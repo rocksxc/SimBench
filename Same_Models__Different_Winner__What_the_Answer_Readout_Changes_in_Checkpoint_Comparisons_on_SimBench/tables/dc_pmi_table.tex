@@ -1,0 +1,23 @@
+\begin{table*}[t]
+\centering
+\small
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{llrrrl}
+\toprule
+Pair & Wt. & Parent TVD & Tuned TVD & $\Delta$ [range] & Four-readout classification \\
+\midrule
+Qwen-14B/Socrates & ES & .5076 & .6907 & +.1830 [+.1624, +.2099] & Interval flip \\
+Qwen-14B/Socrates & PC & .3985 & .6881 & +.2895 [+.2812, +.2979] & Interval flip \\
+Mistral-7B & ES & .5975 & .6883 & +.0908 [+.0748, +.1072] & Interval flip \\
+Mistral-7B & PC & .6445 & .6914 & +.0469 [+.0303, +.0636] & Interval flip \\
+Qwen-7B & ES & .6489 & .5281 & -.1208 [-.1309, -.1113] & Interval flip \\
+Qwen-7B & PC & .6987 & .4510 & -.2477 [-.2573, -.2382] & Interval flip \\
+Llama-3.2-3B & ES & .6780 & .7057 & +.0276 [+.0127, +.0417] & Interval flip \\
+Llama-3.2-3B & PC & .7417 & .6932 & -.0485 [-.0627, -.0342] & No point-winner change \\
+OLMo-2-7B & ES & .6478 & .6742 & +.0264 [+.0039, +.0507] & Interval flip \\
+OLMo-2-7B & PC & .6574 & .6599 & +.0025 [-.0052, +.0096] & Point-winner change only \\
+\bottomrule
+\end{tabular}
+\caption{DC-PMI readout for all five pairs. $\Delta=$ Tuned$-$Parent, so negative values favor the tuned checkpoint. Brackets are 95\% cluster-bootstrap intervals. The last column classifies the pair--weighting cell across all four readouts (first token, summed, length-normalized, DC-PMI): ``interval flip'' means two readouts have gap intervals on opposite sides of zero, and ``point-winner change'' means only the sign of the point gap changes.}
+\label{tab:dc-pmi-five-pair}
+\end{table*}

@@ -1,0 +1,33 @@
+\begin{table*}[t]
+\centering\scriptsize
+\setlength{\tabcolsep}{3.2pt}
+\begin{tabular}{@{}lcccc@{\hspace{5pt}}ccc@{\hspace{5pt}}ccc@{\hspace{5pt}}ccc@{\hspace{5pt}}c@{}}
+\toprule
+& \multicolumn{4}{c}{Chat template, space candidates} & \multicolumn{3}{c}{Chat template, no space} & \multicolumn{3}{c}{Plain prefix (shared)} & \multicolumn{3}{c}{Own serialization} & Own \\
+\cmidrule(lr){2-5}\cmidrule(lr){6-8}\cmidrule(lr){9-11}\cmidrule(lr){12-14}\cmidrule(l){15-15}
+Pair & First & Sum & Len & PMI & First & Sum & Len & First & Sum & Len & First & Sum & Len & Tok.\ \\
+\midrule
+Qwen-14B/Socr.-SFT & (S/S) & P/P & P/P & P/P & (S/S) & P/P & P/P & (S/S) & P/P & P/P & (S/S) & P/P & P/P & (S/S) \\
+Qwen-14B/Socr.-DPO & (D/D) & D/$\circ$ & P/P & P/P & D/D & D/D & D/$\circ$ & $\circ$/$\circ$ & $\circ$/$\circ$ & P/P & D/D & D/D & D/$\circ$ & D/$\circ$ \\
+\addlinespace[2pt]
+Mistral-7B & B/I & B/I & I/I & B/B & B/I & B/I & I/I & $\circ$/I & B/B & I/I & B/I & B/I & I/I & B/B \\
+Qwen2.5-7B & (B/B) & B/B & B/B & I/I & B/I & B/B & $\circ$/I & B/B & B/B & B/B & B/B & B/B & B/I & B/B \\
+Llama-3.2-3B & (I/I) & I/I & I/I & B/I & (I/I) & I/I & I/I & I/I & I/I & I/I & $\circ$/I & $\circ$/B & I/I & $\circ$/I \\
+OLMo-2-7B & (I/I) & I/I & I/I & B/$\circ$ & I/I & I/I & I/I & B/B & B/B & B/B & B/I & I/I & I/I & B/B \\
+\addlinespace[2pt]
+Qwen2.5-14B & (B/I) & B/I & B/I & I/I & B/I & B/I & B/I & B/B & B/B & $\circ$/I & B/B & B/B & B/I & B/B \\
+Llama-3.1-8B & (I/I) & I/I & I/I & $\circ$/I & (I/I) & I/I & I/I & I/I & I/I & I/I & I/I & I/I & I/I & $\circ$/I \\
+Qwen3-8B & ($\circ$/I) & B/$\circ$ & B/I & I/I & (B/I) & B/$\circ$ & I/I & B/B & B/B & $\circ$/I & B/B & B/B & B/I & B/B \\
+OLMo-2-13B & (I/I) & B/I & B/B & I/$\circ$ & I/I & B/B & B/B & B/I & B/I & $\circ$/I & $\circ$/I & B/B & B/B & B/$\circ$ \\
+\addlinespace[2pt]
+OLMo-2-7B Base/SFT & (S/S) & S/S & S/S & $\circ$/S & S/S & S/S & S/S & B/B & B/B & B/B & S/S & S/S & S/S & $\circ$/$\circ$ \\
+OLMo-2-7B SFT/DPO & (S/S) & S/S & S/S & S/S & S/S & S/S & S/S & S/S & $\circ$/D & S/S & S/S & S/S & S/S & S/S \\
+OLMo-2-7B DPO/Inst. & (D/I) & $\circ$/$\circ$ & I/I & D/D & $\circ$/I & I/I & I/I & D/$\circ$ & D/D & D/D & $\circ$/I & I/I & I/I & D/D \\
+\addlinespace[2pt]
+Qwen3-4B/OSim & (O/O) & B/B & B/B & O/O & (O/O) & B/B & B/B & B/B & B/B & B/B & B/B & B/B & B/B & $\circ$/$\circ$ \\
+Qwen3-8B/OSim & ($\circ$/B) & B/B & B/B & O/O & O/B & B/B & B/B & B/B & B/B & B/B & B/B & B/B & B/B & O/O \\
+\bottomrule
+\end{tabular}
+\caption{Who is closer to the human distributions for all 15 pairs (re-implementation runs; equal-source/pooled-cluster weighting in each cell). S = Socrates or, in the OLMo ladder, the SFT checkpoint; P = parent; I = Instruct; B = Base; D = DPO; O = OSim-mid; $\circ$ = the 95\% interval of the gap includes zero. Parentheses mark first-token cells in which at least one checkpoint has coverage below .05 (Appendix Table~\ref{tab:coverage}), so that the cell compares a renormalized remainder. Own serialization: a Base parent under the plain prefix with space candidates, every instruction-tuned checkpoint under its chat template with no-space candidates (gaps and intervals in Appendix Table~\ref{tab:native-serialization-all}). ``Own Tok.'': SimBench's next-token readout with each checkpoint in its own serialization (coverage .000 for Socrates-SFT, whose S there is a remainder). The five original pairs (rows 1 and 3--6) agree with the original runs (Appendix Table~\ref{tab:winner-map}) in every decisive cell.}
+\label{tab:winner-map-15}
+\end{table*}

@@ -1,0 +1,32 @@
+\begin{table}[t]
+\centering\scriptsize
+\setlength{\tabcolsep}{2pt}
+\begin{tabular}{@{}lrrrrrr@{}}
+\toprule
+& \multicolumn{2}{c}{Parent} & \multicolumn{2}{c}{Socrates-SFT} & \multicolumn{2}{c}{Socrates-DPO} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(l){6-7}
+Readout & ES & PC & ES & PC & ES & PC \\
+\midrule
+\multicolumn{7}{@{}l}{\emph{Same-tensor, letter IDs, chat template}} \\
+First token & \textcolor{gray}{\textit{.475}} & \textit{.362} & \textit{.298}$^{S}$ & \textit{.301}$^{S}$ & \textcolor{gray}{\textit{.428}}$^{D}$ & \textit{.350}$^{D}$ \\
+Summed & \textcolor{gray}{.476} & .362 & \textcolor{gray}{.611}$^{P}$ & \textcolor{gray}{.575}$^{P}$ & \textcolor{gray}{.434}$^{D}$ & .359$^{\circ}$ \\
+Length-normalized & \textcolor{gray}{.423} & .380 & \textcolor{gray}{.588}$^{P}$ & \textcolor{gray}{.588}$^{P}$ & \textcolor{gray}{.488}$^{P}$ & \textcolor{gray}{.505}$^{P}$ \\
+DC-PMI & \textcolor{gray}{.507} & \textcolor{gray}{.398} & \textcolor{gray}{.691}$^{P}$ & \textcolor{gray}{.688}$^{P}$ & \textcolor{gray}{.609}$^{P}$ & \textcolor{gray}{.550}$^{P}$ \\
+\multicolumn{7}{@{}l}{\emph{Same-tensor, integer IDs (no leading space)}} \\
+First token & \textcolor{gray}{.459} & .367 & .288$^{S}$ & .295$^{S}$ & \textcolor{gray}{.440}$^{D}$ & .355$^{D}$ \\
+Summed & \textcolor{gray}{.461} & .369 & \textcolor{gray}{.496}$^{P}$ & \textcolor{gray}{.410}$^{P}$ & \textcolor{gray}{.442}$^{D}$ & .357$^{D}$ \\
+Length-normalized & \textcolor{gray}{.366} & .307 & \textcolor{gray}{.571}$^{P}$ & \textcolor{gray}{.561}$^{P}$ & .330$^{D}$ & .300$^{\circ}$ \\
+\multicolumn{7}{@{}l}{\emph{Same-tensor, option text only (no ID)}} \\
+First token & \textcolor{gray}{\textit{.544}} & \textcolor{gray}{\textit{.528}} & \textit{.316}$^{S}$ & \textit{.300}$^{S}$ & \textcolor{gray}{\textit{.419}}$^{D}$ & \textit{.376}$^{D}$ \\
+Summed & \textcolor{gray}{.577} & \textcolor{gray}{.538} & \textcolor{gray}{.438}$^{S}$ & .330$^{S}$ & \textcolor{gray}{.447}$^{D}$ & .392$^{D}$ \\
+Length-normalized & \textcolor{gray}{.594} & \textcolor{gray}{.556} & \textcolor{gray}{.476}$^{S}$ & .368$^{S}$ & \textcolor{gray}{.501}$^{D}$ & \textcolor{gray}{.418}$^{D}$ \\
+\multicolumn{7}{@{}l}{\emph{Native integer protocol, exact next-token probabilities}} \\
+Exact, $T{=}1$ & \textcolor{gray}{.450} & .364 & .291$^{S}$ & .299$^{S}$ & \textcolor{gray}{.435}$^{D}$ & .353$^{D}$ \\
+\multicolumn{7}{@{}l}{\emph{Generated answers}} \\
+SimBench next-token & \textcolor{gray}{.507} & \textcolor{gray}{.406} & \textit{.312}$^{S}$ & \textit{.316}$^{S}$ & \textcolor{gray}{.464}$^{D}$ & \textcolor{gray}{.402}$^{\circ}$ \\
+Verbalized JSON & .214 & .202 & inv. & inv. & .215$^{\circ}$ & .212$^{P}$ \\
+\bottomrule
+\end{tabular}
+\caption{Qwen2.5-14B-Instruct and its two Socrates checkpoints under every readout (re-implementation runs; all-source TVD, uniform baseline .356 ES / .394 PC). Superscripts: winner against the parent by the 95\% interval of the paired gap (S = Socrates-SFT, D = Socrates-DPO, P = parent, $\circ$ = includes zero). Italic: remainders, where the scored first token carries under .05 of the mass for all three checkpoints (the space-prefixed letter IDs and the text-only event; Appendix Tables~\ref{tab:coverage}, \ref{tab:events-coverage}) or for Socrates-SFT alone (SimBench next-token); with integer IDs and no leading space all three place essentially all of their mass on the label tokens (coverage at least .999; Appendix Table~\ref{tab:coverage})). Grey: worse than the uniform predictor. Exact native rows: each complete answer ``$k$\texttt{<|im\_end|>}'' under Socrates' own prompt (captured mass .9997, .9999, and .54) at $T{=}1$; ``inv.'': no valid output; gaps in the text are computed before rounding. Sampled readouts: Appendix Table~\ref{tab:generation}.}
+\label{tab:socrates-readouts}
+\end{table}

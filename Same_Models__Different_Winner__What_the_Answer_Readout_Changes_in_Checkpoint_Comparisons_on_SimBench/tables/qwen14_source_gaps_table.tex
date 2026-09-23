@@ -1,0 +1,23 @@
+\begin{table*}[t]
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lrrrrrr}
+\toprule
+Source & Clusters & First token & Summed & Length norm. &
+Sum $-$ first & Length $-$ sum \\
+\midrule
+ESS & 219 & $-0.348$ & $-0.014$ & $+0.023$ & $+0.334$ & $+0.037$ \\
+GlobalOpinionQA & 454 & $-0.249$ & $+0.053$ & $+0.006$ & $+0.302$ & $-0.047$ \\
+DICES & 498 & $+0.272$ & $+0.653$ & $+0.731$ & $+0.380$ & $+0.078$ \\
+NumberGame & 500 & $-0.107$ & $+0.003$ & $-0.077$ & $+0.110$ & $-0.080$ \\
+ConspiracyCorr & 9 & $-0.466$ & $-0.043$ & $+0.120$ & $+0.423$ & $+0.163$ \\
+\bottomrule
+\end{tabular}
+\caption{Qwen-14B/Socrates gaps within each source. Cells are
+$\Delta=L_{\mathrm{Socrates}}-L_{\mathrm{parent}}$ TVD; negative values favor
+Socrates. Within a single source, \ES{} and \PC{} weighting coincide. The two
+right columns are the paired changes between adjacent reductions.
+ConspiracyCorr has only nine clusters.}
+\label{tab:qwen14-source-gaps}
+\end{table*}

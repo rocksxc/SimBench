@@ -1,0 +1,1640 @@
+\documentclass[11pt]{article}
+\usepackage[review]{acl}
+\usepackage{times}
+\usepackage{latexsym}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{microtype}
+\usepackage{booktabs}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{array}
+\usepackage{placeins}
+\usepackage{enumitem}
+\usepackage{float}
+
+
+\newcommand{\TVD}{\operatorname{TVD}}
+\newcommand{\ES}{\textsc{ES}}
+\newcommand{\PC}{\textsc{PC}}
+\newcommand{\UNIF}{\textsc{Unif}}
+
+% Page-budget switch: \compacttrue moves the DICES trace to the appendix.
+\newif\ifcompact
+\compacttrue
+\newcommand{\fivepairforest}{%
+\begin{figure*}[t]
+\centering
+\includegraphics[width=.94\textwidth]{figures/fig_five_pair_gap_forest.pdf}
+\caption{Original panel: tuned-minus-parent TVD for each pair and readout,
+with 95\% cluster-bootstrap intervals; negative values favor the tuned
+checkpoint. Filled markers: shared chat template (four readouts). Open
+markers: shared plain prefix (three same-tensor readouts; Base--Instruct pairs
+only).}
+\label{fig:five-pair-gap}
+\end{figure*}}
+\newcommand{\fifteenforest}{%
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth,height=1.25in]{figures/fig_fifteen_pair_gap_forest_wide.pdf}
+\caption{Tuned-minus-parent TVD for all fifteen pairs (pooled-cluster weighting) under the three same-tensor readouts, each checkpoint in its own serialization; negative favors the tuned checkpoint; the grey band marks gaps below the .05 floor. A red connector ($\ddagger$) marks a decisive reversal between two readouts under \PC{} (Qwen-14B/Socrates-SFT and Qwen2.5-7B; Mistral-7B reverses decisively under \ES{} only); $\dagger$ marks opposite winners without both gaps at the floor. The same pairs under the shared chat template: Appendix Figure~\ref{fig:fifteen-both}.}
+\label{fig:fifteen}
+\end{figure*}}
+\newcommand{\fifteenforestboth}{%
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{figures/fig_fifteen_pair_gap_forest_both.pdf}
+\caption{Figure~\ref{fig:fifteen} with both conditions: each checkpoint in its own serialization (filled) and both under the chat template with space-prefixed candidates (open), pooled-cluster weighting, 95\% cluster-bootstrap intervals; shaded rows ($\dagger$): the own-serialization readouts give opposite winner letters under \PC{}.}
+\label{fig:fifteen-both}
+\end{figure*}}
+\newcommand{\dicesfigure}{%
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figures/fig_dices_cumulative.pdf}
+\caption{DICES loss of the Qwen-14B parent and Socrates as candidate tokens
+are added to the scored string one position at a time (identical candidates
+for both checkpoints; absent fourth tokens add zero). The first and last
+points reproduce the first-token and summed readouts exactly. Paired
+intervals are in Appendix Table~\ref{tab:qwen14-dices-token-decomposition}.}
+\label{fig:dices}
+\end{figure}}
+
+\title{Same Models, Different Winner? What the Answer Readout Changes in Checkpoint Comparisons on SimBench}
+\author{Anonymous ACL/ARR submission}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Survey-simulation benchmarks compare a language model's distribution over a question's answer options with the distribution among human respondents. A model outputs token probabilities, not that distribution, so the evaluator must choose a \emph{readout}: which string to score, how to serialize the prompt, and how to reduce per-token scores to one score per option. We ask whether the readout changes which of two related checkpoints, a fine-tuned model and its parent, looks better. For fifteen checkpoint pairs on 2,038 SimBench items, both members of a pair see byte-identical prompts within each shared condition, and one stored tensor yields every reduction. Changing only the reduction reverses a decisive winner (opposite winners, both gaps at least .05 TVD) in about one comparison in four under the controlled shared template and one in eight under each checkpoint's own serialization, and half or more of those reversals involve a first-token readout that scores a token the model almost never produces (under a chat template with space-prefixed candidates, for example, such a readout reads at most 2\% of the probability mass for 28 of 30 checkpoint entries). Two public harnesses produce the same remainder, and the whitespace rule of one, replicated in our scorer, silently drops a prompt token for one tokenizer family; we release an opt-in patch. Scoring the option text instead of the ID--option string changes more comparisons, the only difference that is separable with ten model families and only under the shared template, but that string is itself a remainder readout; a full-mass label string, the source composition, and the sharpness of the predictions change comparisons about as often as the reduction. A survey-fine-tuned checkpoint that loses under full-string readouts through a habit at one token wins under its own protocol, by a margin that is mostly spread. We close with six reporting practices.
+\end{abstract}
+
+\section{Introduction}
+
+A growing line of work uses language models to simulate how groups of people
+answer survey questions
+\cite{argyle2023out,santurkar2023opinions,durmus2024globalopinionqa,
+hu-etal-2026-simbench}. The model is shown a question and its answer options,
+and its predicted distribution over the options is compared with the human respondents' distribution. Benchmarks such as SimBench
+score the comparison with total variation distance (TVD), the share of
+probability mass that would have to move to turn one distribution into the
+other. The scores rank models and support claims that fine-tuning on human
+response data improves simulation
+\cite{kolluri-etal-2025-finetuning,suh2025subpop,cao-etal-2025-specializing}.
+
+A language model does not, however, output a distribution over answer
+options. It outputs probabilities over tokens, and the evaluator has to decide
+how to read an answer off. One can score an option's first token, its whole string, or the string averaged per token; correct the score with a content-free prompt (DC-PMI; \citealp{holtzman-etal-2021-surface}); sample answers; or ask the model to write a probability vector. Each rule yields a different distribution, and such choices are known to move absolute scores and leaderboards \cite{shen-etal-2025-revisiting,tsvilodub2024predictions,lyu-etal-2024-beyond}. Whether they move the comparison that fine-tuning claims rest on, the gap between a checkpoint and its parent, has not been isolated.
+
+We isolate it with a controlled audit (Figure~\ref{fig:readouts}). Within each shared-template condition both checkpoints of a pair see byte-identical prompts, and one teacher-forced pass stores the per-token log-probabilities from which every reduction is computed, so two reductions differ only in arithmetic on the same numbers. We apply the design to a survey-fine-tuned checkpoint (Socrates; \citealp{kolluri-etal-2025-finetuning}) and four Base--Instruct pairs, then re-implement the pipeline from its written specification and extend it to fifteen pairs from ten model families, four serialization conditions, and generated-answer readouts. Our contributions:
+\begin{itemize}[leftmargin=*,itemsep=1pt,topsep=2pt]
+\item \textbf{An audit design for paired comparisons}: shared bootstrap draws, so that every interval is paired, and a token-by-token trace of any change of gap between two reductions (Section~\ref{sec:design}).
+\item \textbf{An account of what changes a winner} (Table~\ref{tab:what-changes}): changing only the reduction reverses a decisive winner in at most one comparison in four, mostly through remainder readouts; scoring the option text changes more but is itself a remainder readout; a full-mass label string, the serialization, the source composition, and the sharpness change about as many (Section~\ref{sec:reduction}).
+\item \textbf{A coverage diagnostic} showing that first-token scoring under a chat template with space-prefixed candidates reads a small remainder of the probability mass, the harness whitespace rules behind it, and an opt-in harness patch (Section~\ref{sec:coverage}).
+\item \textbf{Two survey-fine-tuned families under their own protocols}, showing that a reported loss can be a format artifact at a single token (Section~\ref{sec:socrates}).
+\end{itemize}
+
+\section{Background and Related Work}
+
+\paragraph{Survey simulation.}
+Since early ``silicon sampling'' studies \cite{argyle2023out,aher2023using},
+model--human alignment has been measured from populations to individuals
+\cite{santurkar2023opinions,durmus2024globalopinionqa,suh2025subpop,
+cao-etal-2025-specializing,wang-etal-2025-sociobench,park2024generative,
+bisbee2024synthetic,tjuatja2024biases,
+dominguez-olmedo-etal-2024-questioning,williams-etal-2026-beyond,
+libovicky-2026-credibility}, and whether such samples can stand in for respondents is contested \cite{dillion2023replace,boelaert2025machine,anthis2025llm}. SimBench
+\cite{hu-etal-2026-simbench} unifies 20 datasets and scores next-token label
+probabilities for base models and verbalized distributions for
+instruction-tuned models \citep[see also][]{meister-etal-2025-benchmarking,ahnert-etal-2026-survey,hu-levy-2023-prompting},
+and fine-tuning on human data is reported to improve alignment
+\cite{kolluri-etal-2025-finetuning,suh2025subpop,krsteski-etal-2026-valid,
+huang-etal-2026-distribution}.
+
+\paragraph{Reading answers off a language model.}
+Multiple-choice scoring is sensitive to what is scored: raw likelihood,
+length normalization, and DC-PMI respond differently to surface-form
+competition \cite{holtzman-etal-2021-surface}, and label, sequence, and
+generation-based scoring change rankings
+\cite{robinson2023leveraging,shen-etal-2025-revisiting,tsvilodub2024predictions,lyu-etal-2024-beyond};
+HELM and OLMES standardize these choices
+\cite{liang2022helm,gu-etal-2025-olmes,biderman2024lessons}. Label priors and
+option order \cite{zhao2021calibrate,zheng2024mcq,pezeshkpour-hruschka-2024-large},
+formatting \cite{sclar2024quantifying,alzahrani-etal-2024-benchmarks,
+mizrahi-etal-2024-state}, first-token versus generated answers
+\cite{wang-etal-2024-answer-c,wang2024look}, leading spaces
+\cite{sanz-guerrero-etal-2025-mind}, and format fine-tuning \cite{bunn-etal-2025-format} are known sensitivities; human label variation \cite{plank-2022-problem,uma2021learning,nie-etal-2020-learn} is the same distributional target seen from the annotation side.
+
+\paragraph{What is new here.}
+Readout sensitivity is not new \citep{fourrier2023openllm,shen-etal-2025-revisiting,schaeffer2023emergent,dehghani2021benchmark}, and OLMES and lm-evaluation-harness \cite{eval-harness} compute several readouts from one tensor. We apply this discipline, a multiverse analysis \citep{steegen2016multiverse,simonsohn2020specification}, to \emph{paired} checkpoint gaps on a distributional task with a token-by-token trace of each gap change, turn the label-mass analyses of \citet{wang-etal-2024-answer-c} and \citet{sanz-guerrero-etal-2025-mind} into a coverage statistic, and retain invalid outputs through partial-identification bounds \cite{manski1989anatomy,chen2026partial}.
+
+\section{Audit Design}
+\label{sec:design}
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figures/fig_readouts.pdf}
+\caption{Within a shared-template condition both checkpoints see byte-identical prompts. (a)~One teacher-forced pass records a log-probability $a_t$ per candidate token; (b)~the same-tensor readouts differ only in how the $a_t$ are reduced.}
+\label{fig:readouts}
+\end{figure}
+
+\input{tables/glossary_table.tex}
+Table~\ref{tab:glossary} collects the terms; each is defined where it first appears.
+
+\subsection{Checkpoint pairs and data}
+\label{sec:pairs}
+
+Each pair has a \emph{parent} and a \emph{tuned} checkpoint, and its gap $\Delta = L_{\mathrm{tuned}} - L_{\mathrm{parent}}$ is the tuned checkpoint's loss minus the parent's, so a negative gap favors the tuned checkpoint. The
+original panel has five pairs: Qwen2.5-14B-Instruct and Socrates, a checkpoint
+fine-tuned from it on individual-level responses to social-science experiments
+\cite{qwen25technical,kolluri-etal-2025-finetuning}, and the Base and Instruct
+releases of Mistral-7B-v0.3 \cite{jiang2023mistral}, Qwen2.5-7B
+\cite{qwen25technical}, Llama-3.2-3B \cite{meta2024llama32}, and OLMo-2-1124-7B
+\cite{olmo2024furious}. The extended panel adds ten pairs: a
+Socrates checkpoint trained with DPO on the same data; Base--Instruct pairs of
+Qwen2.5-14B, Llama-3.1-8B, Qwen3-8B, and OLMo-2-13B; the three steps of the
+OLMo-2-7B post-training ladder (Base--SFT, SFT--DPO, DPO--Instruct); and two
+behavioral mid-training checkpoints, OSim-mid, trained from Qwen3-4B-Base and
+Qwen3-8B-Base on a mixture that includes Socrates' training data
+\cite{zhou-etal-2026-odyssim}. A sixteenth pair, Mistral-7B-v0.1 and its SubPOP adapter \cite{suh2025subpop}, is scored under the plain prefix (Section~\ref{sec:socrates}) and kept outside the counts, which refer to the fifteen pairs (23 distinct checkpoints from ten families; Qwen2.5-14B-Instruct appears in three pairs and two families). Each pair uses the tuned checkpoint's tokenizer and template (the parent's for the Socrates pairs; the OSim checkpoints ship Qwen3's).
+
+SimBench \cite{hu-etal-2026-simbench} provides, for each item, a group
+description, a question, an ordered list of answer options, and the human
+answer distribution. We use its population-level split and five of its
+twenty sources, chosen by a license rule before any model was run (Appendix~\ref{app:sources}): the European Social Survey (ESS), GlobalOpinionQA, the
+DICES conversational-safety ratings, the NumberGame concept-generalization
+task, and a conspiracy-belief survey (ConspiracyCorr)
+\cite{ess-round8-2016,ess-round9-2018,ess-round10-2020,durmus2024globalopinionqa,
+aroyo2023dices,bigelow2016numbergame,enders2024conspiracism}. Two of the five are behavioral rather than opinion data: DICES and NumberGame supply 998 of the 1,680 clusters and 59\% of the pooled-cluster weight, so the opinion sources are also analyzed on their own (Appendix~\ref{app:reimpl}), and ISSP and Jester are held out. An \emph{item} is one rendered group--question input with its $K_i$ ordered options and human distribution; items sharing question and options form a \emph{cluster}. Four GlobalOpinionQA items whose shares do not sum to 100 are excluded, leaving 2,038 items in 1,680 clusters (Appendix Table~\ref{tab:frame}); this fixed item set is the \emph{frame} every loss averages over.
+
+\subsection{Readouts}
+\label{sec:reductions}
+
+Within a pair, both checkpoints receive the same system message, rendered
+group, question, option list, answer prefix, and tokenizer
+(Appendix~\ref{app:prompts}). Candidate $k$ is the byte string
+``\texttt{\char32 ID$_k$<TAB>option$_k$}''. One teacher-forced pass records,
+for checkpoint $e$, item $i$, option $k$, and candidate-token position $t$,
+the log-probability $a_{eikt}$ of the actual next token; $T_{ik}$ is the
+number of candidate tokens. The three same-tensor scores are the first token, $z^{\textsc{first}}_{eik}=a_{eik1}$; the sum, $z^{\textsc{sum}}_{eik}=\sum_{t=1}^{T_{ik}} a_{eikt}$; and the per-token mean, $z^{\textsc{len}}_{eik}=T_{ik}^{-1}\sum_{t=1}^{T_{ik}} a_{eikt}$. Each passes through a temperature-1 softmax over the $K_i$ options. Because the softmax depends only on score differences, a change in gap between two readouts can be traced token by token through cumulative-prefix scores whose increments sum exactly to the total change. The fourth readout, domain-conditional PMI (DC-PMI), subtracts from the summed score the log-probability of the same candidate under a content-free premise that keeps the system message and chat template but omits the group, question, and option list \citep{holtzman-etal-2021-surface,zhao2021calibrate}: $z^{\textsc{pmi}}_{eik}=z^{\textsc{sum}}_{eik}-\log P_e(c_{ik}\mid d)$. Public harnesses compute the same quantities under other names, such as lm-evaluation-harness's \texttt{acc} and \texttt{acc\_norm} (Appendix Table~\ref{tab:harness-names}).
+
+The \emph{serialization} is how the prompt becomes tokens. Scoring both checkpoints under the Instruct chat template with space-prefixed candidates keeps the prompt identical, but it is not how either checkpoint is normally used (Section~\ref{sec:coverage}). Table~\ref{tab:what-changes} therefore reports four serialization conditions, in the order of its columns. The first is each checkpoint's \emph{own serialization}: a Base parent under the plain prefix with space candidates, its tuned checkpoint under the chat template without a space, so the two see different prompts. The second is the shared template with candidates that carry no leading space. The third is the same template with space-prefixed candidates, the condition we specified in advance; the no-space condition is its correction after the coverage diagnosis. The fourth is a shared plain prefix without chat markup, under which most checkpoints keep at least half of their mass on the label tokens. Where one number is needed we quote the no-space column (controlled) or own serialization (normal use). The \emph{scored string} (the event rows of Table~\ref{tab:what-changes}) is what is scored: the ``\texttt{ID<TAB>option}'' string by default, the option text alone, or the ID alone. Generated-answer readouts complement the likelihood readouts (Appendix~\ref{app:prompts}): SimBench's next-token readout, verbalized vectors (the model writes a probability vector) under two prompts, sampled answers, and Socrates' native protocol. A \emph{label readout} scores a one-token label by its first token.
+
+\subsection{Loss, weighting, and what we count}
+\label{sec:weights}
+
+For human distribution $\mathbf y_i$ and model distribution $\mathbf p_{ei}$,
+the loss is $\ell_{ei}=\TVD(\mathbf p_{ei},\mathbf y_i)=
+\tfrac12\sum_k|p_{eik}-y_{ik}|$, averaged over items within a cluster, then
+over clusters within a source. \emph{Equal-source} (\ES{}) weighting gives
+each source one fifth of the weight; \emph{pooled-cluster} (\PC{}) weighting
+gives every cluster the same weight. \PC{} is primary (\ES{} lets ConspiracyCorr's nine clusters count as much as DICES' 498); both are reported. A uniform predictor gives the absolute baseline (TVD .356 under \ES{}, .394 under \PC{}). Because TVD rewards matching spread, we also report modal accuracy (whether the predicted mode is the human mode),
+within-item Spearman correlation, and an entropy-matched variant whose
+temperature, fitted on the other sources, gives each checkpoint the human
+answers' spread.
+
+A \emph{unit} is one pair under one weighting (30 units), a \emph{cell} one unit under one readout, and each readout names a winner for a unit: the side its 95\% interval favors (written as that side's letter), or a tie ($\circ$) when the interval includes zero. Two readouts \emph{change} a unit when they name different winners, a tie included; they \emph{flip} it when they name opposite sides and the paired difference between the two gaps is at least .05 TVD; the change is \emph{decisive} when they name opposite sides and both gaps are at least .05. \emph{Coverage} is the probability mass a checkpoint places, at the prefix-final position, on the distinct first candidate tokens; a label readout is full-mass at .5 or more and a \emph{remainder} below .05. As a worked example, take the Mistral-7B pair in own serialization. Under \ES{} weighting the first-token and summed readouts put the Base parent ahead by .067 and .068 TVD while the length-normalized readout puts Instruct ahead by .052: the winners are opposite and both gaps exceed .05, so this unit counts as changed and as a decisive reversal. Under \PC{} weighting all three readouts favor Instruct (by .043, .037, and .114), so that unit does not change.
+
+\subsection{Uncertainty and execution}
+\label{sec:execution}
+
+Every checkpoint is evaluated once, deterministically, so the only sampling
+uncertainty we quantify is over items: 10,000 cluster-bootstrap resamples within each source \citep{field2007bootstrapping,miller2024adding}, with one set of draws shared
+across both checkpoints and all readouts of a pair, so that all intervals are
+paired. The .05 decisive floor was fixed before the extended panel was run; it is about twice the cross-implementation floor of .027, and by a power simulation it operates at about .06 (a true reversal of $\pm.06$ is detected in 85\% of resampled frames, one of $\pm.05$ in a tenth). Differences between rows of Table~\ref{tab:what-changes} are judged by a paired bootstrap over the ten model families and by an exact sign-flip test over the per-family contributions, whose smallest attainable $p$ is $2/2^k$ when $k$ families contribute; we call a difference \emph{separable} when the interval excludes zero and the test rejects at .05. The no-space, plain-prefix, and own-serialization columns, the coverage and above-uniform gates of Section~\ref{sec:reduction}, the family bootstrap, and the human reference were specified after the pre-specified column's counts were known (Appendix Table~\ref{tab:timing}), so comparisons between rows are descriptive. Every count's robustness to the floor, the loss, the respondent count, and family resampling is in Appendix~\ref{app:reimpl} (Table~\ref{tab:appendix-index}).
+
+Every result in Section~\ref{sec:results} comes from a same-team re-implementation written from Appendix~\ref{app:prompts}, run with AI assistance in a separate session; it reproduces the original panel's decisive comparisons cell for cell, with losses within .027 TVD (the original numbers were visible during that check; Appendix~\ref{app:compute}). No human distribution enters a prompt (except the five held-out modes of the few-shot diagnostic, Appendix Table~\ref{tab:fewshot}), and there is no prompt search.
+
+\section{Results}
+\label{sec:results}
+
+\subsection{What changes a winner}
+\label{sec:reduction}
+
+\input{tables/what_changes_table.tex}
+
+\paragraph{Changing only the reduction rarely reverses a large gap, but how rarely depends on the condition.} Across the three same-tensor readouts, about half of the 30 units change winner in every condition, many of them among small gaps. Decisive reversals are rarer: 4 of 30 in own serialization, 7 under the controlled shared template with no-space candidates (4 of 15 pairs), 3 with space-prefixed candidates, and 1 under the plain prefix (Figure~\ref{fig:fifteen}). The family-bootstrap intervals on these counts are wide ([0,9], [2,15], and [0,8] units in the first three conditions), so the panel bounds the rate rather than pins it, and the count moves with the criterion: adding the character-normalized readout raises the decisive counts to 8, 10, and 4 (the plain count stays at 1), the Brier score to 8, 10, and 8 (first three conditions), and the paired-difference criterion counts 9, 10, 9, and 4 flips (Appendix Tables~\ref{tab:what-changes-full}, \ref{tab:pair-family-counts}, \ref{tab:proper-scores}). Most of these reversals are not well posed: of the 4, 7, 3, and 1 decisive reversals, 2, 4, 2, and 1 involve a first-token readout whose coverage is below .05, and when both checkpoints clear a coverage of .5 the reduction reverses one unit of 26 in own serialization, two of 8 with no-space candidates, and none of 25 under the plain prefix; with both checkpoints also beating a uniform predictor (4 to 6 units per condition) at most one reverses. Without Qwen2.5-7B, whose gaps move by up to .135 under FP32, the counts fall by at most two; the largest movement between two reductions is .41 TVD (OLMo-2-13B, no-space candidates, summed minus first token; Appendix Tables~\ref{tab:own-absolute}, \ref{tab:gap-changes-15}).
+
+\paragraph{Which string is scored changes more comparisons.} Scoring the option text alone instead of the ``\texttt{ID<TAB>option}'' string changes 20, 26, and 24 units (8, 10, and 12 decisively) against the reduction's 13, 14, and 14 (first three conditions). The advantage is separable under the shared template but not in own serialization, and it rests on few families: the sign-flip $p$ of .03 is the test's floor with six contributing families, and it rises to .06 and .09 if Qwen2.5-14B-Instruct's two families are merged into nine, and to .06 for the matched-instruction variant of the string (Appendix Tables~\ref{tab:family-boot-diff-merged}, \ref{tab:family-boot-events}). The text-only string is, however, a remainder readout everywhere: its first-token coverage is at most .19 (Appendix Table~\ref{tab:events-coverage}), and full-string coverage cannot exceed it. Comparing one change of reduction against one change of string without the first token, the string still changes more units under the shared template ($+12$ to $+13$, $p\le.03$) but in own serialization only under the length-normalized readout, and not separably (Appendix Table~\ref{tab:matched-contrast}). The one alternative string that is full-mass in the same condition as the default string, the ID alone in own serialization (25 of 30 entries at .5 or more), changes 13 units and 5 decisively, about as many as the reduction (13 and 4).
+
+\paragraph{Source composition and sharpness change as many comparisons, and sharpness leads on opinion items.} Omitting DICES, one of the two 500-item sources, changes 18, 12, 14, and 17 units (3, 3, 1, and 1 decisively), about as many as the reduction and no more decisively; the other single-source omissions change 2 to 11 units, none decisively (Appendix Table~\ref{tab:frame-per-omission}). Matching each checkpoint's sharpness to the human answers' entropy changes 11, 13, 19, and 20 units (1, 5, 5, and 1 decisively) in the main frame, but on the two opinion sources alone it changes more units than any other manipulation (28, 21, and 26, with 12, 12, and 11 decisive; Appendix Table~\ref{tab:opinion-events}), and likewise on the items with at least 100 respondents. Neither lever, nor the serialization, is separable from the reduction (Appendix Table~\ref{tab:family-boot-diff}).
+
+Two caveats apply to every count: winner counts miss magnitude (Appendix Table~\ref{tab:magnitude-crossing}), and manipulations act through pair-specific responses (a sum-of-squares partition attributes 51\% of the variance in gaps to pair identity and 2.5\% to the readout main effect). Appendix~\ref{app:reimpl} collects every row, interval, and recount, indexed by claim in Table~\ref{tab:appendix-index}.
+
+\fifteenforest
+\subsection{First-token scoring under a chat template reads a remainder}
+\label{sec:coverage}
+
+After the assistant header a chat model writes no space, so under the shared chat template, where every candidate begins with a space, ``\texttt{\char32 A}'' is a token it almost never produces there: coverage is .02 or less for 28 of the 30 checkpoint entries (15 pairs, two members each; Appendix Table~\ref{tab:coverage}). With no-space candidates the eight Instruct checkpoints are at .90 to 1.00 but their Base parents at .01 to .57; under the plain prefix seven of the eight Base parents keep at least half of their mass. Full-string readouts do not restore the mass: under the chat template the total probability of the $K_i$ candidate strings is at most .021 for every entry but Mistral-Instruct (Appendix Table~\ref{tab:fullstring-coverage}), so summed and length-normalized scores compare continuation likelihoods, not answer mass. One in-context demonstration restores coverage in five of six pair--serialization conditions but moves gaps by up to .31 TVD (Appendix Table~\ref{tab:fewshot}).
+
+The remainder is a harness property as much as a renderer property. With a chat template OLMES puts a space before the choice and lm-evaluation-harness none \cite{eval-harness,sanz-guerrero-etal-2025-mind}, and both move the template's trailing whitespace onto the continuation and encode prefix and candidate jointly. Run unmodified on three pairs, they reproduce our coverage to within .05 for 11 of the 12 checkpoint entries (the exception is a no-space Mistral-7B-Instruct cell whose candidate lacks SentencePiece's word-boundary marker) and our summed winners in 11 of the 12 harness winner cells.
+
+For the Qwen2.5-7B pair the prefix ends in \texttt{<|im\_start|>assistant\textbackslash n}, so the scored ids of the second candidate are 198, 425, 197 (\texttt{\textbackslash n}, \texttt{\char32 B}, \texttt{\textbackslash t}): the newline, identical for every candidate, is scored first, a label readout taken there is uniform, and the label is scored second; this happens for 9 of the 15 pairs. For the harness's summed score (\texttt{acc}) the newline's log-probability cancels in the softmax over options, so the summed winners of those nine pairs are unchanged; what the rule changes is \texttt{acc\_norm}, whose divisor varies across candidates, and any label or first-token readout. For the five OLMo-2 pairs the joint encoding fuses the newline with the prefix's last token, so the slice starts at the label and the model is conditioned on the separately encoded prefix without the newline, a change to the prompt itself (Appendix Table~\ref{tab:joint-example}). Replicated on all fifteen pairs (the harness runs cover three pairs, none of them OLMo-2), the rule changes 4 of 30 units under the summed or length-normalized readout, none decisively, but moves the OLMo-2-7B summed gaps by up to .28 and reverses the OLMo-2-13B summed \PC{} gap ($-.020$ to $+.153$). We release an opt-in patch for lm-evaluation-harness that keeps the trailing whitespace in the prefix (or moves only spaces, never newlines), counts the requests whose joint encoding breaks the prefix boundary, and writes per-token scores, from which the first-token readout and coverage follow; with its options off it reproduces the unpatched harness exactly (Appendix~\ref{app:harness-patch}).
+
+\subsection{Two survey-fine-tuned families under their own protocols}
+\label{sec:socrates}
+
+\input{tables/socrates_readouts_table.tex}
+
+Socrates was trained to answer with an integer, so the letter-ID candidates
+of the shared prompt are a format it never saw.
+In Table~\ref{tab:socrates-readouts} the readouts that favor the parent are those in which the scored string continues past an answer ID: summed and
+length-normalized scoring with letter IDs ($+.213$, $+.208$ under \PC{}) or integer IDs, and DC-PMI, in all of which Socrates is worse than a uniform predictor. With integer IDs and no leading space, Socrates' own format (unlike its own serialization, which uses letter IDs), both checkpoints place essentially all of their mass on the label tokens (coverage at least .999; Appendix Table~\ref{tab:coverage}); there the first-token readout favors Socrates and the summed readout, which continues past the ID, favors the parent. When the option text is scored on its own, Socrates wins under all three
+reductions ($-.228$, $-.208$, $-.188$), and it wins the exact version of its native protocol by $-.159$ (\ES{}) and $-.066$ (\PC{}), a margin that is mostly spread. The first-to-summed change shifts the Socrates gap by $+.274$ (\PC{}) through Socrates' own loss; a token-position trace (Appendix Figure~\ref{fig:dices} and Table~\ref{tab:positions-all}) locates 61\% of the DICES gap increase at the tab after the answer ID, which moves Socrates from better than uniform to worse. The penalty is concentrated on DICES ($+.673$ there; $+.000$ and $+.019$ without it) but recurs on both held-out sources, and only a reversed option order removes it (Appendix~\ref{app:diagnostics}). Socrates-SFT never writes a valid probability vector, so the benchmark's protocol for instruction-tuned models cannot score it at all.
+
+A second survey-fine-tuned family, SubPOP \cite{suh2025subpop}, a LoRA adapter on Mistral-7B-v0.1 trained with lettered options, wins in all 48 cells of the readouts it can be scored under (raw and entropy-matched; $-.05$ to $-.18$ under \PC{}; Appendix Table~\ref{tab:subpop}), a matched interface where Socrates' is mismatched; its margin grows after entropy matching in 23 of the 24 readout--weighting cells, so it is preference rather than spread.
+
+\subsection{Absolute fit and the benchmark's protocol}
+\label{sec:absolute}
+
+Comparative gaps do not certify a useful simulator: at temperature one, 112 of 180 same-tensor losses under the chat template and 79 of 180 in own serialization exceed the uniform baseline; on the items with at least 100 respondents 164 and 139 of 180 do, and no unit there has both checkpoints beating it under all three readouts (Appendix Table~\ref{tab:uniform-floor}). A human reference bounds what any predictor could reach: two fresh samples of the same size drawn from the published shares differ by .028 TVD on ESS, .040 on DICES, .116 on NumberGame, and .031 on ConspiracyCorr, whereas the lowest same-tensor loss of any checkpoint in its own serialization is .30, .11, .20, and .18 there (Appendix Table~\ref{tab:human-ceiling}). The Qwen-14B parent's written JSON vectors score .202 under \PC{}, better than every likelihood readout (Appendix Table~\ref{tab:generation}), and .183 on the four sources with respondent counts, 2.7 times their pooled reference of .068.
+
+SimBench scores base models by next-token label probabilities and instruction-tuned models by verbalized vectors. Our renderer reproduces its prompts byte for byte but adds the assistant header for chat models, which the released token-probability code omits; run as released, that path moves the SimBench score (100 at a perfect match, 0 at the uniform predictor) by 24 to 76 points, and with the header the two agree; published chat-model scores use verbalized vectors and are unaffected (Appendix Table~\ref{tab:released-scorer}).
+
+Under the next-token readout alone Base beats Instruct in five of the eight Base--Instruct pairs under \PC{} and six under \ES{}; under the benchmark's protocol with SimBench's prompt Instruct is closer in seven of the eight under \PC{} and three under \ES{}, with three ties and two Base wins. Instruct's next-token distributions are far sharper than Base's; after entropy matching four of the five Base wins disappear and modal accuracy favors Instruct in six, so the benchmark's own protocol, not the common next-token readout, agrees with the sharpness-matched and modal-accuracy verdicts (Appendix Tables~\ref{tab:protocol-audit}, \ref{tab:simbench-protocol}). On the two opinion sources alone the agreement weakens: Base wins all eight next-token comparisons; entropy matching hands five (\ES{}) or four (\PC{}) to Instruct; and the verbalized protocol gives Instruct four of seven under the controlled prompt (\PC{}) and one of eight under SimBench's prompt (four Base wins), though five of eight after entropy matching (Appendix Table~\ref{tab:protocol-opinion}). Such agreement between a protocol and a diagnostic is consistency, not validation.
+
+\section{Recommendations}
+\label{sec:recommendations}
+
+\begin{enumerate}[leftmargin=*,itemsep=1pt,topsep=2pt]
+\item \textbf{Name the scored string, pre-specify it, and match it to the checkpoint's protocol}: score each checkpoint under its own protocol and both under a shared full-mass string; a reported gain should survive both and be shown next to the uniform baseline and the human reference (Appendix Table~\ref{tab:human-ceiling}).
+\item \textbf{Report the uniform baseline, the coverage at the label position, the encoding rule, and the space convention.} Check the convention by encoding the prefix alone and with the candidate (Appendix Table~\ref{tab:tokenization-boundary}); below .5 coverage report the checkpoint's own protocol or a shared full-mass string instead of a label readout; under a chat template keep the template's trailing newline in the prefix (the patch's \texttt{move\_only\_trailing\_spaces} or \texttt{keep\_trailing\_whitespace} option).
+\item \textbf{Report every reduction the stored scores allow}: at least \texttt{acc}, \texttt{acc\_norm}, and \texttt{acc\_mutual\_info} (Appendix Table~\ref{tab:harness-names}) and, with the patch's per-token output, the first-token readout and coverage.
+\item \textbf{Report a scale-free measure or a fitted temperature} next to TVD.
+\item \textbf{Keep invalid outputs with bounds}, and report both weightings and leave-one-out results.
+\item \textbf{Report the numerical precision and attention kernel, and rerun cells near the floor in FP32}; the arithmetic path moves one pair's gaps by up to .135 TVD.
+\end{enumerate}
+The scoring contract, task files, and patch are released under the MIT license (data terms in Appendix~\ref{app:sources}). In sum, the reduction rarely decides a comparison by itself; the scored string, the serialization, and the sharpness can; and a comparison is a statement about its readout until the readout is reported.
+
+\FloatBarrier
+
+\section*{Limitations}
+
+\paragraph{Scope of the panel.}
+Fifteen pairs and 23 distinct checkpoints are a convenience sample of publicly
+released, locally runnable models. Three survey-fine-tuned checkpoints (Socrates-SFT and -DPO among the 23, and the SubPOP adapter on Mistral-7B-v0.1 in a sixteenth pair outside the counts) and two
+behavioral mid-training checkpoints (OSim-mid) are the only ones trained on
+human response data; SubPOP could be scored under the shared plain prefix
+and SimBench's next-token readout but not under its own protocol, which
+conditions on a demographic attribute question that SimBench's population
+descriptions do not supply; no checkpoint of
+\citet{cao-etal-2025-specializing} is released, and Gemma-2-9B was
+inaccessible (gated repository). The pairs differ
+in size, data, and recipe, so nothing here estimates the effect of a training
+method in general; SubPOP differs from Socrates in parent type, adapter, and
+label format, so its result shows that a survey-fine-tuned checkpoint need
+not lose under the shared design, not that format alone explains Socrates,
+and its training questions were not scanned for overlap. Our finding about Socrates is that it wins under its own
+protocol and loses under a mismatched one; it rests on one SFT checkpoint
+whose DPO sibling does not share the habit, its exact native margin shrinks
+to .02 TVD after sharpness matching and is a tie under \ES{}, its native
+prompt receives SimBench's group description in place of the individual
+profile it was trained on, and we do not evaluate its reported gains on its
+own benchmark. Nine extension checkpoints were loaded from their default
+branch; the commits they resolved to are listed in Appendix
+Table~\ref{tab:extension-revisions}.
+
+\paragraph{Scope of the claims.}
+No readout is a model-independent ground truth: first-token scoring is
+distorted by label priors \cite{wang-etal-2024-answer-c,zheng2024mcq},
+full-string scoring also measures wording, DC-PMI depends on its premise, and
+verbalized distributions on format following; a study should choose the
+readout that matches its claim, not the one under which its checkpoint
+wins, and this audit ranks no readout by an external criterion of simulation quality; the no-space, plain-prefix, and own-serialization columns of Table~\ref{tab:what-changes} were added at revision, after the shared template's remainder had been diagnosed, without changing any count, and the space column is the pre-specified condition; Section~\ref{sec:absolute} adjudicates one class verdict by sharpness matching and modal accuracy, not the readouts themselves, and that verdict is itself weighting-dependent (Instruct seven of eight under \PC{}, three of eight with three ties under \ES{}).
+Our results do not show that any training method helps or hurts in general,
+nor that Socrates' reported gains are wrong. The frame is SimBench's
+population-level split, whereas Socrates and SubPOP are trained as
+subgroup or individual-level predictors, so their own use case is not
+evaluated here; the text-only string's first-token readout is a remainder in every condition, so its counts rest on the summed and length-normalized readouts; and SubPOP is scored
+only under serializations close to its training format.
+
+\paragraph{Readouts and data.}
+We cover likelihood readouts over ID--option strings, ID-only and text-only
+candidates, DC-PMI under two premises, and the generated-answer readouts of Section~\ref{sec:reductions};
+we do not cover chain-of-thought elicitation or constrained decoding. The
+sampled readouts (50 integers at $T{=}.6$; 32 letters) carry Monte Carlo
+noise and a fixed sampling temperature that the bootstrap does not model; the
+exact native readout removes both for Socrates, and two further seeds move
+the sampled gap by at most .005. Each control was run once with one seed and one paraphrase pair, except the option-order control (five seeds). No question of the seven sources used here appears
+verbatim or as a near duplicate among the questions a fixed parser extracted
+from Socrates' training data (Appendix~\ref{app:sources}); the unparsed rows
+and OSim's mixture were not checked. The frame is
+five SimBench sources, two of them behavioral with 59\% of the pooled-cluster
+weight, and it excludes OpinionQA, Afrobarometer, and Latinobar\'ometro, so
+it is not representative of opinion surveys (Appendix
+Tables~\ref{tab:opinion-subset}, \ref{tab:opinion-issp}, and
+\ref{tab:opinion-frame-changes} are the relevant check); equal-source
+weighting gives ConspiracyCorr's nine clusters one fifth of the weight, and
+Appendix Table~\ref{tab:flip-accounting} shows which cells depend on a
+single source. The held-out check uses two further sources (ISSP and Jester; MoralMachine's option layout was not parsed
+by the fixed renderer and was excluded rather than guessed). SimBench's
+population-level human shares are treated as fixed targets except in the
+respondent-resampling check of Appendix~\ref{app:resampling} and the human
+reference of Appendix Table~\ref{tab:human-ceiling}, which assume simple random sampling, and TVD
+rewards matching spread as well as preference, which is why we add
+scale-free and entropy-matched measures rather than replace TVD.
+
+\paragraph{Uncertainty and numerics.}
+Cluster-bootstrap intervals capture sensitivity to which questions are in the
+frame, not uncertainty over sources, prompts, or training. Absolute losses
+reproduce across implementations only to about .03 TVD under bfloat16
+arithmetic, and per-item vectors to a mean TVD of .01 to .10, so cells whose
+gap is below .05 should not be expected to replicate; every decisive cell of the original panel did (Appendix~\ref{app:compute}). FP32 reruns of all 15 pairs move gaps by at most .005 for 13 of them and by up to .135 for Qwen2.5-7B, whose cells are the least reliable of the panel (Appendix Table~\ref{tab:fp32-all}); the FP32 runs also changed hardware, and the generated-answer readouts have no second implementation. With ten families the panel is underpowered for differences between manipulations, and the orderings of Section~\ref{sec:reduction} are descriptive: only the scored string's advantage under the shared template is separable from the reduction by the criterion of Section~\ref{sec:execution} \citep{card-etal-2020-little,dror-etal-2018-hitchhikers}; a bootstrap over 10 checkpoint families is only approximately calibrated and cannot produce events absent from the panel, so the sign-flip $p$ values of Appendix Table~\ref{tab:family-boot-diff} are the safer reading of the row differences; the decisive criterion undercounts reversals near its floor, firing for a true $\pm.05$ reversal in 11\% of resampled frames and for $\pm.07$ in 98\% (Appendix Table~\ref{tab:power}); Qwen2.5-14B-Instruct also belongs to two of the ten families (as the Socrates parent and as the tuned member of the Qwen2.5-14B pair), and merging them into nine moves every interval by at most one unit (event row $p=.06$ and $.09$). SimBench's released shares are used as the target; whether they carry the source studies' design weights is not documented by the benchmark, and the respondent-resampling check of Appendix~\ref{app:resampling} assumes simple random sampling, so a design effect of 1.5 to 2 would widen those intervals by up to 40\%. The entropy-matched
+temperatures are fitted on the other sources of the same frame, which
+leaves them correlated with the evaluation frame through shared clusters of
+similar questions.
+
+\paragraph{Controls.}
+The plain prefix removes the system message together with the chat markup, so
+it does not isolate template tokens; the beginning-of-sequence and
+no-system-message controls separate two of those factors. The coverage statistic is defined at the label position and does not describe later candidate tokens; two public harnesses reproduce it on three pairs, none of them OLMo-2, but their joint encoding scores the template's newline first, so their summed scores include a token ours do not (Appendix Table~\ref{tab:harness}); the OLMo-2 joint-rule numbers come from our replication of the rule, not from the harnesses. The benchmark releases no respondent-level data, so a split-half human reference could not be built, and its projection does not document survey weighting; re-deriving design-weighted ESS targets from the ESS microdata was out of scope. The few-shot diagnostic puts five held-out human modes into the prompt and was run on two pairs; a demonstration answered with a fixed or random option, which would separate format teaching from the human mode, was not run. The two harnesses were run with our prompt as a custom task, not in their shipped multiple-choice configurations, and the harness patch was tested on a probe task with a small model, not on those configurations; the respondent-resampling check covers the chat-template readouts only; and the rows of Table~\ref{tab:what-changes} are compared only through the family bootstrap; the Benjamini--Hochberg family is one row's gap tests, so selecting the largest row is uncorrected. NumberGame's per-item target noise (.08 TVD at a median of 11 respondents) exceeds the decisive floor and DICES' (.03) approaches it; the respondent-floor and target-resampling checks bound but do not remove this. The verbalized readouts are compared on the items each
+checkpoint answers validly, with bounds for the rest; they cannot be computed for checkpoints that never write a vector, and a format the checkpoint does not follow leaves few valid items (Appendix Table~\ref{tab:verbalized-variants}). SimBench's released scorer, run as released on three checkpoints, agrees with ours except on its token-probability path, which omits the assistant header; its verbalized retry loop failed on two of six runs (Appendix Table~\ref{tab:released-scorer}).
+
+\section*{Ethical Considerations}
+
+No new participants are involved: the study uses released aggregate human
+response distributions, accesses no respondent identifiers, and never presents
+model outputs as human data. Consent was governed by the original studies and
+was not re-audited here. Data use follows the recorded source terms
+(Appendix~\ref{app:sources}); the public supplements redistribute no item
+text, respondent records, or model weights. Checkpoints are used under their
+Apache or Llama licenses; OLMo's model card additionally flags terms on
+third-party-generated tuning data \cite{olmo2-instruct-model-card}.
+
+Simulated response distributions, even when accurate in aggregate, can flatten
+within-group variation, reify stereotypes, or be mistaken for the views of a
+population, and could be misused for profiling, persuasion, or targeting. Some
+items concern harmful speech, safety judgments, or false beliefs; matching
+their distributions does not endorse their content. The intended use of this
+work is narrow: auditing claims about released checkpoints before such claims
+guide research or deployment. Nothing here validates replacing respondents or
+public consultation with simulations.
+
+\paragraph{AI-assistance disclosure.}
+OpenAI Codex assisted with literature discovery, experimental controls, code
+drafting and debugging, experiment execution, statistical analysis, and
+manuscript drafting and editing. The authors are responsible for verifying
+the sources, code, numerical outputs, and final claims; no AI system is an
+author, and no AI-generated content is used as a human label or observation.
+
+\bibliography{references}
+
+\appendix
+
+\section{Data and Source Selection}
+\label{app:sources}
+
+Before any model was run, all 20 public SimBench Pop sources were classified
+under a fixed rule (Table~\ref{tab:source-dispositions}): a source was admitted
+only if its recorded license terms were unambiguous and its substantive
+content had not been previewed. Every item of an admitted source is assigned,
+except three ESS items whose question text retains an unfilled template
+placeholder such as \texttt{\{do/did\}}; model outputs and losses played no
+role, and excluded sources were not reconsidered afterwards. Three further sources (Jester, ISSP, MoralMachine) met the rule and were
+held in reserve; ISSP and Jester serve as the held-out set of
+Section~\ref{sec:reduction}, and MoralMachine was excluded there because its
+option layout was not parsed. The recorded terms of the pinned projections are
+CC~BY-NC-SA~4.0 for ESS, GlobalOpinionQA, and DICES and CC0~1.0 for NumberGame
+and ConspiracyCorr; these describe the projections we used, not every upstream
+asset. SimBench distinguishes population-level (Pop) from demographically
+grouped (Grouped) projections; we use Pop only and never pool the two, and
+the human shares are used exactly as released in those projections, with no
+further survey weighting.
+
+\paragraph{Training-data overlap.}
+SocSci210 (revision \texttt{04848111}), Socrates' training data, was scanned
+in full (2,901,390 rows, 135,771 distinct stimuli); a fixed parser extracted
+a question text from 52\% of the rows (1,228 distinct normalized questions).
+None of the 2,672 SimBench questions of the five primary and two held-out
+sources matches one of them exactly after normalization (lower-casing,
+punctuation removal, whitespace collapsing) or nearly (word 5-gram Jaccard
+similarity $\ge .8$). The unparsed rows provide no evidence either way, and
+the OSim-mid mixture was not checked because its conversations have no
+uniform question field.
+
+GlobalOpinionQA stores human shares as percentages. Rows whose total is within
+0.1\% of the nominal total (100 for percentages, 1 for probabilities; exact
+summation, with a $10^{-12}$ slack at the boundary) are divided by that total;
+the four GlobalOpinionQA rows that fail this check are excluded from every loss. Assigned coverage is 2,042 items in 1,684 clusters;
+the loss frame is the remaining 2,038 items in 1,680 clusters
+(Table~\ref{tab:frame}).
+
+\begin{table}[t]
+\centering\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+Source & Items & Clusters & Uniform TVD \\
+\midrule
+ESS & 497 & 219 & .321 \\
+GlobalOpinionQA & 496 & 454 & .350 \\
+DICES & 500 & 498 & .592 \\
+NumberGame & 500 & 500 & .273 \\
+ConspiracyCorr & 45 & 9 & .245 \\
+\midrule
+Total & 2,038 & 1,680 & \\
+\bottomrule
+\end{tabular}
+\caption{The evaluation frame. Items that share a rendered question and option
+list form a cluster. ``Uniform TVD'' is the loss of a predictor that always
+answers uniformly; a high value means human answers concentrate on few
+options.}
+\label{tab:frame}
+\end{table}
+\input{tables/target_noise_table.tex}
+
+\begin{table*}[t]
+\centering
+\small
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{@{}p{.18\textwidth}p{.13\textwidth}p{.60\textwidth}@{}}
+\toprule
+Role & Count & Sources \\
+\midrule
+Primary set & 5 & ESS; GlobalOpinionQA; DICES; NumberGame; ConspiracyCorr \\
+Reserved, not analyzed & 3 & Jester; ISSP; MoralMachine \\
+Content previewed; descriptive only & 1 & WisdomOfCrowds \\
+Unresolved or conflicting source terms & 11 & Choices13k; OpinionQA;
+MoralMachineClassic; ChaosNLI; Afrobarometer; OSPsychBig5; OSPsychMGKT;
+OSPsychMACH; OSPsychRWAS; Latinobarometro; TISP \\
+\bottomrule
+\end{tabular}
+\caption{Classification of all 20 SimBench Pop sources, fixed before any model
+result was inspected.}
+\label{tab:source-dispositions}
+\end{table*}
+
+\section{Exact Prompts}
+\label{app:prompts}
+
+
+The displays below preserve every fixed word, punctuation mark, and line
+break; angle-bracketed text denotes the item-dependent group, question, option
+lines, and released keys. No human distribution, source name, or identifier is
+ever substituted. An empty group description becomes ``Population not
+otherwise specified.'' In these displays an ordinary line break is one literal
+newline and a line break with extra vertical space is two; no terminal newline
+is appended unless stated. Chat-template prompts serialize the system and user
+messages with the pair's pinned Instruct tokenizer and
+\texttt{add\_generation\_prompt=True}; the complete token vector is the fixed
+answer prefix.
+
+\paragraph{Same-tensor contract (all five pairs).}
+The system message is: ``Predict which answer is most likely for the described
+human group. Respond with exactly one answer ID, a tab, and its corresponding
+answer option. Do not explain your answer.'' The user message is:
+\begin{quote}\small
+Human group:\\
+$\langle$group$\rangle$\\[.4ex]
+Question:\\
+$\langle$question$\rangle$\\[.4ex]
+Answer options in published order:\\
+$\langle$ordered \texttt{ID<TAB>option} lines$\rangle$\\[.4ex]
+Choose one answer. Copy exactly one listed ID and option.\\
+Answer:
+\end{quote}
+Candidate $k$ is exactly \texttt{\char32 ID$_k$<TAB>option$_k$} with canonical
+IDs \texttt{A}, \texttt{B}, \ldots, encoded without special tokens; prefix and candidate are tokenized separately and concatenated at the token-id level, so the first candidate token is the standalone encoding of ``\texttt{\char32 A}''. Its per-token log-probabilities are the full-vocabulary teacher-forced values
+aligned from the prefix-final position through the last candidate token; no
+end-of-sequence token or suffix is scored. The first-token readout uses the
+first term, the summed readout their sum, the length-normalized readout their
+mean; all apply the same temperature-1 float64 softmax over options.
+
+\paragraph{Numerics of the scoring pass.}
+The re-implementation loads bfloat16 weights with eager attention, disables TF32, enables PyTorch's deterministic algorithms, runs the prefix once with the key--value cache and then scores each candidate's continuation on its own against the cached prefix (batch size one, no padding), and takes the log-softmax in float32; the original panel used bfloat16 weights, eager attention, and deterministic algorithms. Appendix~\ref{app:compute} measures what changing the attention kernel, the cache, or the weight precision does to the same contract.
+
+\paragraph{Plain prefix (four Base--Instruct pairs).}
+The plain prefix is exactly the user-message text above. The system message
+and all chat markup are omitted, and the shared Instruct tokenizer encodes the
+text with \texttt{add\_special\_tokens=False}, so no BOS, EOS, or generation
+marker is added. Candidate strings and their encoding are unchanged.
+
+\paragraph{Content-free premise for DC-PMI.}
+The premise uses the same chat template and system message; its user message
+is:
+\begin{quote}\small
+Question:\\
+?\\[.4ex]
+Choose one answer. Copy exactly one listed ID and option.\\
+Answer:
+\end{quote}
+One denominator score is computed per unique candidate token sequence and
+checkpoint. The cancellation of the per-item normalizer is algebraic before
+binary64 rounding; the stored summed probabilities are not clipped.
+
+\paragraph{Verbalized prompts (Qwen-14B pair only).}
+Two prompts request a JSON probability vector. The \emph{controlled} prompt
+uses the system message ``Predict the distribution of answers for the
+described human group. Return only one JSON object. Its keys must be exactly
+the listed answer IDs and its values must be probabilities. Include every
+answer ID and no other key. Do not explain your answer.'' and the same user
+block as above, ending instead with ``Return a probability for every answer
+ID. The probabilities must sum to 1.'' The \emph{released-template} prompt
+follows SimBench's own verbalized prompt: the system message is ``You are a
+group of individuals with these shared characteristics:'' followed by one
+newline and the released group field; the user message is
+\begin{quote}\small\ttfamily
+**Question**: $\langle$\textnormal{\texttt{released\_input\_full}}$\rangle$\\[.4ex]
+Estimate what percentage of your group would choose each option. Follow these rules:\\
+1. Use whole numbers from 0 to 100\\
+2. Ensure the percentages sum to exactly 100\\
+3. Only include the numbers (no \% symbols)\\
+4. Use this exact valid JSON format: \{"key1": X, ..., "keyK": X\} and do NOT include anything else.\\
+5. Only output your final answer and nothing else. No explanations or intermediate steps are needed.\\
+Replace X with your estimated percentages for each option.\\
+**Answer**:
+\end{quote}
+with keys equal to the released support labels when present and otherwise the
+canonical IDs. Generation is greedy, run once per item, and never retried;
+Table~\ref{tab:elicitation} summarizes the interfaces.
+
+\paragraph{Instruction variants (re-implementation controls).}
+The persona framing replaces the system message by SimBench's
+``You are a group of individuals with these shared characteristics:'' followed
+by the group description. The distribution instruction is ``Estimate how the
+described human group distributes its answers over the listed options. Respond
+with exactly one answer ID, a tab, and its corresponding answer option,
+choosing each answer in proportion to how often the group would choose it. Do
+not explain your answer.'' Paraphrase 1 is ``You will be shown a human group
+and a survey question. Predict the answer this group is most likely to give.
+Reply with one answer ID, a tab, and the matching option text only.''
+Paraphrase 2 is ``Your task is to guess the most common answer of the
+described group of people. Output exactly one line: an answer ID, a tab, and
+that option, with no explanation.'' ID-only candidates use the system message
+``Predict which answer is most likely for the described human group. Respond
+with exactly one answer ID and no other text.''; text-only candidates use
+``\ldots Respond with exactly one listed answer option, copied verbatim. Do not
+explain your answer.''
+
+\paragraph{Socrates' native protocol.}
+System: ``You are simulating a survey respondent. Answer exactly as
+instructed, following the specified response format without additional
+commentary.'' User: ``You are a survey respondent with the following
+demographic profile:'' $\langle$group$\rangle$, ``Read the question below and
+answer exactly as this person would. Follow the response instructions
+precisely.'', $\langle$question$\rangle$, the options numbered
+``\texttt{1.\ option}'', and ``Only return an integer from 1 to $K$, nothing
+else.'' The wrapper is copied from the model card; the generic option block
+was reconstructed from a SocSci210 training example.
+
+\paragraph{SimBench next-token and sampled-letter readouts.}
+The next-token readout uses SimBench's released prompt: the persona system
+message above and the user text ``\texttt{**Question**:}'' followed by the
+released item text and ``Do not provide any explanation, only answer with one
+of the following options: A, B, \ldots\texttt{\char92n**Answer**: (}'',
+reading the probabilities of the bare labels at the next position. Sampled
+letters uses the same-tensor prompt and parses the first answer ID in each of
+32 completions.
+
+\paragraph{Fixed parser.}
+A completion is rejected if it hits the generation cap, exceeds 65,536 bytes,
+is not strict UTF-8, begins with a byte-order mark after trimming ASCII
+whitespace, or is not exactly one JSON object. Duplicate or non-exact keys,
+booleans, non-numeric, non-finite, or negative values, and zero total mass are
+rejected; the object must contain every expected key and no other. Either a
+vector with maximum at most 1 and total in $[0.95,1.05]$ or one with maximum
+at most 100 and total in $[95,105]$ is accepted and divided by its sum.
+Appendix~\ref{app:parser} reports a target-blind relaxation ladder.
+
+\begin{table*}[t]
+\centering
+\small
+\setlength{\tabcolsep}{2.5pt}
+\begin{tabular}{@{}p{.135\textwidth}p{.265\textwidth}p{.285\textwidth}p{.26\textwidth}@{}}
+\toprule
+Interface & Model-visible input & Requested score/output & Probability construction \\
+\midrule
+Controlled verbalized & Canonical group, question, ordered \texttt{A--Z}
+IDs/options & Exact-key JSON probability vector & Greedy BF16/eager; strict
+one-object parse and normalization \\
+Released-template verbalized & Released group/question; support-derived keys & Percentage
+JSON vector & Same generation and strict parser; serialization and keys differ \\
+Summed full sequence & Same canonical group/question/options;
+interface-specific prefix & Score for \texttt{\char32 ID<TAB>option} &
+Teacher-forced log-probability sum; no EOS, suffix, or length normalization;
+temperature-1 float64 softmax \\
+\bottomrule
+\end{tabular}
+\caption{The Qwen-14B interfaces. Both checkpoints share the pinned parent
+tokenizer, an 8,192-token limit, option order, and canonical content. Each
+generative interface is run once per item; invalid output is not retried, and
+no interface sees the human distribution.}
+\label{tab:elicitation}
+\end{table*}
+
+\section{Weighting and Resampling Details}
+\label{app:resampling}
+
+For an active source set $\mathcal S$, let $G_s$ be the number of clusters in
+source $s$ and $n_g$ the number of items in cluster $g$. An item $i$ in cluster
+$g$ of source $s$ receives weight
+$w_i^{\ES}=1/(|\mathcal S|\,G_s\,n_g)$ under equal-source weighting and
+$w_i^{\PC}=1/\big((\sum_{r\in\mathcal S}G_r)\,n_g\big)$ under pooled-cluster
+weighting.
+
+The cluster bootstrap draws, in each of 10,000 replicates and each source,
+exactly $G_s$ clusters with replacement from that source's clusters (219,
+454, 498, 500, and 9 for ESS, GlobalOpinionQA, DICES, NumberGame, and
+ConspiracyCorr). A drawn cluster carries all its items with its integer
+multiplicity; cluster means are reweighted accordingly and the \ES{}/\PC{}
+aggregates recomputed. The 2.5th and 97.5th percentiles use Hyndman--Fan
+type-7 (linear) quantiles \cite{hyndman1996sample}. The Qwen-14B four-interface
+analysis uses NumPy PCG64 seed 2026072901 and recomputes the donor baselines
+of Table~\ref{tab:controls} in every draw; the same-tensor analyses of all five
+pairs use seed 7234422870595872746 and one shared draw ledger per pair, so that
+both checkpoints and all readouts are resampled together. The held-out DICES
+diagnostics use separate ledgers (seeds 2026090201401 and 2026090202401) over
+the 498 DICES clusters. ConspiracyCorr's nine clusters provide only coarse
+perturbation. Model points come from a single deterministic run; only the item
+composition varies across draws.
+
+\paragraph{Sampling noise of the human targets.}
+The human shares are treated as fixed targets. To measure what their sampling
+error would add, we repeated the paired cluster bootstrap for the four
+chat-template readouts of all 15 pairs (2,000 replicates) while also redrawing
+each item's human distribution from a multinomial with the released number of
+respondents (1,542 items; GlobalOpinionQA releases no sample size, so its
+targets stay fixed). The intervals widen by a factor of 1.04 at the median and
+1.15 at most, and the winner symbol changes in one of the 120 cells
+(Qwen2.5-7B, length-normalized, \PC{}: $+.017$, whose interval comes to
+include zero). Per-item noise (Table~\ref{tab:target-noise}) averages out
+over the hundreds of items of a source, so it does not threaten any decisive
+cell.
+
+\section{Complete Five-Pair Tables}
+\label{app:five-pair-tables}
+
+Table~\ref{tab:five-pair-absolute}, Figure~\ref{fig:five-pair-gap}, and
+Table~\ref{tab:winner-map} give the original panel's complete results (the
+authors' runs); Tables~\ref{tab:five-pair-gap-ranges} and
+\ref{tab:five-pair-classification} add gaps and paired gap changes with
+intervals, Table~\ref{tab:loo-all-pairs} leave-one-source-out results,
+Table~\ref{tab:dc-pmi-five-pair} DC-PMI, Table~\ref{tab:plain-prompt-full}
+the plain prefix, and Table~\ref{tab:native-serialization} each checkpoint's
+own serialization.
+
+\input{tables/five_pair_absolute_table.tex}
+\fivepairforest
+\input{tables/winner_map_table.tex}
+
+\begin{table*}[t]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{@{}llcc@{}}
+\toprule
+Pair & Reduction & \ES{} tuned$-$parent gap [interval] & \PC{} tuned$-$parent gap [interval] \\
+\midrule
+Qwen-14B/Socrates & First token & $-.180$ [$-.195,-.165$] & $-.066$ [$-.079,-.054$] \\
+ & Summed sequence & $+.130$ [$+.112,+.148$] & $+.206$ [$+.195,+.218$] \\
+ & Length normalized & $+.160$ [$+.142,+.179$] & $+.199$ [$+.190,+.208$] \\
+Mistral-7B & First token & $+.013$ [$-.012,+.040$] & $-.060$ [$-.074,-.046$] \\
+ & Summed sequence & $+.048$ [$+.023,+.074$] & $-.025$ [$-.038,-.013$] \\
+ & Length normalized & $-.053$ [$-.073,-.033$] & $-.107$ [$-.115,-.099$] \\
+Qwen-7B & First token & $+.124$ [$+.107,+.141$] & $+.043$ [$+.029,+.058$] \\
+ & Summed sequence & $+.125$ [$+.097,+.154$] & $+.052$ [$+.040,+.065$] \\
+ & Length normalized & $+.074$ [$+.056,+.091$] & $+.027$ [$+.016,+.039$] \\
+Llama-3.2-3B & First token & $-.217$ [$-.235,-.199$] & $-.253$ [$-.269,-.237$] \\
+ & Summed sequence & $-.310$ [$-.329,-.293$] & $-.323$ [$-.339,-.307$] \\
+ & Length normalized & $-.139$ [$-.147,-.131$] & $-.139$ [$-.149,-.129$] \\
+OLMo-2-7B & First token & $-.069$ [$-.091,-.049$] & $-.117$ [$-.130,-.104$] \\
+ & Summed sequence & $-.279$ [$-.300,-.259$] & $-.341$ [$-.358,-.324$] \\
+ & Length normalized & $-.109$ [$-.125,-.093$] & $-.133$ [$-.143,-.123$] \\
+\bottomrule
+\end{tabular}
+\caption{Same-tensor gaps with 95\% cluster-bootstrap intervals. Negative values
+favor the tuned checkpoint. A pair ``flips'' when two readouts have intervals
+on opposite sides of zero.}
+\label{tab:five-pair-gap-ranges}
+\end{table*}
+
+\begin{table*}[t]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{@{}llccl@{}}
+\toprule
+Pair & Wt. & Sum$-$first gap change [interval] & Len$-$sum gap change [interval] & Three-readout class \\
+\midrule
+Qwen-14B/Socrates & ES & $+.310$ [$+.291,+.327$] & $+.030$ [$+.018,+.042$] & Winner flips \\
+ & PC & $+.273$ [$+.263,+.283$] & $-.008$ [$-.018,+.002$] & Winner flips \\
+Mistral-7B & ES & $+.035$ [$+.029,+.040$] & $-.101$ [$-.113,-.088$] & Winner flips \\
+ & PC & $+.035$ [$+.029,+.040$] & $-.082$ [$-.090,-.074$] & Gap moves; same winner \\
+Qwen-7B & ES & $+.002$ [$-.021,+.026$] & $-.052$ [$-.069,-.034$] & Gap moves; same winner \\
+ & PC & $+.009$ [$-.001,+.018$] & $-.025$ [$-.035,-.015$] & Gap moves; same winner \\
+Llama-3.2-3B & ES & $-.093$ [$-.102,-.084$] & $+.171$ [$+.157,+.187$] & Gap moves; same winner \\
+ & PC & $-.070$ [$-.076,-.064$] & $+.184$ [$+.175,+.193$] & Gap moves; same winner \\
+OLMo-2-7B & ES & $-.210$ [$-.220,-.199$] & $+.170$ [$+.160,+.181$] & Gap moves; same winner \\
+ & PC & $-.224$ [$-.234,-.214$] & $+.208$ [$+.198,+.218$] & Gap moves; same winner \\
+\bottomrule
+\end{tabular}
+\caption{Paired changes in the tuned-minus-parent gap between adjacent
+readouts, with 95\% cluster-bootstrap intervals from the same draws.}
+\label{tab:five-pair-classification}
+\end{table*}
+
+\input{tables/loo_all_pairs_table.tex}
+
+\input{tables/dc_pmi_table.tex}
+
+\input{tables/plain_full_table.tex}
+
+\input{tables/native_serialization_table.tex}
+
+\section{Qwen-14B/Socrates Diagnostics}
+
+All tables and figures in this appendix come from the original panel (Section~\ref{sec:execution}); the re-implementation's values for the same quantities are in Appendix~\ref{app:reimpl} and in the tables of Section~\ref{sec:results}, and differ from these in the third decimal.
+
+
+\subsection{Source-level results}
+
+Table~\ref{tab:qwen14-source-gaps} gives the gap within each
+source, Table~\ref{tab:qwen14-source-absolute} the corresponding absolute
+losses, and Table~\ref{tab:qwen14-concentration} the concentration of the
+first-token distributions. Table~\ref{tab:directions} lists the source omissions that most
+qualify the all-source result.
+
+\input{tables/qwen14_source_gaps_table.tex}
+
+\begin{table*}[t]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lrrrrrrrrr@{}}
+\toprule
+& & \multicolumn{4}{c}{Parent TVD} & \multicolumn{4}{c}{Socrates TVD} \\
+\cmidrule(lr){3-6}\cmidrule(l){7-10}
+Source & Uniform & First & Sum & Len & PMI & First & Sum & Len & PMI \\
+\midrule
+ESS & .3205 & .6345 & .6376 & .5922 & .7101 & .2866 & .6235 & .6150 & .7090 \\
+GlobalOpinionQA & .3502 & .5402 & .5411 & .5230 & .6676 & .2910 & .5938 & .5285 & .7534 \\
+DICES & .5922 & .1312 & .1312 & .2469 & .0817 & .4037 & .7839 & .9775 & .9821 \\
+NumberGame & .2729 & .3195 & .3195 & .3143 & .3269 & .2121 & .3223 & .2374 & .3268 \\
+ConspiracyCorr & .2447 & .7633 & .7633 & .4615 & .7520 & .2975 & .7207 & .5817 & .6820 \\
+\bottomrule
+\end{tabular}
+\caption{Qwen-14B/Socrates absolute TVD within each source under the four
+readouts (items averaged within clusters, then clusters within the source).}
+\label{tab:qwen14-source-absolute}
+\end{table*}
+
+\begin{table*}[t]
+\centering\small
+\setlength{\tabcolsep}{6pt}
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+& \multicolumn{2}{c}{Norm.\ entropy} & \multicolumn{2}{c}{Max.\ probability} \\
+\cmidrule(lr){2-3}\cmidrule(l){4-5}
+Source & Parent & Socrates & Parent & Socrates \\
+\midrule
+ESS & .119 & .935 & .904 & .319 \\
+GlobalOpinionQA & .104 & .896 & .935 & .439 \\
+DICES & .012 & .907 & .996 & .530 \\
+NumberGame & .009 & .907 & .998 & .668 \\
+ConspiracyCorr & .016 & .948 & .992 & .329 \\
+\bottomrule
+\end{tabular}
+\caption{Concentration of the first-token distributions of the Qwen-14B pair
+within each source (cluster means). Normalized entropy is $H(\mathbf p)/\log K$;
+the parent is nearly one-hot everywhere and Socrates nearly flat.}
+\label{tab:qwen14-concentration}
+\end{table*}
+
+\begin{table*}[t]
+\centering
+\small
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}llrrl@{}}
+\toprule
+Reduction & Wt. & All-source gap & Key omission gap & Effect \\
+\midrule
+First token & PC & $-0.0664$ & omit GlobalOpinionQA: $+0.0013$ & Near zero \\
+Summed sequence & ES & $+0.1303$ & omit DICES: $-0.0003$ & Near zero \\
+Summed sequence & PC & $+0.2065$ & omit DICES: $+0.0184$ & Attenuated \\
+Length normalized & ES & $+0.1604$ & omit DICES: $+0.0179$ & Attenuated \\
+Length normalized & PC & $+0.1988$ & omit DICES: $-0.0253$ & Sign changes \\
+\bottomrule
+\end{tabular}
+\caption{Leave-one-source-out results that most change the Qwen-14B/Socrates
+all-source gap (Socrates minus parent; negative favors Socrates). These are
+leverage checks.}
+\label{tab:directions}
+\end{table*}
+
+\subsection{DICES mechanism and token positions}
+\label{app:dices-mechanism}
+\ifcompact\dicesfigure\fi
+
+Every DICES item has three candidates with 3, 3, and 4 tokens under the shared
+Qwen tokenizer (1,500 candidate occurrences in 498 clusters).
+Table~\ref{tab:dices-mechanism} shows that summed scoring leaves the parent
+unchanged but concentrates Socrates on the four-token option, and that length
+normalization concentrates it further. The summed-minus-first Socrates TVD
+change is $+.3802$ [$+.3671,+.3928$] against less than $10^{-6}$ for the parent;
+its mean probability on the longer option rises by .5157, from .284 to .800.
+
+\begin{table*}[t]
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lrrr@{\hspace{7pt}}rrr@{\hspace{7pt}}rrr@{}}
+\toprule
+& \multicolumn{3}{c}{TVD} & \multicolumn{3}{c}{Normalized entropy} & \multicolumn{3}{c}{Maximum probability} \\
+\cmidrule(lr){2-4}\cmidrule(lr){5-7}\cmidrule(l){8-10}
+Model & First & Sum & Len & First & Sum & Len & First & Sum & Len \\
+\midrule
+Parent & .1312 & .1312 & .2469 & .0118 & .0118 & .4249 & .9956 & .9956 & .8036 \\
+Socrates & .4037 & .7839 & .9775 & .9072 & .4337 & .0306 & .5303 & .8039 & .9950 \\
+\bottomrule
+\end{tabular}
+\caption{DICES loss and prediction concentration for the Qwen-14B pair.
+Normalized entropy is $H(\mathbf p)/\log K$. All quantities average items
+within clusters before the source mean.}
+\label{tab:dices-mechanism}
+\end{table*}
+
+A target-blind cross-source reconstruction fits, by weighted least squares
+through the origin on the other four sources, the centered
+$\log(p_{\rm sum}/p_{\rm first})$ on centered later-token count, and applies
+the fitted slope to DICES. It predicts a TVD change of $-.1894$ where $+.3802$
+is observed, and its predicted summed distributions have TVD .7982 to the
+observed ones. This rejects a single-slope, source-invariant length
+explanation, not every length-related explanation; within DICES, option
+length, option identity, and termination position remain confounded.
+
+The token-position pass retains every candidate-token term and reproduces all
+1,000 original first-token and summed distributions exactly. The mean centered
+log-score contribution of the tab (position 2) after IDs A, B, and C is
+$-.207$, $-.518$, and $+.725$ for Socrates (a spread of 1.24 nats) and
+$-.00005$, $-.00002$, and $+.00007$ for the parent.
+Table~\ref{tab:qwen14-dices-token-decomposition} reports the cumulative and
+incremental analysis. An increment describes the fixed candidate strings.
+
+\begin{table*}[t]
+\centering\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lrrll@{}}
+\toprule
+Scored prefix & Parent TVD & Socrates TVD & Gap [interval] & Gap increment [interval] \\
+\midrule
+ID only & .1312 & .4037 & +.2724 [.2482,.2959] & --- \\
+ID + tab & .1312 & .6361 & +.5048 [.4801,.5287] & +.2324 [.2278,.2369] \\
++ first option token & .1312 & .7844 & +.6531 [.6283,.6768] & +.1483 [.1364,.1601] \\
+Full string & .1312 & .7839 & +.6527 [.6278,.6763] & $-.00044$ [$-.00051,-.00037$] \\
+\bottomrule
+\end{tabular}
+\caption{DICES cumulative position analysis. Gap is Socrates minus parent TVD;
+each increment adds one candidate-token position, and absent fourth tokens add
+zero. Intervals are from paired cluster bootstraps over the 498 DICES
+clusters.}
+\label{tab:qwen14-dices-token-decomposition}
+\end{table*}
+
+\subsection{Agreement with verbalized distributions}
+
+On the 1,932 items where the parent returns a valid vector under both
+verbalized prompts, Table~\ref{tab:qwen14-agreement} compares each
+likelihood readout with the verbalized vector by TVD, argmax agreement, and
+loss to the human distribution. First-token and summed scoring agree with the
+verbalized vectors to almost the same degree; the verbalized vectors themselves
+are closer to the human distributions.
+
+\begin{table*}[t]
+\centering\small
+\setlength{\tabcolsep}{2.5pt}
+\begin{tabular}{lllrrrrr}
+\toprule
+Prompt & Reduction & Wt. & Reduction--verb. TVD & Argmax agreement & Verb. tie & Red. tie &
+$\Delta$ human TVD \\
+\midrule
+Controlled & First token & ES & 0.4174 & 0.6719 & 0.0580 & 0.0031 & 0.2626 \\
+Controlled & First token & PC & 0.2950 & 0.7973 & 0.0491 & 0.0029 & 0.1585 \\
+Controlled & Summed & ES & 0.4183 & 0.6719 & 0.0580 & 0.0000 & 0.2633 \\
+Controlled & Summed & PC & 0.2957 & 0.7962 & 0.0491 & 0.0000 & 0.1591 \\
+Controlled & Length normalized & ES & 0.3511 & 0.6215 & 0.0580 & 0.0000 & 0.2115 \\
+Controlled & Length normalized & PC & 0.3001 & 0.7043 & 0.0491 & 0.0000 & 0.1809 \\
+Released & First token & ES & 0.3839 & 0.7055 & 0.0445 & 0.0031 & 0.2209 \\
+Released & First token & PC & 0.2813 & 0.8478 & 0.0183 & 0.0029 & 0.1518 \\
+Released & Summed & ES & 0.3848 & 0.7059 & 0.0445 & 0.0000 & 0.2216 \\
+Released & Summed & PC & 0.2820 & 0.8474 & 0.0183 & 0.0000 & 0.1524 \\
+Released & Length normalized & ES & 0.3637 & 0.6189 & 0.0445 & 0.0000 & 0.1698 \\
+Released & Length normalized & PC & 0.3160 & 0.7383 & 0.0183 & 0.0000 & 0.1742 \\
+\bottomrule
+\end{tabular}
+\caption{Parent (Qwen2.5-14B-Instruct) agreement between likelihood readouts
+and verbalized vectors on the 1,932-item common frame. ``Verb./Red. tie'' are
+weighted argmax-tie rates. The last column is the readout's human-target TVD
+minus the verbalized vector's, so positive values mean the readout has higher
+loss.}
+\label{tab:qwen14-agreement}
+\end{table*}
+
+\subsection{Invalid outputs, integer mapping, and bounds}
+\label{app:controls}
+
+Every requested vector is valid, saved but unparsable, or structurally
+unavailable. For a human distribution $\mathbf y_i$, a point mass on its least
+probable option attains the maximum TVD $M_i=1-\min_k y_{ik}$, the distribution
+itself attains zero, and their mixtures attain every value between; hence the
+loss of an unparsable output, allowed to be anything on the simplex, has sharp
+set $[0,M_i]$. If checkpoint $e$ has item-loss set
+$[\underline L_{ei},\overline L_{ei}]$, the item gap set is
+$[\underline L_{{\rm tuned},i}-\overline L_{{\rm parent},i},\;
+\overline L_{{\rm tuned},i}-\underline L_{{\rm parent},i}]$, and its weighted
+sum is sharp for that scope and weighting. A structurally unavailable
+prediction leaves any aggregate with positive weight on that item undefined.
+This is a reporting bound only.
+
+Why deletion can reverse the answer: consider two equally weighted binary items
+with point-mass targets. On the only item valid for both, Socrates has loss 0
+and the parent 0.2, so a complete-case analysis gives $\Delta=-0.2$. On the
+other item the parent has loss 0 and Socrates returns an invalid output whose
+loss may lie anywhere in $[0,1]$. The two-item gap is then
+$(-0.2+[0,1])/2=[-0.1,0.4]$: an admissible completion reverses the
+complete-case sign, so endpoint-dependent failure can change the conclusion,
+not just its precision.
+
+Table~\ref{tab:controlled-full} gives the bounds for every scope, with a
+diagnostic that replaces each unparsable output by the uniform distribution.
+Table~\ref{tab:qwen14-ordinal-effects} reports the integer mapping: after
+parser failure, an exact integer in $1,\ldots,K_i$ is mapped to the
+corresponding one-hot vector, which gives Socrates 1,695 valid vectors on the
+2,038-item frame against the parent's 1,987 valid JSON vectors; remaining
+failures keep their bounds. Under the controlled prompt, 1,699 of the 2,042
+assigned items' Socrates integers lie in $1,\ldots,K_i$ and 1,520 in $0,\ldots,K_i-1$; the
+latter are legal under both conventions but map differently, and 343 are out
+of range under both. Table~\ref{tab:controls} gives simple baselines on the
+full frame.
+
+\begin{table*}[t]
+\centering
+\small
+\setlength{\tabcolsep}{2.6pt}
+\begin{tabular}{@{}llcccc@{}}
+\toprule
+Scope & Wt. & $L_{\rm parent}^{\UNIF}$ & $L_{\rm Socrates}^{\UNIF}$ &
+$\Delta_{\UNIF}$ [interval] & Completion bounds \\
+\midrule
+ALL & ES & .218 & .356 & $+.138$ [.120,.156] & $[-.231,.706]$ \\
+ALL & PC & .206 & .394 & $+.189$ [.178,.200] & $[-.216,.704]$ \\
+OMIT ESS & ES & .209 & .365 & $+.156$ [.135,.178] & $[-.212,.699]$ \\
+OMIT ESS & PC & .198 & .406 & $+.207$ [.195,.220] & $[-.202,.699]$ \\
+OMIT GlobalOpinionQA & ES & .209 & .358 & $+.149$ [.127,.171] & $[-.222,.714]$ \\
+OMIT GlobalOpinionQA & PC & .187 & .411 & $+.224$ [.210,.238] & $[-.197,.714]$ \\
+OMIT DICES & ES & .248 & .297 & $+.049$ [.027,.071] & $[-.264,.660]$ \\
+OMIT DICES & PC & .251 & .311 & $+.060$ [.046,.074] & $[-.265,.625]$ \\
+OMIT NumberGame & ES & .212 & .377 & $+.165$ [.144,.186] & $[-.228,.750]$ \\
+OMIT NumberGame & PC & .190 & .446 & $+.256$ [.246,.267] & $[-.204,.777]$ \\
+OMIT ConspiracyCorr & ES & .214 & .384 & $+.170$ [.159,.180] & $[-.230,.708]$ \\
+OMIT ConspiracyCorr & PC & .206 & .395 & $+.190$ [.178,.201] & $[-.216,.704]$ \\
+\bottomrule
+\end{tabular}
+\caption{Controlled verbalized interface, Qwen-14B pair. $L^{\UNIF}$ replaces
+each unparsable output by the uniform distribution (a diagnostic, not an
+observed output); the last column gives the sharp completion bounds. Point components and bounds are
+rounded independently, so displayed differences may differ by 0.001.}
+\label{tab:controlled-full}
+\end{table*}
+
+
+
+\begin{table*}[t]
+\centering\small
+\begin{tabular}{lrrrrr}
+\toprule
+Wt. & Bound low & Bound high & Parent TVD & Socrates TVD & $\Delta$ \\
+\midrule
+ES & .2226 & .3510 & .2190 & .4981 & .2791 \\
+PC & .0972 & .2725 & .1936 & .3840 & .1904 \\
+\bottomrule
+\end{tabular}
+\caption{Integer-mapping sensitivity. Columns 2--3 are failure-inclusive
+full-frame bounds; columns 4--6 are losses and gaps on items valid for both
+checkpoints and are therefore selection-conditioned.}
+\label{tab:qwen14-ordinal-effects}
+\end{table*}
+
+\begin{table}[!htb]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}lcc@{}}
+\toprule
+Baseline & \ES{} loss [interval] & \PC{} loss [interval] \\
+\midrule
+Uniform & .356 [.348,.365] & .394 [.388,.401] \\
+WAP & .371 [.350,.395] & .394 [.367,.418] \\
+TF--IDF & .347 [.338,.356] & .381 [.374,.389] \\
+\bottomrule
+\end{tabular}
+\caption{Target-frame baselines on the full frame. WAP is a weighted-average
+predictor over other clusters' human distributions; TF--IDF retrieves
+exact-support donor clusters by term-frequency similarity. WAP covers 1,667
+clusters with 13 uniform fallbacks; TF--IDF covers 541 with 1,139 fallbacks.
+Donor eligibility and predictions are recomputed in every bootstrap draw.}
+\label{tab:controls}
+\end{table}
+
+\subsection{Target-blind parser relaxation}
+\label{app:parser}
+
+A relaxation ladder applies rungs in order and records the earliest unique
+success. L0 is the fixed parser. L1 strips a fixed set of Unicode whitespace
+and permits one unambiguous prose or code-fence envelope around one structured
+payload. L2 adds Unicode NFC normalization outside string contents, converts
+typographic quotes to ASCII, and removes at most one trailing comma. L3
+normalizes keys by NFC, case folding, and frozen character stripping, only when
+this gives a bijection onto the expected keys. L4 accepts JSON numbers, decimal
+strings, or (uniformly) percent strings with finite nonnegative values and
+positive mass, then divides by the sum. No rung may add, drop, reorder, or
+fuzzily match a key, choose among payloads, use a target, change relative
+values, or invoke a model. Table~\ref{tab:parser-ladder} shows that no rung
+recovers a Socrates vector.
+
+\begin{table}[!htb]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{2.5pt}
+\begin{tabular}{@{}llrrrrrr@{}}
+\toprule
+Prompt & Endpoint & L0 & L1 & L2 & L3 & L4 & Unrec. \\
+\midrule
+Controlled & Parent & 1,989 & 1,989 & 1,989 & 1,989 & 2,036 & 6 \\
+Controlled & Socrates & 0 & 0 & 0 & 0 & 0 & 2,042 \\
+Released & Parent & 1,979 & 1,979 & 1,979 & 1,979 & 2,033 & 9 \\
+Released & Socrates & 0 & 0 & 0 & 0 & 0 & 2,042 \\
+\bottomrule
+\end{tabular}
+\caption{Cumulative parser-valid counts at relaxation levels L0--L4 among all
+2,042 assigned items; the main text counts the 2,038 target-scorable items,
+hence 1,987 and 1,977 valid parent vectors there. Only L4 (numeric scaling)
+changes a count. ``Unrec.'' is unrecovered.}
+\label{tab:parser-ladder}
+\end{table}
+
+\FloatBarrier
+\section{Option Order and a DPO-Trained Socrates Checkpoint}
+\label{app:diagnostics}
+
+Two further diagnostics were run on the Qwen-14B pair after the primary
+results; both use the fixed 2,038-item frame and the same cluster bootstrap,
+and both are reported here in full.
+
+\paragraph{Option order under the verbalized prompt.}
+Under the controlled verbalized prompt with a neutral heading (``Answer
+options in the displayed order:''), each checkpoint was run once with the
+options in published order and once in exactly reversed order; answer IDs
+were reassigned by display position and the parsed vectors mapped back to the
+published option coordinates. Invalid outputs are scored as the uniform
+distribution. The parent returns a valid vector for 1,986 (published order)
+and 2,005 (reversed) of the 2,038 items and Socrates for none in either
+order, so no item is valid for both checkpoints in both orders, and every
+Socrates-side number is a uniform completion. Table~\ref{tab:option-order}
+gives the results. The parent's own vectors move by .129 TVD on average when
+the order is reversed, whereas the Socrates-minus-parent gap changes by only
+$-.013$, because Socrates contributes the same uniform fallback in both
+orders; the neutral heading itself changes the gap by $+.002$ relative to the
+primary verbalized prompt. The pre-specified order label is therefore
+inconclusive because of Socrates' invalid outputs, and the diagnostic says
+nothing about the order sensitivity of the likelihood readouts.
+
+\begin{table}[!htb]
+\centering\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}lr@{}}
+\toprule
+Quantity (\ES{}) & Point [interval] \\
+\midrule
+Gap, published order & $+.140$ [$+.124,+.156$] \\
+Gap, reversed order & $+.127$ [$+.112,+.142$] \\
+Reversed minus published & $-.013$ [$-.022,-.004$] \\
+Heading: neutral minus primary & $+.002$ [$-.002,+.007$] \\
+Parent, TVD between orders & $.129$ [$.122,.137$] \\
+Socrates, TVD between orders & $.000$ (uniform in both) \\
+\midrule
+\multicolumn{2}{@{}l}{\emph{Per source: published / reversed / parent order TVD}} \\
+ESS & $+.065$ / $+.054$ / $.184$ \\
+GlobalOpinionQA & $+.095$ / $+.073$ / $.153$ \\
+DICES & $+.494$ / $+.488$ / $.059$ \\
+NumberGame & $+.035$ / $-.007$ / $.105$ \\
+ConspiracyCorr & $+.011$ / $+.027$ / $.146$ \\
+\bottomrule
+\end{tabular}
+\caption{Option-order reversal under the verbalized prompt for the Qwen-14B
+pair. Gaps are Socrates minus parent TVD with invalid outputs (all Socrates
+outputs) scored as uniform; ``parent order TVD'' is the mean TVD between the
+parent's published-order and reversed-order vectors. Brackets are 95\%
+cluster-bootstrap intervals.}
+\label{tab:option-order}
+\end{table}
+
+\paragraph{Option order under the likelihood readouts.}
+The re-implementation repeated the same-tensor readouts of the Socrates pair
+with the options in reversed order (Appendix Table~\ref{tab:controls-map});
+because every candidate token's log-probability is stored, the token-position
+decomposition of Section~\ref{sec:socrates} can be repeated for that run.
+Table~\ref{tab:reversed-tab} compares the two orders on DICES, where every
+item has three options and the second option carries 92\% of the human
+answers. The parent continues every candidate string deterministically after
+the ID, so the tab contributes nothing in either order. For Socrates the tab's
+contribution attaches neither to the letter nor to the option: under the
+published order the tab is favored after ``C'' ($+.699$ nats), under the
+reversed order after ``B'' ($+.267$), and the option displayed under ``C'' in
+the published order receives $-.376$ once it is displayed under ``A''. What
+matters for the loss is where the favored continuation lands. In the published
+order it lands on the option that 1.8\% of respondents chose, and the tab
+alone raises Socrates' DICES loss from .405 to .637; in the reversed order it
+lands mostly on the modal option, and the tab lowers the loss from .399 to
+.305. The full-string penalty that reverses the Socrates comparison is
+therefore a property of the letter--option pairing of the published order,
+not of the option text or of the letter, which is why reversing the order
+turns the summed \ES{} gap from $+.135$ to $-.040$
+(Table~\ref{tab:controls-gaps-es}).
+
+\input{tables/reversed_tab_table.tex}
+
+\paragraph{A DPO-trained Socrates checkpoint.}
+The Socrates authors also released a checkpoint trained on the same SocSci210
+data with direct preference optimization (DPO; repository and revision in
+Table~\ref{tab:public-revisions};
+\citealp{socrates-qwen25-14b-dpo-hf,kolluri-etal-2025-finetuning}). Its
+analysis plan was fixed before any of its outputs were seen. It was scored
+under the parent's tokenizer and chat template on the two original likelihood
+interfaces of Table~\ref{tab:elicitation}, the restricted next-token ID
+interface and the summed full-option sequence; these use different prompts
+and are therefore not the same-tensor readouts of the main text.
+Table~\ref{tab:dpo-control} reports the gaps. Under both interfaces the DPO
+checkpoint is slightly closer to the human distributions than its parent
+(gaps of $-.030$ and $-.012$ under the ID interface and $-.040$ and $-.005$
+under the full sequence, for \ES{} and \PC{}; the last interval crosses
+zero); its leave-one-source-out gaps are negative in all
+ten restricted cells and in eight of ten full-sequence cells, the two
+exceptions lying within .005 of zero with intervals crossing zero. It does
+not reproduce the SFT checkpoint's pattern of winning under the ID interface
+and losing under the full sequence: relative to SFT it is worse under the ID interface ($+.147$ and $+.059$) and
+much better under the full sequence ($-.171$ and $-.211$). The pre-specified classification is ``not directionally
+replicated.'' The reversal in the main text is thus a property of the SFT
+checkpoint's continuation behavior rather than of training on SocSci210 as
+such; the two checkpoints differ in objective and possibly other details, so
+this is not a causal comparison of training objectives.
+
+\begin{table}[!htb]
+\centering\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}lllr@{}}
+\toprule
+Contrast & Interface & Wt. & Gap [interval] \\
+\midrule
+DPO $-$ parent & ID next-token & ES & $-.0305$ [$-.0399,-.0206$] \\
+ & & PC & $-.0124$ [$-.0199,-.0051$] \\
+ & Full sequence & ES & $-.0397$ [$-.0557,-.0263$] \\
+ & & PC & $-.0051$ [$-.0120,+.0019$] \\
+\addlinespace[2pt]
+DPO $-$ SFT & ID next-token & ES & $+.1474$ [$+.1318,+.1632$] \\
+ & & PC & $+.0588$ [$+.0475,+.0700$] \\
+ & Full sequence & ES & $-.1714$ [$-.1901,-.1516$] \\
+ & & PC & $-.2111$ [$-.2223,-.1997$] \\
+\bottomrule
+\end{tabular}
+\caption{The DPO-trained Socrates checkpoint against its parent
+(Qwen2.5-14B-Instruct) and against the SFT checkpoint, on the two original
+Qwen-14B likelihood interfaces. Negative values favor DPO. Brackets are 95\%
+cluster-bootstrap intervals.}
+\label{tab:dpo-control}
+\end{table}
+\FloatBarrier
+
+\section{Additional Experiments with the Re-implementation}
+\label{app:reimpl}
+
+Table~\ref{tab:appendix-index} lists where each main-text claim can be checked; Table~\ref{tab:what-changes-full} is the full version of Table~\ref{tab:what-changes}.
+\input{tables/appendix_index_table.tex}
+\input{tables/what_changes_full_table.tex}
+\FloatBarrier
+
+Every table in this appendix comes from the re-implementation described in
+Appendix~\ref{app:compute} (bfloat16, eager attention, one rented A100), run
+after the original panel had been analyzed and with the frame, prompts, seeds,
+and pinned revisions fixed in advance, in four runs (Table~\ref{tab:timing}): the extended panel of 2026-09-07; a follow-up of 2026-09-09 that added no-space candidates for all pairs, the exact native readout, the remaining Socrates controls, seed replicates, SimBench's verbalized prompt for the extension Instruct checkpoints, the held-out extension pairs, and the SubPOP pair; and a second follow-up of 2026-09-10 that added the ID-only and text-only events for the extension pairs, four further option orders, FP32 reruns of two pairs, two further SubPOP formats, five verbalized answer formats, SimBench's released scorer, and a 32B pair; and a third follow-up of 2026-09-11 to 2026-09-13 on an H100 that added FP32 reruns of the remaining pairs, option-order seeds for the extension pairs, SimBench's scorer as released on three checkpoints, the gated tokenizers' boundary audit, two public harnesses on three pairs, unconditional PMI, the text-only event under the unchanged instruction, few-shot demonstrations on two pairs, and the joint-encoding ablation. The five original pairs were scored
+again by the re-implementation so that every comparison in these tables is
+internal to one implementation.
+
+\paragraph{Extended panel.}
+Figure~\ref{fig:fifteen-both} shows the fifteen pairs in own serialization and under the shared template with space-prefixed candidates. Table~\ref{tab:winner-map-15} gives the winner of every cell of all 15 pairs
+under the chat template with space-prefixed and no-space candidates, the
+plain prefix, own serialization, and SimBench's next-token readout,
+Table~\ref{tab:all-pairs-absolute} every all-source loss,
+Table~\ref{tab:flip-accounting} the decisive and marginal flips under each
+serialization and the leave-one-source-out leverage of every pair,
+Table~\ref{tab:threshold-sweep} the decisive counts of
+Table~\ref{tab:what-changes} at four thresholds,
+Table~\ref{tab:opinion-subset} the winner map restricted to the two opinion
+surveys, Table~\ref{tab:opinion-issp} the map on those two plus the
+held-out ISSP, Table~\ref{tab:opinion-frame-changes} the rows of
+Table~\ref{tab:what-changes} on that opinion frame,
+Table~\ref{tab:what-changes-decomp} the split of every changed cell into
+letter and tie changes with paired difference intervals,
+Table~\ref{tab:gated} the same rows restricted by coverage and by the
+uniform baseline, Table~\ref{tab:family-boot} their family-bootstrap
+intervals and an ordinal-loss row, Table~\ref{tab:own-absolute} the
+absolute losses under no-space candidates and in own serialization, Table~\ref{tab:gap-changes-15} the paired intervals of the
+change in gap between reductions for all 15 pairs, Table~\ref{tab:loo-socrates-reimpl} the leave-one-source-out gaps of
+the Socrates pair, Table~\ref{tab:w1-winner-map}
+the winners under an ordinal distance, Table~\ref{tab:native-serialization-all} each checkpoint in its
+own serialization with paired intervals (a Base parent under the plain
+prefix with space candidates; an instruction-tuned checkpoint under its chat
+template with no-space candidates; entropy matching there uses the same rule
+fitted on all items of the other sources), Table~\ref{tab:subpop} the SubPOP
+pair, Table~\ref{tab:rank-stability} the
+rank agreement of the 24 distinct checkpoint--template entries across
+readouts, and Table~\ref{tab:extension-revisions} the repositories and
+revisions. The extension pairs use each
+tuned checkpoint's tokenizer and chat template for both members, as in the
+original panel; the OSim-mid checkpoints ship Qwen3's tokenizer and chat
+template. Normalizing the summed score by the candidate's character count (lm-eval-harness's \texttt{acc\_norm} denominator; OLMES divides by characters as well) instead of its token count changes the length-normalized winner in 4, 3, and 3 of 30 units (own serialization, no-space, space candidates), none decisively (effect sizes in Appendix Table~\ref{tab:effect-sizes}); the few-shot table's byte-normalized column uses the earlier byte-count denominator.
+Table~\ref{tab:fullstring-coverage} gives the total probability of the
+complete candidate strings next to the first-token coverage, and
+Table~\ref{tab:distribution-instruction} the absolute losses of the five
+original pairs under the instruction that asks for a distribution. OSim-mid \cite{zhou-etal-2026-odyssim} is a behavioral
+mid-training stage whose mixture includes Socrates' training data; the two
+released post-trained OSim checkpoints have no documented single parent and
+were not paired.
+
+\paragraph{Generated answers.}
+Table~\ref{tab:generation} reports every generated-answer readout. The native
+Socrates protocol uses the system and user format of the Socrates model card
+(revision \texttt{6666d399}) with options numbered ``\texttt{1.\ option}'' and
+the instruction ``Only return an integer from 1 to $K$, nothing else'', 50
+samples at $T{=}.6$, top-$p{=}.9$; each sample is mapped to its option and the
+empirical frequencies form the prediction; two further seeds (offsets 1000
+and 2000) were run for the SFT pair. The exact native readout scores, under
+the same prompt, the complete answer ``$k$\texttt{<|im\_end|>}'' of every
+option in one teacher-forced pass and renormalizes; its captured mass is the
+sum of these probabilities (.9997 for the parent, .9999 for Socrates-SFT,
+.54 for Socrates-DPO), and its entropy-matched variant, modal accuracy, and
+Spearman correlation use 10,000 paired replicates
+(Table~\ref{tab:native-scalefree}). SimBench's next-token readout uses
+SimBench's own prompt and renormalizes the next-token probabilities of the
+bare option labels after ``\texttt{**Answer**: (}''. Sampled letters draws 32
+answers to the shared prompt at the same temperature and parses the answer ID.
+The verbalized readouts are the controlled and SimBench prompts of
+Appendix~\ref{app:prompts}, greedy, with the fixed parser.
+Table~\ref{tab:simbench-protocol} compares each parent under the next-token
+readout with its tuned checkpoint under the verbalized readout, SimBench's
+protocol for base and instruction-tuned models respectively. Table~\ref{tab:native-scalefree} gives modal accuracy, within-item Spearman correlation, and prediction entropy for the generated-answer readouts of the Qwen-14B pair, and Table~\ref{tab:protocol-audit} audits the Base--Instruct comparison under SimBench's next-token readout and under its per-class protocol with coverage, entropy, an entropy-matched temperature, modal accuracy, and Spearman correlation, all computed from the stored per-item predictions.
+
+\paragraph{Controls.}
+Table~\ref{tab:controls-map} gives the winner under every control (the
+permuted-order, no-system-message, and BOS controls of the Socrates-SFT pair
+come from the follow-up run),
+Tables~\ref{tab:controls-gaps-es} and \ref{tab:controls-gaps-pc} the gaps
+with intervals, and Table~\ref{tab:coverage} the coverage of every checkpoint
+under the chat template, the no-space candidates, the plain prefix, and
+SimBench's next-token readout. The
+instruction variants replace the system message: the persona framing uses
+SimBench's ``You are a group of individuals with these shared
+characteristics:'' prefix; the distribution instruction asks the model to
+``choose each answer in proportion to how often the group would choose it'';
+the two paraphrases reword the request for the most likely answer (exact
+strings in Appendix~\ref{app:prompts}). ID-only candidates are the strings
+``\texttt{\char32 A}'', ``\texttt{\char32 B}'', \ldots; text-only candidates are the option texts with a leading space; integer-ID candidates carry no leading space (with it, every candidate shares its first token). The option-retaining DC-PMI premise
+keeps the ``Answer options in published order'' block and drops only the group
+and question.
+
+\paragraph{Held-out sources, sharpness, and token positions.}
+Table~\ref{tab:heldout} reports ISSP and Jester for all 15 pairs; Tables~\ref{tab:entropy-matched}, \ref{tab:entropy-matched-map}, and
+\ref{tab:scale-free} the entropy-matched and scale-free comparisons (the map
+also covers the plain prefix);
+Table~\ref{tab:positions-all} the cumulative token-position decomposition of
+every original pair and source. For the entropy-matched variant, for each
+checkpoint, readout, and held-out source the softmax temperature is chosen on
+the other four sources so that the mean normalized entropy of the predictions
+equals that of the human distributions there, and applied unchanged to the
+held-out source; Table~\ref{tab:tvd-opt-map} repeats the winner map with the
+temperature chosen instead to minimize the mean TVD on the other four sources
+(61 grid values between $10^{-1.5}$ and $10^{1.5}$). Under that criterion Base
+wins three Base--Instruct cells by at most .004 TVD, 35 of 90 cells differ in
+symbol from the entropy-matched map, and every flip between two readouts is
+marginal. Replacing TVD by the Brier score (squared error summed over
+options) changes 28 of the 210 winner symbols of the seven likelihood
+readouts under the chat template and the plain prefix, 7 to the opposite
+letter; the log score, undefined for zero probabilities and clipped at
+$10^{-6}$, changes 58.
+
+\paragraph{Scored event on all pairs.}
+Table~\ref{tab:events-15} gives the ID-only and text-only events for all 15
+pairs (the five original pairs from the extended-panel run, the extension
+pairs from the second follow-up run). Both events keep the space-prefixed
+candidates of the shared template, so under the chat template the ID-only
+event has near-zero coverage for most checkpoints (Section~\ref{sec:coverage});
+its three reductions coincide because the candidate is one token. Table~\ref{tab:events-same-instruction} adds the text-only event under the unchanged ID+option instruction (third follow-up run): against the ID+option event it changes 24 of 30 units (12 decisively), the matching-instruction event 26 (12), and the two text-only events differ from each other in 10 (3 decisively), so the count measures the event, not the instruction; under the unchanged instruction Qwen3-8B-Instruct has no coverage on the option text. Table~\ref{tab:dc-pmi-uncond} adds unconditional PMI, which changes 14 units against the summed readout (5 decisively) and differs from DC-PMI in 13 (1 decisively).
+
+\paragraph{Option order.}
+Table~\ref{tab:order-marginal} averages, for all 15 pairs (the extension pairs' orders from the third follow-up run), each item's loss over five seeded random permutations of its options before the paired bootstrap (the
+permutation depends on the seed and the item id and is the same for both
+checkpoints). Because many SimBench options are ordinal scales, a permuted
+order changes the item as well as the position of the answer, so the column
+is an average over orders rather than a de-biased estimate of the published-order gap. Against the published order the order-averaged gaps change 15 of 30 units, one decisively (Table~\ref{tab:what-changes}).
+
+\paragraph{Arithmetic path.}
+Table~\ref{tab:fp32} reruns the two pairs with near-threshold flips under
+FP32 weights on the full frame under the chat template, no-space candidates,
+the plain prefix, and own serialization. Mistral-7B's 24 gaps move by at
+most .002 and no symbol changes; Qwen2.5-7B's move by up to .135 (plain
+prefix, length-normalized, \PC{}) and six symbols change, with per-item
+vectors that differ between the two paths by a mean TVD of .06 to .24
+against .003 to .012 for Mistral-7B. The bfloat16 panel is retained as the path practitioners run; Qwen2.5-7B's cells are read with this floor in mind. Table~\ref{tab:fp32-all} extends the FP32 rerun to all 15 pairs and SubPOP (third follow-up run, on an H100 against the A100 panel): 13 of the 16 move by at most .005, Qwen3-8B/OSim by .013, and Qwen2.5-7B by .135; 9 of 282 winner symbols change and one cell decisively (Qwen2.5-7B, plain prefix, length-normalized, \PC{}). A bfloat16 rerun of the shared chat prompt on the H100 (the unconditional-PMI pass) moves its 90 gaps by at most .006 and changes no symbol, so the floor is a precision effect rather than a hardware one. Without that pair the ``any of the three'' row of Table~\ref{tab:what-changes} reads 12/3, 12/7, and 14/3 of 28 units (changed/decisive; own serialization, no-space candidates, space-prefixed candidates) against 13/4, 14/7, and 14/3 of 30 with it.
+
+\paragraph{Verbalized answer formats.}
+Table~\ref{tab:verbalized-variants} runs, for nine of the ten instruction-tuned
+checkpoints with both verbalized baselines (Socrates-SFT writes an integer under every variant), four minimal edits of the
+controlled prompt and a proportion version of SimBench's prompt; the exact
+strings are in the released configuration and every run stores its rendered
+prompt. Under the strict parser of the requested format, a completion that
+answers in another format (answer IDs as keys when option texts were
+requested; bare integers when percentages were requested) is invalid, so
+the valid rates are part of the result.
+
+\paragraph{SimBench's released scorer.}
+The released scorer (\texttt{pitehu/SimBench\_release}, commit
+\texttt{ec384dce}) was run on Qwen2.5-14B-Instruct for the five sources in
+its own environment, with its prompt construction and parser unchanged and
+two overrides required by the audit's conditions (bfloat16 weights instead
+of 8-bit quantization; greedy decoding instead of sampling at
+$T{=}10^{-4}$). Its prompts match ours character for character on all 4,076
+prompt pairs. For chat models its token-probability path applies the chat
+template without the assistant generation prompt, so the label probabilities
+are read at the end of the user turn; run that way its per-item vectors
+differ from ours by a mean TVD of .83 (median .95), its mean TVD to the
+human distributions is .70 against .45, and its SimBench score for the
+checkpoint is $-94.0$ against $-36.8$ ($-44.6$ against $+72.9$ on DICES).
+Its verbalized path failed under greedy decoding because its retry loop
+resamples the same completion; the run was not repeated with sampling. The next-token rows of this paper therefore use the generation prompt and are not comparable with scores produced by the released code. The benchmark's reported protocol scores base models by the token-probability path without a chat template, which is unaffected, and chat models by verbalized vectors, so published scores are affected only where a chat model was scored by token probabilities. Run as released (8-bit weights, sampling at $T{=}10^{-4}$ with its retry loop, its own environment; third follow-up run) on Qwen2.5-14B-Instruct, Llama-3.1-8B-Instruct, and Qwen2.5-7B-Instruct (Table~\ref{tab:released-scorer}), the token-probability path without the header differs from ours by a median TVD of .94, .67, and .49 per item and moves the SimBench score by $-54$, $-76$, and $+24$ points; with the header the two agree to a median TVD of at most .10. The verbalized path agrees where it completes (median TVD 0 to .15); the release's retry loop failed on two of the six verbalized runs (626 and 811 of 2,038 items parsed).
+
+\paragraph{Public harnesses, joint encoding, and demonstrations.}
+Table~\ref{tab:harness} scores three pairs through lm-evaluation-harness and OLMES, unmodified, with the paper's prompt as a custom multiple-choice task (third follow-up run; commits and task files in the software archive). With a chat template the lm-eval default at commit \texttt{ad8737ae} (its chat-template branch suppresses the target delimiter) puts no space before the choice and OLMES one; both encode prefix and choice jointly and move the template's trailing newline onto the continuation, so the newline is scored first and the label second (for the OLMo-2 tokenizer the joint encoding fuses the newline into the preceding token, so the label is scored first and the newline is absent from the prefix the model is conditioned on; Appendix Table~\ref{tab:joint-example}). At the label position the harnesses reproduce the coverage of the corresponding condition of Appendix Table~\ref{tab:coverage}, and lm-eval's no-space choice after Mistral's \texttt{[/INST]} is a marker-free token that the Instruct checkpoint never produces (coverage 0). Their native summed gaps agree with ours in sign in 11 of 12 cells (Mistral-7B under \PC{}: interval across zero against a $-.016$ Instruct win). Table~\ref{tab:joint-tokenization} applies lm-eval's joint rule to all 15 pairs inside our scorer: it changes 4 of 30 units under the summed or length-normalized readout, none decisively, and makes the first-token readout uniform for the nine pairs whose template ends in a newline. Table~\ref{tab:fewshot} adds one and five in-context demonstrations of the answer format to two pairs under a rule fixed before the run (the first five distinct-cluster ISSP items of the held-out frame, answered with their human modes; chat runs with space and no-space candidates because Llama-3.2's template trims the demonstrated answer's leading space): coverage rises to .69 to 1.00 for both checkpoints in five of six pair--serialization conditions, the gaps move by up to .33 TVD in the format-consistent cells and .39 in the Llama chat/space cells (five demonstrations, \ES{}; .28 and .31 with one), whose coverage stays at zero, and the winner changes under some readout in 3 or 4 of the 4 pair--weighting units under the chat template and 1 or 2 under the plain prefix, mostly the length-normalized readouts for Qwen2.5-7B and the first-token and summed readouts for Llama-3.2-3B; a same-day zero-shot rerun of the Llama pair reproduces its stored zero-shot gaps to .002.
+
+\paragraph{A larger pair.}
+Table~\ref{tab:qwen32b} reports Qwen2.5-32B Base and Instruct under the
+same conditions as the panel, run after the panel was frozen and excluded
+from every count in the main text.
+
+\paragraph{Numerical floor.}
+Table~\ref{tab:e0b} reports, for four original pairs on 100 items per source,
+how far the per-item vectors move when only the arithmetic path changes.
+Batched scoring was retained for every run of the original panel (the re-implementation scores one candidate at a time against the cached prefix, Appendix~\ref{app:prompts}). On the full frame, FP32 weights move Qwen-7B's gaps by up to .035 under the chat template and by up to .135 under the plain prefix, and Mistral-7B's by at most .002 (Table~\ref{tab:fp32}).
+
+\fifteenforestboth
+\input{tables/winner_map15_table.tex}
+\input{tables/all_pairs_absolute_table.tex}
+\input{tables/flip_accounting_table.tex}
+\input{tables/threshold_sweep_table.tex}
+\input{tables/loo_socrates_reimpl_table.tex}
+\input{tables/fullstring_coverage_table.tex}
+\input{tables/distribution_instruction_table.tex}
+\input{tables/opinion_subset_table.tex}
+\input{tables/opinion_issp_table.tex}
+\input{tables/opinion_frame_changes_table.tex}
+\input{tables/what_changes_decomp_table.tex}
+\input{tables/gated_table.tex}
+\input{tables/family_boot_table.tex}
+\input{tables/family_boot_diff_table.tex}
+\input{tables/family_boot_diff_table_merged.tex}
+\input{tables/gated_boot_table.tex}
+\input{tables/gate_sweep_table.tex}
+\input{tables/frame_per_omission_table.tex}
+\input{tables/magnitude_crossing_table.tex}
+\FloatBarrier
+
+\paragraph{Loss, multiplicity, respondent floor, and power.}
+Four checks of the counting criterion of Table~\ref{tab:what-changes}, all computed from the released item-level distributions after the counts of Table~\ref{tab:what-changes} were fixed. Table~\ref{tab:proper-scores} recomputes the table under the Brier and log scores, which are proper against the human distribution, with the decisive floor rescaled by the uniform predictor's loss under each score; its TVD columns reproduce Table~\ref{tab:what-changes}. Table~\ref{tab:bh} applies a Benjamini--Hochberg correction within each row's family of gap tests before the units are recounted. Table~\ref{tab:respondent-floor} restricts the frame to items with at least 30 or 100 released respondents, dropping NumberGame and then DICES as well. Table~\ref{tab:power} simulates the criterion's operating characteristics: with true gaps of $\pm g$ under two readouts and the joint sampling error of the shared cluster-bootstrap draws, the decisive criterion has no false positives, fires for $g=.05$ in 11\% of resampled frames and for $g=.07$ in 98\%, while the interval-only criterion fires for $g=.03$ in 91\%; the decisive counts are therefore counts of reversals whose true size is about .06 TVD or more. Table~\ref{tab:log-floor} varies the log score's probability floor: the loss rows of Table~\ref{tab:what-changes} count opposite letters in 13, 12, and 9 units at the $10^{-6}$ floor, 8, 7, and 5 at $10^{-2}$, and 1, 4, and 1 with Laplace smoothing of .05, so the row measures the floor as much as the loss; Table~\ref{tab:what-changes} therefore reports the loss rows with the rescaled floors of Table~\ref{tab:proper-scores}. Table~\ref{tab:pair-family-counts} recounts the headline rows per pair and per family and adds a second outcome, opposite letters with a paired difference of at least .05. Table~\ref{tab:mixed-model} fits linear mixed models with family and pair random intercepts: every manipulation's mean shift is small next to the residual spread, which is why winner counts rather than main effects summarize the panel.
+
+\input{tables/proper_score_table.tex}
+\input{tables/bh_table.tex}
+\input{tables/respondent_floor_table.tex}
+\input{tables/uniform_floor_table.tex}
+\input{tables/human_ceiling_table.tex}
+\input{tables/power_table.tex}
+\input{tables/log_floor_table.tex}
+\input{tables/pair_family_counts_table.tex}
+\input{tables/mixed_model_table.tex}
+\FloatBarrier
+
+\paragraph{Effect sizes, character normalization, and the tokenization boundary.}
+Table~\ref{tab:effect-sizes} reports each manipulation of Table~\ref{tab:what-changes} as a paired difference of gaps in TVD units, with item-level and family-level intervals and the spread of the effect across pairs, together with a balanced sum-of-squares partition of the 270 same-tensor gaps; the manipulations act mainly through pair-specific responses (pair-by-readout interaction 21\% of the variance against a readout main effect of 2.5\%). Table~\ref{tab:own-decomp} decomposes the own-serialization gap of the eleven pairs with a base-model parent into the shared no-space gap and the parent's serialization component. The character-normalized reduction of Table~\ref{tab:what-changes} divides the summed log-probability by the code-point count of the candidate without its leading space, the denominator of lm-eval-harness's \texttt{acc\_norm} (the delimiter-free choice), recomputed from the stored per-token log-probabilities of the re-implementation runs. Table~\ref{tab:tokenization-boundary} audits the tokenization boundary of the contract for all sixteen tokenizers (the four gated ones in the third follow-up run); only Mistral-Instruct's no-space candidates differ, which is why that pair's no-space cells coincide with its space cells. Table~\ref{tab:opinion-events} recomputes the rows of Table~\ref{tab:what-changes}, including the event rows, on the two opinion sources of the main frame (ESS and GlobalOpinionQA) with their own bootstrap draws.
+
+\input{tables/effect_sizes_table.tex}
+\input{tables/own_decomp_table.tex}
+\input{tables/tokenization_boundary_table.tex}
+\input{tables/opinion_events_table.tex}
+\FloatBarrier
+\input{tables/own_absolute_table.tex}
+\input{tables/gap_changes15_table.tex}
+\input{tables/subpop_table.tex}
+\input{tables/events15_table.tex}
+\input{tables/events_same_instruction_table.tex}
+\input{tables/events_own_nospace_table.tex}
+\input{tables/events_coverage_table.tex}
+\input{tables/family_boot_events_table.tex}
+\input{tables/matched_contrast_table.tex}
+\FloatBarrier
+\input{tables/dc_pmi_uncond_table.tex}
+\FloatBarrier
+\input{tables/order_marginal_table.tex}
+\input{tables/fp32_table.tex}
+\input{tables/fp32_all_table.tex}
+\input{tables/harness_table.tex}
+\input{tables/harness_names_table.tex}
+\input{tables/joint_tokenization_table.tex}
+\input{tables/joint_example_table.tex}
+\paragraph{Harness patch.}
+\label{app:harness-patch}
+The released patch against lm-evaluation-harness commit \texttt{ad8737ae} (120 added lines in four files) adds four opt-ins and one check. The check runs in every mode: after the joint encoding of prefix and prefix+candidate, the encoded prefix must be a prefix of the joint encoding, and requests for which it is not are counted in \texttt{lm.boundary\_stats} (the OLMo-2 case). \texttt{keep\_trailing\_whitespace} (a model argument; the attribute lives on the template class, but only the Hugging Face backend accepts the keyword) leaves the prefix's trailing whitespace in place, takes the continuation as the ids beyond the encoded prefix when the check passes, and otherwise encodes the candidate on its own, so that the model is always conditioned on the prefix it was given. \texttt{move\_only\_trailing\_spaces} is the targeted variant: the default rule keeps moving trailing spaces, the case it was written for, but leaves newlines and tabs in the prefix, so a chat template that ends in a newline is scored from the label while a prefix such as ``\texttt{Answer:\char32}'' is encoded as before; on the probe task it gives the same encodings and results as keeping all whitespace. \texttt{token\_logprobs\_path} (implemented for the Hugging Face backend) writes one JSON line per scored request with the continuation's token ids, the per-token log-probabilities, and the number of moved whitespace characters, skipping rolling perplexity requests; the first-token readout and the coverage at the label position (the mass on the distinct first candidate tokens of a document's choices) follow from it without a second pass. A tokenizer-only check with the pinned OLMo-2-7B-Instruct tokenizer reproduces the boundary mismatch in the default mode (the joint encoding fuses the template's newline into the preceding token, and the continuation starts at the label with the newline absent from the prefix ids) and its absence with the option on, and a synthetic mid-word boundary exercises the separate-encoding fallback; whether to make \texttt{move\_only\_trailing\_spaces} the default is left to the maintainers. \texttt{chat\_target\_delimiter} (a task option) sets the delimiter placed before each choice when a chat template is applied, which the harness otherwise sets to the empty string unless a generation prefix without trailing whitespace is given; a mixed model list needs one task variant per tokenizer convention. On a three-item probe task with Qwen2.5-0.5B-Instruct on CPU, the patched harness with the options off reproduces the unpatched results, per-request log-likelihoods, and encodings exactly; with \texttt{keep\_trailing\_whitespace} on, the newline (id 198) stays in the prefix and the label is the first scored token, and the per-token file gives a coverage of .86 to .93 at the label position, where the unpatched rule scores the newline first for every choice; requests served from the harness's response cache are not written to the file. The stock multiple-choice tasks have not been run through the patch.
+\input{tables/fewshot_table.tex}
+\input{tables/released_scorer_table.tex}
+\FloatBarrier
+\input{tables/verbalized_variants_table.tex}
+\input{tables/qwen32b_table.tex}
+\input{tables/w1_winner_map_table.tex}
+\input{tables/native_serialization_all_table.tex}
+\input{tables/extension_revisions_table.tex}
+\input{tables/generation_table.tex}
+\input{tables/simbench_protocol_table.tex}
+\input{tables/native_scalefree_table.tex}
+\input{tables/protocol_audit_table.tex}
+\input{tables/protocol_opinion_table.tex}
+\input{tables/controls_map_table.tex}
+\input{tables/controls_gaps_es_table.tex}
+\input{tables/controls_gaps_pc_table.tex}
+\input{tables/coverage_table.tex}
+\input{tables/heldout_table.tex}
+\input{tables/entropy_matched_table.tex}
+\input{tables/entropy_matched_map_table.tex}
+\input{tables/tvd_opt_map_table.tex}
+\input{tables/scale_free_table.tex}
+\input{tables/positions_all_table.tex}
+\input{tables/rank_stability_table.tex}
+\input{tables/e0b_table.tex}
+\FloatBarrier
+
+\section{Design Sequence, Compute, and Reproducibility}
+\label{app:compute}
+
+\paragraph{Design sequence.}
+Table~\ref{tab:timing} records what was known when each phase was specified.
+``Frozen before inference'' means that the pair, item registry, model-visible
+bytes, readouts, aggregation, and reporting branches were fixed before any
+outcome from that phase was read.
+
+\begin{table*}[t]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{@{}p{.18\textwidth}p{.27\textwidth}p{.43\textwidth}@{}}
+\toprule
+Phase & Timing & Earlier results already known \\
+\midrule
+Qwen-14B four interfaces & Frozen before inference & None from this audit \\
+Qwen-14B same tensor & Frozen before its inference & Four-interface Qwen-14B results \\
+Mistral pair & Fixed before Mistral inference & Qwen-14B/Socrates results \\
+Agreement and integer-mapping checks & No new inference; statistic fixed before recomputation & Qwen-14B/Socrates results \\
+Qwen-7B, Llama, OLMo pairs & Eligible pairs fixed before inference & Qwen-14B/Socrates and Mistral results \\
+DICES mechanism analysis & No new inference; statistics fixed before recomputation & Five-pair results \\
+Plain-prefix control & Fixed before control inference & Five-pair results \\
+DC-PMI & Fixed before new inference & Five-pair results \\
+DICES token positions & Fixed before new inference & Five-pair results and DICES mechanism analysis \\
+Option-order reversal (verbalized) & Fixed before its inference & Qwen-14B/Socrates results \\
+Socrates-DPO control & Plan fixed before DPO inference & Qwen-14B/Socrates results \\
+Re-implementation, replication (E0) & 2026-09-06 & original panel and all diagnostics \\
+Re-implementation, extended panel, generated answers, controls, held-out sources & 2026-09-07 & E0 replication result; frame, prompts, seeds, revisions, and the .05 threshold fixed \\
+Entropy matching, scale-free measures, flip accounting & 2026-09-08 & all runs complete; computed from stored outputs \\
+FP32, order-seed, format, scorer, and 32B reruns (Appendix~\ref{app:reimpl}) & 2026-09-10 & all counts of Table~\ref{tab:what-changes} known; runs fixed before inference \\
+Family bootstrap, sign-flip test, above-uniform gate, per-omission and paired-difference criteria & 2026-09-09 to 2026-09-11 & all counts of Table~\ref{tab:what-changes} known; computed from stored outputs \\
+Proper-score recount, Benjamini--Hochberg correction, respondent floor, power simulation & 2026-09-11 & all counts known; computed from stored outputs \\
+Byte-normalized reduction rows, effect sizes and variance partition, tokenization-boundary audit & 2026-09-11 & all counts known; computed from stored outputs and public tokenizers \\
+Own serialization made the primary column of Table~\ref{tab:what-changes} and Figure~\ref{fig:fifteen} & 2026-09-11 & all counts known; presentation only \\
+Follow-up run: exact native readout, no-space candidates for all pairs, Socrates controls, seed replicates, SimBench prompt for extension Instruct checkpoints, held-out extension pairs, SubPOP & 2026-09-09 & all earlier results; frame, prompts, seeds, and revisions unchanged \\
+Second follow-up run: ID-only and text-only events for the extension pairs, option-order seeds 2--5, FP32 reruns, SubPOP formats, verbalized answer formats, SimBench's released scorer, Qwen2.5-32B pair & 2026-09-10 & all earlier results; frame, prompts, seeds, and revisions unchanged; the five answer formats fixed in a configuration file before the run \\
+Third follow-up run: FP32 for the remaining pairs, option-order seeds for the extension pairs, SimBench's scorer as released, gated-tokenizer audit, two public harnesses, unconditional PMI, same-instruction text-only event, few-shot demonstrations, joint-encoding ablation & 2026-09-11 to 2026-09-13 & all earlier results; frame, prompts, seeds, and revisions unchanged; the demonstration rule fixed in a configuration file before the run \\
+Fourth follow-up run: the three scored events in own serialization and with no-space candidates for all pairs (4.7 H100-hours) & 2026-09-13 & all counts of Table~\ref{tab:what-changes} known; the rows were its empty cells; frame, prompts, seeds, and revisions unchanged \\
+Human reference, decisive-reversal denominators, comparison-matched contrast, magnitude and plain-prefix columns of Table~\ref{tab:what-changes}, opinion-source event rows and protocol audit, harness patch & 2026-09-14 & all counts known; computed from stored outputs; the patch tested on a probe task only \\
+\bottomrule
+\end{tabular}
+\caption{Order in which the phases were specified and what was known at each
+point.}
+\label{tab:timing}
+\end{table*}
+
+\paragraph{Compute and software.}
+Both checkpoints of a pair have the same parameter count: Qwen-14B/Socrates
+14,770,033,664; Mistral 7,248,023,552; Qwen-7B 7,615,616,512; Llama
+3,212,749,824; OLMo 7,298,617,344. The four-interface Qwen-14B analysis ran on
+one 80-GB H100 per task; the same-tensor panel used one 80-GB A100 per task
+(two for Qwen-14B), as did the plain-prefix, DC-PMI, and token-position passes.
+The environment is CPython 3.11.15, PyTorch 2.8.0+cu128, Transformers 4.56.2, and NumPy 2.2.6, with TensorFloat-32 and network access disabled (third follow-up run: Transformers 4.57.6 on one H100).
+Table~\ref{tab:compute-budget} gives the full accounting, including failed and
+unused runs. The re-implementation runs of Appendix~\ref{app:reimpl} used 49.8 A100
+GPU-hours on a rented cloud instance (E0 replication 1.7, numerical floor 2.8,
+generated answers 17.9, controls 8.0, extension pairs 7.4, held-out and
+paraphrases 3.0, FP32 check 0.8, analysis 2.7, remainder setup and packaging)
+and a follow-up run of 11.7 GPU-hours (exact native readout 0.5, integer and
+letter no-space candidates 2.1, Socrates controls 0.6, seed replicates 3.5,
+SimBench prompt for the extension Instruct checkpoints 0.4, held-out
+extension pairs 2.0, SubPOP 0.3, analysis 2.1, setup 0.2), and a second follow-up run of 24.8 GPU-hours (verbalized answer formats 7.7, ID-only and text-only events 2.9, SubPOP formats 0.4, FP32 reruns 3.8, option-order seeds 3.5, SimBench's scorer 0.7, the 32B pair 2.3, analysis 3.1, remainder setup and packaging), and a third follow-up run of 37.4 H100 GPU-hours (FP32 reruns 13.5, SimBench's scorer as released 11.0, option-order seeds 4.0, unconditional PMI 2.0, joint encoding 1.8, same-instruction event 1.7, few-shot demonstrations 1.5, harnesses 1.4, remainder analysis, setup, and packaging), all excluded from the table, so the project used 37.0 GPU-hours on the original route (7.5 of them for the reported panel) and 123.7 on the re-implementation (86.3 A100, 37.4 H100).
+
+\input{tables/compute_table.tex}
+
+\paragraph{Reproducibility.}
+The anonymous supplements accompany the submission. The software archive
+implements every formula (reductions, TVD, weighting, cluster bootstrap, gap
+decomposition, and completion bounds) on synthetic fixtures and replays every
+aggregate cell of the data archive (all-source, single-source, and
+leave-one-source-out, for all readouts and controls). The item-level archive
+releases the predicted distribution of every checkpoint and readout evaluated
+in the paper (the five-pair same-tensor panel, the four plain-prefix pairs,
+DC-PMI, the DICES token-position diagnostic, the Qwen-14B interfaces, and the
+option-order and DPO diagnostics; 163,276 rows with the stored binary64
+values), an integer table linking each item to its data row in the pinned
+SimBench release, the seed and regeneration rule of every bootstrap ledger,
+and a script that joins an independently obtained copy of the pinned SimBench
+file and checks the released point estimates (maximum deviation
+$1.8\times10^{-16}$ over 2,124 values). DC-PMI and cumulative DICES
+distributions are reconstructed from stored numeric inputs and labeled as
+such; per-token tensors exist only for the DICES run. No item text, human distributions, completions, or model weights are
+redistributed. A fifth supplement releases the re-implementation, its
+configurations, and every aggregate table of Appendix~\ref{app:reimpl}; its
+item-level predicted distributions for every run are released in the same
+form as the original panel's.
+
+\paragraph{From-specification re-implementation.}
+To test whether the written contract suffices to reproduce the panel, the
+scoring pipeline was re-implemented from Appendix~\ref{app:prompts} alone
+(parsing, prompts, teacher-forced scoring, reductions, weighting, and
+bootstrap, sharing no code with the original runs) and executed on a rented
+A100-80GB with the pinned checkpoints, in bfloat16 with eager attention (1.65
+GPU-hours for the 128 all-source losses). The frame reproduced exactly once
+two details missing from a first draft of the contract were added, the
+$10^{-12}$ slack at the mass boundary and the placeholder rule of
+Appendix~\ref{app:sources}; both concern the item frame, were added before
+any checkpoint was scored, and the scoring contract was not changed after
+the numbers were compared, so the claim is that the contract suffices after
+these two additions. Table~\ref{tab:reimplementation} summarizes the
+agreement. Of the 128 losses, 99 agree within .01 and the largest deviation
+is .027 (Llama, plain prefix, summed, pooled-cluster). Every cell of
+Table~\ref{tab:winner-map} whose gap is at least .05 in magnitude reproduces
+with the same winner and the same interval side (40 of 40), so every flip of
+Section~\ref{sec:results} recurs: the Socrates first-token reversal, the
+Mistral length-normalized flip, the OLMo plain-prefix reversal, and the DC-PMI
+flips. The five cells that differ are all marginal, with gaps of .016 to .031
+in magnitude, where one implementation's interval includes zero and the
+other's excludes it. At the item level the two implementations' predicted
+distributions differ by a mean TVD of .01 to .10 depending on checkpoint and
+readout, with fitted sharpness ratios of 1.0, no positional bias across answer
+IDs, and content-free-premise scores of identical candidate strings that
+differ by a median of .07 to .17 nats. Within one machine, changing only the
+arithmetic path (FP32 weights, SDPA attention, a KV-cached prefix, or one
+candidate per forward pass) moves the per-item vectors by a mean TVD of .01
+to .03 for three pairs and by up to .19 for Qwen-7B, whose bfloat16 logits
+are the least stable (Table~\ref{tab:e0b}). bfloat16 arithmetic under different execution paths accounts for part of the difference: at the logit magnitudes involved, bfloat16 stores a
+logit at a resolution of .125 to .5 nats, so a small change in the hidden
+state moves individual candidate scores by that much. The lesson agrees with
+the .05 threshold of Section~\ref{sec:weights}: gaps below it should not be
+expected to reproduce across implementations, and the released item-level
+vectors are reproducible to about the width of a bootstrap interval, not bit
+for bit. Since the within-machine perturbations of Table~\ref{tab:e0b} are smaller than the cross-implementation disagreement for three of the four pairs, part of that disagreement is unexplained; the contract of Appendix~\ref{app:prompts} fixes the bytes, not the tokenizer's boundary behavior, and a CPU audit of that boundary (Appendix Table~\ref{tab:tokenization-boundary}) shows, for the tokenizers of all 15 pairs and SubPOP, that encoding prefix and candidate separately gives the same token ids as encoding them jointly for every candidate under every condition except Mistral-Instruct's with no-space candidates, so the separate-encoding convention of the contract does not create the remainder; whether the original implementation and the re-implementation rendered identical token sequences item by item remains unchecked, since the original run's token ids were not stored.
+
+\FloatBarrier
+\input{tables/reimplementation_table.tex}
+
+\begin{table*}[t]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}llll@{}}
+\toprule
+Input or pair & Role & Repository & 40-character revision \\
+\midrule
+SimBench data & Data & \texttt{pitehu/SimBench} & \texttt{f471cf75fd9b8b1eca1ba8724ce6bd255190a11d} \\
+SimBench scorer & Code & \texttt{pitehu/SimBench\_release} & \texttt{ec384dceff886e8c129eb610066ba62791aed3ea} \\
+Qwen-14B/Socrates & Parent & \texttt{Qwen/Qwen2.5-14B-Instruct} & \texttt{cf98f3b3bbb457ad9e2bb7baf9a0125b6b88caa8} \\
+ & Tuned & \texttt{socratesft/socrates-qwen2.5-14b-sft} & \texttt{6666d399b373dd37a2691a921550732f2fdddb20} \\
+ & DPO (App.~\ref{app:diagnostics}) & \texttt{socratesft/socrates-qwen2.5-14b-dpo} & \texttt{f2dbdc4cb661969100f870f177b77bd08fc4cb9b} \\
+Mistral-7B & Parent & \texttt{mistralai/Mistral-7B-v0.3} & \texttt{caa1feb0e54d415e2df31207e5f4e273e33509b1} \\
+ & Tuned & \texttt{mistralai/Mistral-7B-Instruct-v0.3} & \texttt{c170c708c41dac9275d15a8fff4eca08d52bab71} \\
+Qwen-7B & Parent & \texttt{Qwen/Qwen2.5-7B} & \texttt{d149729398750b98c0af14eb82c78cfe92750796} \\
+ & Tuned & \texttt{Qwen/Qwen2.5-7B-Instruct} & \texttt{a09a35458c702b33eeacc393d103063234e8bc28} \\
+Llama-3.2-3B & Parent & \texttt{meta-llama/Llama-3.2-3B} & \texttt{13afe5124825b4f3751f836b40dafda64c1ed062} \\
+ & Tuned & \texttt{meta-llama/Llama-3.2-3B-Instruct} & \texttt{0cb88a4f764b7a12671c53f0838cd831a0843b95} \\
+OLMo-2-7B & Parent & \texttt{allenai/OLMo-2-1124-7B} & \texttt{7df9a82518afdecae4e8c026b27adccc8c1f0032} \\
+ & Tuned & \texttt{allenai/OLMo-2-1124-7B-Instruct} & \texttt{470b1fba1ae01581f270116362ee4aa1b97f4c84} \\
+\bottomrule
+\end{tabular}
+\caption{Exact data, scorer, and checkpoint identities
+\cite{qwen25-14b-instruct-hf,socrates-qwen25-14b-sft-hf,socrates-qwen25-14b-dpo-hf,mistral-v03-model-card}.
+The Qwen, Socrates, Mistral, and OLMo model cards list the Apache~2.0 license;
+Llama uses the Llama~3.2 Community License. Both checkpoints of a pair use the
+tokenizer of the pair's Instruct checkpoint (the parent for Qwen-14B).}
+\label{tab:public-revisions}
+\end{table*}
+
+\end{document}

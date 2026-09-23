@@ -1,0 +1,21 @@
+\begin{table*}[t]
+\centering\scriptsize
+\setlength{\tabcolsep}{2.4pt}
+\begin{tabular}{@{}lrrr@{\hspace{5pt}}rrr@{\hspace{5pt}}rrr@{\hspace{5pt}}rrr@{\hspace{5pt}}rrr@{}}
+\toprule
+& \multicolumn{3}{c}{Own, cov.\ $\ge.5$} & \multicolumn{3}{c}{No space, cov.\ $\ge.5$} & \multicolumn{3}{c}{Own, above unif.} & \multicolumn{3}{c}{No space, above unif.} & \multicolumn{3}{c}{Space, above unif.} \\
+\cmidrule(lr){2-4}\cmidrule(lr){5-7}\cmidrule(lr){8-10}\cmidrule(lr){11-13}\cmidrule(l){14-16}
+Varied & Units & Chg. & Dec. & Units & Chg. & Dec. & Units & Chg. & Dec. & Units & Chg. & Dec. & Units & Chg. & Dec. \\
+\midrule
+Reduction: first vs.\ summed & 26 & 5 & 0 & 8 & 3 & 2 & 4 & 0 & 0 & 2 & 0 & 0 & 6 & 2 & 0 \\
+Reduction: first vs.\ length-norm. & 26 & 9 & 1 & 8 & 4 & 2 & 6 & 4 & 1 & 3 & 1 & 0 & 0 & 0 & 0 \\
+Reduction: summed vs.\ length-norm. & 26 & 6 & 1 & 8 & 1 & 0 & 4 & 4 & 1 & 1 & 1 & 0 & 0 & 0 & 0 \\
+Reduction: any of the three & 26 & 10 & 1 & 8 & 4 & 2 & 6 & 4 & 1 & 4 & 1 & 0 & 6 & 2 & 0 \\
+Weighting: ES vs.\ PC & 13 & 8 & 0 & 4 & 2 & 0 & 5 & 2 & 0 & 0 & 0 & 0 & 3 & 1 & 0 \\
+Frame: omit one source & 26 & 19 & 3 & 8 & 3 & 0 & 19 & 16 & 2 & 6 & 5 & 0 & 12 & 10 & 0 \\
+Sharpness: entropy matching & 26 & 9 & 0 & 8 & 2 & 0 & 19 & 4 & 0 & 6 & 3 & 0 & 12 & 8 & 0 \\
+\bottomrule
+\end{tabular}
+\caption{The rows of Table~\ref{tab:what-changes-full} restricted to well-posed units. Coverage $\ge.5$: pairs whose two members both place at least half of their mass on the first candidate tokens (own serialization: 13 pairs, all but Socrates-SFT and Mistral-7B; no-space candidates: 4 pairs, Socrates-DPO, OLMo-2-13B, and the two OLMo-2-7B ladder pairs with an instruction-tuned parent; no pair qualifies with space candidates). Above uniform: a readout comparison enters a unit only if both checkpoints beat the uniform predictor under both readouts and the unit's weighting; a unit is counted when at least one comparison enters. Units and rules as in Table~\ref{tab:what-changes-full}; family-bootstrap intervals for the above-uniform rows in Table~\ref{tab:gated-boot}. The event rows of Table~\ref{tab:what-changes-full} are not gated; without the first-token readout, whose text-only cells are remainders, the text-only event (matched-instruction variant, space candidates) still changes 23 of 30 units, 12 decisively.}
+\label{tab:gated}
+\end{table*}

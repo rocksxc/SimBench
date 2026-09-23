@@ -1,0 +1,35 @@
+\begin{table*}[t]
+\centering\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}llrcccc@{}}
+\toprule
+Pair & Comparison & Items & TVD gap (\ES{}/\PC{}, \PC{} value) & Entropy-matched & Modal accuracy & Spearman \\
+\midrule
+Mistral-7B & next-token, both & 993 & B/B +.230 & I/I & I/I & I/I \\
+Mistral-7B & protocol (controlled prompt) & 969 & I/I -.029 & I/I & I/I & I/I \\
+Mistral-7B & protocol (SimBench prompt) & 916 & $\circ$/$\circ$ +.006 & I/I & I/I & I/I \\
+Qwen2.5-7B & next-token, both & 993 & B/B +.265 & $\circ$/$\circ$ & $\circ$/$\circ$ & $\circ$/$\circ$ \\
+Qwen2.5-7B & protocol (SimBench prompt) & 945 & $\circ$/$\circ$ +.005 & $\circ$/$\circ$ & B/B & I/I \\
+Llama-3.2-3B & next-token, both & 993 & B/B +.117 & I/I & $\circ$/$\circ$ & I/I \\
+Llama-3.2-3B & protocol (controlled prompt) & 922 & B/B +.039 & $\circ$/$\circ$ & B/$\circ$ & I/I \\
+Llama-3.2-3B & protocol (SimBench prompt) & 972 & B/B +.076 & $\circ$/$\circ$ & B/$\circ$ & I/I \\
+OLMo-2-7B & next-token, both & 993 & B/B +.114 & I/I & I/$\circ$ & I/I \\
+OLMo-2-7B & protocol (controlled prompt) & 949 & $\circ$/I -.023 & I/I & I/I & I/I \\
+OLMo-2-7B & protocol (SimBench prompt) & 984 & B/B +.045 & I/I & $\circ$/$\circ$ & I/I \\
+Qwen2.5-14B & next-token, both & 993 & B/B +.343 & B/B & B/B & B/B \\
+Qwen2.5-14B & protocol (controlled prompt) & 977 & I/I -.049 & I/I & I/$\circ$ & I/I \\
+Qwen2.5-14B & protocol (SimBench prompt) & 986 & I/I -.021 & I/I & $\circ$/$\circ$ & I/I \\
+Llama-3.1-8B & next-token, both & 993 & B/B +.055 & I/I & I/I & I/I \\
+Llama-3.1-8B & protocol (controlled prompt) & 968 & B/B +.035 & I/I & I/I & I/I \\
+Llama-3.1-8B & protocol (SimBench prompt) & 987 & B/B +.041 & I/I & I/I & I/I \\
+Qwen3-8B & next-token, both & 993 & B/B +.271 & I/$\circ$ & $\circ$/$\circ$ & I/I \\
+Qwen3-8B & protocol (controlled prompt) & 993 & I/I -.016 & $\circ$/$\circ$ & $\circ$/$\circ$ & I/I \\
+Qwen3-8B & protocol (SimBench prompt) & 993 & $\circ$/$\circ$ +.014 & $\circ$/$\circ$ & B/B & I/I \\
+OLMo-2-13B & next-token, both & 993 & B/B +.160 & B/B & $\circ$/B & B/B \\
+OLMo-2-13B & protocol (controlled prompt) & 943 & $\circ$/$\circ$ +.001 & $\circ$/I & $\circ$/$\circ$ & I/I \\
+OLMo-2-13B & protocol (SimBench prompt) & 992 & B/B +.018 & I/I & $\circ$/$\circ$ & I/I \\
+\bottomrule
+\end{tabular}
+\caption{The protocol audit of Appendix Table~\ref{tab:protocol-audit} restricted to the two opinion sources of the main frame (ESS and GlobalOpinionQA, 993 items): both checkpoints under SimBench's next-token readout in their own serialization, and the benchmark's protocol (the parent under next-token against the Instruct checkpoint's verbalized vector under the controlled prompt and under SimBench's prompt), over the items with a valid vector; the one row with fewer than half of the items valid (Qwen2.5-7B, controlled prompt, 466) is omitted. Winner letters by the paired 95\% cluster-bootstrap interval (I = Instruct, B = Base, $\circ$ = includes zero; ES weights the two sources equally); entropy-matched temperatures are fitted on the valid items of the other opinion source; higher modal accuracy and Spearman correlation are better. Counts over the pairs: under the next-token readout Base wins all eight under TVD, and entropy matching hands 5 (\ES{}) or 4 (\PC{}) of them to Instruct with two Base wins; under the verbalized protocol with the controlled prompt Instruct is closer in 3 of seven (\ES{}) or 4 of seven (\PC{}) with two Base wins, and with SimBench's prompt in 1 of eight with 4 Base wins and 3 ties; after entropy matching the verbalized protocol favors Instruct in 5 of seven and 5 of eight under \PC{} with no Base win.}
+\label{tab:protocol-opinion}
+\end{table*}

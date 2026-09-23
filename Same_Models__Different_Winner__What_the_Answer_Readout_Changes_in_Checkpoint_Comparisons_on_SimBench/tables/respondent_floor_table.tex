@@ -1,0 +1,22 @@
+\begin{table*}[t]
+\centering\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}lrrrrrrrrr@{}}
+\toprule
+& \multicolumn{3}{c}{Full frame (2,038 items)} & \multicolumn{3}{c}{$n\ge30$ (1,538 items)} & \multicolumn{3}{c}{$n\ge100$ (1,038 items)} \\
+\cmidrule(lr){2-4}\cmidrule(lr){5-7}\cmidrule(l){8-10}
+Varied & Own & No space & Space & Own & No space & Space & Own & No space & Space \\
+\midrule
+Reduction: first vs.\ summed & 7/2 & 10/6 & 11/2 & 8/3 & 11/6 & 11/2 & 8/0 & 9/3 & 10/1 \\
+Reduction: first vs.\ length-norm. & 12/4 & 12/6 & 12/2 & 14/7 & 13/5 & 13/3 & 13/3 & 9/2 & 15/0 \\
+Reduction: summed vs.\ length-norm. & 7/2 & 6/1 & 7/1 & 8/4 & 7/1 & 6/2 & 10/0 & 7/0 & 8/0 \\
+Reduction: any of the three & 13/4 & 14/7 & 14/3 & 15/7 & 15/7 & 14/5 & 13/3 & 12/4 & 15/1 \\
+Reduction: DC-PMI vs.\ summed & -- & -- & 21/5 & -- & -- & 22/6 & -- & -- & 22/3 \\
+Event: option text only & -- & -- & 26/12 & -- & -- & 25/14 & -- & -- & 20/7 \\
+Serialization: to plain prefix & -- & 23/7 & 21/4 & -- & 23/7 & 22/4 & -- & 18/3 & 21/4 \\
+Sharpness: entropy matching & 11/1 & 13/5 & 19/5 & 16/3 & 16/7 & 18/5 & 28/10 & 22/12 & 25/10 \\
+\bottomrule
+\end{tabular}
+\caption{Rows of Table~\ref{tab:what-changes} on frames restricted by the released respondent count of each item: $n\ge30$ drops NumberGame (10 to 18 respondents per item), $n\ge100$ also drops DICES (30 to 43); GlobalOpinionQA releases no count and is kept in both. Each restricted frame has its own 10,000 cluster-bootstrap draws and equal-source weights over the sources it keeps. Cells give units changed/changed decisively (30 units).}
+\label{tab:respondent-floor}
+\end{table*}

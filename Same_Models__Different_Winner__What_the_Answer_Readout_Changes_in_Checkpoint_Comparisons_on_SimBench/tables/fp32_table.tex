@@ -1,0 +1,45 @@
+\begin{table*}[t]
+\centering\scriptsize
+\setlength{\tabcolsep}{2.5pt}
+\begin{tabular}{@{}llccccc@{}}
+\toprule
+Pair, condition & Readout & \multicolumn{2}{c}{bfloat16 gap} & \multicolumn{2}{c}{FP32 gap} & Path TVD P/T \\
+\cmidrule(lr){3-4}\cmidrule(lr){5-6} & & ES & PC & ES & PC & mean/median \\
+\midrule
+Mistral-7B, chat template, space & First & +.031 [.004,.062] B & -.037 [-.050,-.024] I & +.032 [.005,.063] B & -.035 [-.048,-.022] I & .011/.009; .011/.005 \\
+ & Summed & +.057 [.030,.086] B & -.016 [-.028,-.003] I & +.057 [.031,.087] B & -.014 [-.026,-.001] I & .014/.012; .011/.005 \\
+ & Len.-norm. & -.052 [-.070,-.033] I & -.104 [-.112,-.095] I & -.051 [-.070,-.033] I & -.104 [-.112,-.095] I & .004/.003; .007/.006 \\
+\addlinespace[1pt]
+Mistral-7B, chat template, no space & First & +.031 [.004,.062] B & -.037 [-.050,-.024] I & +.032 [.005,.063] B & -.035 [-.048,-.022] I & .011/.009; .011/.005 \\
+ & Summed & +.057 [.030,.086] B & -.016 [-.028,-.003] I & +.057 [.031,.087] B & -.014 [-.026,-.001] I & .014/.012; .011/.005 \\
+ & Len.-norm. & -.052 [-.070,-.033] I & -.104 [-.112,-.095] I & -.051 [-.070,-.033] I & -.104 [-.112,-.095] I & .004/.003; .007/.006 \\
+\addlinespace[1pt]
+Mistral-7B, plain prefix & First & -.007 [-.020,.006] $\circ$ & -.016 [-.021,-.011] I & -.007 [-.020,.006] $\circ$ & -.016 [-.021,-.011] I & .007/.007; .010/.009 \\
+ & Summed & +.017 [.004,.031] B & +.027 [.021,.033] B & +.017 [.004,.031] B & +.026 [.020,.032] B & .012/.011; .012/.011 \\
+ & Len.-norm. & -.024 [-.028,-.019] I & -.021 [-.023,-.019] I & -.024 [-.029,-.020] I & -.021 [-.023,-.019] I & .003/.003; .004/.003 \\
+\addlinespace[1pt]
+Mistral-7B, own serialization & First & +.067 [.042,.093] B & -.043 [-.057,-.029] I & +.067 [.043,.093] B & -.042 [-.056,-.028] I & .007/.007; .011/.005 \\
+ & Summed & +.068 [.043,.094] B & -.037 [-.051,-.024] I & +.069 [.044,.095] B & -.037 [-.050,-.024] I & .012/.011; .011/.005 \\
+ & Len.-norm. & -.052 [-.069,-.034] I & -.114 [-.123,-.105] I & -.052 [-.070,-.034] I & -.114 [-.123,-.106] I & .003/.003; .007/.006 \\
+\addlinespace[1pt]
+Qwen2.5-7B, chat template, space & First & +.131 [.113,.150] B & +.052 [.037,.066] B & +.141 [.125,.158] B & +.069 [.055,.082] B & .106/.093; .120/.002 \\
+ & Summed & +.136 [.110,.162] B & +.072 [.059,.084] B & +.137 [.125,.151] B & +.066 [.055,.076] B & .182/.154; .164/.002 \\
+ & Len.-norm. & +.066 [.047,.085] B & +.017 [.004,.029] B & +.044 [.029,.058] B & -.017 [-.027,-.006] I & .058/.050; .126/.095 \\
+\addlinespace[1pt]
+Qwen2.5-7B, chat template, no space & First & +.041 [.022,.060] B & -.062 [-.078,-.045] I & +.066 [.048,.084] B & -.028 [-.044,-.012] I & .094/.089; .124/.001 \\
+ & Summed & +.136 [.118,.155] B & +.047 [.032,.061] B & +.109 [.094,.123] B & +.012 [-.002,.025] $\circ$ & .176/.165; .167/.002 \\
+ & Len.-norm. & -.004 [-.021,.013] $\circ$ & -.086 [-.099,-.073] I & -.023 [-.038,-.006] I & -.104 [-.116,-.092] I & .056/.050; .135/.077 \\
+\addlinespace[1pt]
+Qwen2.5-7B, plain prefix & First & +.125 [.109,.142] B & +.042 [.028,.055] B & +.140 [.125,.156] B & +.061 [.048,.074] B & .063/.058; .105/.014 \\
+ & Summed & +.186 [.164,.212] B & +.137 [.125,.149] B & +.143 [.128,.158] B & +.065 [.052,.078] B & .163/.151; .216/.056 \\
+ & Len.-norm. & +.085 [.069,.102] B & +.066 [.058,.074] B & -.024 [-.037,-.010] I & -.069 [-.080,-.059] I & .063/.056; .238/.163 \\
+\addlinespace[1pt]
+Qwen2.5-7B, own serialization & First & +.168 [.152,.185] B & +.072 [.058,.085] B & +.172 [.157,.188] B & +.081 [.068,.094] B & .063/.058; .124/.001 \\
+ & Summed & +.201 [.181,.220] B & +.124 [.112,.135] B & +.177 [.163,.191] B & +.083 [.070,.097] B & .163/.151; .167/.002 \\
+ & Len.-norm. & +.025 [.007,.043] B & -.052 [-.064,-.040] I & +.013 [-.004,.030] $\circ$ & -.070 [-.082,-.057] I & .063/.056; .135/.077 \\
+\addlinespace[1pt]
+\bottomrule
+\end{tabular}
+\caption{Arithmetic path on the full frame: every same-tensor gap (tuned minus parent, all sources, 95\% paired cluster-bootstrap intervals) of the two pairs with near-threshold flips under bfloat16 weights, the panel's path, and under FP32 weights (eager attention and batched scoring in both). The last column gives the mean/median per-item TVD between the prediction vectors of the two paths for the parent; the tuned checkpoint. Mistral-7B's gaps move by at most .002; Qwen2.5-7B's move by up to .135 and change symbol in several cells, so its bfloat16 cells are marked in Table~\ref{tab:winner-map-15}.}
+\label{tab:fp32}
+\end{table*}

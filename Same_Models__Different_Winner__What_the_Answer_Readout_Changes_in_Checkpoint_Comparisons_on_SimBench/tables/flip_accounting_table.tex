@@ -1,0 +1,29 @@
+\begin{table*}[t]
+\centering\scriptsize
+\setlength{\tabcolsep}{2.4pt}
+\begin{tabular}{@{}lcccccccccccc@{}}
+\toprule
+& \multicolumn{2}{c}{Chat, space} & \multicolumn{2}{c}{Chat, no space} & \multicolumn{2}{c}{Plain prefix} & \multicolumn{2}{c}{Own serialization} & \multicolumn{2}{c}{Sum vs.\ Len (chat)} & \multicolumn{2}{c}{Omit one source} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}\cmidrule(lr){8-9}\cmidrule(lr){10-11}\cmidrule(l){12-13}
+Pair & ES & PC & ES & PC & ES & PC & ES & PC & ES & PC & ES & PC \\
+\midrule
+Qwen-14B/Socr.-SFT & decisive & decisive & decisive & decisive & decisive & marginal & decisive & decisive & none & none & 3/4 & 2/4 \\
+Qwen-14B/Socr.-DPO & marginal & marginal & none & none & none & none & none & none & marginal & none & 2/4 & 4/4 \\
+Mistral-7B & decisive & none & decisive & none & marginal & marginal & decisive & none & decisive & none & 3/4 & 3/4 \\
+Qwen2.5-7B & none & none & none & marginal & none & none & none & decisive & none & none & 1/4 & 3/4 \\
+Llama-3.2-3B & none & none & none & none & none & none & none & marginal & none & none & 1/4 & 1/4 \\
+OLMo-2-7B & none & none & none & none & none & none & marginal & none & none & none & 2/4 & 1/4 \\
+Qwen2.5-14B & none & none & none & none & none & marginal & none & marginal & none & none & 4/4 & 4/4 \\
+Llama-3.1-8B & none & none & none & none & none & none & none & none & none & none & 1/4 & 1/4 \\
+Qwen3-8B & none & none & marginal & none & none & marginal & none & marginal & none & none & 3/4 & 4/4 \\
+OLMo-2-13B & marginal & marginal & decisive & decisive & none & none & none & marginal & none & marginal & 3/4 & 3/4 \\
+OLMo-2-7B Base/SFT & none & none & none & none & none & none & none & none & none & none & 1/4 & 1/4 \\
+OLMo-2-7B SFT/DPO & none & none & none & none & none & marginal & none & none & none & none & 1/4 & 3/4 \\
+OLMo-2-7B DPO/Inst. & marginal & none & none & none & none & none & none & none & none & none & 4/4 & 4/4 \\
+Qwen3-4B/OSim & marginal & marginal & decisive & decisive & none & none & none & none & none & none & 1/4 & 2/4 \\
+Qwen3-8B/OSim & none & none & marginal & none & none & none & none & none & none & none & 2/4 & 1/4 \\
+\bottomrule
+\end{tabular}
+\caption{Flip accounting for all 15 pairs (re-implementation runs). Columns 2--9: whether the three same-tensor readouts disagree on the winner by the interval criterion under the shared chat template with space-prefixed candidates, the same template with no-space candidates, the shared plain prefix, and each checkpoint's own serialization (Base parent under the plain prefix, instruction-tuned checkpoints under the chat template with no-space candidates), and whether the disagreement is \emph{decisive} (two readouts with opposite winners both have gaps of at least .05 TVD). Columns 10--11: the same for the two full-string readouts (summed, length-normalized) alone under the chat template with space candidates. Columns 12--13: among the four chat-template readouts, how many change their winner symbol when some single source is omitted.}
+\label{tab:flip-accounting}
+\end{table*}

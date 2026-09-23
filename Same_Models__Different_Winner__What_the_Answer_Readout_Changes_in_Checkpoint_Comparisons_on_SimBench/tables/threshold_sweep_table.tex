@@ -1,0 +1,36 @@
+\begin{table*}[t]
+\centering\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}lrrrrrrrrrrrrrrrr@{}}
+\toprule
+& & \multicolumn{5}{c}{Space candidates} & \multicolumn{5}{c}{No-space candidates} & \multicolumn{5}{c}{Own serialization} \\
+\cmidrule(lr){3-7}\cmidrule(lr){8-12}\cmidrule(l){13-17}
+Varied & Units & Chg. & .03 & .05 & .07 & .10 & Chg. & .03 & .05 & .07 & .10 & Chg. & .03 & .05 & .07 & .10 \\
+\midrule
+Reduction: first vs.\ summed & 30 & 11 & 3 & 2 & 1 & 1 & 10 & 7 & 6 & 4 & 3 & 7 & 4 & 2 & 1 & 1 \\
+Reduction: first vs.\ length-norm. & 30 & 12 & 4 & 2 & 1 & 1 & 12 & 7 & 6 & 3 & 2 & 12 & 8 & 4 & 1 & 1 \\
+Reduction: summed vs.\ length-norm. & 30 & 7 & 2 & 1 & 0 & 0 & 6 & 3 & 1 & 0 & 0 & 7 & 4 & 2 & 0 & 0 \\
+Reduction: any of the three & 30 & 14 & 5 & 3 & 1 & 1 & 14 & 9 & 7 & 4 & 3 & 13 & 8 & 4 & 1 & 1 \\
+Reduction: DC-PMI vs.\ summed & 30 & 21 & 8 & 5 & 5 & 1 & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- \\
+Candidates: space removed & 30 & 9 & 3 & 2 & 0 & 0 & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- \\
+Serialization: to plain prefix & 30 & 21 & 7 & 4 & 3 & 0 & 23 & 13 & 7 & 4 & 1 & -- & -- & -- & -- & -- \\
+Serialization: to own & 30 & 16 & 4 & 3 & 2 & 1 & 12 & 6 & 5 & 2 & 1 & -- & -- & -- & -- & -- \\
+Weighting: ES vs.\ PC & 15 & 7 & 3 & 1 & 1 & 0 & 7 & 3 & 1 & 1 & 0 & 9 & 3 & 0 & 0 & 0 \\
+Frame: omit one source & 30 & 21 & 5 & 1 & 1 & 0 & 15 & 6 & 3 & 1 & 0 & 23 & 6 & 3 & 0 & 0 \\
+Sharpness: entropy matching & 30 & 19 & 6 & 5 & 2 & 0 & 13 & 6 & 5 & 2 & 1 & 11 & 2 & 1 & 0 & 0 \\
+\addlinespace[2pt]\multicolumn{17}{@{}l}{\emph{Prompt-side controls, space candidates: five original pairs (10 units); the two event rows all 15 pairs (30 units)}} \\
+Option order reversed & 10 & 5 & 3 & 2 & 2 & 1 & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- \\
+Option order permuted & 10 & 5 & 1 & 0 & 0 & 0 & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- \\
+No system message & 10 & 7 & 3 & 1 & 1 & 0 & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- \\
+BOS before plain prefix & 10 & 1 & 0 & 0 & 0 & 0 & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- \\
+Separator ``A.'' or ``A)'' & 2 & 0 & 0 & 0 & 0 & 0 & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- \\
+Wording (any of 4 variants) & 10 & 5 & 3 & 1 & 1 & 0 & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- \\
+Event: ID only (15 pairs) & 30 & 15 & 8 & 5 & 2 & 1 & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- \\
+Event: option text only (15 pairs) & 30 & 26 & 16 & 12 & 9 & 7 & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- \\
+PMI premise with options & 10 & 5 & 3 & 1 & 1 & 0 & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- \\
+Option order averaged over five orders & 12 & 5 & 2 & 1 & 0 & 0 & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- \\
+\bottomrule
+\end{tabular}
+\caption{The rows of Table~\ref{tab:what-changes-full} (units of one pair and weighting; 15 for the weighting row) with the number of units changed and the number changed decisively when the magnitude threshold on both gaps is .03, .05 (the paper's value), .07, or .10 TVD, for each candidate condition, plus the prompt-side controls (a unit changes if any same-tensor readout changes under the control; five original pairs except the two event rows, which cover all 15 pairs, and the order-averaged row, which covers the six pairs with five random orders (12 units; Table~\ref{tab:order-marginal}); the wording row pools four variants, the separator row two on the Qwen-14B pair; the BOS control is applied to the plain prefix; the PMI-premise row compares DC-PMI only). A decisive reversal is possible only in units where two readouts have gaps at the floor with intervals off zero: 22, 20, and 20 of the 30 units (own serialization, no-space candidates, space-prefixed candidates), of which 4, 7, and 3 reverse decisively at .05.}
+\label{tab:threshold-sweep}
+\end{table*}

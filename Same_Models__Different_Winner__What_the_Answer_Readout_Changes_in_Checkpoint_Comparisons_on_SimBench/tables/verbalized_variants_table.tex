@@ -1,0 +1,23 @@
+\begin{table*}[t]
+\centering\scriptsize
+\setlength{\tabcolsep}{1.0pt}
+\begin{tabular}{@{}lcc@{\hspace{5pt}}cc@{\hspace{5pt}}cc@{\hspace{5pt}}cc@{\hspace{5pt}}cc@{\hspace{5pt}}cc@{}}
+\toprule
+& \multicolumn{2}{c}{Baseline} & \multicolumn{2}{c}{Percentages} & \multicolumn{2}{c}{Two decimals} & \multicolumn{2}{c}{Option-text keys} & \multicolumn{2}{c}{Array} & \multicolumn{2}{c}{SimB.\ proportions} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}\cmidrule(lr){8-9}\cmidrule(lr){10-11}\cmidrule(l){12-13}
+Checkpoint & Valid & TVD & Valid & $\Delta$ [95\% CI] & Valid & $\Delta$ [CI] & Valid & $\Delta$ [CI] & Valid & $\Delta$ [CI] & Valid & $\Delta$ [CI] \\
+\midrule
+Qwen2.5-14B-I. & .99 & .202 & .99 & +.017[.011,.024] & 1.00 & +.002[-.003,.008] & .06 & +.033[.022,.045] & 1.00 & +.006[.001,.011] & 1.00 & +.005[-.000,.011] \\
+Socrates-DPO & 1.00 & .212 & .07 & +.036[.011,.062] & 1.00 & +.002[-.001,.005] & .07 & +.002[-.007,.010] & 1.00 & +.009[.004,.013] & 1.00 & -.019[-.023,-.014] \\
+Mistral-7B-I. & .99 & .259 & .98 & +.010[.003,.017] & .97 & +.015[.011,.020] & .68 & -.001[-.006,.004] & .90 & +.010[.003,.016] & .98 & -.020[-.026,-.013] \\
+Qwen2.5-7B-I. & .44 & .291 & .93 & +.055[.039,.071] & .50 & +.018[.005,.031] & .22 & +.050[.007,.095] & .63 & -.004[-.034,.026] & .78 & +.023[.012,.034] \\
+Llama-3.2-3B-I. & .96 & .330 & .91 & -.017[-.028,-.005] & .91 & +.038[.024,.051] & .81 & -.017[-.025,-.009] & .82 & +.086[.072,.100] & .98 & -.026[-.035,-.015] \\
+OLMo-2-7B-I. & .92 & .384 & .89 & -.028[-.037,-.018] & .90 & +.079[.071,.086] & .03 & -.017[-.043,.008] & .73 & +.004[-.011,.019] & 1.00 & +.016[.007,.024] \\
+Llama-3.1-8B-I. & .99 & .287 & .97 & +.030[.017,.044] & .96 & +.011[-.001,.022] & .93 & +.107[.093,.121] & .98 & -.020[-.030,-.010] & 1.00 & +.039[.026,.052] \\
+Qwen3-8B & 1.00 & .229 & .99 & +.021[.015,.027] & 1.00 & +.007[.003,.011] & .68 & -.003[-.007,.002] & .99 & +.164[.150,.177] & 1.00 & -.004[-.009,.001] \\
+OLMo-2-13B-I. & .97 & .226 & .98 & +.005[-.002,.012] & .97 & +.018[.010,.026] & .81 & +.017[.011,.023] & .42 & +.048[.036,.059] & 1.00 & +.062[.049,.075] \\
+\bottomrule
+\end{tabular}
+\caption{Verbalized-format sensitivity (follow-up run of 2026-09-10; exact strings in the released configuration). Each checkpoint writes a JSON distribution under the controlled prompt (baseline: probabilities keyed by answer ID) and under four minimal edits of it (whole-number percentages; probabilities with exactly two decimals; the option texts as keys; a keyless array in listed order), and under SimBench's own prompt with proportions instead of percentages (``SimB.\ proportions'', compared with SimBench's prompt as released). Valid: share of the 2,038 items with a parseable vector of the requested format (a completion that ignores the requested format counts as invalid). $\Delta$: the paired difference in all-source TVD (PC) between the variant and its baseline on the items valid under both, positive = the variant fits worse, with 95\% cluster-bootstrap intervals. Socrates-SFT writes an integer under every variant and is omitted; ``I.'' abbreviates Instruct. Spearman correlation of the checkpoint ranking (PC TVD, checkpoints with valid rate $\ge$ .5 under both prompts) with the baseline ranking: percentages 0.96 (7 checkpoints), two decimals 0.98 (8), option-text keys 0.90 (5), array 0.86 (7), SimBench proportions 0.70 (9).}
+\label{tab:verbalized-variants}
+\end{table*}

@@ -1,0 +1,53 @@
+\begin{table*}[t]
+\centering\scriptsize
+\setlength{\tabcolsep}{1.1pt}
+\begin{tabular}{@{}llccccccc@{}}
+\toprule
+Pair & Readout & Valid & Parent & Tuned & Entropy & Gap ES [interval] & Gap PC [interval] & Bounds ES / PC \\
+\midrule
+Qwen-14B/Socr.-SFT & SimBench next-token & 1.00/1.00 & .507/.406 & .312/.316 & .057/.930 & -.195 [-.213,-.176] & -.090 [-.103,-.077] S & [-.195,-.195] / [-.090,-.090] \\
+Qwen-14B/Socr.-SFT & Native integers & 1.00/1.00 & .476/.382 & .309/.288 & .061/.737 & -.167 [-.185,-.146] & -.094 [-.105,-.083] S & [-.167,-.167] / [-.094,-.094] \\
+Qwen-14B/Socr.-SFT & Native integers, exact & 1.00/1.00 & .450/.364 & .291/.299 & .130/.910 & -.159 [-.180,-.138] & -.066 [-.078,-.054] S & [-.159,-.159] / [-.066,-.066] \\
+Qwen-14B/Socr.-SFT & Sampled letters & 1.00/0.00 & .489/.376 & --/-- & .024/-- & -- & -- & [-.489,+.425] / [-.376,+.525] \\
+Qwen-14B/Socr.-SFT & Verbalized (contr.) & 0.99/0.00 & .214/.202 & --/-- & .661/-- & -- & -- & [-.219,+.701] / [-.206,+.700] \\
+Qwen-14B/Socr.-SFT & Verbalized (SimB.) & 1.00/0.00 & .271/.215 & --/-- & .587/-- & -- & -- & [-.273,+.644] / [-.217,+.687] \\
+Qwen-14B/Socr.-DPO & SimBench next-token & 1.00/1.00 & .507/.406 & .464/.402 & .057/.160 & -.043 [-.060,-.026] & -.004 [-.014,+.005] $\circ$ & [-.043,-.043] / [-.004,-.004] \\
+Qwen-14B/Socr.-DPO & Native integers & 1.00/1.00 & .476/.382 & .459/.368 & .061/.048 & -.017 [-.031,-.003] & -.014 [-.022,-.006] D & [-.017,-.017] / [-.014,-.014] \\
+Qwen-14B/Socr.-DPO & Native integers, exact & 1.00/1.00 & .450/.364 & .435/.353 & .130/.118 & -.015 [-.029,-.001] & -.012 [-.020,-.005] D & [-.015,-.015] / [-.012,-.012] \\
+Qwen-14B/Socr.-DPO & Sampled letters & 1.00/1.00 & .489/.376 & .466/.370 & .024/.051 & -.023 [-.038,-.010] & -.005 [-.012,+.001] $\circ$ & [-.023,-.023] / [-.005,-.005] \\
+Qwen-14B/Socr.-DPO & Verbalized (contr.) & 0.99/1.00 & .214/.202 & .215/.212 & .661/.768 & +.001 [-.013,+.012] & +.010 [+.003,+.018] P & [-.005,+.004] / [+.005,+.015] \\
+Qwen-14B/Socr.-DPO & Verbalized (SimB.) & 1.00/0.94 & .271/.215 & .257/.232 & .587/.734 & -.015 [-.029,-.001] & +.019 [+.012,+.026] P & [-.028,+.013] / [+.002,+.051] \\
+Mistral-7B & SimBench next-token & 1.00/1.00 & .354/.388 & .544/.511 & .965/.145 & +.190 [+.170,+.210] & +.123 [+.108,+.139] B & [+.190,+.190] / [+.123,+.123] \\
+Mistral-7B & Sampled letters & 1.00/1.00 & .445/.455 & .481/.394 & .823/.102 & +.036 [+.012,+.059] & -.061 [-.077,-.045] I & [+.035,+.036] / [-.062,-.060] \\
+Mistral-7B & Verbalized (contr.) & 0.04/0.99 & .469/.342 & .313/.259 & .677/.602 & -.117 [-.212,-.006] & -.033 [-.092,+.028] $\circ$ & [-.586,+.302] / [-.624,+.254] \\
+Mistral-7B & Verbalized (SimB.) & 0.36/0.96 & .466/.450 & .340/.286 & .487/.428 & -.125 [-.164,-.087] & -.156 [-.185,-.127] I & [-.334,+.179] / [-.471,+.160] \\
+Qwen2.5-7B & SimBench next-token & 1.00/1.00 & .310/.326 & .501/.457 & .853/.131 & +.192 [+.171,+.211] & +.131 [+.117,+.144] B & [+.192,+.192] / [+.131,+.131] \\
+Qwen2.5-7B & Sampled letters & 1.00/1.00 & .328/.325 & .484/.403 & .696/.054 & +.155 [+.139,+.174] & +.078 [+.064,+.091] B & [+.155,+.155] / [+.078,+.078] \\
+Qwen2.5-7B & Verbalized (contr.) & 0.48/0.44 & .699/.486 & .290/.291 & .132/.796 & -.322 [-.356,-.287] & -.212 [-.238,-.184] I & [-.584,+.233] / [-.631,+.452] \\
+Qwen2.5-7B & Verbalized (SimB.) & 0.84/0.97 & .484/.518 & .328/.299 & .569/.735 & -.164 [-.197,-.135] & -.230 [-.247,-.213] I & [-.231,-.036] / [-.315,-.103] \\
+Llama-3.2-3B & SimBench next-token & 1.00/1.00 & .400/.443 & .391/.347 & .911/.526 & -.009 [-.032,+.011] & -.096 [-.109,-.084] I & [-.009,-.009] / [-.096,-.096] \\
+Llama-3.2-3B & Sampled letters & 1.00/1.00 & .422/.422 & .446/.414 & .829/.367 & +.024 [-.004,+.054] & -.008 [-.023,+.007] $\circ$ & [+.024,+.024] / [-.008,-.008] \\
+Llama-3.2-3B & Verbalized (contr.) & 0.00/0.96 & --/-- & .392/.330 & --/.702 & -- & -- & [-.532,+.411] / [-.583,+.353] \\
+Llama-3.2-3B & Verbalized (SimB.) & 0.00/0.99 & --/-- & .370/.323 & --/.603 & -- & -- & [-.549,+.376] / [-.583,+.330] \\
+OLMo-2-7B & SimBench next-token & 1.00/1.00 & .360/.395 & .450/.463 & .943/.552 & +.090 [+.075,+.106] & +.068 [+.057,+.079] B & [+.090,+.090] / [+.068,+.068] \\
+OLMo-2-7B & Sampled letters & 0.99/1.00 & .386/.403 & .422/.329 & .720/.317 & +.035 [+.019,+.052] & -.076 [-.087,-.066] I & [+.033,+.039] / [-.078,-.071] \\
+OLMo-2-7B & Verbalized (contr.) & 0.00/0.92 & --/.959 & .379/.384 & .000/.766 & -- & -- & [-.559,+.415] / [-.551,+.437] \\
+OLMo-2-7B & Verbalized (SimB.) & 0.11/1.00 & .546/.389 & .497/.483 & .549/.678 & -.023 [-.071,+.021] & -.025 [-.060,+.011] $\circ$ & [-.376,+.462] / [-.365,+.438] \\
+Qwen2.5-14B & SimBench next-token & 1.00/1.00 & .328/.332 & .507/.406 & .799/.057 & +.179 [+.162,+.196] & +.074 [+.062,+.085] B & [+.179,+.179] / [+.074,+.074] \\
+Llama-3.1-8B & SimBench next-token & 1.00/1.00 & .383/.395 & .372/.322 & .951/.497 & -.011 [-.028,+.005] & -.073 [-.086,-.061] I & [-.011,-.011] / [-.073,-.073] \\
+Llama-3.1-8B & Verbalized (SimB.) & --/1.00 & --/-- & .355/.282 & --/-- & -- & -- & -- \\
+Qwen3-8B & SimBench next-token & 1.00/1.00 & .299/.307 & .458/.374 & .821/.065 & +.159 [+.142,+.178] & +.067 [+.056,+.078] B & [+.159,+.159] / [+.067,+.067] \\
+Qwen3-8B & Verbalized (SimB.) & --/1.00 & --/-- & .314/.264 & --/.549 & -- & -- & -- \\
+OLMo-2-13B & SimBench next-token & 1.00/1.00 & .300/.321 & .358/.319 & .896/.378 & +.057 [+.042,+.074] & -.002 [-.013,+.009] $\circ$ & [+.057,+.057] / [-.002,-.002] \\
+OLMo-2-13B & Verbalized (SimB.) & --/1.00 & --/-- & .327/.278 & --/-- & -- & -- & -- \\
+OLMo-2-7B Base/SFT & SimBench next-token & 1.00/1.00 & .360/.395 & .367/.402 & .943/.780 & +.007 [-.004,+.018] & +.006 [-.002,+.015] $\circ$ & [+.007,+.007] / [+.006,+.006] \\
+OLMo-2-7B SFT/DPO & SimBench next-token & 1.00/1.00 & .373/.399 & .440/.464 & .825/.584 & +.066 [+.055,+.078] & +.065 [+.055,+.076] S & [+.066,+.066] / [+.065,+.065] \\
+OLMo-2-7B DPO/Inst. & SimBench next-token & 1.00/1.00 & .399/.407 & .450/.463 & .687/.552 & +.051 [+.041,+.061] & +.056 [+.049,+.063] D & [+.051,+.051] / [+.056,+.056] \\
+Qwen3-4B/OSim & SimBench next-token & 1.00/1.00 & .313/.341 & .313/.342 & .866/.852 & -.000 [-.007,+.006] & +.001 [-.004,+.007] $\circ$ & [-.000,-.000] / [+.001,+.001] \\
+Qwen3-8B/OSim & SimBench next-token & 1.00/1.00 & .299/.307 & .271/.273 & .821/.876 & -.028 [-.046,-.014] & -.033 [-.039,-.028] O & [-.028,-.028] / [-.033,-.033] \\
+Mistral-v0.1/SubPOP & SimBench next-token & 1.00/1.00 & .363/.405 & .303/.340 & .946/.906 & -.060 [-.066,-.054] & -.065 [-.070,-.060] S & [-.060,-.060] / [-.065,-.065] \\
+\bottomrule
+\end{tabular}
+\caption{Generated-answer readouts for every pair (re-implementation runs). Valid: share of items with a parseable answer (parent/tuned); losses are all-source TVD over each checkpoint's valid items; Entropy: mean normalized entropy of the valid predictions (the human distributions average .66); gaps and 95\% cluster-bootstrap intervals are paired over items valid for both checkpoints (omitted when fewer than 50); gap bounds let every invalid prediction range over the whole probability simplex (Appendix~\ref{app:controls}) and coincide with the point when both checkpoints are valid everywhere. SimBench next-token: each checkpoint in its own serialization. Native integers: Socrates' training protocol (50 samples, $T{=}.6$, top-$p{=}.9$; two further seeds give Socrates-SFT gaps of $-.165$ and $-.170$ under ES and $-.095$ and $-.096$ under PC), and the exact next-token readout of the same prompt (every complete answer ``$k$\texttt{<|im\_end|>}'', no sampling). SubPOP: Appendix Table~\ref{tab:subpop}. Sampled letters: 32 samples of the shared prompt. Verbalized: JSON probability vectors under the controlled prompt and under SimBench's prompt (for Llama-3.1-8B, Qwen3-8B, and OLMo-2-13B the SimBench prompt was run for the Instruct checkpoint only; Qwen2.5-14B-Instruct's SimBench-prompt run appears in the Socrates rows).}
+\label{tab:generation}
+\end{table*}

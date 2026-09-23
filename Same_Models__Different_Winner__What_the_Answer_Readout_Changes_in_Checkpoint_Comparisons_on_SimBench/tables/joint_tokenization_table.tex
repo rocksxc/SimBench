@@ -1,0 +1,33 @@
+\begin{table*}[t]
+\centering\scriptsize
+\setlength{\tabcolsep}{2.5pt}
+\begin{tabular}{@{}lllcccc@{}}
+\toprule
+& Moved & First & \multicolumn{2}{c}{Summed} & \multicolumn{2}{c}{Length-norm.} \\
+\cmidrule(lr){4-5}\cmidrule(l){6-7}
+Pair & ws. & token & Separate & Joint & Separate & Joint \\
+\midrule
+Qwen-14B/Socr.-SFT & \texttt{\textbackslash n} & newline & P/P +.213 & P/P +.213 & P/P +.208 & P/P +.186 \\
+Qwen-14B/Socr.-DPO & \texttt{\textbackslash n} & newline & D/$\circ$ -.003 & D/$\circ$ -.003 & P/P +.125 & P/P +.130 \\
+\addlinespace[2pt]
+Mistral-7B & none & label & B/I -.016 & B/I -.014 & I/I -.104 & I/I -.103 \\
+Qwen2.5-7B & \texttt{\textbackslash n} & newline & B/B +.072 & B/B +.070 & B/B +.017 & B/B +.018 \\
+Llama-3.2-3B & \texttt{\textbackslash n\textbackslash n} & newline & I/I -.301 & I/I -.301 & I/I -.134 & I/I -.127 \\
+OLMo-2-7B & \texttt{\textbackslash n} & label & I/I -.375 & I/I -.113 & I/I -.149 & I/I -.073 \\
+\addlinespace[2pt]
+Qwen2.5-14B & \texttt{\textbackslash n} & newline & B/I -.069 & B/I -.068 & B/I -.051 & B/I -.032 \\
+Llama-3.1-8B & \texttt{\textbackslash n\textbackslash n} & newline & I/I -.375 & I/I -.374 & I/I -.063 & I/I -.065 \\
+Qwen3-8B & \texttt{\textbackslash n\textbackslash n} & newline & B/$\circ$ -.006 & B/$\circ$ -.003 & B/I -.043 & $\circ$/I -.078 \\
+OLMo-2-13B & \texttt{\textbackslash n} & label & B/I -.020 & B/B +.153 & B/B +.025 & B/B +.070 \\
+\addlinespace[2pt]
+OLMo-2-7B Base/SFT & \texttt{\textbackslash n} & label & S/S -.408 & S/S -.129 & S/S -.133 & S/S -.059 \\
+OLMo-2-7B SFT/DPO & \texttt{\textbackslash n} & label & S/S +.031 & S/S +.052 & S/S +.012 & S/S +.011 \\
+OLMo-2-7B DPO/Inst. & \texttt{\textbackslash n} & label & $\circ$/$\circ$ +.002 & I/I -.036 & I/I -.028 & I/I -.025 \\
+\addlinespace[2pt]
+Qwen3-4B/OSim & \texttt{\textbackslash n} & newline & B/B +.229 & B/B +.227 & B/B +.116 & B/B +.095 \\
+Qwen3-8B/OSim & \texttt{\textbackslash n} & newline & B/B +.088 & B/B +.094 & B/B +.076 & B/B +.050 \\
+\bottomrule
+\end{tabular}
+\caption{Joint encoding under lm-eval-harness's rule (third follow-up run; commit \texttt{ad8737ae}): the prefix's trailing whitespace is moved onto the continuation, prefix and prefix+candidate are encoded jointly, and the continuation is the part beyond the encoded prefix; compared with the package's separate encoding (Appendix~\ref{app:prompts}) under the chat template with space-prefixed candidates. ``Moved ws.'' is the whitespace the template ends with, which the rule scores as the first continuation token: ``First token'' is what the rule scores first: for 9 pairs the moved newline, identical for every candidate, so the first-token readout is uniform (gap 0, not shown) and the label is scored second; for the OLMo-2 pairs the tokenizer keeps the newline in the prefix and the label comes first, and Mistral's template ends without whitespace, so its joint continuation is the space-prefixed candidate itself. Cells give the ES/PC winner symbols and the PC gap (tuned minus parent TVD; letters as in Table~\ref{tab:winner-map-15}). Against separate encoding, the joint rule changes 4 of the 30 pair--weighting units under the summed or the length-normalized readout (0 decisively; summed alone 3/0, length-normalized alone 1/0).}
+\label{tab:joint-tokenization}
+\end{table*}

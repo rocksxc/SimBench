@@ -1,0 +1,32 @@
+\begin{table*}[t]
+\centering\scriptsize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lrrrrrr@{}}
+\toprule
+Manipulation (condition B $-$ condition A) & Cells & Mean $\Delta$ [95\% items] & Mean $|\Delta|$ & SD over pairs & Share $|\Delta|\ge.05$ & Mean $\Delta$ [95\% families] \\
+\midrule
+Reduction: summed $-$ first (space) & 30 & +.024 [+.022, +.027] & .108 & .152 & .57 & [-.018, +.119] \\
+Reduction: length-norm.\ $-$ first (space) & 30 & +.069 [+.065, +.072] & .098 & .113 & .60 & [+.013, +.147] \\
+Reduction: length-norm.\ $-$ summed (space) & 30 & +.044 [+.041, +.048] & .104 & .135 & .63 & [-.042, +.114] \\
+Reduction: char-norm.\ $-$ length-norm.\ (space) & 30 & +.003 [-.001, +.006] & .041 & .053 & .30 & [-.031, +.030] \\
+Reduction: summed $-$ first (nospace) & 30 & +.088 [+.085, +.090] & .104 & .121 & .73 & [+.034, +.178] \\
+Reduction: length-norm.\ $-$ first (nospace) & 30 & +.067 [+.063, +.071] & .100 & .126 & .50 & [+.003, +.129] \\
+Reduction: length-norm.\ $-$ summed (nospace) & 30 & -.021 [-.024, -.017] & .082 & .091 & .77 & [-.084, +.020] \\
+Reduction: char-norm.\ $-$ length-norm.\ (nospace) & 30 & -.007 [-.010, -.005] & .031 & .043 & .23 & [-.038, +.012] \\
+Reduction: summed $-$ first (own) & 30 & +.034 [+.032, +.037] & .083 & .117 & .57 & [-.000, +.107] \\
+Reduction: length-norm.\ $-$ first (own) & 30 & -.023 [-.025, -.021] & .091 & .127 & .60 & [-.084, +.037] \\
+Reduction: length-norm.\ $-$ summed (own) & 30 & -.057 [-.060, -.055] & .086 & .084 & .73 & [-.119, -.033] \\
+Reduction: char-norm.\ $-$ length-norm.\ (own) & 30 & -.012 [-.014, -.009] & .035 & .046 & .23 & [-.045, +.008] \\
+Candidates: no space $-$ space & 90 & +.002 [+.000, +.003] & .054 & .047 & .41 & [-.031, +.033] \\
+Event: option text $-$ ID+option & 90 & +.036 [+.032, +.041] & .154 & .194 & .71 & [-.068, +.173] \\
+Event: ID only $-$ ID+option & 90 & -.067 [-.070, -.065] & .100 & .106 & .54 & [-.151, -.012] \\
+Serialization: plain $-$ chat & 90 & +.065 [+.061, +.068] & .097 & .101 & .52 & [+.008, +.101] \\
+Serialization: own $-$ chat & 90 & +.069 [+.066, +.073] & .085 & .073 & .51 & [+.034, +.122] \\
+Weighting: \PC{} $-$ \ES{} & 45 & -.025 [-.032, -.018] & .046 & .054 & .36 & [-.066, -.004] \\
+Frame: omit DICES $-$ full & 90 & +.033 [+.031, +.036] & .069 & .078 & .53 & [-.001, +.085] \\
+Sharpness: matched $-$ raw & 90 & -.041 [-.043, -.039] & .085 & .080 & .62 & [-.107, -.015] \\
+\bottomrule
+\end{tabular}
+\caption{Effect sizes of the manipulations of Table~\ref{tab:what-changes} on the paired gap, in TVD units. Each cell is one pair and weighting (and one same-tensor readout where the manipulation is applied to each readout); $\Delta$ is the gap under condition B minus the gap under condition A, aggregated with the shared cluster-bootstrap draws. Columns: number of cells; mean signed $\Delta$ with its 95\% item-level interval; mean $|\Delta|$; standard deviation of the pair-mean $\Delta$ over the 15 pairs (a random-effect summary of how much the manipulation's effect varies by pair); share of cells with $|\Delta|\ge.05$; 95\% interval of the mean over 10,000 resamples of the 10 checkpoint families. A balanced sum-of-squares partition of the 270 same-tensor gaps (15 pairs $\times$ 3 readouts $\times$ 3 conditions $\times$ 2 weightings) gives pair identity 51\%, the readout, condition, and weighting main effects 2.5\%, 6.0\%, and 0.9\%, their interactions with the pair 21\%, 7\%, and 4\%, and the remaining interactions 8\%: the manipulations act mainly through pair-specific responses, which is why winner counts, not main effects, summarize them.}
+\label{tab:effect-sizes}
+\end{table*}

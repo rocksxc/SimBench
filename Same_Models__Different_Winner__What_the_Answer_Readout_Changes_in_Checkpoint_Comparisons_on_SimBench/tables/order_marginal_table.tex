@@ -1,0 +1,72 @@
+\begin{table*}[t]
+\centering\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}llcccc@{}}
+\toprule
+Pair & Readout & \multicolumn{2}{c}{Published order} & \multicolumn{2}{c}{Order-averaged (five random orders)} \\
+\cmidrule(lr){3-4}\cmidrule(l){5-6} & & ES & PC & ES & PC \\
+\midrule
+Qwen-14B/Socr.-SFT & First token & -.177 S & -.061 S & -.160 [-.174,-.145] S (-.167 to -.153) & -.052 [-.063,-.041] S (-.057 to -.048) \\
+ & Summed & +.135 P & +.213 P & +.099 [.087,.113] P (.090 to .104) & +.131 [.120,.141] P (.126 to .135) \\
+ & Length-norm. & +.165 P & +.208 P & +.179 [.164,.194] P (.173 to .186) & +.211 [.201,.221] P (.206 to .217) \\
+\addlinespace[1pt]
+Qwen-14B/Socr.-DPO & First token & -.047 D & -.012 D & -.022 [-.031,-.012] D (-.027 to -.019) & -.008 [-.014,-.003] D (-.014 to -.005) \\
+ & Summed & -.041 D & -.003 $\circ$ & -.019 [-.028,-.009] D (-.023 to -.016) & -.004 [-.010,.002] $\circ$ (-.009 to -.001) \\
+ & Length-norm. & +.065 P & +.125 P & +.056 [.048,.065] P (.048 to .067) & +.092 [.084,.099] P (.089 to .097) \\
+\addlinespace[1pt]
+Mistral-7B & First token & +.031 B & -.037 I & +.095 [.082,.109] B (.091 to .103) & +.020 [.007,.033] B (.011 to .028) \\
+ & Summed & +.057 B & -.016 I & +.101 [.087,.115] B (.094 to .106) & +.022 [.009,.035] B (.010 to .029) \\
+ & Length-norm. & -.052 I & -.104 I & -.023 [-.035,-.011] I (-.026 to -.021) & -.069 [-.077,-.061] I (-.075 to -.066) \\
+\addlinespace[1pt]
+Qwen2.5-7B & First token & +.131 B & +.052 B & +.110 [.093,.127] B (.106 to .117) & +.036 [.022,.050] B (.030 to .040) \\
+ & Summed & +.136 B & +.072 B & +.105 [.089,.121] B (.101 to .109) & +.040 [.027,.054] B (.032 to .048) \\
+ & Length-norm. & +.066 B & +.017 B & +.096 [.081,.110] B (.092 to .100) & +.068 [.058,.079] B (.066 to .072) \\
+\addlinespace[1pt]
+Llama-3.2-3B & First token & -.207 I & -.238 I & +.010 [-.000,.020] $\circ$ (-.006 to .018) & +.021 [.011,.032] B (.005 to .032) \\
+ & Summed & -.293 I & -.301 I & -.067 [-.077,-.057] I (-.082 to -.060) & -.029 [-.040,-.017] I (-.045 to -.015) \\
+ & Length-norm. & -.135 I & -.134 I & -.033 [-.038,-.028] I (-.040 to -.026) & -.020 [-.027,-.014] I (-.029 to -.010) \\
+\addlinespace[1pt]
+OLMo-2-7B & First token & -.085 I & -.128 I & +.062 [.050,.073] B (.037 to .070) & +.038 [.030,.047] B (.024 to .047) \\
+ & Summed & -.312 I & -.375 I & -.074 [-.085,-.063] I (-.098 to -.060) & -.066 [-.078,-.054] I (-.088 to -.049) \\
+ & Length-norm. & -.124 I & -.149 I & -.010 [-.017,-.003] I (-.024 to .000) & -.010 [-.017,-.003] I (-.020 to -.001) \\
+\addlinespace[1pt]
+Qwen2.5-14B & First token & +.075 B & -.099 I & +.109 [.095,.124] B (.097 to .121) & -.013 [-.027,.000] $\circ$ (-.022 to -.004) \\
+ & Summed & +.096 B & -.069 I & +.124 [.110,.139] B (.114 to .135) & +.005 [-.009,.019] $\circ$ (-.003 to .013) \\
+ & Length-norm. & +.036 B & -.051 I & +.044 [.028,.060] B (.037 to .049) & -.039 [-.053,-.025] I (-.045 to -.033) \\
+\addlinespace[1pt]
+Llama-3.1-8B & First token & -.291 I & -.333 I & -.114 [-.124,-.103] I (-.127 to -.101) & -.123 [-.134,-.112] I (-.137 to -.108) \\
+ & Summed & -.356 I & -.375 I & -.176 [-.186,-.165] I (-.191 to -.162) & -.157 [-.169,-.146] I (-.175 to -.138) \\
+ & Length-norm. & -.056 I & -.063 I & +.001 [-.005,.007] $\circ$ (-.007 to .006) & +.002 [-.003,.007] $\circ$ (-.003 to .009) \\
+\addlinespace[1pt]
+Qwen3-8B & First token & -.018 $\circ$ & -.128 I & +.061 [.048,.073] B (.052 to .072) & -.055 [-.067,-.044] I (-.061 to -.049) \\
+ & Summed & +.098 B & -.006 $\circ$ & +.116 [.103,.128] B (.109 to .123) & +.003 [-.008,.015] $\circ$ (-.004 to .009) \\
+ & Length-norm. & +.032 B & -.043 I & +.061 [.046,.077] B (.059 to .063) & -.010 [-.020,.000] $\circ$ (-.015 to -.004) \\
+\addlinespace[1pt]
+OLMo-2-13B & First token & -.152 I & -.175 I & -.032 [-.039,-.024] I (-.033 to -.030) & -.047 [-.054,-.041] I (-.054 to -.042) \\
+ & Summed & +.041 B & -.020 I & +.129 [.120,.139] B (.117 to .138) & +.136 [.128,.144] B (.124 to .142) \\
+ & Length-norm. & +.021 B & +.025 B & +.080 [.074,.085] B (.078 to .083) & +.090 [.086,.094] B (.087 to .094) \\
+\addlinespace[1pt]
+OLMo-2-7B Base/SFT & First token & -.148 S & -.131 S & -.049 [-.058,-.039] S (-.067 to -.041) & -.033 [-.039,-.026] S (-.043 to -.026) \\
+ & Summed & -.392 S & -.408 S & -.193 [-.203,-.184] S (-.213 to -.180) & -.166 [-.177,-.155] S (-.182 to -.152) \\
+ & Length-norm. & -.123 S & -.133 S & -.044 [-.048,-.039] S (-.055 to -.038) & -.037 [-.043,-.032] S (-.046 to -.032) \\
+\addlinespace[1pt]
+OLMo-2-7B SFT/DPO & First token & +.058 S & +.010 S & +.081 [.074,.089] S (.080 to .082) & +.058 [.055,.062] S (.055 to .061) \\
+ & Summed & +.077 S & +.031 S & +.081 [.075,.088] S (.078 to .085) & +.060 [.056,.065] S (.057 to .063) \\
+ & Length-norm. & +.015 S & +.012 S & +.026 [.021,.030] S (.023 to .030) & +.024 [.022,.026] S (.022 to .028) \\
+\addlinespace[1pt]
+OLMo-2-7B DPO/Inst. & First token & +.005 D & -.006 I & +.029 [.026,.033] D (.024 to .032) & +.013 [.011,.015] D (.012 to .014) \\
+ & Summed & +.003 $\circ$ & +.002 $\circ$ & +.039 [.034,.044] D (.035 to .043) & +.040 [.037,.043] D (.037 to .044) \\
+ & Length-norm. & -.016 I & -.028 I & +.008 [.006,.010] D (.006 to .010) & +.004 [.002,.005] D (.002 to .005) \\
+\addlinespace[1pt]
+Qwen3-4B/OSim & First token & -.013 O & -.008 O & -.040 [-.044,-.035] O (-.044 to -.034) & -.060 [-.064,-.056] O (-.063 to -.058) \\
+ & Summed & +.249 B & +.229 B & +.221 [.210,.232] B (.216 to .227) & +.205 [.196,.214] B (.197 to .215) \\
+ & Length-norm. & +.121 B & +.116 B & +.124 [.118,.129] B (.120 to .130) & +.126 [.120,.131] B (.122 to .135) \\
+\addlinespace[1pt]
+Qwen3-8B/OSim & First token & -.003 $\circ$ & +.031 B & -.033 [-.039,-.027] O (-.038 to -.029) & -.040 [-.045,-.034] O (-.041 to -.037) \\
+ & Summed & +.064 B & +.088 B & +.041 [.034,.048] B (.037 to .046) & +.049 [.041,.056] B (.043 to .055) \\
+ & Length-norm. & +.064 B & +.076 B & +.047 [.043,.051] B (.044 to .050) & +.053 [.049,.056] B (.052 to .054) \\
+\bottomrule
+\end{tabular}
+\caption{Option order on all 15 pairs, chat template with space-prefixed candidates (the extension pairs' orders from the third follow-up run; Socrates-DPO: four random orders, its parent copied from the SFT pair). Gaps are tuned minus parent TVD (all sources, temperature 1); the order-averaged column scores every item under five seeded random permutations of its options (the same permutations for both checkpoints) and averages the item's loss before the paired cluster bootstrap (95\% intervals; in parentheses the range of the five single-order gaps). Letters as in Table~\ref{tab:winner-map-15}. The permutation is seeded by the seed and the item id; permuting an ordinal scale also changes the item, so this column is an average over orders, not a cleaner estimate of the published one. Against the published order, the order-averaged gaps change 15 of the 30 pair--weighting units of Table~\ref{tab:what-changes} (1 decisively).}
+\label{tab:order-marginal}
+\end{table*}

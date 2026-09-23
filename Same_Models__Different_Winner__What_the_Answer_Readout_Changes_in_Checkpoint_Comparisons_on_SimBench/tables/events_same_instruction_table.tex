@@ -1,0 +1,33 @@
+\begin{table*}[t]
+\centering\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}lcccccccc@{}}
+\toprule
+& ID+option & \multicolumn{3}{c}{Option text, matching instruction} & \multicolumn{3}{c}{Option text, same instruction} & Coverage P/T \\
+\cmidrule(lr){2-2}\cmidrule(lr){3-5}\cmidrule(lr){6-8}\cmidrule(l){9-9}
+Pair & Summed & First & Summed & Len.-norm. & First & Summed & Len.-norm. & same instr. \\
+\midrule
+Qwen-14B/Socr.-SFT & P/P +.213 & S/S -.228 & S/S -.208 & S/S -.188 & S/S -.325 & S/S -.301 & S/S -.292 & .000/.000 \\
+Qwen-14B/Socr.-DPO & D/$\circ$ -.003 & D/D -.152 & D/D -.146 & D/D -.138 & D/D -.224 & D/D -.221 & D/D -.219 & .000/.000 \\
+\addlinespace[2pt]
+Mistral-7B & B/I -.016 & B/$\circ$ -.008 & B/B +.051 & I/I -.070 & I/I -.154 & I/I -.112 & B/B +.019 & .018/.037 \\
+Qwen2.5-7B & B/B +.072 & I/I -.158 & I/I -.165 & I/I -.168 & B/I -.049 & B/I -.061 & B/I -.046 & .000/.000 \\
+Llama-3.2-3B & I/I -.301 & B/B +.161 & B/B +.159 & B/B +.157 & B/B +.080 & B/B +.075 & B/B +.086 & .000/.000 \\
+OLMo-2-7B & I/I -.375 & $\circ$/I -.092 & $\circ$/I -.100 & I/I -.083 & I/I -.096 & I/I -.100 & I/I -.097 & .002/.000 \\
+\addlinespace[2pt]
+Qwen2.5-14B & B/I -.069 & B/B +.096 & B/B +.103 & B/B +.087 & B/B +.214 & B/B +.220 & B/B +.213 & .003/.000 \\
+Llama-3.1-8B & I/I -.375 & B/B +.186 & B/B +.194 & B/B +.190 & B/B +.152 & B/B +.168 & B/B +.190 & .002/.000 \\
+Qwen3-8B & B/$\circ$ -.006 & B/B +.018 & B/B +.035 & B/B +.081 & B/B +.241 & B/B +.265 & B/B +.314 & .013/.000 \\
+OLMo-2-13B & B/I -.020 & $\circ$/I -.079 & B/I -.054 & B/I -.054 & I/I -.117 & $\circ$/I -.091 & $\circ$/I -.102 & .003/.000 \\
+\addlinespace[2pt]
+OLMo-2-7B Base/SFT & S/S -.408 & B/B +.009 & B/$\circ$ +.001 & B/B +.016 & $\circ$/S -.028 & $\circ$/S -.038 & S/S -.030 & .002/.000 \\
+OLMo-2-7B SFT/DPO & S/S +.031 & D/D -.084 & D/D -.084 & D/D -.080 & D/D -.052 & $\circ$/D -.050 & D/D -.042 & .000/.000 \\
+OLMo-2-7B DPO/Inst. & $\circ$/$\circ$ +.002 & I/I -.017 & I/I -.016 & I/I -.019 & I/I -.015 & I/I -.013 & $\circ$/I -.025 & .000/.000 \\
+\addlinespace[2pt]
+Qwen3-4B/OSim & B/B +.229 & $\circ$/O -.027 & O/O -.032 & $\circ$/O -.015 & O/O -.033 & O/O -.042 & $\circ$/O -.032 & .000/.000 \\
+Qwen3-8B/OSim & B/B +.088 & B/B +.025 & B/B +.040 & B/B +.065 & B/B +.105 & B/B +.116 & B/B +.149 & .001/.000 \\
+\bottomrule
+\end{tabular}
+\caption{The text-only event with the instruction held fixed (third follow-up run), chat template with space-prefixed candidates, all 15 pairs. The matching-instruction columns repeat Table~\ref{tab:events-15} (the system message asks for the option text); the same-instruction columns score the option text alone under the unchanged ID+option instruction (``Respond with exactly one answer ID, a tab, and its corresponding answer option''), so the two prompts differ only in the scored string. Cells give the ES/PC winner symbols and the PC gap (tuned minus parent TVD; letters as in Table~\ref{tab:winner-map-15}); coverage is the mass on the first candidate tokens (parent/tuned) under the same-instruction event. Against the ID+option event, the same-instruction event changes 24 of 30 pair--weighting units (12 decisively) and the matching-instruction event 26 (12); the two text-only events differ from each other in 10 units (3 decisively).}
+\label{tab:events-same-instruction}
+\end{table*}

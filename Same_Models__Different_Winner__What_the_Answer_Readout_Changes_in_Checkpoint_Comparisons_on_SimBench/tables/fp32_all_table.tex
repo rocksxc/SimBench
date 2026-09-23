@@ -1,0 +1,32 @@
+\begin{table*}[t]
+\centering\scriptsize
+\setlength{\tabcolsep}{2.5pt}
+\begin{tabular}{@{}lrrrrrr@{}}
+\toprule
+& \multicolumn{4}{c}{FP32 (H100) vs.\ bfloat16 (A100)} & \multicolumn{2}{c}{bfloat16 rerun (H100)} \\
+\cmidrule(lr){2-5}\cmidrule(l){6-7}
+Pair & Cells & Max $|\Delta|$ & Sym. & Dec. & Max $|\Delta|$ & Sym. \\
+\midrule
+Qwen-14B/Socr.-SFT & 18 & .002 & 0 & 0 & .001 & 0 \\
+Qwen-14B/Socr.-DPO & 18 & .002 & 1 & 0 & .001 & 0 \\
+Mistral-7B & 18 & .002 & 0 & 0 & .001 & 0 \\
+Qwen2.5-7B & 18 & .135 & 5 & 1 & .005 & 0 \\
+Llama-3.2-3B & 18 & .005 & 0 & 0 & .001 & 0 \\
+OLMo-2-7B & 18 & .003 & 0 & 0 & .001 & 0 \\
+Qwen2.5-14B & 18 & .003 & 0 & 0 & .002 & 0 \\
+Llama-3.1-8B & 18 & .002 & 0 & 0 & .002 & 0 \\
+Qwen3-8B & 18 & .004 & 2 & 0 & .003 & 0 \\
+OLMo-2-13B & 18 & .004 & 0 & 0 & .002 & 0 \\
+OLMo-2-7B Base/SFT & 18 & .003 & 0 & 0 & .001 & 0 \\
+OLMo-2-7B SFT/DPO & 18 & .001 & 0 & 0 & .001 & 0 \\
+OLMo-2-7B DPO/Inst. & 18 & .001 & 0 & 0 & .001 & 0 \\
+Qwen3-4B/OSim & 18 & .004 & 0 & 0 & .003 & 0 \\
+Qwen3-8B/OSim & 18 & .013 & 1 & 0 & .006 & 0 \\
+Mistral-7B-v0.1/SubPOP & 12 & .001 & 0 & 0 & -- & -- \\
+\midrule
+All & 282 & -- & 9 & 1 & .006 & 0 \\
+\bottomrule
+\end{tabular}
+\caption{Numerical floor per pair (third follow-up run). Left: every all-source gap of the pair under the chat template with space and with no-space candidates and under the plain prefix (SubPOP: plain and plain+BOS), three same-tensor readouts, both weightings, rerun with FP32 weights on an H100 against the bfloat16 panel run on an A100; Max $|\Delta|$ is the largest absolute change of a gap in TVD, Sym.\ the number of cells whose winner symbol changes (including to or from $\circ$), Dec.\ the number that change decisively (opposite letters, both gaps at least .05). The FP32 runs differ from the panel in arithmetic precision and in hardware. Right: the same chat prompt re-scored in bfloat16 on the H100 (the unconditional-PMI pass of Table~\ref{tab:dc-pmi-uncond} shares its prefix and candidates), six cells per pair, which isolates the hardware and kernel part of the floor. Qwen2.5-7B's cells, the least stable of the panel, are read with its floor in mind (Appendix Table~\ref{tab:fp32}).}
+\label{tab:fp32-all}
+\end{table*}

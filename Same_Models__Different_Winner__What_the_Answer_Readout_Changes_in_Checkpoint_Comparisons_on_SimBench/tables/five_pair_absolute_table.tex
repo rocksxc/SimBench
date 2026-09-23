@@ -1,0 +1,50 @@
+\begin{table*}[t]
+\centering
+\small
+\setlength{\tabcolsep}{2.5pt}
+\begin{tabular}{@{}llrrr@{\hspace{8pt}}rrr@{}}
+\toprule
+& & \multicolumn{3}{c}{Equal source (ES)} &
+    \multicolumn{3}{c}{Pooled cluster (PC)} \\
+\cmidrule(lr){3-5}\cmidrule(l){6-8}
+Pair & Reduction & Parent & Tuned & $\Delta$ & Parent & Tuned & $\Delta$ \\
+\midrule
+Qwen-14B/Socrates & First token & .4778 & .2982 & $-.1796$ & .3668 & .3004 & $-.0664$ \\
+& Summed sequence & .4786 & .6088 & $+.1303$ & .3674 & .5739 & $+.2065$ \\
+& Length normalized & .4276 & .5880 & $+.1604$ & .3877 & .5865 & $+.1988$ \\
+& DC-PMI & .5076 & .6907 & $+.1830$ & .3985 & .6881 & $+.2895$ \\
+\addlinespace[2pt]
+Mistral-7B & First token & .4210 & .4340 & $+.0130$ & .4158 & .3560 & $-.0598$ \\
+& Summed sequence & .3869 & .4345 & $+.0475$ & .3801 & .3549 & $-.0251$ \\
+& Length normalized & .3868 & .3335 & $-.0533$ & .4176 & .3109 & $-.1068$ \\
+& DC-PMI & .5975 & .6883 & $+.0908$ & .6445 & .6914 & $+.0469$ \\
+\addlinespace[2pt]
+Qwen-7B & First token & .3241 & .4476 & $+.1235$ & .3349 & .3783 & $+.0434$ \\
+& Summed sequence & .3316 & .4569 & $+.1253$ & .3268 & .3791 & $+.0523$ \\
+& Length normalized & .4229 & .4965 & $+.0736$ & .4552 & .4826 & $+.0273$ \\
+& DC-PMI & .6489 & .5281 & $-.1208$ & .6987 & .4510 & $-.2477$ \\
+\addlinespace[2pt]
+Llama-3.2-3B & First token & .5474 & .3309 & $-.2166$ & .5813 & .3279 & $-.2533$ \\
+& Summed sequence & .6626 & .3526 & $-.3100$ & .6770 & .3539 & $-.3231$ \\
+& Length normalized & .5316 & .3928 & $-.1388$ & .5792 & .4401 & $-.1391$ \\
+& DC-PMI & .6780 & .7057 & $+.0276$ & .7417 & .6932 & $-.0485$ \\
+\addlinespace[2pt]
+OLMo-2-7B & First token & .4325 & .3631 & $-.0693$ & .4074 & .2906 & $-.1168$ \\
+& Summed sequence & .7248 & .4457 & $-.2791$ & .7144 & .3736 & $-.3408$ \\
+& Length normalized & .5172 & .4083 & $-.1089$ & .5560 & .4228 & $-.1332$ \\
+& DC-PMI & .6478 & .6742 & $+.0264$ & .6574 & .6599 & $+.0025$ \\
+\midrule
+\multicolumn{2}{@{}l}{Uniform predictor (all pairs)} & .3561 & .3561 & --- & .3945 & .3945 & --- \\
+\bottomrule
+\end{tabular}
+\caption{Absolute TVD to the human distributions and the tuned-minus-parent gap
+($\Delta$) for every readout on the shared 2,038-item frame. The first three
+reductions use each checkpoint's own token scores; DC-PMI adds a content-free
+denominator pass. Lower TVD is better, so negative $\Delta$ favors the tuned
+checkpoint. ``Parent'' is Qwen2.5-14B-Instruct for the Socrates pair; for the
+other four pairs it is the Base model scored under the shared Instruct chat
+template, and ``Tuned'' is the Instruct model. The uniform predictor depends
+only on the human targets. Bootstrap intervals for every gap are in
+Appendix Tables~\ref{tab:five-pair-gap-ranges} and~\ref{tab:dc-pmi-five-pair}.}
+\label{tab:five-pair-absolute}
+\end{table*}

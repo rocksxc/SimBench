@@ -1,0 +1,16 @@
+\begin{table}[t]
+\centering\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+Pair & FP32 & SDPA & KV cache & Single \\
+\midrule
+Mistral-7B & .010/.012 & .011/.015 & .012/.015 & .012/.016 \\
+Qwen2.5-7B & .100/.194 & .099/.193 & .026/.045 & .034/.053 \\
+Llama-3.2-3B & .010/.013 & .012/.017 & .012/.017 & .014/.018 \\
+OLMo-2-7B & .007/.013 & .009/.016 & .010/.017 & .010/.018 \\
+\bottomrule
+\end{tabular}
+\caption{Numerical floor within one machine: mean per-item TVD (first-token/summed readouts) between the bfloat16 batched baseline and the same scoring under FP32 weights, SDPA attention, a KV-cached prefix, or one candidate per forward pass, on 100 items per source (both checkpoints, chat and plain).}
+\label{tab:e0b}
+\end{table}

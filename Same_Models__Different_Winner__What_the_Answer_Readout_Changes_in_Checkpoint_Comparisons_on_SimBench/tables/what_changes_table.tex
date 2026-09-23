@@ -1,0 +1,23 @@
+\begin{table*}[t]
+\centering\scriptsize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lrrrrrrrrrrrr@{}}
+\toprule
+& \multicolumn{3}{c}{Own serialization} & \multicolumn{3}{c}{Shared, no-space cand.} & \multicolumn{3}{c}{Shared, space (pre-spec.)} & \multicolumn{3}{c}{Shared plain prefix} \\
+\cmidrule(lr){2-4}\cmidrule(lr){5-7}\cmidrule(lr){8-10}\cmidrule(l){11-13}
+What is varied & Chg. & Dec. & $|\Delta|$ & Chg. & Dec. & $|\Delta|$ & Chg. & Dec. & $|\Delta|$ & Chg. & Dec. & $|\Delta|$ \\
+\midrule
+Reduction: any of three & 13 & 4 & .09 & 14 & 7 & .10 & 14 & 3 & .10 & 14 & 1 & .05 \\
+Reduction: any of four & 16 & 8 & .09 & 15 & 10 & .09 & 15 & 4 & .09 & 16 & 1 & .04 \\
+Event: option text & 20 & 8 & .12 & 26 & 10 & .12 & 24 & 12 & .17 & -- & -- & -- \\
+Event: ID only & 13 & 5 & .08 & 15 & 8 & .11 & 15 & 5 & .10 & -- & -- & -- \\
+Serialization: chat$\to$plain & -- & -- & -- & 23 & 7 & .10 & 21 & 4 & .10 & -- & -- & -- \\
+Sharpness: matched $T$ & 11 & 1 & .07 & 13 & 5 & .08 & 19 & 5 & .08 & 20 & 1 & .05 \\
+Frame: omit DICES & 18 & 3 & .07 & 12 & 3 & .07 & 14 & 1 & .07 & 17 & 1 & .04 \\
+Loss: TVD$\to$Brier & 9 & 0 & -- & 8 & 0 & -- & 10 & 0 & -- & 9 & 0 & -- \\
+Weighting (15 pairs) & 9 & 0 & .05 & 7 & 1 & .05 & 7 & 1 & .05 & 6 & 0 & .02 \\
+\bottomrule
+\end{tabular}
+\caption{What changes a winner: pair--weighting units (15 pairs $\times$ 2 weightings; the weighting row counts pairs) whose winner symbol changes (Chg.) or reverses decisively (Dec.: opposite winners, both gaps at least .05 TVD) when the named element is varied, and the mean absolute change of the paired gap ($|\Delta|$, TVD). Conditions: own serialization; the shared chat template with no-space and with space-prefixed candidates (the latter pre-specified; first-token scoring reads a remainder there); the shared plain prefix, where both checkpoints keep at least half of their mass on the label tokens in 25 of 30 units. Decisive reversals under the reduction per family: 3, 4, and 2 of 10 (first three conditions). Reduction rows compare the three same-tensor readouts, or four with the character-normalized one; other rows compare each same-tensor readout with the named change; the frame row is the largest of five single-source omissions (first three conditions: median 6, 8, and 10 changed; only DICES reverses decisively; under the plain prefix only the DICES omission was run). Full row set, flips, pair and family counts, and intervals: Appendix Tables~\ref{tab:what-changes-full}, \ref{tab:pair-family-counts}, \ref{tab:family-boot}, \ref{tab:family-boot-events}.}
+\label{tab:what-changes}
+\end{table*}

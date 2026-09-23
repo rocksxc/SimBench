@@ -1,0 +1,29 @@
+\begin{table*}[t]
+\centering\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}lcccccccc@{}}
+\toprule
+& \multicolumn{4}{c}{Modal accuracy (parent/tuned)} & \multicolumn{4}{c}{Spearman rank correlation (parent/tuned)} \\
+\cmidrule(lr){2-5}\cmidrule(l){6-9}
+Pair & First & Sum & Len & PMI & First & Sum & Len & PMI \\
+\midrule
+Qwen-14B/Socr.-SFT & .523/.564 & .524/.316 & .506/.285 & .496/.334 & .558/.387 & .555/.228 & .381/.084 & .430/.163 \\
+Qwen-14B/Socr.-DPO & .523/.562 & .524/.553 & .506/.413 & .496/.368 & .558/.580 & .555/.561 & .381/.259 & .430/.370 \\
+Mistral-7B & .208/.550 & .376/.550 & .222/.549 & .230/.295 & -.029/.449 & .157/.451 & -.166/.428 & .071/-.010 \\
+Qwen2.5-7B & .602/.571 & .505/.546 & .350/.408 & .341/.537 & .389/.484 & .374/.450 & .004/.168 & .097/.333 \\
+Llama-3.2-3B & .159/.510 & .158/.507 & .126/.321 & .132/.235 & -.315/.462 & -.317/.414 & -.432/.125 & -.294/.126 \\
+OLMo-2-7B & .247/.564 & .160/.551 & .128/.419 & .148/.267 & -.084/.373 & -.127/.342 & -.361/.079 & -.289/-.171 \\
+Qwen2.5-14B & .257/.523 & .279/.524 & .268/.506 & .343/.496 & .078/.558 & .117/.555 & -.240/.381 & .132/.430 \\
+Llama-3.1-8B & .160/.577 & .159/.568 & .126/.326 & .171/.347 & -.282/.448 & -.160/.488 & -.414/.073 & -.364/.170 \\
+Qwen3-8B & .184/.602 & .480/.600 & .260/.534 & .249/.506 & -.047/.502 & .174/.473 & -.201/.280 & .113/.307 \\
+OLMo-2-13B & .169/.578 & .254/.372 & .232/.352 & .340/.313 & -.163/.424 & -.281/.156 & -.354/.030 & .116/.040 \\
+OLMo-2-7B Base/SFT & .247/.581 & .160/.558 & .128/.333 & .148/.352 & -.084/.387 & -.127/.269 & -.361/-.003 & -.289/.134 \\
+OLMo-2-7B SFT/DPO & .581/.571 & .558/.545 & .333/.351 & .352/.284 & .387/.409 & .269/.329 & -.003/.016 & .134/-.062 \\
+OLMo-2-7B DPO/Inst. & .571/.564 & .545/.551 & .351/.419 & .284/.267 & .409/.373 & .329/.342 & .016/.079 & -.062/-.171 \\
+Qwen3-4B/OSim & .571/.514 & .382/.248 & .269/.232 & .142/.232 & .451/.491 & .156/.011 & -.188/-.079 & -.298/-.092 \\
+Qwen3-8B/OSim & .398/.457 & .560/.429 & .335/.258 & .255/.263 & .194/.326 & .429/.239 & -.013/-.172 & .098/.114 \\
+\bottomrule
+\end{tabular}
+\caption{Scale-free agreement with the human distributions under the chat template, all 15 pairs and all four readouts (equal-source means of cluster means; re-implementation runs): modal accuracy is the share of items whose predicted mode equals the human mode; Spearman is the rank correlation between predicted and human option probabilities within an item.}
+\label{tab:scale-free}
+\end{table*}

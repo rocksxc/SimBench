@@ -1,0 +1,44 @@
+\begin{table*}[t]
+\centering\scriptsize
+\setlength{\tabcolsep}{2.5pt}
+\begin{tabular}{@{}llccc@{\hspace{6pt}}cc@{}}
+\toprule
+& & \multicolumn{3}{c}{Parent/tuned TVD and gap at entropy-matched temperatures} & \multicolumn{2}{c}{Mean fitted $T$} \\
+\cmidrule(lr){3-5}\cmidrule(l){6-7}
+Pair & Wt. & First & Summed & Length-norm.\ & First & Summed \\
+\midrule
+Qwen-14B/Socr.-SFT & ES & .307/.336; +.029 [+.017,+.043] P & .306/.463; +.157 [+.136,+.178] P & .358/.514; +.157 [+.144,+.170] P & 9.38/0.42 & 9.70/3.41 \\
+Qwen-14B/Socr.-SFT & PC & .262/.293; +.031 [+.024,+.039] P & .263/.436; +.173 [+.165,+.182] P & .363/.529; +.166 [+.158,+.174] P & 9.38/0.42 & 9.70/3.41 \\
+Qwen-14B/Socr.-DPO & ES & .307/.299; -.008 [-.017,+.001] $\circ$ & .306/.305; -.001 [-.010,+.008] $\circ$ & .358/.375; +.017 [+.007,+.027] P & 9.38/7.24 & 9.70/7.39 \\
+Qwen-14B/Socr.-DPO & PC & .262/.298; +.036 [+.032,+.041] P & .263/.306; +.043 [+.039,+.047] P & .363/.407; +.044 [+.040,+.048] P & 9.38/7.24 & 9.70/7.39 \\
+Mistral-7B & ES & .569/.396; -.173 [-.198,-.146] I & .509/.401; -.108 [-.132,-.082] I & .526/.375; -.151 [-.175,-.127] I & 0.33/2.62 & 0.33/2.76 \\
+Mistral-7B & PC & .480/.354; -.126 [-.136,-.115] I & .420/.354; -.066 [-.077,-.056] I & .527/.330; -.197 [-.207,-.186] I & 0.33/2.62 & 0.33/2.76 \\
+Qwen2.5-7B & ES & .378/.337; -.041 [-.053,-.028] I & .371/.342; -.030 [-.045,-.014] I & .505/.441; -.064 [-.076,-.051] I & 0.36/5.17 & 0.63/5.83 \\
+Qwen2.5-7B & PC & .336/.316; -.020 [-.032,-.009] I & .315/.304; -.012 [-.022,-.001] I & .532/.425; -.107 [-.117,-.098] I & 0.36/5.17 & 0.63/5.83 \\
+Llama-3.2-3B & ES & .581/.355; -.227 [-.245,-.210] I & .553/.366; -.187 [-.205,-.170] I & .603/.440; -.162 [-.174,-.151] I & 0.92/1.19 & 1.78/1.29 \\
+Llama-3.2-3B & PC & .598/.365; -.233 [-.249,-.217] I & .588/.383; -.205 [-.220,-.190] I & .636/.494; -.142 [-.155,-.129] I & 0.92/1.19 & 1.78/1.29 \\
+OLMo-2-7B & ES & .536/.367; -.169 [-.188,-.149] I & .552/.409; -.143 [-.162,-.125] I & .614/.503; -.111 [-.129,-.095] I & 0.63/1.02 & 2.38/1.77 \\
+OLMo-2-7B & PC & .478/.293; -.185 [-.199,-.172] I & .569/.348; -.221 [-.235,-.207] I & .630/.471; -.159 [-.172,-.146] I & 0.63/1.02 & 2.38/1.77 \\
+Qwen2.5-14B & ES & .466/.307; -.159 [-.174,-.144] I & .454/.306; -.149 [-.161,-.135] I & .553/.358; -.195 [-.208,-.182] I & 0.59/9.38 & 0.53/9.70 \\
+Qwen2.5-14B & PC & .534/.262; -.272 [-.286,-.258] I & .508/.263; -.245 [-.259,-.231] I & .601/.363; -.238 [-.251,-.224] I & 0.59/9.38 & 0.53/9.70 \\
+Llama-3.1-8B & ES & .588/.340; -.248 [-.263,-.234] I & .572/.328; -.245 [-.259,-.230] I & .637/.507; -.130 [-.144,-.116] I & 1.16/0.96 & 1.52/1.04 \\
+Llama-3.1-8B & PC & .589/.298; -.290 [-.304,-.277] I & .562/.290; -.272 [-.285,-.259] I & .631/.510; -.121 [-.130,-.112] I & 1.16/0.96 & 1.52/1.04 \\
+Qwen3-8B & ES & .516/.323; -.193 [-.212,-.174] I & .412/.325; -.087 [-.102,-.071] I & .538/.416; -.122 [-.145,-.101] I & 0.82/4.92 & 0.51/5.00 \\
+Qwen3-8B & PC & .529/.272; -.257 [-.269,-.245] I & .416/.275; -.141 [-.153,-.130] I & .559/.386; -.173 [-.183,-.163] I & 0.82/4.92 & 0.51/5.00 \\
+OLMo-2-13B & ES & .559/.331; -.228 [-.244,-.211] I & .549/.526; -.023 [-.036,-.012] I & .593/.527; -.066 [-.076,-.057] I & 0.52/0.57 & 0.85/1.42 \\
+OLMo-2-13B & PC & .556/.290; -.267 [-.278,-.255] I & .584/.503; -.081 [-.090,-.071] I & .621/.557; -.064 [-.071,-.057] I & 0.52/0.57 & 0.85/1.42 \\
+OLMo-2-7B Base/SFT & ES & .536/.330; -.205 [-.226,-.184] S & .552/.395; -.157 [-.174,-.142] S & .614/.528; -.085 [-.099,-.072] S & 0.63/0.55 & 2.38/0.77 \\
+OLMo-2-7B Base/SFT & PC & .478/.273; -.205 [-.218,-.192] S & .569/.336; -.233 [-.244,-.222] S & .630/.538; -.092 [-.101,-.083] S & 0.63/0.55 & 2.38/0.77 \\
+OLMo-2-7B SFT/DPO & ES & .330/.368; +.038 [+.032,+.044] S & .395/.421; +.026 [+.017,+.035] S & .528/.516; -.012 [-.019,-.005] D & 0.55/0.98 & 0.77/1.49 \\
+OLMo-2-7B SFT/DPO & PC & .273/.305; +.031 [+.027,+.036] S & .336/.357; +.021 [+.015,+.028] S & .538/.505; -.033 [-.038,-.028] D & 0.55/0.98 & 0.77/1.49 \\
+OLMo-2-7B DPO/Inst. & ES & .368/.367; -.001 [-.005,+.003] $\circ$ & .421/.409; -.012 [-.016,-.008] I & .516/.503; -.014 [-.017,-.010] I & 0.98/1.02 & 1.49/1.77 \\
+OLMo-2-7B DPO/Inst. & PC & .305/.293; -.012 [-.015,-.008] I & .357/.348; -.009 [-.012,-.006] I & .505/.471; -.034 [-.037,-.031] I & 0.98/1.02 & 1.49/1.77 \\
+Qwen3-4B/OSim & ES & .365/.374; +.008 [-.002,+.018] $\circ$ & .488/.465; -.022 [-.037,-.007] O & .550/.498; -.053 [-.062,-.044] O & 0.32/0.41 & 0.39/2.86 \\
+Qwen3-4B/OSim & PC & .345/.348; +.003 [-.004,+.010] $\circ$ & .470/.490; +.020 [+.009,+.031] B & .563/.528; -.036 [-.044,-.027] O & 0.32/0.41 & 0.39/2.86 \\
+Qwen3-8B/OSim & ES & .412/.392; -.020 [-.034,-.004] O & .321/.435; +.113 [+.098,+.129] B & .495/.524; +.030 [+.021,+.038] B & 0.42/0.68 & 0.48/0.62 \\
+Qwen3-8B/OSim & PC & .378/.424; +.046 [+.036,+.055] B & .288/.438; +.150 [+.138,+.162] B & .509/.572; +.062 [+.056,+.069] B & 0.42/0.68 & 0.48/0.62 \\
+\bottomrule
+\end{tabular}
+\caption{Entropy-matched temperatures for all 15 pairs (chat template, space-prefixed candidates, re-implementation runs): for each checkpoint, readout, and source, the softmax temperature is fitted on the other four sources so that the mean normalized entropy of the predictions equals that of the human distributions, then applied to the held-out source. Cells give parent/tuned all-source TVD at the matched temperatures, the paired gap with its 95\% interval, and the winner symbol; the last columns give the fitted temperatures averaged over sources (parent/tuned); temperatures are searched on $[10^{-3},10^{3}]$, and 12 of the 60 checkpoint--readout means shown exceed 4: Qwen2.5-14B-Instruct as the parent of both Socrates pairs and as the tuned member of the Qwen2.5-14B pair (9.4 and 9.7), Socrates-DPO (7.2 and 7.4), Qwen2.5-7B-Instruct (5.2 and 5.8), and Qwen3-8B-Instruct (4.9 and 5.0), whose next-token distributions are nearly one-hot; at these temperatures the tempered readout is far flatter than the raw one, so the matched comparison is between two flattened predictors, although their matched losses remain below the uniform baseline. The no-space and own-serialization variants are summarized in Table~\ref{tab:entropy-matched-map} and Table~\ref{tab:native-serialization-all}.}
+\label{tab:entropy-matched}
+\end{table*}

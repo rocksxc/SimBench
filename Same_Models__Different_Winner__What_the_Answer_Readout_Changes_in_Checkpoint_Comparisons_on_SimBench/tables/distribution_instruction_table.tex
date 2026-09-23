@@ -1,0 +1,24 @@
+\begin{table*}[t]
+\centering\scriptsize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}llcccccc@{}}
+\toprule
+& & \multicolumn{3}{c}{Mode instruction (reference)} & \multicolumn{3}{c}{Distribution instruction} \\
+\cmidrule(lr){3-5}\cmidrule(l){6-8}
+Pair & Wt. & First & Summed & Length-norm. & First & Summed & Length-norm. \\
+\midrule
+Qwen-14B/Socr.-SFT & ES & .475/.298 & .476/.611 & .423/.588 & .457/.302 & .457/.642 & .447/.597 \\
+ & PC & .362/.301 & .362/.575 & .380/.588 & .363/.306 & .362/.604 & .429/.586 \\
+Mistral-7B & ES & .404/.436 & .380/.437 & .384/.332 & .355/.447 & .345/.450 & .374/.333 \\
+ & PC & .391/.354 & .369/.354 & .415/.311 & .359/.411 & .351/.413 & .406/.347 \\
+Qwen2.5-7B & ES & .319/.450 & .323/.458 & .418/.484 & .333/.409 & .321/.435 & .424/.491 \\
+ & PC & .326/.378 & .305/.376 & .449/.465 & .344/.348 & .321/.361 & .455/.489 \\
+Llama-3.2-3B & ES & .553/.345 & .661/.368 & .531/.396 & .528/.345 & .639/.345 & .518/.379 \\
+ & PC & .585/.346 & .677/.376 & .578/.445 & .559/.337 & .661/.340 & .562/.417 \\
+OLMo-2-7B & ES & .443/.358 & .741/.430 & .529/.405 & .557/.325 & .740/.371 & .528/.371 \\
+ & PC & .415/.287 & .726/.351 & .567/.418 & .526/.301 & .717/.311 & .559/.380 \\
+\bottomrule
+\end{tabular}
+\caption{Absolute TVD (parent/tuned) of the five original pairs under the chat template when the system message asks for the most likely answer (the reference prompt) and when it asks the checkpoint to choose each answer in proportion to how often the group would choose it (Appendix~\ref{app:prompts}); re-implementation runs. The uniform predictor scores .356 (ES) and .394 (PC); 38 of the 60 reference losses and 36 of the 60 distribution-instruction losses exceed it.}
+\label{tab:distribution-instruction}
+\end{table*}

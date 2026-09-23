@@ -1,0 +1,35 @@
+\begin{table*}[t]
+\centering\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}llcccccc@{}}
+\toprule
+Pair & Comparison & Coverage P/T & Entropy P/T & TVD gap & Entropy-matched TVD gap & Modal-accuracy gap & Spearman gap \\
+\midrule
+Mistral-7B & next-token, both & .909/.802 & .965/.143 & .190/.123 B/B & -.082/-.088 I/I & .164/.123 I/I & .031/-.010 $\circ$/$\circ$ \\
+Mistral-7B & protocol (controlled prompt) & -- & .965/.604 & -.041/-.129 I/I & -.156/-.232 I/I & .193/.277 I/I & .234/.241 I/I \\
+Mistral-7B & protocol (SimBench prompt) & -- & .966/.431 & -.013/-.103 $\circ$/I & -.174/-.243 I/I & .191/.273 I/I & .240/.223 I/I \\
+Qwen2.5-7B & next-token, both & .994/.999 & .856/.132 & .192/.131 B/B & .000/.025 $\circ$/B & .049/-.031 $\circ$/B & -.072/-.107 B/B \\
+Qwen2.5-7B & protocol (SimBench prompt) & -- & .856/.733 & .019/-.026 B/I & .022/.018 B/B & -.092/-.056 B/B & -.024/-.061 $\circ$/B \\
+Llama-3.2-3B & next-token, both & .958/.598 & .911/.527 & -.009/-.096 $\circ$/I & -.242/-.282 I/I & .332/.317 I/I & .522/.448 I/I \\
+Llama-3.2-3B & protocol (controlled prompt) & -- & .912/.704 & -.008/-.117 $\circ$/I & -.275/-.367 I/I & .216/.271 I/I & .457/.395 I/I \\
+Llama-3.2-3B & protocol (SimBench prompt) & -- & .911/.605 & -.030/-.120 I/I & -.216/-.261 I/I & .227/.274 I/I & .406/.299 I/I \\
+OLMo-2-7B & next-token, both & .983/.994 & .944/.554 & .090/.068 B/B & -.021/-.005 I/$\circ$ & .098/.035 I/I & .113/.022 I/$\circ$ \\
+OLMo-2-7B & protocol (controlled prompt) & -- & .942/.766 & .018/.002 $\circ$/$\circ$ & -.091/-.093 I/I & .131/.122 I/I & .100/-.009 I/$\circ$ \\
+OLMo-2-7B & protocol (SimBench prompt) & -- & .944/.680 & .138/.088 B/B & .108/.128 B/B & -.117/-.124 B/B & -.241/-.301 B/B \\
+Qwen2.5-14B & next-token, both & .996/.999 & .800/.057 & .179/.074 B/B & -.044/-.074 I/I & .027/.058 $\circ$/I & -.056/-.021 B/$\circ$ \\
+Qwen2.5-14B & protocol (controlled prompt) & -- & .799/.664 & -.113/-.131 I/I & -.114/-.127 I/I & .165/.118 I/I & .161/.152 I/I \\
+Qwen2.5-14B & protocol (SimBench prompt) & -- & .800/.589 & -.057/-.117 I/I & -.134/-.153 I/I & .083/.098 I/I & .114/.144 I/I \\
+Llama-3.1-8B & next-token, both & .860/.602 & .951/.499 & -.011/-.073 $\circ$/I & -.211/-.220 I/I & .317/.255 I/I & .513/.365 I/I \\
+Llama-3.1-8B & protocol (controlled prompt) & -- & .951/.510 & -.052/-.109 I/I & -.252/-.271 I/I & .251/.205 I/I & .433/.269 I/I \\
+Llama-3.1-8B & protocol (SimBench prompt) & -- & .951/.345 & -.028/-.113 I/I & -.231/-.202 I/I & .317/.298 I/I & .493/.392 I/I \\
+Qwen3-8B & next-token, both & .972/.127 & .823/.067 & .159/.067 B/B & .007/.004 $\circ$/$\circ$ & .043/.015 $\circ$/$\circ$ & .042/.025 I/I \\
+Qwen3-8B & protocol (controlled prompt) & -- & .823/.734 & -.040/-.078 I/I & -.007/-.018 $\circ$/I & .006/.015 $\circ$/$\circ$ & .048/.060 $\circ$/I \\
+Qwen3-8B & protocol (SimBench prompt) & -- & .823/.549 & .015/-.043 $\circ$/I & -.034/-.051 I/I & .007/-.035 $\circ$/B & .025/.021 $\circ$/$\circ$ \\
+OLMo-2-13B & next-token, both & .990/.930 & .897/.381 & .057/-.002 B/$\circ$ & -.036/-.050 I/I & .031/.055 $\circ$/I & -.002/-.030 $\circ$/B \\
+OLMo-2-13B & protocol (controlled prompt) & -- & .897/.679 & -.006/-.094 $\circ$/I & -.026/-.082 I/I & -.035/.099 $\circ$/I & .064/.104 I/I \\
+OLMo-2-13B & protocol (SimBench prompt) & -- & .897/.581 & .026/-.043 $\circ$/I & -.039/-.042 I/I & -.062/.044 $\circ$/I & .024/.042 $\circ$/I \\
+\bottomrule
+\end{tabular}
+\caption{The Base--Instruct comparison under SimBench's readouts, audited with the paper's own lenses (re-implementation runs; each gap is tuned minus parent, ES/PC, with the winner by the paired 95\% cluster-bootstrap interval; I = Instruct, B = Base). ``next-token, both'': both checkpoints under SimBench's next-token readout in their own serialization (coverage = mass on the label tokens before renormalization, averaged over the paired items of this table (an item-level mean, which differs in the third decimal from the equal-source cluster means of Table~\ref{tab:coverage}); entropy = mean normalized entropy of the predictions under ES, human answers .66). ``protocol'': the parent under next-token against the Instruct checkpoint's verbalized vector (under the controlled prompt and under SimBench's prompt), over the items with a valid vector. Entropy matching fits each checkpoint's temperature on the other sources; higher modal accuracy and Spearman correlation are better, so a negative gap there favors Base.}
+\label{tab:protocol-audit}
+\end{table*}

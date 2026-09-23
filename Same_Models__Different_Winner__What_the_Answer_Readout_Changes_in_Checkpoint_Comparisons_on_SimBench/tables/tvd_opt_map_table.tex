@@ -1,0 +1,27 @@
+\begin{table}[t]
+\centering\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}lccc@{}}
+\toprule
+Pair & First & Sum & Len \\
+\midrule
+Qwen-14B/Socr.-SFT & $\circ$/P & P/P & P/P \\
+Qwen-14B/Socr.-DPO & D/P & D/P & D/P \\
+Mistral-7B & I/I & $\circ$/I & $\circ$/I \\
+Qwen2.5-7B & $\circ$/I & $\circ$/I & $\circ$/I \\
+Llama-3.2-3B & I/I & I/I & B/B \\
+OLMo-2-7B & $\circ$/I & $\circ$/I & B/$\circ$ \\
+Qwen2.5-14B & I/I & $\circ$/I & I/I \\
+Llama-3.1-8B & I/I & I/I & I/I \\
+Qwen3-8B & I/I & I/I & I/I \\
+OLMo-2-13B & I/I & I/I & I/I \\
+OLMo-2-7B Base/SFT & S/S & $\circ$/S & S/S \\
+OLMo-2-7B SFT/DPO & S/$\circ$ & D/D & S/S \\
+OLMo-2-7B DPO/Inst. & D/D & D/I & D/D \\
+Qwen3-4B/OSim & O/O & O/$\circ$ & B/B \\
+Qwen3-8B/OSim & O/B & $\circ$/B & B/B \\
+\bottomrule
+\end{tabular}
+\caption{Winner map (ES/PC) under the chat template when each checkpoint's softmax temperature is chosen, for every held-out source, to minimize the mean TVD on the other four sources (grid of 61 temperatures between $10^{-1.5}$ and $10^{1.5}$), instead of matching entropy as in Table~\ref{tab:entropy-matched-map}; all 15 pairs, re-implementation runs.}
+\label{tab:tvd-opt-map}
+\end{table}

@@ -1,0 +1,29 @@
+\begin{table}[t]
+\centering\scriptsize
+\setlength{\tabcolsep}{2.2pt}
+\begin{tabular}{@{}lcccc@{\hspace{4pt}}ccc@{}}
+\toprule
+& \multicolumn{4}{c}{Chat template (shared)} & \multicolumn{3}{c}{Plain prefix (shared)} \\
+\cmidrule(lr){2-5}\cmidrule(l){6-8}
+Pair & First & Sum & Len & PMI & First & Sum & Len \\
+\midrule
+Qwen-14B/Socr.-SFT & S/S & P/P & P/P & P/P & S/S & P/P & P/P \\
+Qwen-14B/Socr.-DPO & D/D & D/D & D/D & D/D & $\circ$/$\circ$ & $\circ$/$\circ$ & P/P \\
+Mistral-7B & B/B & B/B & $\circ$/I & B/B & B/B & $\circ$/$\circ$ & I/I \\
+Qwen2.5-7B & B/B & B/B & B/B & $\circ$/$\circ$ & B/B & B/B & B/B \\
+Llama-3.2-3B & I/I & I/I & I/I & $\circ$/$\circ$ & B/B & B/B & I/I \\
+OLMo-2-7B & $\circ$/$\circ$ & I/I & I/I & B/B & B/B & B/B & B/B \\
+Qwen2.5-14B & B/B & B/B & B/B & I/I & B/B & B/B & I/I \\
+Llama-3.1-8B & I/I & I/I & B/B & B/B & I/I & I/I & I/I \\
+Qwen3-8B & B/B & B/B & B/B & B/$\circ$ & B/B & B/B & B/B \\
+OLMo-2-13B & I/I & B/B & B/B & B/B & B/B & B/B & B/B \\
+OLMo-2-7B Base/SFT & S/S & S/S & S/S & $\circ$/$\circ$ & B/B & S/S & S/S \\
+OLMo-2-7B SFT/DPO & S/S & S/S & S/S & S/S & S/S & S/S & S/S \\
+OLMo-2-7B DPO/Inst. & D/D & D/D & D/D & D/D & D/D & D/D & D/D \\
+Qwen3-4B/OSim & O/O & B/B & B/B & $\circ$/$\circ$ & B/B & B/B & B/B \\
+Qwen3-8B/OSim & O/O & $\circ$/$\circ$ & B/B & B/$\circ$ & $\circ$/B & B/B & B/B \\
+\bottomrule
+\end{tabular}
+\caption{Winner map on the three opinion surveys, the two of the main frame plus the held-out ISSP (ESS, GlobalOpinionQA, and ISSP; 1,491 items; ES/PC symbols as in Appendix Table~\ref{tab:winner-map-15}), all 15 pairs, re-implementation runs. Intervals are 10,000-replicate cluster bootstraps within the three sources; ES weights the three sources equally.}
+\label{tab:opinion-issp}
+\end{table}

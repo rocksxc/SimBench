@@ -1,0 +1,44 @@
+\begin{table*}[t]
+\centering\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}llccccccc@{}}
+\toprule
+& & \multicolumn{4}{c}{Chat template} & \multicolumn{3}{c}{Plain prefix} \\
+\cmidrule(lr){3-6}\cmidrule(l){7-9}
+Pair & Wt. & First & Sum & Len & PMI & First & Sum & Len \\
+\midrule
+Qwen-14B/Socr.-SFT & ES & -.407 S & +.063 P & +.109 P & -.023 S & -.271 S & +.202 P & +.175 P \\
+Qwen-14B/Socr.-SFT & PC & -.368 S & +.146 P & +.124 P & +.065 P & -.235 S & +.250 P & +.242 P \\
+Qwen-14B/Socr.-DPO & ES & -.170 D & -.121 D & -.022 D & -.114 D$^{\dagger}$ & -.034 D & +.092 P & +.017 P \\
+Qwen-14B/Socr.-DPO & PC & -.112 D & -.086 D & -.017 D & -.079 D$^{\dagger}$ & -.014 D & +.057 P & +.024 P \\
+Mistral-7B & ES & +.191 B & +.158 B & -.027 I & +.092 B & +.038 B & +.001 $\circ$ & -.017 I \\
+Mistral-7B & PC & +.178 B & +.169 B & -.026 I & +.087 B & +.027 B & +.004 $\circ$ & -.017 I \\
+Qwen2.5-7B & ES & +.127 B & +.191 B & +.039 B & +.104 B$^{\dagger}$ & +.207 B & +.264 B & +.009 B \\
+Qwen2.5-7B & PC & +.140 B & +.221 B & +.069 B & +.096 B$^{\dagger}$ & +.159 B & +.256 B & +.025 B \\
+Llama-3.2-3B & ES & -.009 $\circ$ & -.084 I & -.032 I & +.041 B & +.011 B & +.010 $\circ$ & -.033 I \\
+Llama-3.2-3B & PC & -.052 I & -.175 I & -.054 I & +.018 B & +.012 B & +.010 $\circ$ & -.039 I \\
+OLMo-2-7B & ES & -.020 I & -.177 I & -.044 I & +.090 B & +.170 B & +.110 B & +.006 B \\
+OLMo-2-7B & PC & -.061 I & -.235 I & -.064 I & +.055 B & +.197 B & +.038 B & +.017 B \\
+Qwen2.5-14B & ES & +.289 B & +.276 B & +.078 B & +.188 B$^{\dagger}$ & +.189 B & +.178 B & -.023 I \\
+Qwen2.5-14B & PC & +.253 B$^{\dagger}$ & +.248 B$^{\dagger}$ & +.100 B$^{\dagger}$ & +.087 B$^{\dagger}$ & +.166 B & +.164 B & -.042 I \\
+Llama-3.1-8B & ES & +.037 B & -.001 $\circ$ & +.003 $\circ$ & +.035 B & -.004 $\circ$ & -.070 I & -.024 I \\
+Llama-3.1-8B & PC & -.055 I & -.105 I & -.000 $\circ$ & +.028 B & -.028 I & -.114 I & -.037 I \\
+Qwen3-8B & ES & +.137 B & +.093 B & +.046 B & -.018 $\circ$ & +.106 B & +.118 B & -.003 $\circ$ \\
+Qwen3-8B & PC & +.127 B$^{\dagger}$ & +.110 B & +.085 B & +.005 $\circ$ & +.101 B & +.134 B & -.002 $\circ$ \\
+OLMo-2-13B & ES & -.195 I & +.007 $\circ$ & +.035 B & +.062 B & +.038 B & +.108 B & +.025 B \\
+OLMo-2-13B & PC & -.137 I & +.030 B & +.041 B & +.049 B & +.051 B & +.084 B$^{\dagger}$ & +.028 B \\
+OLMo-2-7B Base/SFT & ES & -.115 S & -.255 S & -.054 S & +.002 $\circ$ & +.028 B & -.021 S & -.015 S \\
+OLMo-2-7B Base/SFT & PC & -.146 S & -.312 S & -.076 S & -.011 $\circ$ & +.025 B & -.079 S$^{\dagger}$ & -.023 S \\
+OLMo-2-7B SFT/DPO & ES & +.059 S & +.059 S & +.005 S & +.078 S & +.053 S & +.110 S & +.015 S \\
+OLMo-2-7B SFT/DPO & PC & +.048 S & +.056 S & +.007 S & +.046 S & +.074 S & +.090 S & +.028 S \\
+OLMo-2-7B DPO/Inst. & ES & +.035 D & +.019 D & +.005 D & +.010 D & +.089 D & +.021 D & +.006 D \\
+OLMo-2-7B DPO/Inst. & PC & +.036 D & +.021 D & +.005 D & +.020 D & +.098 D & +.027 D & +.011 D \\
+Qwen3-4B/OSim & ES & -.071 O & +.256 B & +.081 B & -.052 O & +.004 $\circ$ & +.050 B & +.013 B \\
+Qwen3-4B/OSim & PC & -.078 O & +.295 B & +.104 B & -.015 O & +.018 B & +.040 B & +.018 B \\
+Qwen3-8B/OSim & ES & -.118 O & +.062 B & +.016 B & +.098 B & -.006 O & +.035 B & +.013 B \\
+Qwen3-8B/OSim & PC & -.136 O & +.016 B & +.024 B & +.064 B & +.005 $\circ$ & +.028 B & +.016 B \\
+\bottomrule
+\end{tabular}
+\caption{Held-out sources (ISSP, 498 items; Jester, 136 items; MoralMachine excluded because its option layout was not parsed): tuned-minus-parent TVD and the winner symbol from its 95\% cluster-bootstrap interval, for all 15 pairs (re-implementation runs). ES weights the two sources equally. $^{\dagger}$: the winner differs decisively from the five-source frame (12 of 210 cells).}
+\label{tab:heldout}
+\end{table*}

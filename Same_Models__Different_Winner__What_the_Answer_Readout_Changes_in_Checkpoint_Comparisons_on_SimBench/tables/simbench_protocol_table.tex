@@ -1,0 +1,32 @@
+\begin{table*}[t]
+\centering\scriptsize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}llcccccc@{}}
+\toprule
+Pair & Tuned prompt & Valid & Parent ES/PC & Tuned ES/PC & Gap ES [interval] & Gap PC [interval] & Winner \\
+\midrule
+Qwen-14B/Socr.-DPO & controlled & 1.00 & .507/.406 & .215/.212 & -.292 [-.312,-.272] & -.193 [-.206,-.180] & D/D \\
+Qwen-14B/Socr.-DPO & SimBench & 0.94 & .513/.401 & .257/.232 & -.256 [-.283,-.223] & -.169 [-.181,-.158] & D/D \\
+Mistral-7B & controlled & 0.99 & .354/.388 & .313/.259 & -.041 [-.064,-.020] & -.129 [-.141,-.118] & I/I \\
+Mistral-7B & SimBench & 0.96 & .353/.389 & .340/.286 & -.013 [-.038,+.011] & -.103 [-.117,-.088] & $\circ$/I \\
+Qwen2.5-7B & SimBench & 0.97 & .309/.325 & .328/.299 & +.019 [+.001,+.038] & -.026 [-.035,-.017] & B/I \\
+Llama-3.2-3B & controlled & 0.96 & .400/.446 & .392/.330 & -.008 [-.023,+.007] & -.117 [-.125,-.108] & $\circ$/I \\
+Llama-3.2-3B & SimBench & 0.99 & .400/.443 & .370/.323 & -.030 [-.047,-.015] & -.120 [-.132,-.109] & I/I \\
+OLMo-2-7B & controlled & 0.92 & .361/.383 & .379/.384 & +.018 [-.002,+.037] & +.002 [-.007,+.011] & $\circ$/$\circ$ \\
+OLMo-2-7B & SimBench & 1.00 & .359/.395 & .497/.483 & +.138 [+.121,+.154] & +.088 [+.080,+.096] & B/B \\
+Qwen2.5-14B & controlled & 0.99 & .328/.333 & .214/.202 & -.113 [-.133,-.094] & -.131 [-.138,-.123] & I/I \\
+Qwen2.5-14B & SimBench & 1.00 & .327/.332 & .271/.215 & -.057 [-.081,-.032] & -.117 [-.125,-.109] & I/I \\
+Llama-3.1-8B & controlled & 0.99 & .382/.396 & .330/.287 & -.052 [-.081,-.022] & -.109 [-.122,-.096] & I/I \\
+Llama-3.1-8B & SimBench & 1.00 & .382/.395 & .355/.282 & -.028 [-.046,-.010] & -.113 [-.127,-.099] & I/I \\
+Qwen3-8B & controlled & 1.00 & .299/.307 & .259/.229 & -.040 [-.062,-.022] & -.078 [-.086,-.070] & I/I \\
+Qwen3-8B & SimBench & 1.00 & .299/.307 & .314/.264 & +.015 [-.005,+.031] & -.043 [-.053,-.032] & $\circ$/I \\
+OLMo-2-13B & controlled & 0.97 & .299/.320 & .293/.226 & -.006 [-.034,+.020] & -.094 [-.102,-.086] & $\circ$/I \\
+OLMo-2-13B & SimBench & 1.00 & .300/.322 & .327/.278 & +.026 [-.000,+.050] & -.043 [-.055,-.031] & $\circ$/I \\
+OLMo-2-7B Base/SFT & controlled & 0.82 & .366/.351 & .384/.330 & +.017 [-.008,+.042] & -.021 [-.029,-.013] & $\circ$/S \\
+OLMo-2-7B SFT/DPO & controlled & 0.94 & .374/.387 & .369/.370 & -.006 [-.028,+.021] & -.017 [-.028,-.006] & $\circ$/D \\
+OLMo-2-7B DPO/Inst. & controlled & 0.92 & .402/.398 & .379/.384 & -.024 [-.047,-.001] & -.013 [-.027,+.000] & I/$\circ$ \\
+\bottomrule
+\end{tabular}
+\caption{SimBench's own protocol: the parent under the next-token readout in its own serialization against the tuned checkpoint under the verbalized readout (controlled prompt, and SimBench's prompt), re-implementation runs; SimBench's prompt was run for every Instruct checkpoint (Qwen2.5-14B-Instruct's run is the Socrates parent's). Losses and paired 95\% cluster-bootstrap intervals are computed over the items on which the tuned checkpoint wrote a valid vector (share given as Valid); rows with fewer than half the items valid are omitted. For the pairs whose parent is itself instruction-tuned (Socrates-DPO, OLMo-2-7B SFT/DPO and DPO/Instruct) the parent row is not SimBench's protocol, which would score an instruction-tuned parent by its verbalized vector; those rows are kept for completeness.}
+\label{tab:simbench-protocol}
+\end{table*}

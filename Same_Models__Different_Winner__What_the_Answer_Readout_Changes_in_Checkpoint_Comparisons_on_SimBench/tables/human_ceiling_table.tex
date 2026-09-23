@@ -1,0 +1,20 @@
+\begin{table}[t]
+\centering\scriptsize
+\setlength{\tabcolsep}{2pt}
+\begin{tabular}{@{}lrrrrr@{}}
+\toprule
+Source & Items & Pub.--fresh & Fresh--fresh & Best model & Uniform \\
+\midrule
+ESS & 497 & .020 & .028 & .302 & .321 \\
+GlobalOpinionQA & -- & -- & -- & .276 & .350 \\
+DICES & 500 & .028 & .040 & .109 & .592 \\
+NumberGame & 500 & .081 & .116 & .196 & .273 \\
+ConspiracyCorr & 45 & .022 & .031 & .177 & .245 \\
+\midrule
+Four sources, \ES{}/\PC{} & 1,542 & .038/.048 & .054/.068 & -- & -- \\
+ESS+Consp., \ES{}/\PC{} & 542 & .021/.020 & .030/.028 & -- & -- \\
+\bottomrule
+\end{tabular}
+\caption{A human reference for the absolute losses. For every item whose respondent count $n$ is released, the expected TVD between the published shares and a fresh multinomial sample of size $n$ (Pub.--fresh, the target-noise figure of Appendix Table~\ref{tab:target-noise}, recomputed here with a new seed; median $n$ there) and between two independent fresh samples of size $n$ (Fresh--fresh: what a second, equally sized survey of the same population would score against the first); 200 draws per item, cluster means, equal-source weights within a source. Best model: the lowest same-tensor loss of any checkpoint entry in its own serialization on that source (equal-source cluster mean); Uniform: the uniform predictor. GlobalOpinionQA releases no respondent counts. The pooled rows (the four sources with counts; ESS and ConspiracyCorr, the sources with at least 100 respondents per item) weight the sources equally (\ES{}) or by cluster (\PC{}).}
+\label{tab:human-ceiling}
+\end{table}

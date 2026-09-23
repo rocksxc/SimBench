@@ -1,0 +1,20 @@
+\begin{table*}[t]
+\centering\scriptsize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}llrrrrrr@{}}
+\toprule
+Readout & Wt. & All sources & $-$ESS & $-$GlobalOpinionQA & $-$DICES & $-$NumberGame & $-$ConspiracyCorr \\
+\midrule
+First token & ES & -.177 & -.135 & -.159 & -.293 & -.193 & -.103 \\
+ & PC & -.061 & -.018 & +.008$^{\circ}$ & -.209 & -.041 & -.059 \\
+Summed & ES & +.135 & +.171 & +.156 & +.000$^{\circ}$ & +.168 & +.180 \\
+ & PC & +.213 & +.246 & +.273 & +.019 & +.302 & +.214 \\
+Length-normalized & ES & +.165 & +.201 & +.204 & +.017$^{\circ}$ & +.225 & +.179 \\
+ & PC & +.208 & +.236 & +.282 & -.023 & +.328 & +.209 \\
+DC-PMI & ES & +.185 & +.232 & +.207 & +.007$^{\circ}$ & +.231 & +.247 \\
+ & PC & +.291 & +.335 & +.363 & +.035 & +.414 & +.293 \\
+\bottomrule
+\end{tabular}
+\caption{Leave-one-source-out gaps (Socrates minus parent TVD) for the Qwen-14B/Socrates-SFT pair under the chat template, re-implementation runs; $^{\circ}$ marks a gap whose 95\% cluster-bootstrap interval includes zero. Omitting DICES removes the full-string penalty (summed \ES{} gap $+.000$ [$-.019,+.020$]).}
+\label{tab:loo-socrates-reimpl}
+\end{table*}

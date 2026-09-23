@@ -1,0 +1,27 @@
+\begin{table}[t]
+\centering\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+Pair & First & Sum & Len & PMI \\
+\midrule
+Qwen-14B/Socr.-SFT & S/S & P/P & P/P & P/P \\
+Qwen-14B/Socr.-DPO & $\circ$/D & $\circ$/$\circ$ & P/P & P/P \\
+Mistral-7B & $\circ$/$\circ$ & $\circ$/$\circ$ & I/I & B/$\circ$ \\
+Qwen2.5-7B & B/B & B/B & B/B & I/I \\
+Llama-3.2-3B & I/I & I/I & I/I & $\circ$/I \\
+OLMo-2-7B & I/I & I/I & I/I & $\circ$/$\circ$ \\
+Qwen2.5-14B & B/I & B/I & B/$\circ$ & I/I \\
+Llama-3.1-8B & I/I & I/I & I/I & $\circ$/I \\
+Qwen3-8B & I/I & B/$\circ$ & B/$\circ$ & I/I \\
+OLMo-2-13B & I/I & B/$\circ$ & B/B & I/I \\
+OLMo-2-7B Base/SFT & S/S & S/S & S/S & $\circ$/$\circ$ \\
+OLMo-2-7B SFT/DPO & S/S & S/S & S/S & S/S \\
+OLMo-2-7B DPO/Inst. & D/D & D/D & I/I & $\circ$/D \\
+Qwen3-4B/OSim & O/$\circ$ & B/B & B/B & $\circ$/O \\
+Qwen3-8B/OSim & O/O & B/B & B/B & $\circ$/O \\
+\bottomrule
+\end{tabular}
+\caption{Interpretable only where the option list is ordered. Winner map under the ordinal Wasserstein-1 distance (option index as the metric) instead of TVD, chat template, all 15 pairs (ES/PC; re-implementation runs). Symbols as in Table~\ref{tab:winner-map-15}.}
+\label{tab:w1-winner-map}
+\end{table}

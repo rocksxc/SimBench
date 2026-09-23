@@ -1,0 +1,24 @@
+\begin{table*}[t]
+\centering\scriptsize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}llcccccccc@{}}
+\toprule
+& & \multicolumn{2}{c}{TVD} & \multicolumn{2}{c}{Modal accuracy} & \multicolumn{2}{c}{Spearman} & \multicolumn{2}{c}{Norm.\ entropy (ES)} \\
+\cmidrule(lr){3-4}\cmidrule(lr){5-6}\cmidrule(lr){7-8}\cmidrule(l){9-10}
+Checkpoint & Readout & Parent & Tuned & Parent & Tuned & Parent & Tuned & Parent & Tuned \\
+\midrule
+Socrates-SFT & Native integers (exact) & .450/.364 & .291/.299 & .563/.653 & .565/.689 & .542/.538 & .512/.557 & .130 & .910 \\
+Socrates-SFT & Native integers (exact, entropy-matched) & .308/.314 & .323/.294 & -- & -- & -- & -- & .652 & .658 \\
+Socrates-SFT & Native integers (50 samples) & .476/.382 & .309/.288 & .562/.656 & .528/.663 & .453/.531 & .485/.538 & .061 & .738 \\
+Socrates-SFT & SimBench next-token & .507/.406 & .312/.316 & .504/.626 & .534/.678 & .417/.438 & .323/.477 & .057 & .929 \\
+Socrates-DPO & Native integers (exact) & .450/.364 & .435/.353 & .563/.653 & .587/.671 & .542/.538 & .596/.567 & .130 & .118 \\
+Socrates-DPO & Native integers (exact, entropy-matched) & .308/.314 & .293/.312 & -- & -- & -- & -- & .652 & .648 \\
+Socrates-DPO & Native integers (50 samples) & .476/.382 & .459/.368 & .562/.656 & .581/.670 & .453/.531 & .505/.555 & .061 & .047 \\
+Socrates-DPO & SimBench next-token & .507/.406 & .464/.402 & .504/.626 & .539/.616 & .417/.438 & .510/.476 & .057 & .162 \\
+Socrates-DPO & Verbalized JSON (controlled) & .214/.202 & .215/.212 & .643/.686 & .632/.663 & .636/.612 & .596/.582 & .664 & .770 \\
+Socrates-DPO & Verbalized JSON (SimBench prompt) & .271/.215 & .257/.232 & .560/.667 & .584/.679 & .587/.604 & .560/.576 & .589 & .736 \\
+\bottomrule
+\end{tabular}
+\caption{Scale-free agreement under the generated-answer readouts for the Qwen2.5-14B-Instruct parent and its two Socrates checkpoints (re-implementation runs; each cell is ES/PC over each checkpoint's valid items, cluster means first). Modal accuracy is the share of items whose predicted mode equals the human mode; Spearman is the within-item rank correlation between predicted and human option probabilities; the last columns give the mean normalized entropy of the predictions (the human distributions average .66 under ES). Socrates-SFT writes no valid JSON vector. ``Native integers (exact)'': the exact next-token readout of Section~\ref{sec:socrates}; the entropy-matched rows give TVD at the temperatures fitted on the other sources (SFT gap $+.015$ [$-.003,+.035$] ES, $-.020$ [$-.027,-.013$] PC; DPO $-.015$ [$-.024,-.006$], $-.001$ [$-.006,+.003$]); paired intervals for the modal-accuracy and Spearman gaps: SFT $+.002$ [$-.064,+.063$] / $+.036$ [$+.017,+.055$] and $-.029$ [$-.080,+.016$] / $+.019$ [$-.001,+.038$] (ES / PC); DPO $+.024$ [$-.020,+.071$] / $+.018$ [$+.003,+.034$] and $+.054$ [$+.031,+.077$] / $+.029$ [$+.016,+.043$].}
+\label{tab:native-scalefree}
+\end{table*}

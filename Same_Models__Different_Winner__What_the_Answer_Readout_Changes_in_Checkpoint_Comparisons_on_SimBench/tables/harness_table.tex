@@ -1,0 +1,22 @@
+\begin{table*}[t]
+\centering\scriptsize
+\setlength{\tabcolsep}{2.5pt}
+\begin{tabular}{@{}llcccccc@{}}
+\toprule
+& & & Label & \multicolumn{2}{c}{Harness summed gap} & \multicolumn{2}{c}{Ours, same candidates} \\
+\cmidrule(lr){5-6}\cmidrule(l){7-8}
+Pair & Harness & Candidate & cov.\ P/T & ES & PC & ES & PC \\
+\midrule
+Qwen-14B/Socr.-SFT & lm-eval & no space (after moved newline) & 1.000/.000 & P +.127 & P +.231 & P +.129 & P +.233 \\
+ & OLMES & space (after moved newline) & .000/.000 & P +.133 & P +.210 & P +.135 & P +.213 \\
+\addlinespace[2pt]
+Mistral-7B & lm-eval & no space & .136/.000 & B +.043 & $\circ$ -.011 & B +.057 & I -.016 \\
+ & OLMES & space & .166/.994 & B +.056 & I -.016 & B +.057 & I -.016 \\
+\addlinespace[2pt]
+Llama-3.2-3B & lm-eval & no space (after moved newline) & .021/.894 & I -.259 & I -.258 & I -.253 & I -.255 \\
+ & OLMES & space (after moved newline) & .000/.000 & I -.290 & I -.300 & I -.293 & I -.301 \\
+\bottomrule
+\end{tabular}
+\caption{Two public harnesses run unmodified on three pairs (third follow-up run): lm-evaluation-harness (commit \texttt{ad8737ae}, \texttt{--apply\_chat\_template}) and OLMES (commit \texttt{5a51f502}), each with the paper's prompt as a custom multiple-choice task whose choices are the ``ID<TAB>option'' strings (bfloat16, eager attention, batch size 1, as in the package). With a chat template the current lm-eval default puts no space before the choice; OLMES adds one. Both encode prefix and choice jointly and move the template's trailing newline onto the continuation, so for the Qwen and Llama templates the first scored token is the newline and the label is scored second; Mistral's template ends without whitespace, and lm-eval's no-space choice then starts with a marker-free ``\texttt{A}'' that its SentencePiece model never produces after \texttt{[/INST]}. ``Label cov.'' is the mass on the distinct candidate tokens at the label position (parent/tuned, mean over items), computed from the harness's own token ids through a read-only forward hook on the model call, since neither harness emits per-token log-probabilities. Harness gaps use each harness's native summed log-likelihood (tuned minus parent TVD after a softmax over choices; ES/PC winner and PC gap, letters as in Table~\ref{tab:winner-map-15}); ``ours'' is the package's summed readout with the same candidate strings (no-space for lm-eval, space for OLMES) under separate encoding; for Mistral, separate encoding re-adds the SentencePiece marker, so our no-space cell coincides with our space cell (Table~\ref{tab:tokenization-boundary}).}
+\label{tab:harness}
+\end{table*}

@@ -1,0 +1,26 @@
+\begin{table*}[t]
+\centering\scriptsize
+\setlength{\tabcolsep}{2.5pt}
+\begin{tabular}{@{}llccrrcc@{}}
+\toprule
+Checkpoint & Method & Cue & Status & Released & Ours & TVD mean/med. & Valid R/O \\
+\midrule
+Qwen2.5-14B-Instruct & token prob. & no (default) & complete & -90.5 & -36.8 & .817/.945 & 2038/2038 \\
+ &  & yes & complete & -37.0 & -36.8 & .059/.000 & 2038/2038 \\
+ & verbalized & no & failed (626 parsed) & 12.5* & 30.4 & .100/.050 & 626/2031 \\
+ &  & yes (default) & complete & 31.2 & 30.4 & .056/.000 & 2038/2031 \\
+\addlinespace[2pt]
+Llama-3.1-8B-Instruct & token prob. & no (default) & complete & -70.4 & 5.1 & .594/.673 & 2038/2038 \\
+ &  & yes & complete & 6.4 & 5.1 & .125/.101 & 2038/2038 \\
+ & verbalized & no & complete & 5.3 & 6.8 & .066/.000 & 2038/2032 \\
+ &  & yes (default) & complete & 5.2 & 6.8 & .062/.000 & 2038/2032 \\
+\addlinespace[2pt]
+Qwen2.5-7B-Instruct & token prob. & no (default) & complete & -12.3 & -36.6 & .498/.494 & 2038/2038 \\
+ &  & yes & complete & -38.0 & -36.6 & .126/.002 & 2038/2038 \\
+ & verbalized & no & complete & 16.6 & 15.4 & .207/.147 & 2038/1970 \\
+ &  & yes (default) & failed (811 parsed) & -6.8* & 15.4 & .183/.144 & 811/1970 \\
+\bottomrule
+\end{tabular}
+\caption{SimBench's released scorer run as released (third follow-up run; \texttt{pitehu/SimBench\_release}, commit \texttt{ec384dce}; 8-bit weights, sampling at $T{=}10^{-4}$ with the release's retry loop, its own environment) on three chat checkpoints for the 2,038 items, by its token-probability and verbalized methods, with and without the assistant generation cue (the release's default is no cue for token probabilities and the cue for verbalized answers). ``Released'' and ``Ours'' are the release's own SimBench score (unweighted item mean of source-normalized scores, as its CLI reports: $100\,(1-\mathrm{TVD}/\overline{\mathrm{TVD}}_{\text{uniform}})$ with the uniform predictor's mean TVD on the item's source as the reference, so 100 is a perfect match and 0 the uniform predictor's distance) computed from the release's vectors and from this paper's vectors for the same checkpoint and method; TVD mean/median is the per-item distance between the two vector sets; Valid counts items with a parsable answer (released/ours). Starred scores are computed on the items the failed run accepted before its retry limit and are not full-frame scores.}
+\label{tab:released-scorer}
+\end{table*}

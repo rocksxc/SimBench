@@ -1,0 +1,44 @@
+\begin{table*}[t]
+\centering\scriptsize
+\setlength{\tabcolsep}{2.3pt}
+\begin{tabular}{@{}llcccccc@{}}
+\toprule
+Serialization & Readout & Wt. & Base & Instruct & Gap [95\% interval] & Entropy-matched gap & Coverage B/I \\
+\midrule
+Chat template, space & First token & ES & .312 & .425 & +.114 [.100,.127] B & -.134 [-.144,-.124] I & .004/.000 \\
+ &  & PC & .318 & .352 & +.034 [.022,.047] B & -.060 [-.069,-.051] I & .004/.000 \\
+ & Summed & ES & .289 & .425 & +.136 [.123,.150] B & -.086 [-.096,-.074] I &  \\
+ &  & PC & .286 & .352 & +.066 [.055,.077] B & -.007 [-.014,-.001] I &  \\
+ & Length-normalized & ES & .366 & .427 & +.061 [.049,.074] B & -.130 [-.139,-.121] I &  \\
+ &  & PC & .395 & .421 & +.026 [.014,.038] B & -.087 [-.094,-.080] I &  \\
+ & DC-PMI & ES & .642 & .475 & -.166 [-.178,-.154] I & -.126 [-.139,-.115] I &  \\
+ &  & PC & .666 & .405 & -.261 [-.270,-.251] I & -.131 [-.139,-.123] I &  \\
+Chat template, no space & First token & ES & .290 & .431 & +.141 [.126,.156] B & -.079 [-.089,-.070] I & .540/1.000 \\
+ &  & PC & .276 & .354 & +.079 [.068,.089] B & -.001 [-.008,.006] $\circ$ & .520/1.000 \\
+ & Summed & ES & .287 & .431 & +.144 [.129,.159] B & -.069 [-.079,-.058] I &  \\
+ &  & PC & .270 & .354 & +.084 [.075,.094] B & -.005 [-.010,.001] $\circ$ &  \\
+ & Length-normalized & ES & .324 & .316 & -.008 [-.021,.006] $\circ$ & -.088 [-.097,-.079] I &  \\
+ &  & PC & .351 & .291 & -.060 [-.072,-.048] I & -.032 [-.038,-.027] I &  \\
+Plain prefix & First token & ES & .271 & .399 & +.128 [.109,.148] B & -.022 [-.043,-.001] I & .733/.955 \\
+ &  & PC & .287 & .341 & +.054 [.042,.065] B & +.012 [.003,.021] B & .739/.957 \\
+ & Summed & ES & .283 & .407 & +.124 [.104,.147] B & -.027 [-.048,-.005] I &  \\
+ &  & PC & .296 & .352 & +.056 [.045,.068] B & -.001 [-.010,.008] $\circ$ &  \\
+ & Length-normalized & ES & .322 & .311 & -.011 [-.026,.004] $\circ$ & -.050 [-.065,-.035] I &  \\
+ &  & PC & .352 & .323 & -.029 [-.039,-.019] I & -.011 [-.020,-.002] I &  \\
+Own (Base plain, Instruct no space) & First token & ES & .271 & .431 & +.160 [.147,.173] B & -- & .733/1.000 \\
+ &  & PC & .287 & .354 & +.067 [.056,.079] B & -- & .739/1.000 \\
+ & Summed & ES & .283 & .431 & +.148 [.135,.161] B & -- &  \\
+ &  & PC & .296 & .354 & +.058 [.047,.070] B & -- &  \\
+ & Length-normalized & ES & .322 & .316 & -.005 [-.019,.008] $\circ$ & -- &  \\
+ &  & PC & .352 & .291 & -.062 [-.074,-.049] I & -- &  \\
+SimBench prompt & Next-token (own serialization) & ES & .306 & .495 & +.189 [.168,.210] B & -- & 1.00/1.00 \\
+ &  & PC & .308 & .424 & +.117 [.104,.130] B & -- &  \\
+Protocol: Base next-token vs.\ Instruct verbalized & Controlled JSON & ES & .306 & .221 & -.084 [-.101,-.068] I & -- & 1.00/1.00 \\
+ &  & PC & .307 & .219 & -.088 [-.095,-.082] I & -- &  \\
+ & SimBench prompt (JSON) & ES & .306 & .255 & -.051 [-.072,-.028] I & -- & 1.00/1.00 \\
+ &  & PC & .308 & .231 & -.077 [-.084,-.069] I & -- &  \\
+\bottomrule
+\end{tabular}
+\caption{A larger pair, Qwen2.5-32B Base (\texttt{1818d35814b8}) and Instruct (\texttt{5ede1c97bbab}), run after the 15-pair panel was frozen (second follow-up run; bf16, one A100-80GB) and therefore reported here rather than in Figure~\ref{fig:fifteen}. Same rows as Table~\ref{tab:subpop}: all-source TVD losses, gaps (Instruct minus Base) with 95\% paired cluster-bootstrap intervals (B = Base, I = Instruct), entropy-matched gaps (temperatures fitted on the other sources; not computed for own serialization) and first-token coverage. Mean normalized entropy under the next-token readout: Base .794, Instruct .064 (human .66). The uniform predictor scores .356 (ES) / .394 (PC). Protocol rows pair the Base checkpoint's next-token readout (plain prefix) with the Instruct checkpoint's verbalized vectors on the items it answers validly (coverage column: next-token coverage / valid rate).}
+\label{tab:qwen32b}
+\end{table*}

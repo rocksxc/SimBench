@@ -1,0 +1,20 @@
+\begin{table*}[t]
+\centering\scriptsize
+\setlength{\tabcolsep}{2.5pt}
+\begin{tabular}{@{}lccc@{\hspace{8pt}}ccc@{}}
+\toprule
+& \multicolumn{3}{c}{Equal-source} & \multicolumn{3}{c}{Pooled-cluster} \\
+\cmidrule(lr){2-4}\cmidrule(l){5-7}
+& Sum & Len & PMI & Sum & Len & PMI \\
+\midrule
+First & +0.35 [+0.27,+0.38] & -0.01 [-0.10,+0.02] & -0.21 [-0.30,-0.14] & +0.42 [+0.36,+0.45] & +0.05 [+0.02,+0.10] & +0.02 [-0.04,+0.04] \\
+Sum &  & +0.49 [+0.46,+0.54] & +0.01 [-0.04,+0.06] &  & +0.50 [+0.46,+0.53] & +0.20 [+0.13,+0.24] \\
+Len &  &  & +0.07 [-0.01,+0.11] &  &  & +0.26 [+0.22,+0.30] \\
+\addlinespace[2pt]\multicolumn{7}{@{}l}{\emph{No-space candidates}} \\
+First & +0.20 & +0.14 & -- & +0.32 & +0.30 & -- \\
+Sum &  & +0.45 & -- &  & +0.65 & -- \\
+\bottomrule
+\end{tabular}
+\caption{Kendall $\tau_b$ (space block: with 95\% cluster-bootstrap intervals from the shared ledger) between the orderings of the 24 distinct checkpoint--template entries of the extended panel (30 entries minus duplicates that share checkpoint and template) by all-source TVD under two readouts, chat template with space-prefixed candidates (top) and with no-space candidates (bottom; DC-PMI not run there).}
+\label{tab:rank-stability}
+\end{table*}

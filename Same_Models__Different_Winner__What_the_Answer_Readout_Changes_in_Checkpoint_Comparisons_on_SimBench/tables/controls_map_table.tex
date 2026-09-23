@@ -1,0 +1,29 @@
+\begin{table*}[t]
+\centering\scriptsize
+\setlength{\tabcolsep}{2.4pt}
+\begin{tabular}{@{}lccccccccccccccc@{}}
+\toprule
+Control & \multicolumn{3}{c}{Qwen-14B/Socr.} & \multicolumn{3}{c}{Mistral-7B} & \multicolumn{3}{c}{Qwen2.5-7B} & \multicolumn{3}{c}{Llama-3.2-3B} & \multicolumn{3}{c}{OLMo-2-7B} \\
+\cmidrule(lr){2-4}\cmidrule(lr){5-7}\cmidrule(lr){8-10}\cmidrule(lr){11-13}\cmidrule(l){14-16}
+& First & Sum & Len & First & Sum & Len & First & Sum & Len & First & Sum & Len & First & Sum & Len \\
+\midrule
+Published (reference) & S/S & P/P & P/P & B/I & B/I & I/I & B/B & B/B & B/B & I/I & I/I & I/I & I/I & I/I & I/I \\
+Option order reversed & S/S & S/$\circ$ & P/P & B/$\circ$ & B/$\circ$ & I/I & B/B & B/B & B/B & I/I & I/I & I/I & B/B & I/I & I/I \\
+Option order permuted & S/S & P/P & P/P & B/B & B/B & I/I & B/B & B/B & B/B & $\circ$/$\circ$ & I/I & I/I & B/B & I/I & I/I \\
+No system message & S/S & P/P & P/P & B/B & B/B & $\circ$/I & B/B & B/$\circ$ & B/B & I/I & I/I & $\circ$/$\circ$ & B/B & I/I & I/I \\
+Plain prefix + BOS & S/S & P/P & P/P & $\circ$/I & B/$\circ$ & I/I & B/B & B/B & B/B & I/I & I/I & I/I & B/B & B/B & B/B \\
+No leading space & S/S & P/P & P/P & B/I & B/I & I/I & B/I & B/B & $\circ$/I & I/I & I/I & I/I & I/I & I/I & I/I \\
+Separator ``A.'' (Qwen-14B only) & S/S & P/P & P/P & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- \\
+Separator ``A)'' (Qwen-14B only) & S/S & P/P & P/P & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- \\
+Persona instruction & S/S & P/P & P/P & B/B & B/B & $\circ$/I & B/B & B/B & B/B & I/I & I/I & I/I & B/B & I/I & $\circ$/B \\
+Distribution instruction & S/S & P/P & P/P & B/B & B/B & I/I & B/$\circ$ & B/B & B/B & I/I & I/I & I/I & I/I & I/I & I/I \\
+Paraphrase 1 & S/S & P/P & P/P & B/$\circ$ & B/$\circ$ & I/I & B/B & B/B & B/B & I/I & I/I & I/I & I/I & I/I & I/I \\
+Paraphrase 2 & S/S & P/P & P/P & B/B & B/B & $\circ$/I & B/B & B/B & B/I & I/I & I/I & I/I & I/I & I/I & I/I \\
+Candidates: ID only & S/S & S/S & S/S & $\circ$/I & $\circ$/I & $\circ$/I & B/B & B/B & B/B & I/I & I/I & I/I & I/I & I/I & I/I \\
+Candidates: option text only & S/S & S/S & S/S & B/$\circ$ & B/B & I/I & I/I & I/I & I/I & B/B & B/B & B/B & $\circ$/I & $\circ$/I & I/I \\
+DC-PMI premise with options (PMI col.) & S/S & P/P & S/P & B/I & B/I & B/B & B/B & B/B & B/I & I/I & I/I & I/I & I/I & I/I & I/I \\
+\bottomrule
+\end{tabular}
+\caption{Winner under each control for the five original pairs (re-implementation runs, chat template unless stated; ES/PC symbols as in Table~\ref{tab:winner-map-15}). The last row replaces the third column of each pair by DC-PMI with a premise that retains the option list. Separator variants were run for the Qwen-14B pair only. Counts of cells that differ from the reference row are given in the text.}
+\label{tab:controls-map}
+\end{table*}

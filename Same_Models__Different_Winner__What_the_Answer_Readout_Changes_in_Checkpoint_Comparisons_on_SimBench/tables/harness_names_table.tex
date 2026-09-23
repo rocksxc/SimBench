@@ -1,0 +1,18 @@
+\begin{table}[t]
+\centering\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}lll@{}}
+\toprule
+This paper & lm-evaluation-harness & OLMES \\
+\midrule
+Summed (\textsc{sum}) & \texttt{acc} & \texttt{acc\_raw} \\
+Character-normalized & \texttt{acc\_norm} & \texttt{acc\_per\_char} \\
+Length-normalized (\textsc{len}) & -- & \texttt{acc\_per\_token} \\
+Unconditional PMI & \texttt{acc\_mutual\_info} & \texttt{acc\_uncond} \\
+DC-PMI (content-free premise) & -- & -- \\
+First token; coverage & -- (the patch) & -- \\
+\bottomrule
+\end{tabular}
+\caption{Correspondence between this paper's readouts and the metrics of the two public harnesses at the pinned commits (Appendix Table~\ref{tab:harness}). \texttt{acc\_norm} divides by the code-point count of the choice; \texttt{acc\_mutual\_info}'s premise is the BOS token where one exists and otherwise the end-of-text token, OLMES's unconditional premise is ``Answer:''. Neither harness exposes per-token scores, so the first-token readout and the coverage at the label position were computed from the harness's token ids through a read-only forward hook on the model call (the label-coverage columns of Appendix Table~\ref{tab:harness}) or, with the released patch, from its per-token file.}
+\label{tab:harness-names}
+\end{table}

@@ -1,0 +1,21 @@
+\begin{table}[H]
+\centering\scriptsize
+\setlength{\tabcolsep}{2.6pt}
+\begin{tabular}{@{}llrrcrr@{}}
+\toprule
+Pair & Prefix & Max $|\Delta|$ & $>$.01 & Map & First & Sum \\
+\midrule
+Qwen-14B/Socr. & Chat & .008 & 0 & 8/8 & .022 & .029 \\
+Mistral-7B & Chat & .025 & 4 & 7/8 & .069 & .071 \\
+Mistral-7B & Plain & .015 & 3 & 4/6 & .043 & .072 \\
+Qwen-7B & Chat & .022 & 4 & 8/8 & .043 & .069 \\
+Qwen-7B & Plain & .006 & 0 & 6/6 & .048 & .063 \\
+Llama-3.2-3B & Chat & .022 & 4 & 8/8 & .027 & .039 \\
+Llama-3.2-3B & Plain & .027 & 2 & 4/6 & .035 & .050 \\
+OLMo-2-7B & Chat & .023 & 10 & 8/8 & .039 & .039 \\
+OLMo-2-7B & Plain & .014 & 2 & 6/6 & .063 & .102 \\
+\bottomrule
+\end{tabular}
+\caption{Agreement between the paper's panel and a from-scratch re-implementation of the written contract, run on a rented A100 in bfloat16. Per pair and prefix, 16 (chat) or 12 (plain) all-source TVD losses are compared (parent and tuned, ES and PC, all readouts). Max $|\Delta|$: largest absolute loss deviation; $>$.01: cells deviating by more than .01; Map: cells of Table~\ref{tab:winner-map} with the same winner and interval side; First/Sum: mean per-item TVD between the two implementations' predicted distributions, averaged over both checkpoints.}
+\label{tab:reimplementation}
+\end{table}

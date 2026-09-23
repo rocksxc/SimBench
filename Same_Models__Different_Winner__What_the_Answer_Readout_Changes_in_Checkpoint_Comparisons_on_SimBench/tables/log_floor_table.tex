@@ -1,0 +1,19 @@
+\begin{table}[t]
+\centering\scriptsize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+Loss & Own & No space & Space \\
+\midrule
+log, floor 1e-6 & 18/13 & 14/12 & 16/9 \\
+log, floor 1e-4 & 18/11 & 14/10 & 16/9 \\
+log, floor 1e-3 & 17/10 & 13/9 & 15/7 \\
+log, floor 1e-2 & 15/8 & 11/7 & 13/5 \\
+log, smoothing .01 & 13/7 & 11/7 & 13/5 \\
+log, smoothing .05 & 10/1 & 9/4 & 7/1 \\
+Brier & 9/3 & 8/2 & 10/2 \\
+\bottomrule
+\end{tabular}
+\caption{The loss rows of Table~\ref{tab:what-changes} under other probability floors. Cells give units whose winner symbol under some same-tensor readout differs between TVD and the alternative loss / units whose letters are opposite (no magnitude floor, so not the decisive count of Table~\ref{tab:what-changes-full}, which requires both gaps to be at least .05), out of 30. The paper's log score clips predicted probabilities at $10^{-6}$; the rows below clip at larger floors or add Laplace smoothing $(p+\alpha)/(1+\alpha K)$ before the logarithm. Likelihood readouts place near-zero mass on some options, so the floor is part of the log score's definition; the Brier score, which needs no floor, is repeated for comparison.}
+\label{tab:log-floor}
+\end{table}

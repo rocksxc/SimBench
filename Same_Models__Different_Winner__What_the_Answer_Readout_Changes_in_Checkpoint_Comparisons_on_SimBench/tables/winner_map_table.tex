@@ -1,0 +1,19 @@
+\begin{table}[!b]
+\centering\scriptsize
+\setlength{\tabcolsep}{2.4pt}
+\begin{tabular}{@{}lcccc@{\hspace{5pt}}ccc@{}}
+\toprule
+& \multicolumn{4}{c}{Chat template (shared)} & \multicolumn{3}{c}{Plain prefix (shared)} \\
+\cmidrule(lr){2-5}\cmidrule(l){6-8}
+Pair & First & Sum & Len & PMI & First & Sum & Len \\
+\midrule
+Qwen-14B/Socr. & S/S & P/P & P/P & P/P & --- & --- & --- \\
+Mistral-7B & $\circ$/I & B/I & I/I & B/B & $\circ$/$\circ$ & $\circ$/B & I/I \\
+Qwen-7B & B/B & B/B & B/B & I/I & B/B & B/B & B/B \\
+Llama-3.2-3B & I/I & I/I & I/I & B/I & I/I & $\circ$/$\circ$ & I/I \\
+OLMo-2-7B & I/I & I/I & I/I & B/$\circ$ & B/B & B/B & B/B \\
+\bottomrule
+\end{tabular}
+\caption{Who is closer to the human distributions under each readout, with equal-source/pooled-cluster weighting in each cell. First row: S = Socrates, P = its Qwen2.5-14B-Instruct parent. Other rows: I = Instruct, B = Base. A letter means the 95\% cluster-bootstrap interval of the gap excludes zero; $\circ$ means it includes zero. The plain prefix was run for the four Base--Instruct pairs. Reading across a row shows how often the answer to ``which checkpoint is better?'' changes with the readout.}
+\label{tab:winner-map}
+\end{table}

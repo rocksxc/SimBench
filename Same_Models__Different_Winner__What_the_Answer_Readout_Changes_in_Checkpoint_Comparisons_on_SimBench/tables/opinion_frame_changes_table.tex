@@ -1,0 +1,21 @@
+\begin{table}[t]
+\centering\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+Varied & Units & Changed & Decisive \\
+\midrule
+Reduction: first vs.\ summed & 30 & 10 & 2 \\
+Reduction: first vs.\ length-norm. & 30 & 14 & 3 \\
+Reduction: summed vs.\ length-norm. & 30 & 6 & 0 \\
+Reduction: any of the three & 30 & 14 & 3 \\
+Reduction: DC-PMI vs.\ summed & 30 & 16 & 0 \\
+Serialization: to plain prefix & 30 & 20 & 4 \\
+Weighting: ES vs.\ PC & 15 & 1 & 0 \\
+Frame: omit one source (of three) & 30 & 14 & 0 \\
+Sharpness: entropy matching & 30 & 21 & 8 \\
+\bottomrule
+\end{tabular}
+\caption{The rows of Table~\ref{tab:what-changes-full} recomputed on the opinion-survey frame (ESS, GlobalOpinionQA, and the held-out ISSP; 1,491 items), shared chat template with space-prefixed candidates and shared plain prefix, all 15 pairs, with the same units and counting rule (one pair and weighting; the weighting row one pair) (10,000-replicate cluster bootstrap within the three sources; ES weights the three sources equally; entropy-matched temperatures are fitted on the other two sources). Relative to the five-source frame, 68 of 210 winner symbols change, 5 decisively (Appendix Table~\ref{tab:opinion-issp}).}
+\label{tab:opinion-frame-changes}
+\end{table}

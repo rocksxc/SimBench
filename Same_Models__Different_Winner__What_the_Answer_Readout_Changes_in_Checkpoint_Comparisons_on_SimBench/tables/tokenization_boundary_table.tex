@@ -1,0 +1,28 @@
+\begin{table}[t]
+\centering\scriptsize
+\setlength{\tabcolsep}{2.5pt}
+\begin{tabular}{@{}llrrr@{}}
+\toprule
+Pair & Tokenizer & Space & No space & Plain \\
+\midrule
+Qwen-14B/Socr.-SFT & Qwen2.5-14B-Inst. & 0/0 & 0/0 & 0/0 \\
+Qwen-14B/Socr.-DPO & Qwen2.5-14B-Inst. & 0/0 & 0/0 & 0/0 \\
+Mistral-7B & Mistral-7B-Inst.-v0.3 & 0/0 & 100/100 & 0/0 \\
+Qwen2.5-7B & Qwen2.5-7B-Inst. & 0/0 & 0/0 & 0/0 \\
+Llama-3.2-3B & Llama-3.2-3B-Inst. & 0/0 & 0/0 & 0/0 \\
+OLMo-2-7B & OLMo-2-7B-Inst. & 0/0 & 0/0 & 0/0 \\
+Qwen2.5-14B & Qwen2.5-14B-Inst. & 0/0 & 0/0 & 0/0 \\
+Llama-3.1-8B & Llama-3.1-8B-Inst. & 0/0 & 0/0 & 0/0 \\
+Qwen3-8B & Qwen3-8B & 0/0 & 0/0 & 0/0 \\
+OLMo-2-13B & OLMo-2-13B-Inst. & 0/0 & 0/0 & 0/0 \\
+OLMo-2-7B Base/SFT & OLMo-2-7B-SFT & 0/0 & 0/0 & 0/0 \\
+OLMo-2-7B SFT/DPO & OLMo-2-7B-DPO & 0/0 & 0/0 & 0/0 \\
+OLMo-2-7B DPO/Inst. & OLMo-2-7B-Inst. & 0/0 & 0/0 & 0/0 \\
+Qwen3-4B/OSim & osim-4b-mid & 0/0 & 0/0 & 0/0 \\
+Qwen3-8B/OSim & osim-8b-mid & 0/0 & 0/0 & 0/0 \\
+Mistral-7B-v0.1/SubPOP & Mistral-7B-v0.1 & -- & -- & 0/0 \\
+\bottomrule
+\end{tabular}
+\caption{Tokenization-boundary audit for the tokenizers of all 15 pairs and of SubPOP (CPU only; no model loaded; 8,508 candidates per condition; the twelve public tokenizers were audited locally, the four gated ones in the third follow-up run). For every item and candidate, the token ids of the prefix and the candidate encoded separately and concatenated (the contract of Appendix~\ref{app:prompts}) are compared with the joint encoding of the concatenated string under the chat template with space-prefixed candidates, with no-space candidates, and under the plain prefix (SubPOP: plain only); each cell gives the percentage of candidates whose id sequence differs / whose first candidate token differs. The only nonzero cell is Mistral-7B-Instruct-v0.3 with no-space candidates: its SentencePiece tokenizer prepends the word-boundary marker to a candidate encoded on its own, so the separately encoded ``\texttt{A}'' is the token ``\texttt{\_A}'' of the space-prefixed candidate, whereas the joint encoding yields the marker-free ``\texttt{A}''; the pair's no-space cells therefore coincide with its space cells (Section~\ref{sec:coverage}). Under the joint rule of lm-eval-harness, which also moves the template's trailing whitespace onto the continuation, see Appendix Table~\ref{tab:joint-tokenization}.}
+\label{tab:tokenization-boundary}
+\end{table}

@@ -1,0 +1,37 @@
+\begin{table*}[t]
+\centering\scriptsize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}llcccccc@{}}
+\toprule
+Serialization & Readout & Wt. & Base & SubPOP & Gap [95\% interval] & Entropy-matched gap & Coverage B/S \\
+\midrule
+Plain prefix & First token & ES & .362 & .306 & -.056 [-.064,-.048] S & -.134 [-.155,-.114] S & .260/.876 \\
+ &  & PC & .395 & .331 & -.064 [-.070,-.059] S & -.162 [-.175,-.149] S & .247/.878 \\
+ & Summed & ES & .361 & .322 & -.039 [-.053,-.025] S & -.199 [-.225,-.176] S &  \\
+ &  & PC & .398 & .309 & -.089 [-.098,-.079] S & -.206 [-.217,-.195] S &  \\
+ & Length-normalized & ES & .383 & .345 & -.038 [-.043,-.034] S & -.130 [-.145,-.116] S &  \\
+ &  & PC & .426 & .379 & -.047 [-.050,-.043] S & -.159 [-.169,-.149] S &  \\
+Plain prefix + BOS & First token & ES & .363 & .307 & -.056 [-.065,-.048] S & -.141 [-.161,-.123] S & .264/.885 \\
+ &  & PC & .400 & .333 & -.067 [-.072,-.061] S & -.180 [-.192,-.168] S & .254/.884 \\
+ & Summed & ES & .369 & .330 & -.039 [-.053,-.025] S & -.199 [-.218,-.182] S &  \\
+ &  & PC & .407 & .311 & -.096 [-.106,-.086] S & -.210 [-.221,-.199] S &  \\
+ & Length-normalized & ES & .386 & .340 & -.047 [-.052,-.042] S & -.134 [-.149,-.120] S &  \\
+ &  & PC & .429 & .375 & -.055 [-.059,-.050] S & -.159 [-.169,-.149] S &  \\
+Plain prefix, integer IDs & First token & ES & \multicolumn{4}{c}{identical first token; readout uniform for both} & n/a \\
+ & Summed & ES & .352 & .294 & -.058 [-.073,-.043] S & -.166 [-.186,-.147] S &  \\
+ &  & PC & .382 & .284 & -.099 [-.110,-.087] S & -.162 [-.174,-.150] S &  \\
+ & Length-normalized & ES & .369 & .322 & -.047 [-.050,-.043] S & -.167 [-.180,-.154] S &  \\
+ &  & PC & .408 & .358 & -.050 [-.053,-.046] S & -.173 [-.184,-.163] S &  \\
+Mistral-Instruct template & First token & ES & .451 & .315 & -.135 [-.145,-.126] S & -.125 [-.146,-.102] S & .001/.696 \\
+ &  & PC & .492 & .344 & -.148 [-.154,-.141] S & -.172 [-.182,-.162] S & .001/.695 \\
+ & Summed & ES & .442 & .287 & -.155 [-.171,-.139] S & -.257 [-.275,-.237] S &  \\
+ &  & PC & .467 & .287 & -.180 [-.193,-.167] S & -.258 [-.273,-.244] S &  \\
+ & Length-normalized & ES & .450 & .346 & -.104 [-.110,-.097] S & -.175 [-.189,-.160] S &  \\
+ &  & PC & .488 & .374 & -.114 [-.119,-.109] S & -.183 [-.195,-.172] S &  \\
+SimBench prompt & Next-token (SimBench) & ES & .363 & .303 & -.060 [-.066,-.054] S & -.101 [-.119,-.083] S & .909/.985 \\
+ &  & PC & .405 & .340 & -.065 [-.070,-.060] S & -.120 [-.130,-.109] S &  \\
+\bottomrule
+\end{tabular}
+\caption{A second survey-fine-tuned family: Mistral-7B-v0.1 and its SubPOP LoRA adapter \cite{suh2025subpop} (adapter merged into the base weights; revisions in Table~\ref{tab:extension-revisions}), re-implementation runs on the 2,038-item frame. The adapter was trained on a base model with lettered options and an ``Answer:'' cue, so the shared plain prefix is close to its training format; it has no chat template. Losses are all-source TVD; gaps are SubPOP minus Base with 95\% paired cluster-bootstrap intervals (S = SubPOP, B = Base); entropy-matched gaps use temperatures fitted on the other sources; coverage is the mass on the first candidate tokens (plain prefix) or on the bare labels (SimBench prompt; not defined for integer IDs: under this tokenizer a space-prefixed integer candidate begins with the space token, so the first-token readout is uniform and only the full-string readouts are informative). Two rows added in the second follow-up run: integer IDs in place of the letters, and the Mistral-Instruct chat template of the paper's Mistral-7B pair applied with the parent's tokenizer, under which its [INST] markers are plain text (space and no-space candidates encode identically for this tokenizer, so one row is shown); the adapter keeps its margin under both, unlike Socrates under the tab format. SubPOP's own evaluation protocol conditions on a demographic attribute question that SimBench's group descriptions do not supply, so it could not be applied without inventing a mapping (Limitations).}
+\label{tab:subpop}
+\end{table*}

@@ -1,0 +1,16 @@
+\begin{table}[t]
+\centering\scriptsize
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+Source & Items & Median $n$ & TVD \\
+\midrule
+ESS & 497 & 1773 & .020 \\
+GlobalOpinionQA & 0 & -- & -- \\
+DICES & 500 & 36 & .028 \\
+NumberGame & 500 & 11 & .080 \\
+ConspiracyCorr & 45 & 1025 & .022 \\
+\bottomrule
+\end{tabular}
+\caption{Sampling noise of the human targets. For items whose respondent count $n$ is released, the mean TVD between the published shares and a fresh multinomial sample of the same size (200 draws per item). GlobalOpinionQA releases no respondent counts.}
+\label{tab:target-noise}
+\end{table}

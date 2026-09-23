@@ -1,0 +1,20 @@
+\begin{table}[t]
+\centering\scriptsize
+\setlength{\tabcolsep}{2.5pt}
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+$\pm g$ & Decisive [min, max] & \ES{} & \PC{} & Interval only [min, max] \\
+\midrule
+0.00 & 0.00 [0.00, 0.00] & 0.00 & 0.00 & 0.00 [0.00, 0.00] \\
+0.02 & 0.00 [0.00, 0.00] & 0.00 & 0.00 & 0.64 [0.00, 1.00] \\
+0.03 & 0.00 [0.00, 0.00] & 0.00 & 0.00 & 0.91 [0.09, 1.00] \\
+0.04 & 0.00 [0.00, 0.00] & 0.00 & 0.00 & 0.98 [0.57, 1.00] \\
+0.05 & 0.11 [0.02, 0.24] & 0.11 & 0.11 & 0.99 [0.86, 1.00] \\
+0.06 & 0.85 [0.50, 1.00] & 0.81 & 0.90 & 1.00 [0.97, 1.00] \\
+0.07 & 0.98 [0.83, 1.00] & 0.97 & 1.00 & 1.00 [1.00, 1.00] \\
+0.10 & 1.00 [1.00, 1.00] & 1.00 & 1.00 & 1.00 [1.00, 1.00] \\
+\bottomrule
+\end{tabular}
+\caption{Operating characteristics of the decisive-flip criterion. For each of the 30 units (pair and weighting; chat template, space candidates) the first-token and summed per-item gap vectors are centered and shifted to true aggregate gaps of $+g$ and $-g$ TVD; the 10,000 shared cluster-bootstrap draws then give the joint sampling error of the two aggregate gaps, and a resampled frame counts as a decisive flip when both point gaps lie beyond $\max(.05,h)$ on opposite sides of zero, $h$ being the unit's interval half-width (.002 to .029), and as an interval flip when both lie beyond $h$. Entries are the share of resampled frames that fire, averaged over the 30 units (with the extreme units) and per weighting; the $g=0$ row is the false-positive rate.}
+\label{tab:power}
+\end{table}

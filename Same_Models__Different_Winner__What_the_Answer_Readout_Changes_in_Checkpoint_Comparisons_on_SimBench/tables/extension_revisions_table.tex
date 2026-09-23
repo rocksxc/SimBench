@@ -1,0 +1,39 @@
+\begin{table*}[t]
+\centering\scriptsize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}llll@{}}
+\toprule
+Pair & Side & Repository & Revision used \\
+\midrule
+Qwen-14B/Socr.-DPO & parent & \texttt{Qwen/Qwen2.5-14B-Instruct} & \texttt{cf98f3b3bbb4} \\
+Qwen-14B/Socr.-DPO & tuned & \texttt{socratesft/socrates-qwen2.5-14b-dpo} & \texttt{f2dbdc4cb661} \\
+Qwen2.5-14B & parent & \texttt{Qwen/Qwen2.5-14B} & main (\texttt{97e1e76335b7}, last modified 2024-09-20) \\
+Qwen2.5-14B & tuned & \texttt{Qwen/Qwen2.5-14B-Instruct} & \texttt{cf98f3b3bbb4} \\
+Llama-3.1-8B & parent & \texttt{meta-llama/Llama-3.1-8B} & main (\texttt{d04e592bb4f6}, last modified 2024-10-16) \\
+Llama-3.1-8B & tuned & \texttt{meta-llama/Llama-3.1-8B-Instruct} & main (\texttt{0e9e39f249a1}, last modified 2024-09-25) \\
+Qwen3-8B & parent & \texttt{Qwen/Qwen3-8B-Base} & main (\texttt{49e3418fbbbc}, last modified 2025-05-21) \\
+Qwen3-8B & tuned & \texttt{Qwen/Qwen3-8B} & main (\texttt{b968826d9c46}, last modified 2025-07-26) \\
+OLMo-2-13B & parent & \texttt{allenai/OLMo-2-1124-13B} & main (\texttt{3fefddc1bf18}, last modified 2025-01-06) \\
+OLMo-2-13B & tuned & \texttt{allenai/OLMo-2-1124-13B-Instruct} & main (\texttt{3a5c85baefbb}, last modified 2025-01-06) \\
+OLMo-2-7B Base/SFT & parent & \texttt{allenai/OLMo-2-1124-7B} & \texttt{7df9a82518af} \\
+OLMo-2-7B Base/SFT & tuned & \texttt{allenai/OLMo-2-1124-7B-SFT} & main (\texttt{1de02c017511}, last modified 2025-01-06) \\
+OLMo-2-7B SFT/DPO & parent & \texttt{allenai/OLMo-2-1124-7B-SFT} & main (\texttt{1de02c017511}, last modified 2025-01-06) \\
+OLMo-2-7B SFT/DPO & tuned & \texttt{allenai/OLMo-2-1124-7B-DPO} & main (\texttt{e34ea60adff2}, last modified 2025-01-06) \\
+OLMo-2-7B DPO/Inst. & parent & \texttt{allenai/OLMo-2-1124-7B-DPO} & main (\texttt{e34ea60adff2}, last modified 2025-01-06) \\
+OLMo-2-7B DPO/Inst. & tuned & \texttt{allenai/OLMo-2-1124-7B-Instruct} & \texttt{470b1fba1ae0} \\
+Qwen3-4B/OSim & parent & \texttt{Qwen/Qwen3-4B-Base} & \texttt{906bfd4b4dc7} \\
+Qwen3-4B/OSim & tuned & \texttt{cmu-lti/osim-4b-mid} & \texttt{887271ac8996} \\
+Qwen3-8B/OSim & parent & \texttt{Qwen/Qwen3-8B-Base} & \texttt{49e3418fbbbc} \\
+Qwen3-8B/OSim & tuned & \texttt{cmu-lti/osim-8b-mid} & \texttt{af9ef0347ede} \\
+Mistral-7B-v0.1/SubPOP & parent & \texttt{mistralai/Mistral-7B-v0.1} & \texttt{27d67f1b5f57} \\
+Mistral-7B-v0.1/SubPOP & tuned & \texttt{jjssuh/mistral-7b-v0.1-subpop} (adapter) & \texttt{b63bd98fd73e} \\
+Qwen2.5-32B (Table~\ref{tab:qwen32b}) & parent & \texttt{Qwen/Qwen2.5-32B} & \texttt{1818d35814b8} \\
+Qwen2.5-32B (Table~\ref{tab:qwen32b}) & tuned & \texttt{Qwen/Qwen2.5-32B-Instruct} & \texttt{5ede1c97bbab} \\
+\addlinespace[2pt]
+lm-eval-harness & -- & \texttt{EleutherAI/lm-evaluation-harness} & \texttt{ad8737ae7fad24cf64e50fc7fc31397bff586b9e} \\
+OLMES & -- & \texttt{allenai/olmes} & \texttt{5a51f502d463b8cdc4a2dcad7d7096c41ff1197e} \\
+\bottomrule
+\end{tabular}
+\caption{Repositories and revisions of the extension pairs (re-implementation runs of 2026-09-07). Where a run loaded the default branch (``main''), the commit it resolved to was recorded afterwards; the last two rows are the GitHub repositories and commits of the harness runs of Table~\ref{tab:harness} and of the joint rule of Tables~\ref{tab:joint-tokenization} and \ref{tab:joint-example}, and from the repository metadata; each such repository had last been modified months earlier, so the listed commit is the one loaded. The tuned checkpoint's tokenizer and chat template were used for both members of a pair. The SubPOP pair (follow-up run of 2026-09-09) uses the parent's tokenizer and no chat template; the adapter's configuration names this base model, and both revisions were pinned before the run. The Qwen2.5-32B pair (second follow-up run of 2026-09-10) was pinned to the commits shown before its run and is not part of the 15-pair panel.}
+\label{tab:extension-revisions}
+\end{table*}

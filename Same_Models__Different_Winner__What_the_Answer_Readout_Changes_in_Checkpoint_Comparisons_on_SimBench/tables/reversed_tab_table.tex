@@ -1,0 +1,27 @@
+\begin{table}[!htb]
+\centering\scriptsize
+\setlength{\tabcolsep}{2.5pt}
+\begin{tabular}{@{}llrrr@{}}
+\toprule
+& & \multicolumn{3}{c}{Displayed ID} \\
+\cmidrule(l){3-5}
+Order & Quantity & A & B & C \\
+\midrule
+Published & Tab contribution, Socrates (nats) & $-.168$ & $-.532$ & $+.699$ \\
+ & Human share, displayed option & .065 & .917 & .018 \\
+Reversed & Tab contribution, Socrates (nats) & $-.376$ & $+.267$ & $+.109$ \\
+ & Human share, displayed option & .018 & .917 & .065 \\
+\midrule
+& & ID only & $+$tab & Full string \\
+\cmidrule(l){3-5}
+Published & Socrates DICES TVD & .405 & .637 & .788 \\
+ & Parent DICES TVD & .116 & .116 & .116 \\
+ & Gap (Socrates $-$ parent) & $+.289$ & $+.521$ & $+.672$ \\
+Reversed & Socrates DICES TVD & .399 & .305 & .247 \\
+ & Parent DICES TVD & .111 & .111 & .111 \\
+ & Gap (Socrates $-$ parent) & $+.288$ & $+.194$ & $+.136$ \\
+\bottomrule
+\end{tabular}
+\caption{The tab after the answer ID on DICES under the published and the reversed option order (re-implementation runs, 500 three-option items, item means). Top: mean centered log-score contribution of the tab token by displayed ID for Socrates-SFT (the parent's contributions are below $10^{-3}$ in both orders), and the mean human share of the option displayed under that ID. Bottom: cumulative TVD as the ID, the tab, and the option text are scored, and the resulting gap.}
+\label{tab:reversed-tab}
+\end{table}

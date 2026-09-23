@@ -1,0 +1,27 @@
+\begin{table*}[t]
+\centering\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}lrrrrrr@{}}
+\toprule
+& \multicolumn{2}{c}{Own serialization} & \multicolumn{2}{c}{No-space candidates} & \multicolumn{2}{c}{Space candidates} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(l){6-7}
+Varied & Uncorrected & BH & Uncorrected & BH & Uncorrected & BH \\
+\midrule
+Reduction: first vs.\ summed & 7/2 & 7/2 & 10/6 & 10/6 & 11/2 & 11/2 \\
+Reduction: first vs.\ length-norm. & 12/4 & 12/4 & 12/6 & 12/6 & 12/2 & 12/2 \\
+Reduction: summed vs.\ length-norm. & 7/2 & 7/2 & 6/1 & 6/1 & 7/1 & 7/1 \\
+Reduction: any of the three & 13/4 & 13/4 & 14/7 & 14/7 & 14/3 & 14/3 \\
+Reduction: DC-PMI vs.\ summed & -- & -- & -- & -- & 21/5 & 21/5 \\
+Candidates: space removed & -- & -- & -- & -- & 9/2 & 9/2 \\
+Event: option text only & -- & -- & -- & -- & 26/12 & 26/12 \\
+Event: ID only & -- & -- & -- & -- & 15/5 & 15/5 \\
+Serialization: to plain prefix & -- & -- & 23/7 & 23/7 & 21/4 & 21/4 \\
+Serialization: to own & -- & -- & 12/5 & 12/5 & 16/3 & 16/3 \\
+Weighting: ES vs.\ PC & 9/0 & 9/0 & 7/1 & 7/1 & 7/1 & 7/1 \\
+Frame: omit one source & 23/3 & 23/3 & 15/3 & 15/3 & 21/1 & 21/1 \\
+Sharpness: entropy matching & 11/1 & 11/1 & 13/5 & 13/5 & 19/5 & 19/5 \\
+\bottomrule
+\end{tabular}
+\caption{Table~\ref{tab:what-changes-full} with a Benjamini--Hochberg correction. For each row and condition, the family is every gap the row compares (a two-readout row: 60 gaps; a three-readout row: 90 or more); each gap's two-sided bootstrap $p$-value (share of the 10,000 shared draws on the other side of zero, doubled) is adjusted within the family, and a gap whose adjusted $p$ exceeds .05 becomes a tie before the units are recounted. Cells give units changed/changed decisively (30 units; 15 for the weighting row). The correction removes point winners, so it lowers the changed counts and can only lower or keep the decisive counts.}
+\label{tab:bh}
+\end{table*}

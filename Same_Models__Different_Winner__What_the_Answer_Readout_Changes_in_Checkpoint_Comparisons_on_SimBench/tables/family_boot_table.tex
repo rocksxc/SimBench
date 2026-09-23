@@ -1,0 +1,28 @@
+\begin{table*}[t]
+\centering\scriptsize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lrrrrrrr@{}}
+\toprule
+& & \multicolumn{2}{c}{Own serialization} & \multicolumn{2}{c}{No-space candidates} & \multicolumn{2}{c}{Space candidates} \\
+\cmidrule(lr){3-4}\cmidrule(lr){5-6}\cmidrule(l){7-8}
+Varied & Units & Chg.\ [95\%] & Dec.\ [95\%] & Chg.\ [95\%] & Dec.\ [95\%] & Chg.\ [95\%] & Dec.\ [95\%] \\
+\midrule
+Reduction: first vs.\ summed & 30 & 7 [2,12] & 2 [0,6] & 10 [5,17] & 6 [0,14] & 11 [5,18] & 2 [0,6] \\
+Reduction: first vs.\ length-norm. & 30 & 12 [8,18] & 4 [0,9] & 12 [6,20] & 6 [0,14] & 12 [5,21] & 2 [0,6] \\
+Reduction: summed vs.\ length-norm. & 30 & 7 [3,14] & 2 [0,6] & 6 [1,12] & 1 [0,4] & 7 [3,10] & 1 [0,4] \\
+Reduction: any of the three & 30 & 13 [8,20] & 4 [0,9] & 14 [7,22] & 7 [2,15] & 14 [7,22] & 3 [0,8] \\
+Reduction: DC-PMI vs.\ summed & 30 & -- & -- & -- & -- & 21 [17,26] & 5 [1,11] \\
+Candidates: space removed & 30 & -- & -- & -- & -- & 9 [4,14] & 2 [0,5] \\
+Event: option text only & 30 & -- & -- & -- & -- & 26 [23,29] & 12 [5,22] \\
+Event: ID only & 30 & -- & -- & -- & -- & 15 [7,24] & 5 [0,11] \\
+Serialization: to plain prefix & 30 & -- & -- & 23 [15,28] & 7 [2,11] & 21 [12,27] & 4 [0,8] \\
+Serialization: to own & 30 & -- & -- & 12 [6,21] & 5 [1,11] & 16 [11,22] & 3 [0,6] \\
+Weighting: ES vs.\ PC & 15 & 9 [6,12] & 0 [0,0] & 7 [3,11] & 1 [0,4] & 7 [4,11] & 1 [0,4] \\
+Frame: omit one source & 30 & 23 [18,28] & 3 [0,6] & 15 [8,23] & 3 [0,7] & 21 [14,27] & 1 [0,4] \\
+Sharpness: entropy matching & 30 & 11 [6,18] & 1 [0,4] & 13 [5,23] & 5 [1,11] & 19 [13,25] & 5 [2,10] \\
+Ordinal W1 vs.\ TVD winner & 30 & -- & -- & -- & -- & 12 [6,20] & 0 [0,0] \\
+\bottomrule
+\end{tabular}
+\caption{The counts of Table~\ref{tab:what-changes-full}, including its two event rows, with 95\% intervals from a bootstrap over checkpoint families (10 families: the two Socrates pairs share the Qwen-14B family, the four OLMo-2-7B pairs one family, Qwen3-8B Base/Instruct and Qwen3-8B/OSim one family; 10,000 resamples of families with replacement, counts rescaled to the row's number of units). The last row compares the winner under TVD with the winner under the ordinal Wasserstein-1 loss (Appendix Table~\ref{tab:w1-winner-map}) for the three same-tensor readouts; no magnitude threshold applies, so its decisive column is empty.}
+\label{tab:family-boot}
+\end{table*}

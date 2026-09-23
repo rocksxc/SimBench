@@ -1,0 +1,28 @@
+\begin{table*}[t]
+\centering
+\small
+\begin{tabular}{@{}lrr@{}}
+\toprule
+Allocation category & GPU-hours & CPU core-hours \\
+\midrule
+\multicolumn{3}{@{}l}{\emph{GPU jobs, including their co-allocated CPUs}} \\
+Inference supporting reported results and completed controls & 7.541 & 35.727 \\
+Option-order and DPO diagnostics (Appendix~\ref{app:diagnostics}) & 5.137 & 20.548 \\
+Failed or timed-out inference attempts & 24.349 & 130.047 \\
+GPU-allocation subtotal & 37.027 & 186.321 \\
+\midrule
+\multicolumn{3}{@{}l}{\emph{CPU-only jobs}} \\
+Successful analysis and reporting of reported results & 0 & 4.680 \\
+Failed adjacent analysis and reporting & 0 & 2.002 \\
+Successful unused diagnostic analysis & 0 & 1.156 \\
+Failed unused diagnostic analysis & 0 & 0.647 \\
+Successful setup, admission, synthetic checks and barriers & 0 & 6.177 \\
+Failed control setup and engineering & 0 & 0.002 \\
+CPU-only subtotal & 0 & 14.665 \\
+\midrule
+\textbf{Entire enumerated allocation route} & \textbf{37.027} & \textbf{200.986} \\
+\bottomrule
+\end{tabular}
+\caption{Final compute allocations for the enumerated experimental route. Each row uses elapsed seconds multiplied by allocated GPUs or CPU cores; subtotals use unrounded integer seconds. Reported inference, including completed plain-prefix, DICES token-position, and DC-PMI controls, comprises 5.887 H100-80GB hours and 1.654 A100-80GB hours, with a maximum of four concurrently allocated GPUs. All enumerated control chains are complete. The scope excludes storage, downloads, upstream model/data creation, unmetered login-node work, manuscript editing, and a separately abandoned experimental route. These are allocation estimates, not utilization or energy estimates.}
+\label{tab:compute-budget}
+\end{table*}

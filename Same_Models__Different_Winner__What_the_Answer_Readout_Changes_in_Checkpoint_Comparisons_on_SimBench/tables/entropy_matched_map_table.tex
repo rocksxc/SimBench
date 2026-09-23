@@ -1,0 +1,29 @@
+\begin{table*}[t]
+\centering\scriptsize
+\setlength{\tabcolsep}{3.5pt}
+\begin{tabular}{@{}lccc@{\hspace{6pt}}ccc@{\hspace{6pt}}ccc@{\hspace{6pt}}ccc@{}}
+\toprule
+& \multicolumn{3}{c}{Chat template, space} & \multicolumn{3}{c}{Chat template, no space} & \multicolumn{3}{c}{Plain prefix} & \multicolumn{3}{c}{Own serialization} \\
+\cmidrule(lr){2-4}\cmidrule(lr){5-7}\cmidrule(lr){8-10}\cmidrule(l){11-13}
+Pair & First & Sum & Len & First & Sum & Len & First & Sum & Len & First & Sum & Len \\
+\midrule
+Qwen-14B/Socr.-SFT & P/P & P/P & P/P & P/P & P/P & P/P & P/S & P/P & P/P & S/$\circ$ & P/P & P/P \\
+Qwen-14B/Socr.-DPO & $\circ$/P & $\circ$/P & P/P & D/P & D/P & $\circ$/P & D/D & D/D & D/P & D/P & D/P & $\circ$/P \\
+Mistral-7B & I/I & I/I & I/I & I/I & I/I & I/I & I/I & I/$\circ$ & $\circ$/I & I/I & I/I & I/I \\
+Qwen2.5-7B & I/I & I/I & I/I & I/I & I/I & I/I & I/I & B/B & B/B & $\circ$/B & B/B & I/I \\
+Llama-3.2-3B & I/I & I/I & I/I & I/I & I/I & I/I & I/I & I/I & I/I & I/I & I/I & I/I \\
+OLMo-2-7B & I/I & I/I & I/I & I/I & I/I & I/I & B/$\circ$ & I/I & I/I & $\circ$/I & I/I & I/I \\
+Qwen2.5-14B & I/I & I/I & I/I & I/I & I/I & I/I & $\circ$/B & $\circ$/B & I/B & B/B & B/B & I/I \\
+Llama-3.1-8B & I/I & I/I & I/I & I/I & I/I & I/I & I/I & I/I & I/I & I/I & I/I & I/I \\
+Qwen3-8B & I/I & I/I & I/I & I/I & I/I & I/I & B/B & B/B & B/B & B/B & B/B & $\circ$/I \\
+OLMo-2-13B & I/I & I/I & I/I & I/I & B/B & B/B & I/I & I/I & I/I & I/I & B/B & $\circ$/B \\
+OLMo-2-7B Base/SFT & S/S & S/S & S/S & S/S & S/S & S/S & B/B & S/S & $\circ$/B & S/S & S/S & S/S \\
+OLMo-2-7B SFT/DPO & S/S & S/S & D/D & S/S & S/S & S/S & D/D & D/D & D/D & S/S & S/S & S/S \\
+OLMo-2-7B DPO/Inst. & $\circ$/I & I/I & I/I & $\circ$/I & I/I & I/I & D/I & $\circ$/$\circ$ & $\circ$/I & $\circ$/I & I/I & I/I \\
+Qwen3-4B/OSim & $\circ$/$\circ$ & O/B & O/O & O/O & O/O & O/O & B/B & B/B & B/B & B/B & B/B & B/B \\
+Qwen3-8B/OSim & O/B & B/B & B/B & O/O & B/B & O/B & B/B & B/B & B/B & B/B & B/B & B/B \\
+\bottomrule
+\end{tabular}
+\caption{Winner map at entropy-matched temperatures (ES/PC), all 15 pairs, under the shared chat template with space-prefixed and with no-space candidates, the shared plain prefix, and each checkpoint's own serialization (re-implementation runs). Symbols as in Table~\ref{tab:winner-map-15}; gaps and intervals for the chat template are in Table~\ref{tab:entropy-matched} and for own serialization in Table~\ref{tab:native-serialization-all}.}
+\label{tab:entropy-matched-map}
+\end{table*}

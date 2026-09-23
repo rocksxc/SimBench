@@ -1,0 +1,21 @@
+\begin{table}[t]
+\centering\scriptsize
+\setlength{\tabcolsep}{2pt}
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+Row minus reduction row (space) & Chg.\ [95\%] & $p$ & Dec.\ [95\%] & $p$ \\
+\midrule
+Event: option text only & +12 [+4,+20] & 0.06 & +9 [+2,+18] & 0.06 \\
+Event: ID only & +1 [+0,+3] & 1.00 & +2 [-2,+8] & 0.75 \\
+Reduction: DC-PMI vs.\ summed & +7 [-1,+14] & 0.20 & +2 [-5,+10] & 0.78 \\
+Candidates: space removed & -5 [-13,+2] & 0.31 & -1 [-5,+3] & 1.00 \\
+Serialization: to plain prefix & +7 [-4,+16] & 0.50 & +1 [-7,+7] & 1.00 \\
+Serialization: to own & +2 [-5,+10] & 0.78 & +0 [-4,+4] & 1.00 \\
+Frame: omit one source & +7 [+1,+12] & 0.16 & -2 [-7,+2] & 0.75 \\
+Sharpness: entropy matching & +5 [+0,+10] & 0.25 & +2 [-4,+8] & 0.75 \\
+Ordinal W1 vs.\ TVD winner & -2 [-10,+5] & 0.84 & -3 [-8,+0] & 0.50 \\
+\bottomrule
+\end{tabular}
+\caption{Paired family-bootstrap differences between each row of Table~\ref{tab:what-changes} (space candidates) and the ``reduction: any of the three'' row: the same resample of the 10 checkpoint families is applied to both rows and the difference in counts (rescaled to 30 units) is recorded; 95\% intervals over 10,000 resamples. A row is separable from the reduction (Section~\ref{sec:execution}) when its interval excludes zero and the exact two-sided sign-flip test over the 10 per-family contributions to the difference (1,024 sign patterns) rejects at .05; the test is the more conservative of the two statements.}
+\label{tab:family-boot-diff}
+\end{table}

@@ -1,0 +1,36 @@
+\begin{table*}[t]
+\centering\scriptsize
+\begin{tabular}{lllrrr}
+\toprule
+Pair & Red. & Wt. & Base/Instruct TVD & Plain gap [range] & Plain$-$chat gap change [range] \\
+\midrule
+Mistral-7B & First & ES & .366/.369 & +.003 [-.009,+.015] & -.010 [-.028,+.007] \\
+Mistral-7B & First & PC & .393/.393 & +.001 [-.004,+.005] & +.060 [+.047,+.074] \\
+Mistral-7B & Sum & ES & .381/.393 & +.012 [-.003,+.026] & -.036 [-.053,-.018] \\
+Mistral-7B & Sum & PC & .406/.425 & +.019 [+.014,+.024] & +.044 [+.032,+.057] \\
+Mistral-7B & Len & ES & .392/.361 & -.031 [-.035,-.026] & +.022 [+.006,+.039] \\
+Mistral-7B & Len & PC & .432/.408 & -.024 [-.026,-.022] & +.083 [+.075,+.091] \\
+Qwen-7B & First & ES & .285/.409 & +.124 [+.107,+.141] & +.001 [-.017,+.016] \\
+Qwen-7B & First & PC & .311/.355 & +.045 [+.031,+.059] & +.001 [-.008,+.010] \\
+Qwen-7B & Sum & ES & .266/.446 & +.180 [+.155,+.207] & +.054 [+.036,+.071] \\
+Qwen-7B & Sum & PC & .263/.395 & +.132 [+.120,+.145] & +.080 [+.068,+.092] \\
+Qwen-7B & Len & ES & .343/.426 & +.083 [+.068,+.098] & +.009 [-.002,+.020] \\
+Qwen-7B & Len & PC & .371/.432 & +.060 [+.052,+.068] & +.033 [+.024,+.041] \\
+Llama-3.2-3B & First & ES & .364/.306 & -.058 [-.076,-.041] & +.158 [+.144,+.173] \\
+Llama-3.2-3B & First & PC & .388/.314 & -.074 [-.084,-.064] & +.179 [+.169,+.190] \\
+Llama-3.2-3B & Sum & ES & .401/.394 & -.007 [-.024,+.010] & +.303 [+.284,+.323] \\
+Llama-3.2-3B & Sum & PC & .412/.420 & +.008 [-.001,+.017] & +.331 [+.317,+.345] \\
+Llama-3.2-3B & Len & ES & .377/.332 & -.045 [-.049,-.041] & +.094 [+.086,+.101] \\
+Llama-3.2-3B & Len & PC & .417/.378 & -.038 [-.042,-.034] & +.101 [+.093,+.109] \\
+OLMo-2-7B & First & ES & .326/.439 & +.113 [+.090,+.136] & +.182 [+.162,+.204] \\
+OLMo-2-7B & First & PC & .357/.403 & +.046 [+.035,+.057] & +.163 [+.151,+.174] \\
+OLMo-2-7B & Sum & ES & .511/.582 & +.072 [+.061,+.083] & +.351 [+.331,+.370] \\
+OLMo-2-7B & Sum & PC & .552/.606 & +.054 [+.041,+.067] & +.395 [+.381,+.409] \\
+OLMo-2-7B & Len & ES & .430/.453 & +.024 [+.017,+.030] & +.132 [+.120,+.146] \\
+OLMo-2-7B & Len & PC & .481/.517 & +.035 [+.028,+.042] & +.168 [+.161,+.176] \\
+\bottomrule
+\end{tabular}
+\caption{Complete plain-prefix results for the four Base--Instruct pairs. Switching from the chat template to the plain prefix removes both the system message and the chat markup, so the last column measures the combined change. Brackets are 95\% cluster-bootstrap intervals.}
+\label{tab:plain-prompt-full}
+\end{table*}
+

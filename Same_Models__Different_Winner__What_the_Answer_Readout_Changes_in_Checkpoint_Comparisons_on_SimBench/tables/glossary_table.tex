@@ -1,0 +1,17 @@
+\begin{table}[t]
+\centering\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{1.9cm}p{5.55cm}@{}}
+\toprule
+Term & Meaning \\
+\midrule
+Scored string (event) & What is scored: ``\texttt{ID<TAB>option}'' (default), the option text alone, or the ID alone. \\
+Serialization & How the prompt becomes tokens: the shared chat template (space or no-space candidates), the shared plain prefix, or each checkpoint's own serialization. \\
+Reduction & How per-token scores become one score: first token, sum, or per-token mean (the three \emph{same-tensor} readouts, computed from one stored tensor), character-normalized, or DC-PMI. \\
+Unit; changed, flipped, decisive & One pair under one weighting (30 units); two readouts change it when their winners differ, flip it when the winners are opposite with a paired difference of at least .05 TVD, and reverse it decisively when the winners are opposite and both gaps are at least .05. \\
+Coverage, remainder & Mass at the label position on the distinct first candidate tokens; full-mass at .5 or more, a remainder below .05. \\
+\bottomrule
+\end{tabular}
+\caption{Terms used in the paper; the readout is the triple (scored string, serialization, reduction).}
+\label{tab:glossary}
+\end{table}

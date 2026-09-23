@@ -1,0 +1,33 @@
+\begin{table}[t]
+\centering\scriptsize
+\setlength{\tabcolsep}{2.2pt}
+\begin{tabular}{@{}lrrrrrr@{}}
+\toprule
+& \multicolumn{2}{c}{Own} & \multicolumn{2}{c}{No space} & \multicolumn{2}{c}{Space} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(l){6-7}
+Varied & Same & Any & Same & Any & Same & Any \\
+\midrule
+Red.: first vs.\ sum & 4 & 7 & 7 & 10 & 3 & 9 \\
+Red.: first vs.\ len. & 7 & 12 & 4 & 5 & 6 & 14 \\
+Red.: sum vs.\ len. & 7 & 9 & 9 & 13 & 5 & 7 \\
+Red.: sum vs.\ char. & 7 & 8 & 10 & 12 & 8 & 10 \\
+Red.: any of three & 9 & 14 & 12 & 14 & 9 & 15 \\
+Red.: any of four & 14 & 16 & 15 & 17 & 15 & 19 \\
+Red.: PMI vs.\ sum & -- & -- & -- & -- & 3 & 15 \\
+Red.: uncond.\ PMI & -- & -- & -- & -- & 5 & 9 \\
+Cand.: space removed & -- & -- & -- & -- & 11 & 13 \\
+Event: text (matched) & -- & -- & -- & -- & 9 & 20 \\
+Event: text (unchanged) & -- & -- & -- & -- & 12 & 21 \\
+Event: ID only & -- & -- & -- & -- & 10 & 16 \\
+Option order & -- & -- & -- & -- & 16 & 18 \\
+Tokenization: joint & -- & -- & -- & -- & 7 & 7 \\
+Serial.: chat$\to$plain & -- & -- & 17 & 25 & 16 & 23 \\
+Serial.: chat$\to$own & -- & -- & 14 & 16 & 12 & 21 \\
+Weighting (15) & 4 & 9 & 4 & 7 & 2 & 5 \\
+Frame: omit source & 24 & 27 & 15 & 18 & 17 & 20 \\
+Sharpness: matched $T$ & 16 & 20 & 10 & 19 & 9 & 18 \\
+\bottomrule
+\end{tabular}
+\caption{Magnitude crossings, the outcome Table~\ref{tab:what-changes} does not count: units (pair and weighting; 30, the weighting row 15) in which the compared readouts place $|\text{gap}|$ on opposite sides of .05 TVD. Same: the winner symbol is unchanged, so the unit counts as no change in Table~\ref{tab:what-changes} although the gap crosses the decisive floor (order averaging shrinks Llama-3.2-3B's summed \PC{} gap from $-.30$ to $-.03$ and OLMo-2-7B's from $-.38$ to $-.07$ with the letter unchanged); Any: the gap crosses .05 whether or not the symbol changes. Same rows, conditions, and released item-level distributions as Table~\ref{tab:what-changes}.}
+\label{tab:magnitude-crossing}
+\end{table}

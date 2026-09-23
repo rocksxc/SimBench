@@ -1,0 +1,46 @@
+\begin{table*}[t]
+\centering\scriptsize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lllrrrrrr@{}}
+\toprule
+Pair & Wt. & Red. & All sources & $-$ESS & $-$GlobalOpinionQA & $-$DICES & $-$NumberGame & $-$ConspiracyCorr \\
+\midrule
+Qwen-14B/Socrates & ES & First & $-.180$ & $-.138$ & $-.162$ & $-.293$ & $-.198$ & $-.108$ \\
+ & ES & Sum & $+.130$ & $+.166$ & $+.150$ & $-.0003^{\circ}$ & $+.162$ & $+.173$ \\
+ & ES & Len & $+.160$ & $+.195$ & $+.199$ & $+.018^{\circ}$ & $+.220$ & $+.171$ \\
+ & PC & First & $-.066$ & $-.024$ & $+.001^{\circ}$ & $-.209$ & $-.049$ & $-.064$ \\
+ & PC & Sum & $+.206$ & $+.240$ & $+.263$ & $+.018$ & $+.293$ & $+.208$ \\
+ & PC & Len & $+.199$ & $+.225$ & $+.270$ & $-.025$ & $+.316$ & $+.199$ \\
+\addlinespace[2pt]
+Mistral-7B & ES & First & $+.013$ & $-.028^{\circ}$ & $-.024^{\circ}$ & $+.116$ & $+.023^{\circ}$ & $-.023$ \\
+ & ES & Sum & $+.048$ & $+.007^{\circ}$ & $+.019^{\circ}$ & $+.151$ & $+.050$ & $+.011^{\circ}$ \\
+ & ES & Len & $-.053$ & $-.079$ & $-.050$ & $+.004^{\circ}$ & $-.057$ & $-.085$ \\
+ & PC & First & $-.060$ & $-.095$ & $-.141$ & $+.084$ & $-.073$ & $-.061$ \\
+ & PC & Sum & $-.025$ & $-.060$ & $-.095$ & $+.119$ & $-.052$ & $-.026$ \\
+ & PC & Len & $-.107$ & $-.130$ & $-.121$ & $-.033$ & $-.136$ & $-.108$ \\
+\addlinespace[2pt]
+Qwen-7B & ES & First & $+.124$ & $+.091$ & $+.103$ & $+.214$ & $+.134$ & $+.075$ \\
+ & ES & Sum & $+.125$ & $+.095$ & $+.099$ & $+.219$ & $+.131$ & $+.082$ \\
+ & ES & Len & $+.074$ & $+.060$ & $+.069$ & $+.118$ & $+.079$ & $+.042$ \\
+ & PC & First & $+.043$ & $+.012^{\circ}$ & $-.017^{\circ}$ & $+.162$ & $+.028$ & $+.042$ \\
+ & PC & Sum & $+.052$ & $+.023$ & $-.013^{\circ}$ & $+.179$ & $+.032$ & $+.051$ \\
+ & PC & Len & $+.027$ & $+.013^{\circ}$ & $+.003^{\circ}$ & $+.083$ & $+.016$ & $+.026$ \\
+\addlinespace[2pt]
+Llama-3.2-3B & ES & First & $-.217$ & $-.237$ & $-.261$ & $-.144$ & $-.209$ & $-.232$ \\
+ & ES & Sum & $-.310$ & $-.328$ & $-.370$ & $-.254$ & $-.292$ & $-.306$ \\
+ & ES & Len & $-.139$ & $-.140$ & $-.165$ & $-.148$ & $-.105$ & $-.136$ \\
+ & PC & First & $-.253$ & $-.271$ & $-.332$ & $-.147$ & $-.255$ & $-.254$ \\
+ & PC & Sum & $-.323$ & $-.336$ & $-.417$ & $-.235$ & $-.298$ & $-.323$ \\
+ & PC & Len & $-.139$ & $-.140$ & $-.179$ & $-.155$ & $-.081$ & $-.139$ \\
+\addlinespace[2pt]
+OLMo-2-7B & ES & First & $-.069$ & $-.086$ & $-.109$ & $-.001^{\circ}$ & $-.055$ & $-.097$ \\
+ & ES & Sum & $-.279$ & $-.314$ & $-.337$ & $-.179$ & $-.260$ & $-.307$ \\
+ & ES & Len & $-.109$ & $-.116$ & $-.147$ & $-.078$ & $-.080$ & $-.122$ \\
+ & PC & First & $-.117$ & $-.134$ & $-.193$ & $-.021$ & $-.112$ & $-.118$ \\
+ & PC & Sum & $-.341$ & $-.371$ & $-.449$ & $-.197$ & $-.334$ & $-.342$ \\
+ & PC & Len & $-.133$ & $-.141$ & $-.199$ & $-.092$ & $-.095$ & $-.134$ \\
+\bottomrule
+\end{tabular}
+\caption{Leave-one-source-out gaps (tuned minus parent TVD) for every pair, weighting, and same-tensor readout under the chat template. Each ``$-$'' column omits one source; negative values favor the tuned checkpoint; $^{\circ}$ marks a gap whose 95\% cluster-bootstrap interval includes zero. Omitting DICES produces the largest change in 24 of the 30 rows, and at least one omission changes the sign of the gap in 9 rows.}
+\label{tab:loo-all-pairs}
+\end{table*}

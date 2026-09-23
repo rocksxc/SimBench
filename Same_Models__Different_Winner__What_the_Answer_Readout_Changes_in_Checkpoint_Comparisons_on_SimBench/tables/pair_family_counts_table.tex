@@ -1,0 +1,30 @@
+\begin{table*}[t]
+\centering\scriptsize
+\setlength{\tabcolsep}{2.5pt}
+\begin{tabular}{@{}llrrrrrrrrr@{}}
+\toprule
+& & \multicolumn{3}{c}{Units (30)} & \multicolumn{3}{c}{Pairs (15)} & \multicolumn{3}{c}{Families (10)} \\
+\cmidrule(lr){3-5}\cmidrule(lr){6-8}\cmidrule(l){9-11}
+Varied & Cond. & Chg. & Dec. & Flip & Chg. & Dec. & Flip & Chg. & Dec. & Flip \\
+\midrule
+Reduction: any of the three & Own & 13 & 4 & 9 & 10 & 3 & 8 & 8 & 3 & 8 \\
+Reduction: any of the three & No space & 14 & 7 & 10 & 9 & 4 & 7 & 7 & 4 & 6 \\
+Reduction: any of the three & Space & 14 & 3 & 9 & 8 & 2 & 5 & 6 & 2 & 4 \\
+Event: option text (matched instr.) & Space & 26 & 12 & 20 & 15 & 7 & 12 & 10 & 6 & 10 \\
+Event: option text (unchanged instr.) & Space & 24 & 12 & 18 & 14 & 8 & 11 & 10 & 7 & 10 \\
+Event: option text (matched instr.) & Own & 22 & 6 & 17 & 13 & 3 & 11 & 9 & 3 & 9 \\
+Event: option text (matched instr.) & No space & 26 & 9 & 17 & 15 & 6 & 11 & 10 & 5 & 8 \\
+Event: option text (unchanged instr.) & Own & 20 & 8 & 16 & 12 & 5 & 11 & 9 & 5 & 9 \\
+Event: option text (unchanged instr.) & No space & 26 & 10 & 18 & 14 & 8 & 11 & 10 & 8 & 10 \\
+Event: ID only & Own & 13 & 5 & 10 & 10 & 4 & 8 & 8 & 4 & 8 \\
+Event: ID only & No space & 15 & 8 & 10 & 9 & 4 & 6 & 7 & 4 & 5 \\
+Serialization: chat$\to$plain & No space & 23 & 7 & 15 & 12 & 6 & 10 & 8 & 5 & 7 \\
+Serialization: chat$\to$plain & Space & 21 & 4 & 10 & 11 & 3 & 6 & 7 & 2 & 5 \\
+Sharpness: matched $T$ & Own & 11 & 1 & 5 & 9 & 1 & 5 & 8 & 1 & 5 \\
+Sharpness: matched $T$ & No space & 13 & 5 & 8 & 8 & 4 & 7 & 6 & 4 & 6 \\
+Sharpness: matched $T$ & Space & 19 & 5 & 11 & 11 & 5 & 8 & 8 & 5 & 7 \\
+\bottomrule
+\end{tabular}
+\caption{Headline rows of Table~\ref{tab:what-changes} counted per pair--weighting unit (30), per pair (15; a pair counts when either weighting does), and per checkpoint family (10; a family counts when any of its pairs does). Chg.\ and Dec.\ as in Table~\ref{tab:what-changes}; Flip is a second outcome: opposite winner letters (both intervals off zero) with a paired gap difference of at least .05 TVD, which counts reversals whose two gaps need not both exceed .05. The pairs of a family share checkpoints, so families are the unit the family bootstrap and the sign-flip test resample.}
+\label{tab:pair-family-counts}
+\end{table*}

@@ -1,0 +1,33 @@
+\begin{table*}[t]
+\centering\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}lcccccccc@{}}
+\toprule
+& \multicolumn{4}{c}{Own serialization} & \multicolumn{4}{c}{No-space candidates, shared template} \\
+\cmidrule(lr){2-5}\cmidrule(l){6-9}
+Pair & ID+option & text (unchanged) & text (matched) & ID only & ID+option & text (unchanged) & text (matched) & ID only \\
+\midrule
+Qwen-14B/Socr.-SFT & P/P +.233 & S/S -.086 & S/S -.103 & S/S -.067 & P/P +.233 & S/S -.086 & S/S -.103 & S/S -.067 \\
+Qwen-14B/Socr.-DPO & D/D -.010 & D/D -.035 & D/D -.053 & D/D -.014 & D/D -.010 & D/D -.035 & D/D -.053 & D/D -.014 \\
+\addlinespace[2pt]
+Mistral-7B & B/I -.037 & I/I -.201 & B/B +.059 & B/I -.038 & B/I -.016 & I/I -.112 & B/B +.051 & $\circ$/I -.064 \\
+Qwen2.5-7B & B/B +.124 & B/B +.018 & B/B +.030 & B/B +.061 & B/B +.047 & I/I -.220 & I/I -.161 & B/I -.058 \\
+Llama-3.2-3B & $\circ$/B +.016 & B/B +.072 & B/B +.021 & I/I -.132 & I/I -.255 & B/B +.048 & $\circ$/I -.025 & I/I -.226 \\
+OLMo-2-7B & I/I -.181 & I/I -.089 & $\circ$/I -.112 & B/I -.064 & I/I -.212 & B/I -.031 & $\circ$/I -.028 & I/I -.351 \\
+\addlinespace[2pt]
+Qwen2.5-14B & B/B +.110 & B/B +.081 & B/B +.120 & B/B +.089 & B/I -.049 & B/I -.045 & B/I -.046 & B/I -.047 \\
+Llama-3.1-8B & I/I -.137 & $\circ$/I -.086 & B/I -.036 & I/I -.152 & I/I -.206 & $\circ$/I -.041 & $\circ$/I -.047 & I/I -.287 \\
+Qwen3-8B & B/B +.137 & B/B +.382 & B/B +.154 & B/B +.157 & B/$\circ$ -.011 & B/B +.166 & $\circ$/I -.084 & B/$\circ$ -.007 \\
+OLMo-2-13B & B/B +.192 & $\circ$/B +.015 & B/B +.029 & I/I -.123 & B/B +.234 & $\circ$/I -.060 & B/I -.045 & I/I -.413 \\
+\addlinespace[2pt]
+OLMo-2-7B Base/SFT & S/S -.215 & S/S -.108 & $\circ$/S -.107 & S/S -.081 & S/S -.245 & $\circ$/S -.049 & $\circ$/S -.023 & S/S -.369 \\
+OLMo-2-7B SFT/DPO & S/S +.097 & S/S +.014 & $\circ$/D -.008 & S/S +.036 & S/S +.097 & S/S +.014 & $\circ$/D -.008 & S/S +.036 \\
+OLMo-2-7B DPO/Inst. & I/I -.064 & $\circ$/D +.005 & $\circ$/$\circ$ +.003 & I/I -.018 & I/I -.064 & $\circ$/D +.005 & $\circ$/$\circ$ +.003 & I/I -.018 \\
+\addlinespace[2pt]
+Qwen3-4B/OSim & B/B +.221 & B/B +.014 & B/B +.145 & B/B +.019 & B/B +.095 & O/O -.037 & B/B +.062 & O/O -.119 \\
+Qwen3-8B/OSim & B/B +.245 & B/B +.213 & B/B +.080 & B/B +.071 & B/B +.120 & $\circ$/B +.014 & O/O -.117 & O/O -.061 \\
+\bottomrule
+\end{tabular}
+\caption{The scored events in own serialization and under the shared template with no-space candidates (fourth follow-up run, E44): tuned-minus-parent TVD under the summed readout for the ID+option string (the same-tensor readout of Table~\ref{tab:what-changes}), the option text alone under the unchanged ID+option instruction, the option text alone with the matching instruction, and the ID alone; \ES{}/\PC{} winner letters by the 95\% interval of the paired gap ($\circ$ = includes zero) and the \PC{} gap. In own serialization a Base parent is scored under the plain prefix (candidates with a leading space) and an instruction-tuned checkpoint under its chat template without one; the four pairs with an instruction-tuned parent take the chat/no-space form on both sides. Over the three same-tensor readouts the events change 20, 22, and 13 of 30 units in own serialization (8, 6, and 5 decisively) and 26, 26, and 15 with no-space candidates (10, 9, and 8 decisively); within the ID-only event the three reductions coincide, since its candidate is one token. At decisive floors .03, .05, .07, and .10 the unchanged-instruction event reverses 12, 8, 5, and 2 units in own serialization against the reduction's 8, 4, 1, and 1 (14, 10, 6, 3 against 9, 7, 4, 3 with no-space candidates); under the Brier score with its rescaled floor it reverses 14, 16, and 15 (own, no space, space) against the reduction's 8, 10, and 8.}
+\label{tab:events-own-nospace}
+\end{table*}

@@ -1,0 +1,18 @@
+\begin{table*}[t]
+\centering\scriptsize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lrrrrrrrrr@{}}
+\toprule
+& \multicolumn{3}{c}{Own} & \multicolumn{3}{c}{No space} & \multicolumn{3}{c}{Space} \\
+\cmidrule(lr){2-4}\cmidrule(lr){5-7}\cmidrule(l){8-10}
+Gate & Units & Chg. & Dec. & Units & Chg. & Dec. & Units & Chg. & Dec. \\
+\midrule
+none & 30 & 13 & 4 & 30 & 14 & 7 & 30 & 14 & 3 \\
+coverage $\ge.3$ & 26 & 10 & 1 & 12 & 5 & 2 & 0 & 0 & 0 \\
+coverage $\ge.5$ & 26 & 10 & 1 & 8 & 4 & 2 & 0 & 0 & 0 \\
+coverage $\ge.8$ & 6 & 2 & 0 & 6 & 2 & 0 & 0 & 0 & 0 \\
+\bottomrule
+\end{tabular}
+\caption{Coverage-gate sweep for the reduction's union row (any of the three same-tensor readouts): units (pair and weighting) retained when both checkpoints' first-token coverage is at least the gate, and among them the units whose winner symbol changes (Chg.) or reverses decisively (Dec.). The .5 gate is the one used in Table~\ref{tab:gated}; the gate was chosen at revision, not pre-specified.}
+\label{tab:gate-sweep}
+\end{table*}

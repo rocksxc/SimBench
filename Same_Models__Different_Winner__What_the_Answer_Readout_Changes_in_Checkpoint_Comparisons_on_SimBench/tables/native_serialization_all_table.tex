@@ -1,0 +1,42 @@
+\begin{table*}[t]
+\centering\scriptsize
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{@{}llcccc@{}}
+\toprule
+Pair & Wt. & First & Summed & Length-norm. & Entropy-matched (First / Summed / Len.) \\
+\midrule
+Qwen-14B/Socr.-SFT & ES & -.179 [-.192,-.167] S & +.129 [+.109,+.148] P & +.186 [+.167,+.207] P & -.024 S / +.074 P / +.196 P \\
+Qwen-14B/Socr.-SFT & PC & -.060 [-.073,-.048] S & +.233 [+.223,+.243] P & +.285 [+.275,+.296] P & -.004 $\circ$ / +.140 P / +.251 P \\
+Qwen-14B/Socr.-DPO & ES & -.045 [-.061,-.031] D & -.044 [-.060,-.030] D & -.070 [-.080,-.061] D & -.023 D / -.025 D / -.003 $\circ$ \\
+Qwen-14B/Socr.-DPO & PC & -.011 [-.017,-.004] D & -.010 [-.017,-.004] D & -.005 [-.012,+.001] $\circ$ & +.066 P / +.064 P / +.033 P \\
+Mistral-7B & ES & +.067 [+.042,+.093] B & +.068 [+.043,+.094] B & -.052 [-.069,-.034] I & -.131 I / -.104 I / -.136 I \\
+Mistral-7B & PC & -.043 [-.057,-.029] I & -.037 [-.051,-.024] I & -.114 [-.123,-.105] I & -.178 I / -.134 I / -.230 I \\
+Qwen2.5-7B & ES & +.168 [+.152,+.185] B & +.201 [+.181,+.220] B & +.025 [+.007,+.043] B & -.010 $\circ$ / +.077 B / -.032 I \\
+Qwen2.5-7B & PC & +.072 [+.058,+.085] B & +.124 [+.112,+.135] B & -.052 [-.064,-.040] I & +.025 B / +.081 B / -.046 I \\
+Llama-3.2-3B & ES & -.007 [-.028,+.014] $\circ$ & +.013 [-.006,+.031] $\circ$ & -.037 [-.043,-.031] I & -.110 I / -.094 I / -.093 I \\
+Llama-3.2-3B & PC & -.024 [-.036,-.011] I & +.016 [+.005,+.027] B & -.035 [-.041,-.029] I & -.101 I / -.057 I / -.081 I \\
+OLMo-2-7B & ES & +.048 [+.033,+.064] B & -.073 [-.090,-.056] I & -.085 [-.098,-.072] I & +.004 $\circ$ / -.148 I / -.142 I \\
+OLMo-2-7B & PC & -.064 [-.071,-.057] I & -.181 [-.195,-.167] I & -.121 [-.127,-.115] I & -.106 I / -.221 I / -.229 I \\
+Qwen2.5-14B & ES & +.197 [+.183,+.212] B & +.190 [+.177,+.206] B & +.075 [+.061,+.088] B & +.029 B / +.026 B / -.046 I \\
+Qwen2.5-14B & PC & +.106 [+.095,+.117] B & +.110 [+.100,+.121] B & -.038 [-.050,-.025] I & +.018 B / +.023 B / -.013 I \\
+Llama-3.1-8B & ES & -.021 [-.036,-.007] I & -.089 [-.105,-.072] I & -.091 [-.098,-.083] I & -.109 I / -.219 I / -.267 I \\
+Llama-3.1-8B & PC & -.086 [-.097,-.076] I & -.137 [-.148,-.126] I & -.101 [-.106,-.096] I & -.136 I / -.234 I / -.294 I \\
+Qwen3-8B & ES & +.207 [+.186,+.227] B & +.196 [+.177,+.215] B & +.029 [+.011,+.048] B & +.043 B / +.034 B / +.003 $\circ$ \\
+Qwen3-8B & PC & +.137 [+.125,+.149] B & +.137 [+.125,+.149] B & -.044 [-.054,-.033] I & +.041 B / +.032 B / -.015 I \\
+OLMo-2-13B & ES & -.003 [-.014,+.008] $\circ$ & +.191 [+.179,+.203] B & +.073 [+.066,+.080] B & -.047 I / +.032 B / +.001 $\circ$ \\
+OLMo-2-13B & PC & -.047 [-.054,-.040] I & +.192 [+.182,+.203] B & +.085 [+.078,+.091] B & -.062 I / +.064 B / +.028 B \\
+OLMo-2-7B Base/SFT & ES & -.019 [-.035,-.004] S & -.143 [-.157,-.130] S & -.084 [-.088,-.079] S & -.032 S / -.170 S / -.134 S \\
+OLMo-2-7B Base/SFT & PC & -.078 [-.084,-.073] S & -.215 [-.225,-.204] S & -.105 [-.109,-.101] S & -.136 S / -.243 S / -.218 S \\
+OLMo-2-7B SFT/DPO & ES & +.065 [+.057,+.073] S & +.109 [+.101,+.117] S & +.019 [+.010,+.028] S & +.035 S / +.055 S / +.042 S \\
+OLMo-2-7B SFT/DPO & PC & +.021 [+.016,+.026] S & +.097 [+.090,+.104] S & +.018 [+.015,+.021] S & +.041 S / +.070 S / +.057 S \\
+OLMo-2-7B DPO/Inst. & ES & +.003 [-.001,+.007] $\circ$ & -.039 [-.045,-.032] I & -.020 [-.023,-.018] I & +.000 $\circ$ / -.033 I / -.050 I \\
+OLMo-2-7B DPO/Inst. & PC & -.007 [-.011,-.003] I & -.064 [-.070,-.057] I & -.034 [-.036,-.032] I & -.010 I / -.048 I / -.067 I \\
+Qwen3-4B/OSim & ES & +.059 [+.052,+.067] B & +.206 [+.190,+.223] B & +.114 [+.106,+.121] B & +.124 B / +.121 B / +.070 B \\
+Qwen3-4B/OSim & PC & +.074 [+.069,+.080] B & +.221 [+.209,+.233] B & +.115 [+.108,+.123] B & +.122 B / +.162 B / +.110 B \\
+Qwen3-8B/OSim & ES & +.100 [+.090,+.110] B & +.169 [+.158,+.180] B & +.067 [+.062,+.071] B & +.109 B / +.174 B / +.152 B \\
+Qwen3-8B/OSim & PC & +.158 [+.150,+.167] B & +.245 [+.235,+.255] B & +.093 [+.088,+.097] B & +.204 B / +.269 B / +.257 B \\
+\bottomrule
+\end{tabular}
+\caption{Each checkpoint in its own serialization, all 15 pairs, re-implementation runs: tuned-minus-parent TVD with 95\% paired cluster-bootstrap intervals (10,000 replicates). A Base parent is scored under the plain prefix with the space-prefixed candidates (its coverage there is .28 to .80, Appendix Table~\ref{tab:coverage}); every instruction-tuned checkpoint, including the four instruction-tuned parents (the two Socrates pairs, OLMo-2-7B SFT/DPO and DPO/Instruct), is scored under its chat template with no-space candidates (coverage .86 to 1.00 for the Instruct checkpoints; .000 for Socrates-SFT, which never writes a letter). The last column gives the gap at entropy-matched temperatures fitted on the other sources.}
+\label{tab:native-serialization-all}
+\end{table*}

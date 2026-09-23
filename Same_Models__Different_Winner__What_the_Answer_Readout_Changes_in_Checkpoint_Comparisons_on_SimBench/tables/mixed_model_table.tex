@@ -1,0 +1,22 @@
+\begin{table*}[t]
+\centering\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}lccc@{}}
+\toprule
+Fixed effect (TVD) & Model A & Model B & Model C \\
+\midrule
+Intercept (first token, space, ES; B/C: ID+option) & -.053 [-.108,+.001] & -.038 [-.082,+.006] & -.042 [-.099,+.015] \\
+Summed vs.\ first token & +.049 [+.024,+.074] & +.019 [-.023,+.061] & +.019 [-.024,+.062] \\
+Length-norm.\ vs.\ first token & +.038 [+.012,+.063] & +.035 [-.007,+.077] & +.049 [+.006,+.092] \\
+No-space vs.\ space candidates & +.002 [-.023,+.027] & -- & -- \\
+Own vs.\ shared serialization & +.069 [+.044,+.094] & -- & -- \\
+Option text vs.\ ID+option & -- & +.036 [+.002,+.071] & +.043 [+.008,+.078] \\
+\PC{} vs.\ \ES{} & -.025 [-.045,-.004] & -.027 [-.062,+.007] & -.025 [-.060,+.010] \\
+\midrule
+SD family / pair / residual & .029 / .087 / .086 & .028 / .022 / .118 & .056 / .040 / .120 \\
+Observations & 270 & 180 & 180 \\
+\bottomrule
+\end{tabular}
+\caption{Linear mixed models on the stored gaps (tuned minus parent TVD) with random intercepts for checkpoint family (10) and pair (15), fitted by maximum likelihood with the fixed effects profiled out; Wald 95\% intervals. Model A: the 270 same-tensor gaps (15 pairs, three readouts, three candidate/serialization conditions, two weightings). Models B and C: the 180 gaps of the space condition under the ID+option event and the text-only event with a matching instruction (B) or the unchanged instruction (C). A fixed effect is the mean shift of the gap when the factor changes, holding the others fixed; because manipulations act mainly through pair-specific responses (Appendix Table~\ref{tab:effect-sizes}), the residual SD is large relative to every fixed effect, and a small mean shift is compatible with many winner changes.}
+\label{tab:mixed-model}
+\end{table*}

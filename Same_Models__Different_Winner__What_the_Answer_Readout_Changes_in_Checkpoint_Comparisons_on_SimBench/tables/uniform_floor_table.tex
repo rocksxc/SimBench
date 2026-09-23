@@ -1,0 +1,15 @@
+\begin{table*}[t]
+\centering\scriptsize
+\setlength{\tabcolsep}{2.5pt}
+\begin{tabular}{@{}lrrrrr@{}}
+\toprule
+Frame & Items & Uniform \ES{}/\PC{} & Space: above & Own: above & Own: both beat uniform \\
+\midrule
+Full frame & 2,038 & 0.356/0.394 & 112/180 & 79/180 & 4/30 \\
+$n\ge30$ & 1,538 & 0.377/0.446 & 112/180 & 80/180 & 4/30 \\
+$n\ge100$ & 1,038 & 0.305/0.339 & 164/180 & 139/180 & 0/30 \\
+\bottomrule
+\end{tabular}
+\caption{The uniform baseline on the respondent-floored frames of Appendix Table~\ref{tab:respondent-floor} (same definitions: $n\ge30$ drops NumberGame, $n\ge100$ also drops DICES, and GlobalOpinionQA, which releases no respondent counts, is kept in both): the uniform predictor's TVD under each weighting, the number of same-tensor losses (15 pairs, two sides, three readouts, two weightings; 180) that exceed it under the shared chat template with space candidates and in own serialization, and the own-serialization units (pair and weighting; 30) in which both checkpoints beat it under all three readouts.}
+\label{tab:uniform-floor}
+\end{table*}

@@ -1,0 +1,44 @@
+\begin{table}[t]
+\centering\scriptsize
+\setlength{\tabcolsep}{1.7pt}
+\begin{tabular}{@{}llrrrrr@{}}
+\toprule
+Pair & Side & Chat & No space & Plain & Next-token & Int.\ IDs \\
+\midrule
+Qwen-14B/Socr.-SFT & parent & .000 & 1.000 & .992 & .999 & 1.000 \\
+Qwen-14B/Socr.-SFT & tuned & .000 & .000 & .000 & .000 & .999 \\
+Qwen-14B/Socr.-DPO & parent & .000 & 1.000 & .992 & .999 & 1.000 \\
+Qwen-14B/Socr.-DPO & tuned & .000 & 1.000 & 1.000 & 1.000 & 1.000 \\
+Mistral-7B & parent & .179 & .179 & .280 & .908 & -- \\
+Mistral-7B & tuned & .995 & .995 & .582 & .803 & -- \\
+Qwen2.5-7B & parent & .000 & .252 & .502 & .994 & -- \\
+Qwen2.5-7B & tuned & .000 & 1.000 & .998 & .999 & -- \\
+Llama-3.2-3B & parent & .000 & .022 & .590 & .958 & -- \\
+Llama-3.2-3B & tuned & .000 & .907 & .887 & .597 & -- \\
+OLMo-2-7B & parent & .001 & .207 & .688 & .983 & -- \\
+OLMo-2-7B & tuned & .000 & .942 & .978 & .994 & -- \\
+Qwen2.5-14B & parent & .013 & .316 & .711 & .996 & -- \\
+Qwen2.5-14B & tuned & .000 & 1.000 & .992 & .999 & -- \\
+Llama-3.1-8B & parent & .001 & .010 & .565 & .860 & -- \\
+Llama-3.1-8B & tuned & .000 & .999 & .927 & .602 & -- \\
+Qwen3-8B & parent & .020 & .049 & .761 & .972 & -- \\
+Qwen3-8B & tuned & .000 & .948 & .879 & .125 & -- \\
+OLMo-2-13B & parent & .005 & .569 & .795 & .990 & -- \\
+OLMo-2-13B & tuned & .000 & .999 & .956 & .930 & -- \\
+OLMo-2-7B Base/SFT & parent & .001 & .207 & .688 & .983 & -- \\
+OLMo-2-7B Base/SFT & tuned & .000 & .860 & .913 & .864 & -- \\
+OLMo-2-7B SFT/DPO & parent & .000 & .860 & .913 & .999 & -- \\
+OLMo-2-7B SFT/DPO & tuned & .000 & .956 & .989 & .975 & -- \\
+OLMo-2-7B DPO/Inst. & parent & .000 & .956 & .989 & 1.000 & -- \\
+OLMo-2-7B DPO/Inst. & tuned & .000 & .942 & .978 & .994 & -- \\
+Qwen3-4B/OSim & parent & .000 & .009 & .750 & .984 & -- \\
+Qwen3-4B/OSim & tuned & .000 & .944 & .557 & .962 & -- \\
+Qwen3-8B/OSim & parent & .002 & .310 & .761 & .972 & -- \\
+Qwen3-8B/OSim & tuned & .000 & .995 & .576 & .678 & -- \\
+Mistral-7B-v0.1/SubPOP & parent & -- & -- & .260 & -- & -- \\
+Mistral-7B-v0.1/SubPOP & tuned & -- & -- & .876 & -- & -- \\
+\bottomrule
+\end{tabular}
+\caption{Coverage: the mean (equal-source) probability mass placed on the scored candidate tokens before renormalization. First three columns: mass at the prefix-final position on the distinct first candidate tokens under the shared chat template with the leading-space candidates, the same candidates without the leading space, and the shared plain prefix. Next-token: mass on the bare option labels under SimBench's own next-token readout with each checkpoint in its own serialization. Int.\ IDs: integer IDs without a leading space under the chat template, Socrates' own answer format, run for the Socrates pairs only (Section~\ref{sec:socrates}; with a leading space the mass is .000 for all three checkpoints). The SubPOP pair (Appendix Table~\ref{tab:subpop}) is a base model without a chat template and was scored under the plain prefix only (with a BOS token: .264 and .885).}
+\label{tab:coverage}
+\end{table}

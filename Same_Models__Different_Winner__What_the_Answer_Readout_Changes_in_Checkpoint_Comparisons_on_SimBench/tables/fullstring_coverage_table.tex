@@ -1,0 +1,44 @@
+\begin{table}[t]
+\centering\scriptsize
+\setlength{\tabcolsep}{2pt}
+\begin{tabular}{@{}llcccc@{}}
+\toprule
+& & \multicolumn{2}{c}{Chat template} & \multicolumn{2}{c}{Plain prefix} \\
+\cmidrule(lr){3-4}\cmidrule(l){5-6}
+Pair & Side & First & Full & First & Full \\
+\midrule
+Qwen-14B/Socr.-SFT & parent & .000 & .000 & .992 & .591 \\
+ & tuned & .000 & .000 & .000 & .000 \\
+Qwen-14B/Socr.-DPO & parent & .000 & .000 & .992 & .591 \\
+ & tuned & .000 & .000 & 1.000 & .193 \\
+Mistral-7B & parent & .179 & .021 & .280 & .010 \\
+ & tuned & .995 & .959 & .582 & .227 \\
+Qwen2.5-7B & parent & .000 & .000 & .502 & .034 \\
+ & tuned & .000 & .000 & .998 & .010 \\
+Llama-3.2-3B & parent & .000 & .000 & .590 & .021 \\
+ & tuned & .000 & .000 & .887 & .253 \\
+OLMo-2-7B & parent & .001 & .000 & .688 & .009 \\
+ & tuned & .000 & .000 & .978 & .015 \\
+Qwen2.5-14B & parent & .013 & .009 & .711 & .409 \\
+ & tuned & .000 & .000 & .992 & .591 \\
+Llama-3.1-8B & parent & .001 & .000 & .565 & .021 \\
+ & tuned & .000 & .000 & .927 & .251 \\
+Qwen3-8B & parent & .020 & .006 & .761 & .254 \\
+ & tuned & .000 & .000 & .879 & .047 \\
+OLMo-2-13B & parent & .005 & .000 & .795 & .001 \\
+ & tuned & .000 & .000 & .956 & .000 \\
+OLMo-2-7B Base/SFT & parent & .001 & .000 & .688 & .009 \\
+ & tuned & .000 & .000 & .913 & .033 \\
+OLMo-2-7B SFT/DPO & parent & .000 & .000 & .913 & .033 \\
+ & tuned & .000 & .000 & .989 & .014 \\
+OLMo-2-7B DPO/Inst. & parent & .000 & .000 & .989 & .014 \\
+ & tuned & .000 & .000 & .978 & .015 \\
+Qwen3-4B/OSim & parent & .000 & .000 & .750 & .089 \\
+ & tuned & .000 & .000 & .557 & .071 \\
+Qwen3-8B/OSim & parent & .002 & .001 & .761 & .254 \\
+ & tuned & .000 & .000 & .576 & .159 \\
+\bottomrule
+\end{tabular}
+\caption{Coverage of the first candidate tokens and of the complete candidate strings (total probability of the $K_i$ strings ``\texttt{\char32 ID<TAB>option}'' given the prefix), equal-source means of cluster means, under the shared chat template and the shared plain prefix (re-implementation runs). Full-string coverage cannot exceed first-token coverage, so under the chat template every same-tensor readout renormalizes a remainder; the summed and length-normalized readouts differ from the first-token readout by the continuation probabilities they add.}
+\label{tab:fullstring-coverage}
+\end{table}

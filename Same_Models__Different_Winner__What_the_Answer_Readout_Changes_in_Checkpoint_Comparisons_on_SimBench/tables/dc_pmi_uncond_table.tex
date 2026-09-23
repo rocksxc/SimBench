@@ -1,0 +1,31 @@
+\begin{table*}[t]
+\centering\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}lccc@{}}
+\toprule
+Pair & Summed & DC-PMI (question premise) & Unconditional PMI \\
+\midrule
+Qwen-14B/Socr.-SFT & P/P +.213 & P/P +.291 & P/P +.261 \\
+Qwen-14B/Socr.-DPO & D/$\circ$ -.003 & P/P +.153 & P/P +.119 \\
+\addlinespace[2pt]
+Mistral-7B & B/I -.016 & B/B +.055 & $\circ$/I -.069 \\
+Qwen2.5-7B & B/B +.072 & I/I -.246 & I/I -.159 \\
+Llama-3.2-3B & I/I -.301 & B/I -.052 & I/I -.125 \\
+OLMo-2-7B & I/I -.375 & B/$\circ$ +.002 & I/I -.203 \\
+\addlinespace[2pt]
+Qwen2.5-14B & B/I -.069 & I/I -.245 & I/I -.250 \\
+Llama-3.1-8B & I/I -.375 & $\circ$/I -.040 & I/I -.018 \\
+Qwen3-8B & B/$\circ$ -.006 & I/I -.197 & I/I -.286 \\
+OLMo-2-13B & B/I -.020 & I/$\circ$ -.009 & I/I -.021 \\
+\addlinespace[2pt]
+OLMo-2-7B Base/SFT & S/S -.408 & $\circ$/S -.025 & S/S -.134 \\
+OLMo-2-7B SFT/DPO & S/S +.031 & S/S +.015 & S/D -.025 \\
+OLMo-2-7B DPO/Inst. & $\circ$/$\circ$ +.002 & D/D +.012 & I/I -.044 \\
+\addlinespace[2pt]
+Qwen3-4B/OSim & B/B +.229 & O/O -.078 & O/O -.060 \\
+Qwen3-8B/OSim & B/B +.088 & O/O -.030 & B/B +.084 \\
+\bottomrule
+\end{tabular}
+\caption{Unconditional PMI (third follow-up run): the summed score minus the candidate's score after the end-of-text token alone (the analogue of lm-eval-harness's \texttt{acc\_mutual\_info}, whose premise is the tokenizer's BOS token where one exists and otherwise its end-of-text token; our unconditional candidate keeps its leading space, whereas the harness encodes the bare choice on its own, which for a SentencePiece tokenizer re-adds the word marker), next to the summed readout and the DC-PMI of the paper, whose premise keeps the instruction and replaces the question by ``?''; chat template with space-prefixed candidates, all 15 pairs. Cells give the ES/PC winner symbols and the PC gap (tuned minus parent TVD; letters as in Table~\ref{tab:winner-map-15}). Against the summed readout, unconditional PMI changes 14 of 30 pair--weighting units (5 decisively) and DC-PMI 21 (5); the two PMI variants differ from each other in 13 units (1 decisively).}
+\label{tab:dc-pmi-uncond}
+\end{table*}

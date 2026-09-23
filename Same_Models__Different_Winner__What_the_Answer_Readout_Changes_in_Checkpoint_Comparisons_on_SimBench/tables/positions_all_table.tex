@@ -1,0 +1,37 @@
+\begin{table}[t]
+\centering\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}llrrr@{}}
+\toprule
+Pair & Source & ID & +tab & Full \\
+\midrule
+Qwen-14B/Socr.-SFT & ESS & -.344 & -.065 & -.009 \\
+Qwen-14B/Socr.-SFT & GOQA & -.248 & -.019 & +.052 \\
+Qwen-14B/Socr.-SFT & DICES & +.290 & +.522 & +.673 \\
+Qwen-14B/Socr.-SFT & NumberGame & -.109 & -.104 & +.003 \\
+Qwen-14B/Socr.-SFT & Consp. & -.471 & -.327 & -.044 \\
+Mistral-7B & ESS & +.248 & +.273 & +.263 \\
+Mistral-7B & GOQA & +.179 & +.172 & +.174 \\
+Mistral-7B & DICES & -.382 & -.351 & -.347 \\
+Mistral-7B & NumberGame & -.017 & +.012 & +.018 \\
+Mistral-7B & Consp. & +.130 & +.164 & +.176 \\
+Qwen2.5-7B & ESS & +.240 & +.246 & +.230 \\
+Qwen2.5-7B & GOQA & +.209 & +.232 & +.231 \\
+Qwen2.5-7B & DICES & -.200 & -.209 & -.173 \\
+Qwen2.5-7B & NumberGame & +.072 & +.097 & +.097 \\
+Qwen2.5-7B & Consp. & +.335 & +.292 & +.293 \\
+Llama-3.2-3B & ESS & -.123 & -.273 & -.239 \\
+Llama-3.2-3B & GOQA & -.037 & -.084 & -.069 \\
+Llama-3.2-3B & DICES & -.465 & -.466 & -.482 \\
+Llama-3.2-3B & NumberGame & -.248 & -.383 & -.360 \\
+Llama-3.2-3B & Consp. & -.164 & -.355 & -.316 \\
+OLMo-2-7B & ESS & -.008 & -.151 & -.160 \\
+OLMo-2-7B & GOQA & +.078 & -.053 & -.060 \\
+OLMo-2-7B & DICES & -.330 & -.754 & -.757 \\
+OLMo-2-7B & NumberGame & -.169 & -.389 & -.380 \\
+OLMo-2-7B & Consp. & +.002 & -.170 & -.203 \\
+\bottomrule
+\end{tabular}
+\caption{Cumulative token-position decomposition of the pooled-cluster gap on each source under the chat template (re-implementation runs): the gap when only the answer-ID token is scored, when the tab is added, and when the full candidate string is scored (the summed readout). Positive values favor the parent.}
+\label{tab:positions-all}
+\end{table}

@@ -1,0 +1,29 @@
+\begin{table}[t]
+\centering\scriptsize
+\setlength{\tabcolsep}{2.2pt}
+\begin{tabular}{@{}lcccc@{\hspace{4pt}}ccc@{}}
+\toprule
+& \multicolumn{4}{c}{Chat template (shared)} & \multicolumn{3}{c}{Plain prefix (shared)} \\
+\cmidrule(lr){2-5}\cmidrule(l){6-8}
+Pair & First & Sum & Len & PMI & First & Sum & Len \\
+\midrule
+Qwen-14B/Socr.-SFT & S/S & P/P & $\circ$/$\circ$ & P/P & S/S & P/P & P/P \\
+Qwen-14B/Socr.-DPO & D/D & D/D & D/D & $\circ$/$\circ$ & D/D & $\circ$/$\circ$ & P/P \\
+Mistral-7B & B/B & B/B & $\circ$/I & B/$\circ$ & B/B & $\circ$/$\circ$ & I/I \\
+Qwen2.5-7B & B/B & B/B & B/B & I/I & B/B & B/B & B/B \\
+Llama-3.2-3B & I/I & I/I & I/I & $\circ$/$\circ$ & $\circ$/B & B/B & I/I \\
+OLMo-2-7B & B/B & I/I & I/$\circ$ & B/B & B/B & B/B & B/B \\
+Qwen2.5-14B & B/B & B/B & B/B & I/I & B/B & B/B & $\circ$/B \\
+Llama-3.1-8B & I/I & I/I & B/B & $\circ$/$\circ$ & I/I & I/I & I/I \\
+Qwen3-8B & B/B & B/B & B/B & $\circ$/$\circ$ & B/B & B/B & B/B \\
+OLMo-2-13B & I/I & B/B & B/B & $\circ$/$\circ$ & B/B & B/B & B/B \\
+OLMo-2-7B Base/SFT & S/S & S/S & S/S & B/B & B/B & B/B & $\circ$/$\circ$ \\
+OLMo-2-7B SFT/DPO & S/S & S/S & S/S & S/S & S/S & S/S & S/S \\
+OLMo-2-7B DPO/Inst. & D/D & $\circ$/D & $\circ$/$\circ$ & $\circ$/$\circ$ & D/D & D/D & D/D \\
+Qwen3-4B/OSim & $\circ$/O & B/B & B/B & O/$\circ$ & B/B & B/B & B/B \\
+Qwen3-8B/OSim & O/O & B/B & B/B & $\circ$/O & $\circ$/$\circ$ & $\circ$/$\circ$ & B/B \\
+\bottomrule
+\end{tabular}
+\caption{Winner map on the two opinion surveys alone (ESS and GlobalOpinionQA, 993 items in 673 clusters; ES/PC symbols as in Appendix Table~\ref{tab:winner-map-15}), all 15 pairs, re-implementation runs. Intervals are cluster bootstraps within the two sources; ES weights the two sources equally. Qwen2.5-14B gaps there: first token +.245, summed +.251, length-normalized +.178 under PC (+.253, +.254, +.187 under ES), all intervals excluding zero.}
+\label{tab:opinion-subset}
+\end{table}
