@@ -1,0 +1,21 @@
+\begin{table}[t]
+\centering
+\caption{Exact fixed/branching variance ratio for independently retrained depth-$b$ forests with cap $b$ (median over five splits; $b=3$ is in Table~\ref{tab:forestexact}). Cells with $m\le b$ are not binding; cells marked -- were not computed within the compute budget (Appendix~\ref{app:capsens}). Right: number of binding tasks and the median fitted ratio (designs optimized on training records, evaluated held-out).}
+\label{tab:capgrid}
+\small
+\setlength{\tabcolsep}{3.5pt}
+\begin{tabular}{lrrrrrr}
+\toprule
+Data & $b$ & $m=6$ & $m=9$ & $m=12$ & tasks & fitted \\
+\midrule
+WDBC & 2 & 1.31 & 1.23 & 1.27 & 45 & 1.31 \\
+Spambase & & 1.35 & 1.25 & 1.35 & & \\
+Ionosphere & & 1.31 & 1.44 & 1.42 & & \\
+\addlinespace[1pt]
+WDBC & 4 & 1.23 & -- & -- & 15 & 1.26 \\
+Spambase & & 1.28 & -- & -- & & \\
+Ionosphere & & 1.20 & -- & -- & & \\
+\addlinespace[1pt]
+\bottomrule
+\end{tabular}
+\end{table}

@@ -1,0 +1,77 @@
+\section{Learning the Design from the Audit Itself}\label{app:selfcal}
+The population-specific constants $W_\A(P)$ are attained by designs tuned to
+$P$. Section~\ref{sec:experiments} tunes them on separate reference records.
+No reference is needed asymptotically: because every cell mass of every
+interview is estimable from the records assigned that interview, a pilot
+phase of the audit itself can supply the design, and pointwise unbiasedness
+keeps every intermediate design exactly unbiased.
+
+For a finite menu $\A$, a law $P$ on $\X\times\{-1,1\}$ and a design $(q,g)$
+feasible for \eqref{eq:mainW}, write $J_P(q,g)=\sum_\iota\sum_{c,y}P_\iota(c,y)g_\iota(c,y)^2/q_\iota$
+for its second moment, where $P_\iota(c,y)=P(\ell_\iota(X)=c,Y=y)$ are the
+cell masses, so that $M_\A(P)=\inf_{q,g}J_P(q,g)$. For $\beta\in(0,1]$ let
+$M_\A^{\beta}(P)$ denote the infimum over designs with $q_\iota\ge\beta/|\A|$
+for all $\iota$.
+
+\begin{proposition}[Two-phase self-calibration]\label{prop:selfcal}
+Let $n_1=n_1(n)\to\infty$ with $n_1/n\to0$, and let $\alpha_n,\beta_n\in(0,1]$
+tend to zero with $\alpha_n n_1^{1/2}\to\infty$. Phase one interviews $n_1$
+records with the uniform design on $\A$ and forms, for every interview $\iota$,
+the Horvitz--Thompson estimates
+$\widehat P_\iota(c,y)=(|\A|/n_1)\sum_{i\le n_1}\mathbf 1\{\iota_i=\iota,\ \ell_\iota(X_i)=c,\ Y_i=y\}$
+and the smoothed masses $\widetilde P_\iota=(1-\alpha_n)\widehat P_\iota+\alpha_n u_\iota$,
+where $u_\iota$ is uniform on the cells and labels of $\iota$. Let
+$(\hat q,\hat g)$ minimize $J_{\widetilde P}$ over feasible designs with
+$q\ge\beta_n/|\A|$, and interview the remaining $n_2=n-n_1$ records with
+$(\hat q,\hat g)$. Then the mean $\widehat\Delta$ of their scores is
+unbiased for $\Delta(P)$ conditionally on phase one, for every $P$, and
+\[
+ n_2\Var(\widehat\Delta\mid\text{phase one})=J_P(\hat q,\hat g)-\Delta(P)^2,
+ \qquad J_P(\hat q,\hat g)\ \xrightarrow{\ \PP\ }\ M_\A(P),
+ \qquad n\,\Var(\widehat\Delta\mid\text{phase one})\xrightarrow{\ \PP\ }W_\A(P).
+\]
+\end{proposition}
+\begin{proof}
+Unbiasedness holds because $(\hat q,\hat g)$ satisfies the pointwise
+constraints $\sum_\iota\hat g_\iota(\ell_\iota(x),y)=t(x,y)$ for every $(x,y)$,
+whatever the phase-one data. Conditionally on phase one the phase-two scores
+are iid with mean $\Delta(P)$ and second moment $J_P(\hat q,\hat g)$, which
+gives the variance identity. For the limit put $P^{\alpha}_\iota=(1-\alpha_n)P_\iota+\alpha_nu_\iota$.
+Each $\widehat P_\iota(c,y)$ is an average of $n_1$ iid bounded terms with
+mean $P_\iota(c,y)$, so $\max_{\iota,c,y}|\widehat P_\iota(c,y)-P_\iota(c,y)|=O_\PP(n_1^{-1/2})$
+over the finitely many cells. Since
+$\widetilde P_\iota-P^\alpha_\iota=(1-\alpha_n)(\widehat P_\iota-P_\iota)$ and
+$P^\alpha_\iota\ge\alpha_nu_\iota$,
+\[
+ \rho_n:=\max_{\iota,c,y}\Big|\frac{\widetilde P_\iota(c,y)}{P^\alpha_\iota(c,y)}-1\Big|
+ \le\frac{\max_{\iota,c,y}|\widehat P_\iota(c,y)-P_\iota(c,y)|}{\alpha_n\min_\iota u_\iota}
+ =O_\PP\big((\alpha_nn_1^{1/2})^{-1}\big)\to0 .
+\]
+Let $(q^\alpha,g^\alpha)$ be optimal for $J_{P^\alpha}$ under the floor
+$\beta_n$. Because $J$ is linear in the masses,
+\[
+ (1-\alpha_n)J_P(\hat q,\hat g)\le J_{P^\alpha}(\hat q,\hat g)\le\frac{J_{\widetilde P}(\hat q,\hat g)}{1-\rho_n}
+ \le\frac{J_{\widetilde P}(q^\alpha,g^\alpha)}{1-\rho_n}\le\frac{1+\rho_n}{1-\rho_n}\,M^{\beta_n}_\A(P^{\alpha}) .
+\]
+Finally $M^{\beta}_\A(P^{\alpha})\to M_\A(P)$ as $\alpha,\beta\to0$: for any
+feasible $(q,g)$, mixing $q$ with the uniform design at weight $\beta$ keeps
+the tables feasible and multiplies $J$ by at most $(1-\beta)^{-1}$, so
+$M_\A^\beta(P^\alpha)\le(1-\beta)^{-1}J_{P^\alpha}(q,g)\le(1-\beta)^{-1}[(1-\alpha)J_P(q,g)+\alpha J_{u}(q,g)]$,
+whose infimum over $(q,g)$ tends to $M_\A(P)$; conversely
+$M_\A^\beta(P^\alpha)\ge(1-\alpha)M_\A(P)$. Combining the displays gives
+$\limsup J_P(\hat q,\hat g)\le M_\A(P)$ in probability, and
+$J_P(\hat q,\hat g)\ge M_\A(P)$ holds for every feasible design.
+Since $n_2/n\to1$, the last claim follows from
+$W_\A(P)=M_\A(P)-\Delta(P)^2$.
+\end{proof}
+
+The proposition is an asymptotic statement about a finite menu: phase one
+must estimate the masses of all $\sum_\iota|{\rm cells}(\iota)|$ cells, which
+requires $n_1$ large compared with $|\A|2^b$, and in the experiments of
+Section~\ref{sec:experiments} reference records play the role of phase one.
+A sequential version that refits the design after every batch of records
+inherits exact unbiasedness by the same argument; its rate is not analyzed
+here. Learning the design across records is standard adaptive importance
+sampling; the point here is that the pointwise constraints make every fitted
+design exactly unbiased, so that the price of learning is paid in variance
+only.

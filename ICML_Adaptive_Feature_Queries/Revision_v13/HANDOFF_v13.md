@@ -1,0 +1,23 @@
+# Research handoff — v13 (round 2 reviewed, revision in progress -> round 3)
+
+Date: 2026-11-09. Paper: **The Statistical Value of Adaptive Feature Queries** (ICML 2027 target, not submitted). Current draft: `Manuscript/paper.pdf` (main text 8 pages incl. impact statement; appendix in citation order); legacy material: `Manuscript/legacy_supplement.pdf`. Source: `Manuscript/paper.tex` (spine `appendix_v13.tex`). The v11 and v12 snapshots are unchanged; all v13 work lives in this folder.
+
+## Status of the user's loop
+| Round | Novelty | Reviews | Revision |
+| --- | --- | --- | --- |
+| 1 | PASS | v11: 3/3/3 | done -> v12 |
+| 2 | PASS (this session; plus a re-check of the new rounds theorem: tree evaluation / Li et al. 2026 are cited, the statistical question is distinct) | v12: R1 3, R2 4, R3 4 (`Reviews/round2_v12_*.md`) | v13 (this folder) |
+| 3 | pending | pending | — |
+
+## What changed from v12 to v13
+Theory: Theorem 3(c) binary pointer tree (near-tight round hierarchy, exponent b−O(r log b)); Corollary on the variance scale of the bracket; Proposition on two-phase self-calibration; main-text statement of the approximately identifiable regime via Phi_n.
+Experiments (code in `Research/code`, results in `Research/results`): exact cap grid b=2 (m=6,9,12) and b=4 (m=6), complete (forest_exact_v13.py); b=4 at m>=9 and all of b=5 NOT completed (two partial WDBC m=9 b=4 tasks in `forest_capgrid_partial/`, not used in any table); smoothing alpha in {0.1%,1%,5%,10%} and bootstrap of held-out records; model-assisted regression imputation vs MI (screening_mi_v13.py); reference-law predictor of the realized ratio (predictor_v13.py); data from verified public mirrors (PMLB for Spambase/Ionosphere; Git-LFS mirror of the Kaggle BRFSS 2015 file, sha256 19f367e3...; GitHub mirrors of ann-thyroid; sklearn WDBC) — every mirror reproduces stored v12 numbers to nine decimals.
+Presentation: new abstract; constructions figure (`figures/v13_constructions.pdf`); notation appendix; related work on MST/CAT, optimal SQD, multiwave two-phase, dynamic question design, AFA evaluation, tree evaluation; appendix reordered; legacy sections moved to `legacy_supplement.tex` (xr-hyper against paper.aux).
+
+## Pitfalls
+- Sandbox network: archive.ics.uci.edu, nces.ed.gov, openml, huggingface, kaggle are blocked; raw.githubusercontent.com, media.githubusercontent.com (Git LFS) and PyPI work.
+- PMLB datasets are Git-LFS pointers on raw.githubusercontent; fetch via media.githubusercontent.com/media/EpistasisLab/pmlb/master/datasets/<name>/<name>.tsv.gz.
+- The v12 code paths `V11 = Path(__file__).resolve().parents[3]/...` were replaced by the absolute path of the v11 handoff code in the copies under `Research/code`.
+- Column generation on this 4-core machine takes ~10 min per m=12, b=3 task (k=12 trees per iteration); do not oversubscribe cores. At b=4 it takes 46-51 min per m=9 task (fitted design doubles the work) and more than 74 min per m=12 task even with --nofit; b=5 is slower still. Budget a separate multi-hour run (or a bigger machine) for these cells.
+- To finish the cap grid: `python3 -I Research/code/forest_exact_v13.py --data <inputs_v11> --out Research/results/forest_capgrid --bs 4 --ms 9,12 --seeds 5 --alphas 0.01 --boots 0 --workers 2` (then `--bs 5 --ms 6,9,12`); add `--nofit` to skip fitted designs. Results are written per task and the script skips tasks whose output file already exists, so a stopped run resumes by rerunning the same command. Move the two files in `forest_capgrid_partial/` back into `forest_capgrid/` once their cells are complete. Then rerun `predictor_v13.py`, `v13_tables.py`, `fill_placeholders.py` (which rewrites `paper.tex` and `v13_experiments_main.tex` from the `.template.tex` files), rebuild `paper.tex` (pdflatex, bibtex, pdflatex x2) and `legacy_supplement.tex`, and check that the references still start on page 9 at the latest.
+- Do not invent reviewer scores, author verification, experiments or references. `Manuscript/AUTHOR_VERIFICATION.md` has v13 rows, all "Not confirmed".

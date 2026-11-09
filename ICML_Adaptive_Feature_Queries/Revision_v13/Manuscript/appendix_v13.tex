@@ -1,0 +1,45 @@
+\section*{Guide to the Appendix}
+The appendix follows the order of the main text. Sections~\ref{app:notation}--\ref{app:general} contain the notation, identifiability, and the general finite-sample and first-order characterization (Theorem~\ref{thm:char}). Sections~\ref{app:universal}--\ref{app:costlocal} prove the sharp gap (Theorem~\ref{thm:universal}) and its extensions to finite samples, larger alphabets, polynomial dimension, mean budgets and the local comparison. Section~\ref{app:instances} contains instance certificates, the two-round attainment for the address, and the relation to augmented estimators. Sections~\ref{app:roundshier}--\ref{app:selfcal} prove the rounds hierarchy (Theorem~\ref{thm:rounds}), the population bracket (Theorem~\ref{thm:bracket}) and the self-calibration result (Proposition~\ref{prop:selfcalmain}). Sections~\ref{sec:pathdesign}--\ref{app:fullscores} describe the fixed-form score program. Sections~\ref{app:forestexact}--\ref{app:pisa} detail the experiments, followed by order effects, identification floors for nonlinear updates, proper scores, cost regimes, default collection designs, the budget curve of a synthetic family, and reproducibility. Material from earlier stages of this study that the main text no longer uses (restricted branching menus, controlled refinements, calibration transfer, pilots, cost crossovers) is collected in a separate supplementary report.
+
+\section{Notation}\label{app:notation}
+\begin{center}\small
+\begin{tabular}{lp{10.5cm}}
+\toprule
+Symbol & Meaning\\
+\midrule
+$d=p_1-p_0$, $t(x,y)=yd(x)$ & Contrast of the two frozen rules, and the per-record target; $\Delta(P)=\E_P[t]$\\
+$\iota$, $\ell_\iota(x)$, $\A$ & Interview, its transcript, and a finite menu of interviews\\
+$\A_r(b)$ & $r$-round interviews with at most $b$ queries; $\A_1$ fixed forms, $\A_b$ branching trees\\
+$q_\iota$, $g_\iota$ & Interview probabilities and transcript score tables of a design\\
+$V(d,\A)$, $V_r$ & Worst-case first-order constant \eqref{eq:unbiasedprogram}; its value on $\A_r(b)$\\
+$\Phi_n(d,\A)$ & Finite-sample program \eqref{eq:phimain}, within a factor 104 of the minimax risk\\
+$W_\A(P)$, $M_\A(P)$ & Smallest variance and second moment of a pointwise-unbiased design at $P$; $M=W+\Delta^2$\\
+$\Gamma_P$, $N_P(\tau)$ & Energy fraction explained by the best single form; R\'enyi-$1/2$ effective number of path sets\\
+$K_{m,b}$ & $\min\{2^{b-1},\binom{m-1}{b-1}\}$\\
+$\kappa$, $D=2^\kappa$ & Address bits and data bits of the address contrast; $L$ levels of the binary pointer tree\\
+$\U$ & Uniform law on the profile cube\\
+$B,\;n_0$ & Larger hard cap in the mixed-budget result; pilot sample size\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\input{app_id_general_v13}
+\input{supporting_results_v13}
+\input{universal_proof}
+\input{revision_theory}
+\input{structural_extensions}
+\input{cost_local_theory}
+\input{review_extensions}
+\input{v12_theory}
+\input{v13_selfcal}
+\input{v12_moved_v13}
+\input{path_design}
+\input{full_form_v13}
+\input{v12_experiments_appendix}
+\input{v13_experiments_appendix}
+\input{archive_pisa_v13}
+\input{v8_measurement_v13}
+\input{v9_extensions}
+\input{metric_extensions}
+\input{app_budgetcurve_v13}
+\input{app_repro_v13}

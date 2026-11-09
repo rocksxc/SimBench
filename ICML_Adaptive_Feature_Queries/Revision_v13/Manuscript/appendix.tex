@@ -1,0 +1,192 @@
+\section*{Notation Guide}
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+Symbol & Meaning\\
+\midrule
+$\iota$ & Interview or form index\\
+$\kappa$ & Number of address coordinates; $D=2^\kappa$ data coordinates\\
+$b,B$ & Mean or primary cap, and larger hybrid hard cap\\
+$R,n_0$ & Number of batches, and pilot sample size\\
+$M,t$ & Contrast amplitude $\|d\|_\infty$, and target $Yd(X)$\\
+$\theta,\vartheta$ & Local parameter, and fixed two-point perturbation\\
+$\zeta$ & Algebraic constant $\sqrt2$ in the four-bit certificate\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Identifiability and Irreducible Error}\label{app:id}
+Let $L_\iota$ lift a transcript table to $\mathbb R^{\X}$, so $(L_\iota u)(x)=u(\ell_\iota(x))$. The space $\Hh_\A=\sum_\iota\mathrm{im}(L_\iota)$ is closed. Put $\delta=\inf_{v\in\Hh_\A}\|d-v\|_\infty$. In fact $\lim_{n\to\infty} R_\A(d,n)=\delta^2$. For the upper bound choose an approximant $v$ attaining $\delta$, decompose $v=\sum_\iota L_\iota g_\iota$, and give every used interview positive probability. The mean score is uniformly within $\delta$ of $\Delta$, and its variance tends to zero uniformly over $P$ since all alphabets are finite.
+
+If $\delta>0$, finite-dimensional norm duality gives a signed vector $w$ of $\ell_1$ norm one annihilating $\Hh_\A$ with $\sum_xw(x)d(x)=\delta$. This follows by separating $d$ from the open $\ell_\infty$ ball of radius $\delta$ around that subspace, or by duality of the linear program for uniform approximation. In particular $\sum_{x:\ell_\iota(x)=u} w(x)=0$ for every $\iota,u$. Give $X$ the law $|w|$, and in the two populations set $Y=\pm\sgn w(X)$. For each $y$, each transcript cell has identical joint probability with $Y=y$ in the two populations. This remains true if $y$ determines which interview is used. Sequentially conditioning on past records gives identical transcript laws for $n$ interviews while the gains are $\pm\delta$. The average of the two squared risks is at least $\delta^2$. The same reasoning gives necessity in the identification criterion.
+
+For a binary coordinate mask $T$ its cells span all characters $\chi_S$ with $S\subseteq T$ and no other characters, by the uniqueness of the multilinear expansion. A decision-tree leaf indicator is a product of up to $b$ factors $(1\pm x_i)/2$. Conversely the fixed query of $S$ recovers $\chi_S$ for every $|S|\le b$. This proves the common identification threshold.
+
+\section{The General Minimax Characterization}\label{app:general}
+Let $\|\cdot\|_\mu$ denote the norm in $L^2(\mu)$, identifying functions equal on the support of $\mu$. All objects below are finite-dimensional. We can take $q$ strictly positive when computing infima. If a feasible boundary design has $q_\iota=0$, its table is zero; mixing $q$ with a positive design and taking the mixture coefficient to zero recovers the same objective. Empty transcript cells can be discarded.
+
+\subsection{The Dual Form}
+For a fixed $\mu$ define, on the span of the transcript subspaces of $L^2(\mu)$,
+\[
+ N_\mu(v)=\inf_{\sum_\iota f_\iota=v}\sum_\iota\|f_\iota\|_\mu,\qquad f_\iota\in\mathrm{im}(L_\iota);
+\]
+extend it by $+\infty$ outside that span. The dual seminorm on the full space is $N_\mu^*(h)=\max_\iota\|\Pi_\iota h\|_\mu$. Indeed $|\ip{h}{\sum_\iota f_\iota}|\le\max_\iota\|\Pi_\iota h\|_\mu\sum_\iota\|f_\iota\|_\mu$, and a single normalized projection onto a maximizing subspace attains the bound. The closed unit ball of $N_\mu$ is the image of a compact product-space unit ball, so its squared norm is lower semicontinuous.
+
+Maximizing over profiles in \eqref{eq:program} is equivalent to maximizing its expectation over all $\mu$. The objective is continuous affine in $\mu$ on the compact probability simplex and continuous convex in $(q,g)$ for positive $q$. Sion's minimax theorem exchanges maximum and infimum \citep{sion1958}. For fixed tables, Cauchy--Schwarz and $q_\iota\propto\|L_\iota g_\iota\|_\mu$ give
+\[
+ \inf_q \sum_\iota\|L_\iota g_\iota\|_\mu^2/q_\iota
+      =\Big(\sum_\iota\|L_\iota g_\iota\|_\mu\Big)^2
+\]
+with zeros handled by limits. Thus at fixed $\mu$ the inner value is $\inf_v \{\|d-v\|_\mu^2+N_\mu(v)^2/n\}$. By finite-dimensional Fenchel duality this equals
+\[
+ \sup_h\{2\ip{d}{h}-\|h\|_\mu^2-nN_\mu^*(h)^2\}.
+\]
+To verify the factors, set $F(v)=\|d-v\|_\mu^2$ and $G(v)=N_\mu(v)^2/n$. Their conjugates satisfy
+\[
+ F^*(u)=\langle u,d\rangle_\mu+\|u\|_\mu^2/4,
+ \qquad G^*(u)=nN_\mu^*(u)^2/4.
+\]
+Fenchel duality gives $\inf_v(F+G)(v)=\sup_u[-F^*(-u)-G^*(u)]$; substituting $u=2h$ gives the displayed expression. There is no duality gap because the first squared norm is finite and continuous everywhere and the second is proper convex. Optimizing over the scale of $h$ proves \eqref{eq:dual}.
+
+\paragraph{Relation to fixed-channel constants.}
+For a prescribed iid observation kernel, the $\chi^2$-modulus bound of \citet{polyanskiy2026} brackets MSE between the squared modulus divided by $(1+\sqrt e)^2$ and the squared modulus, under its stated assumptions. \citet{juditsky2009} instead formulate their main comparison using a confidence-level error criterion. Neither modulus is the joint-design objective in \eqref{eq:program}. Our factor 104 is a conservative conversion for that objective under sequential interview choice, not an improvement on fixed-channel constants. The additional argument is a witness whose information is bounded simultaneously for every eligible interview, including the two choices selected by the current label.
+
+\subsection{Finite-Sample Converse}
+The upper bound in Theorem~\ref{thm:finite} follows from the conditional-score calculation in Section~\ref{sec:general}. For the lower bound fix $\mu,h$ and normalize $\|h\|_\mu^2+nJ_\mu(h)=1$. Write $C_\mu=1+\E_\mu|h|\le2$ and set
+\[
+ \nu(x)=\mu(x)(1+|h(x)|)/C_\mu,\qquad
+ u(x)=\mu(x)h(x)/\nu(x)
+\]
+on the support of $\mu$, with $u=0$ elsewhere. We have $\|u\|_\infty\le2$, $\nu\ge\mu/2$, and $\E_\nu[du]=\ip{d}{h}$. For every partition into transcript cells $C$,
+\[
+ \sum_C \nu(C)\,\E_\nu[u\mid C]^2
+  =\sum_{C:\nu(C)>0}\frac{\big(\sum_{x\in C}\mu(x)h(x)\big)^2}{\nu(C)}
+  \le 2\|\Pi_\iota h\|_\mu^2 .
+\]
+For $\vartheta=1/5$ define $P_\pm(x,y)=\nu(x)(1\pm \vartheta y u(x))/2$. Their gains are $\pm \vartheta\ip{d}{h}$. Condition on past interviews and on independent random coins. Under the null law with $X\sim\nu$ and $Y$ fair and independent, the probability $p_0(z)$ of a leaf $z=(y,C)$ changes to $p_\pm(z)=p_0(z)(1\pm \vartheta s_z)$ with $s_z=y\E_\nu[u\mid C]$. If the label selects interview $\iota_y$, the null second moment is
+\[
+ \E_0s_z^2=\frac12\sum_{y\in\{-1,1\}}\sum_{C\in \iota_y}
+       \nu(C)\E_\nu[u\mid C]^2
+ \le\frac12\sum_y 2\|\Pi_{\iota_y}h\|_\mu^2\le2J_\mu(h).
+\]
+Also $|s_z|\le2$. The conditional divergence satisfies
+\[
+ \KL(p_+\Vert p_-)\le\chi^2(p_+\Vert p_-)
+    \le \frac{4\vartheta^2}{1-2\vartheta}\E_0 s_z^2
+    \le \frac{8\vartheta^2}{1-2\vartheta}J_\mu(h).
+\]
+The bound is uniform in the realized past. Independent protocol randomness can be revealed at the start, then discarded by data processing. The KL chain rule bounds the divergence of the two full experiments by $8/15$. Pinsker's inequality bounds their total variation by $2/\sqrt{15}$. Classifying an estimate by the nearer of the two parameter values yields worst-case squared risk at least $\vartheta^2\ip{d}{h}^2(1-2/\sqrt{15})/2\ge\ip{d}{h}^2/104$. Taking the supremum in \eqref{eq:dual} proves Theorem~\ref{thm:finite}. The numerical inequality is equivalent to $15\cdot27^2>104^2$. The losses come from the change of measure, the KL-to-total-variation conversion, and testing two alternatives. The same calculation applies when the current label cannot select the form; this constant is not caused solely by label-dependent selection.
+
+\subsection{Exact First-Order Constant}
+Assume $d\in\Hh_\A$. Apply the same minimax exchange to \eqref{eq:unbiasedprogram}, retaining the affine pointwise constraint $s_g=d$. For strictly positive $\mu$ the pointwise constraint is equivalent to equality in $L^2(\mu)$, so the fixed-$\mu$ optimum is $N_\mu(d)^2$. Restricting the supremum to such $\mu$ preserves its value. Indeed mixing any $\mu$ with $\epsilon$ times a positive law gives an inner objective at least $(1-\epsilon)$ times the original one for every feasible design. By duality,
+\begin{equation}
+ V(d,\A)=\sup_{\mu>0,\,h:\,J_\mu(h)>0}
+                \frac{\ip{d}{h}^2}{J_\mu(h)}.\label{eq:vdual}
+\end{equation}
+The zero contrast has value zero. Equation~\eqref{eq:dual} and \eqref{eq:vdual} also give $n\Phi_n\to V$: the upper bound is $V$ by a zero-residual design, and every fixed witness in \eqref{eq:vdual} gives the matching lower limit.
+
+For a lower bound on $nR_\A$, fix positive $\mu,h$ and set $P_\theta(x,y)=\mu(x)(1+\theta y h(x))/2$, $|\theta|\le\eta<1/\|h\|_\infty$. Then $\Delta(P_\theta)=\theta c$, with $c=\ip{d}{h}$. For each history and deterministic choice of interviews the conditional leaf law has the form $p_\theta(z)=p_0(z)(1+\theta s_z)$. At the null $\E_0s_z^2\le J_\mu(h)$ and $|s_z|\le\|h\|_\infty$. Its Fisher information at $\theta$ is therefore at most $J_\mu(h)/(1-\eta\|h\|_\infty)$. Conditional likelihood scores are martingale differences, so the full information is bounded by $n$ times this quantity, including for a randomized protocol with its independent seed revealed.
+
+Use a smooth prior $\pi_\eta$ on $[-\eta,\eta]$ vanishing at both endpoints with finite information $I(\pi_\eta)$, for example $\eta^{-1}\cos^2(\pi \theta/(2\eta))$. Integration by parts in the joint data--parameter law gives $\E[(\widehat\Delta-\theta c)\partial_\theta\log(p_\theta\pi_\eta)]=c$. Cauchy--Schwarz gives the van Trees inequality \citep{gill1995}, here a lower bound of
+\[
+     \frac{c^2}{nJ_\mu(h)/(1-\eta\|h\|_\infty)+I(\pi_\eta)}
+\]
+on the prior risk, and hence on worst-case risk. First take $n\to\infty$ after multiplying by $n$, then $\eta\downarrow0$, then optimize \eqref{eq:vdual}. The means of the unbiased scores in \eqref{eq:unbiasedprogram} give the opposite inequality for every $n$, proving Theorem~\ref{thm:asym}.
+
+\subsection{When the Constant Is Attained in the Unbiased Class}
+For a fixed positive design law $q$ such that the eligible cells span $d$, the analogous program $V_q(d)$ fixes $q$ in \eqref{eq:unbiasedprogram}. Its value divided by $n$ is exactly the worst-case minimax MSE among globally unbiased estimators with iid design $q$. To see the lower bound, choose $X\sim\mu$ of full support and an independent fair label. For a symmetric unbiased statistic $U_n$ of observations $O_i=(\iota_i,\ell_{\iota_i},Y_i)$ put $H(O_1)=\E[U_n\mid O_1]-\E U_n$. Orthogonality of the one-observation projections gives $\Var U_n\ge n\E H^2$. Perturbing the joint law to $\mu(x)(1+t y h(x))/2$ and differentiating unbiasedness gives $\ip{d}{h}=n\E[H(O_1)Y_1h(X_1)]$ for all $h$. Thus $d=\sum_\iota L_\iota g_\iota$ with $g_\iota(\ell)=nq_\iota\E[YH\mid \iota,\ell]$. Jensen bounds $\Var U_n$ below by $n^{-1}\inf_{s_g=d}\sum_\iota\|L_\iota g_\iota\|_\mu^2/q_\iota$. Taking the supremum over full-support $\mu$ and exchanging extrema as above gives the claim. Symmetrization costs no risk with iid records.
+
+\input{universal_proof}
+
+\input{revision_theory}
+
+\section{Binary Experiments and the Budget Curve}\label{app:sign}
+\paragraph{The binomial minimax value.}
+For any nonzero $d$ set $M=\|d\|_\infty$. With full profiles a randomized sign with conditional mean $Yd(X)/M$ has population mean $\Delta/M$. For $n$ iid signs $W_i$ with unknown mean $\mu_0$, the estimate $\sqrt n\,\overline W/(1+\sqrt n)$ has variance $(1-\mu_0^2)/(1+\sqrt n)^2$ and squared bias $\mu_0^2/(1+\sqrt n)^2$. For the lower bound fix a profile at which $|d|=M$ and vary the sign label. A $\mathrm{Beta}(\sqrt n/2,\sqrt n/2)$ prior on the success probability of the sign makes this constant-risk rule its posterior mean on the mean-sign scale. The Bayes risk equals the displayed frequentist risk, proving minimaxity. The full-profile value is therefore $M^2/(1+\sqrt n)^2$. The one-feature construction in Proposition~\ref{prop:add} simulates these same signs, and the constant-profile lower bound applies. For $M=0$ return zero.
+
+\subsection{Proof of Theorem~\ref{thm:gap}}\label{app:gap}
+If $b<2k$, under uniform $X$ the laws $Y=\pm d_k(X)$ give the same observations on every allowed leaf. The risk is at least one and zero attains it. For $b\ge2k$ we show that $J_\U(d_k)=1/C$ and construct a per-person score $H$ with $\E[H\mid X,Y]=Yd_k(X)$ and $\E[H^2\mid X,Y]=C$ for each design type.
+
+\paragraph{Fixed forms.}
+Under the uniform law, projecting a multilinear expansion onto a mask retains exactly its contained Fourier terms. In a block of size four a mask with $j=2,3,4$ coordinates captures at most $1/4,1/2,1$ of the total squared coefficient mass, respectively. The first maximum is achieved by a supported pair and the other two by any mask of the indicated size. A block with fewer than two coordinates captures zero mass. Independence of blocks gives total mass at most $2^{b-4k}$, and choosing a supported pair in every two-coordinate block attains it for any budget allocation assigning between two and four coordinates to every block. For two coordinates sample one of four supported pairs uniformly and return twice its signed product. For three, choose $\{1,2,3\}$ or $\{2,3,4\}$ with equal probability. Return $2f$ when the first form is chosen and $x_2=x_3$, or when the second is chosen and $x_2\ne x_3$; return zero otherwise. For four the score is $f$ itself. The scores have conditional means $f$ and constant second moments $4,2,1$. Multiply independently randomized block scores and $Y$ to obtain the desired $H$.
+
+\paragraph{Branching forms.}
+When $b=2k+r$, $0\le r\le k$, evaluate $r$ blocks via branching, using three queries each; use a random signed pair score of magnitude two in every other block. Then $H$ has constant absolute value $2^{k-r}$ and square $C=4^{k-r}$. When $b\ge3k$, evaluate every block. For the lower witness, at any deterministic leaf under uniform $X$, an unqueried coordinate remains uniform independent of the others. Nonzero conditional mean for the product requires that every block has at least two exposed coordinates. At most $r$ blocks have more than two, so $|\E_\U[d_k\mid\ell]|\le2^{-(k-r)}$. Averaging yields the bound on $J$. It is attained by evaluating $r$ blocks exactly and querying one predetermined supported pair in each other block. The absolute conditional mean is then $2^{-(k-r)}$ at every leaf.
+
+\paragraph{Exact program and leading coefficients.}
+The witness $\mu=\U,h=d_k$ in \eqref{eq:dual} gives $\Phi_n\ge1/(1+n/C)$. Randomized query procedures can be represented as mixtures over deterministic interviews by drawing all their random coins in advance. Taking their unbiased transcript scores with shrinkage $\gamma=n/(n+C)$ gives $s_g=\gamma d_k$ and a second-moment contribution at most $\gamma^2 C$ at every profile. Thus $\Phi_n\le(1-\gamma)^2+\gamma^2 C/n=C/(n+C)$. The same witness in \eqref{eq:vdual} and the unshrunk scores give $V=C$. Theorem~\ref{thm:finite} yields the nonasymptotic rates. At $b\ge3k$, evaluating $d_k$ yields a sign of mean $\Delta$ and the binomial minimax value above.
+
+\paragraph{Exact binary comparison for branching.}
+For $2k\le b\le3k$ put $\lambda=2^{b-3k}$. The branching score $\lambda H$ is a sign with mean $\lambda\Delta$ for every $P$. Conversely consider the subfamily of uniform $X$ with conditional label law $(1+\theta y d_k(x))/2$. Then $\Delta=\theta\in[-1,1]$. At each leaf, conditionally on the history and independent random coins, $p_\theta(z)=p_0(z)(1+\theta s_z)$ with $|s_z|\le\lambda$ and $\sum_zp_0(z)s_z=0$. A sign $w$ of mean $\lambda\theta$ can generate this leaf via the probability kernel $K(z\mid w)=p_0(z)(1+w s_z/\lambda)$. Simulating the leaves successively reproduces the complete protocol. This is an explicit experiment comparison in the sense of \citet{blackwell1953}: on the indicated subfamily an arbitrary interview can be simulated using the scalar sign. Together with the construction for every $P$, it gives exact equality of minimax risks with the binary-mean experiment, even for biased estimators.
+
+\paragraph{Why the population supremum matters.}
+A uniform-law calculation can be uninformative even when an update is identifiable. For example, take an extra switch $z\in\{-1,1\}$ and set $\widetilde d=1+\mathbf1\{z=1\}(d_k-1)$. This remains Boolean, has degree $2k+1$, and has uniform mean $1/2$, so even an empty form captures at least $1/4$ of the squared mean signal in the uniform witness $h=\widetilde d$. At the identifiable width $2k+1$, however, a population supported on $z=1$ contains the original hard experiment at that width. An auditor given the switch for free still has branching risk of order $\min\{1,4^{k-1}/n\}$ for $k\ge1$. Optimizing over profile laws and perturbations in \eqref{eq:dual} accounts for this possibility.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=.62\textwidth]{figures/query_cost.pdf}
+\caption{Exact synthetic budget curve for the same update on 24 features ($k=6$). The fixed coefficient is 64 and the branching coefficient is one at 18 queries.}
+\label{fig:cost}
+\end{figure}
+
+\section{Empirical Oracle and Evaluation Details}\label{app:emp}
+\subsection{Finite-Sample Oracle for Sequential Designs}
+The fixed-form oracle is a pointwise benchmark. Let $z=(x,y)$, $t(z)=yd(x)$, and let $P$ now denote the held-out empirical law. The oracle may use $P$ to select a design and tables, but the resulting estimator must remain unbiased under every possible law. Otherwise the optimization would trivially return the constant $\Delta(P)$. The admissible score functions $H_\iota(\ell_\iota(x),y)$ therefore satisfy
+\begin{equation}
+             \sum_\iota q_\iota H_\iota(\ell_\iota(x),y)=yd(x)\qquad\text{for every }(x,y).\label{eq:unbpoint}
+\end{equation}
+\input{oracle_proof}
+
+\input{path_design}
+
+
+\input{review_extensions}
+
+
+\input{structural_extensions}
+\input{indicator_address}
+
+\input{cost_local_theory}
+\input{full_form_extensions}
+\input{v8_extensions}
+\input{v9_extensions}
+
+\input{metric_extensions}
+\input{v10_extensions}
+\input{archive_and_forests}
+
+\section{Reproducibility and Research Methods}
+The anonymous supplement contains code, numerical certificates, aggregate
+results, simulation standard errors, and figure/table generators. Source data
+are obtained separately with pinned checksums. The SUSHI loader also verifies
+a normalized profile fingerprint because the creator's legacy archive and
+current PrefLib profile differ. Individual SUSHI rankings may not be
+redistributed; no individual survey records are supplied.
+
+Checks cover 21,276 exact rational hybrid-budget inequalities, six independent
+small conic programs, binary and ordinal profile-cell formulations, and five
+full-support local-efficiency comparisons. EM is checked against direct
+maximization of its penalized likelihood. Release checks verify task counts,
+comparator populations, primal/dual bounds, pilot-risk accounting, and
+interval simulation errors. Symbolic and numerical checks are also supplied.
+
+These finite checks support the implementations and written derivations;
+they do not replace proofs of general statements. The product counterexample
+has a separately released rational certificate checked exactly on all 256
+profiles. The unrestricted-menu experiment enumerates every eligible form
+on all 70 binary tasks and releases its population witnesses. Nonlinear-model
+floor certificates use exact integer nullspace checks and rational endpoint
+evaluation on the released prediction grids. The one-sided address formula
+has an analytic proof and exact small-instance primal/dual checks.
+All 1,048 retained release checks and 50 new archive/forest checks pass.
+The new checks verify actual-form observability, the Brier block
+decomposition, MI summary arithmetic and the complete forest grid,
+including a separate address instance with known optima. The proper-loss extension is
+checked on every profile and both labels of
+an independent toy cube. The budget-curve release contains all 260
+recorded cap/contrast cases, with separately implemented Python-integer
+Walsh and rational endpoint checks; age-transfer summaries retain every
+nonzero case and explicitly record zero contrasts.
+A generative language
+model participated in formulating research questions, deriving and checking
+proof arguments, implementing analyses, and drafting the manuscript.

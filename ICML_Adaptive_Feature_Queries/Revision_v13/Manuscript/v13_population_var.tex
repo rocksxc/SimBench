@@ -1,0 +1,29 @@
+\paragraph{The bracket on the variance scale.}
+Section~\ref{sec:experiments} reports the number of records a design needs
+relative to branching, that is the ratio of variances
+$W_\A(P)=M_\A(P)-\Delta(P)^2$ of pointwise-unbiased designs rather than the
+ratio of second moments. The two scales differ when $\Delta(P)\neq0$, and the
+bracket transfers as follows.
+
+\begin{corollary}[Bracket on the variance scale]\label{cor:bracketvar}
+Under the assumptions of Theorem~\ref{thm:bracketfull}(b), with
+$\sigma_P^2=\E_P[t^2]-\Delta(P)^2=W_{\rm branch}(P)>0$,
+\[
+ \frac{\E_P[t^2]/\Gamma_{\rm fixed}(P)-\Delta(P)^2}{\sigma_P^2}
+ \ \le\ \frac{W_{\rm fixed}(P)}{W_{\rm branch}(P)}
+ \ \le\ \frac{N_P(\tau)\,\E_P[t^2]-\Delta(P)^2}{\sigma_P^2}.
+\]
+When the second-moment endpoints exceed one, the variance-scale endpoints are
+larger than them, so the variance ratio is bracketed by a wider interval
+than the second-moment ratio.
+\end{corollary}
+\begin{proof}
+Every design in \eqref{eq:mainW} is unbiased for $\Delta(P)$, so its variance
+is its second moment minus $\Delta(P)^2$; in particular
+$W_{\rm fixed}=M_{\rm fixed}-\Delta^2$ and $W_{\rm branch}=\E_P[t^2]-\Delta^2$.
+Subtract $\Delta^2$ from the three terms of Theorem~\ref{thm:bracketfull}(b)
+multiplied by $\E_P[t^2]$ and divide by $\sigma_P^2$. The last statement is
+the inequality $(a-c)/(b-c)\ge a/b$ for $a\ge b>c\ge0$.
+\end{proof}
+The tables of Section~\ref{sec:experiments} and Appendix~\ref{app:screening}
+report this variance-scale bracket, and "inside the bracket" refers to it.

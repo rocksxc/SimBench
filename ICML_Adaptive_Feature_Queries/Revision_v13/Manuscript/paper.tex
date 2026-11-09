@@ -1,0 +1,226 @@
+\documentclass{article}
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{xurl}
+\usepackage{icml2026}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{array}
+\usepackage{float}
+\hypersetup{pdftitle={The Statistical Value of Adaptive Feature Queries},pdfauthor={Anonymous Authors},pdfsubject={Anonymous review manuscript on statistical model evaluation}}
+\icmltitlerunning{The Statistical Value of Adaptive Feature Queries}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\sgn}{\operatorname{sgn}}
+\newcommand{\KL}{D_{\mathrm{KL}}}
+\newcommand{\X}{\mathcal X}
+\newcommand{\A}{\mathcal A}
+\newcommand{\G}{\mathcal G}
+\newcommand{\Hh}{\mathcal H}
+\newcommand{\U}{\mathsf U}
+\newcommand{\ip}[2]{\langle #1,#2\rangle_\mu}
+\newcommand{\PP}{\mathbb P}
+\newcommand{\pos}[1]{(#1)_+}
+\newcommand{\rin}{R_{\mathrm{branch}}}
+\newcommand{\rfix}{R_{\mathrm{fixed}}}
+\newcommand{\sqdist}{\operatorname{dist}}
+\lefthyphenmin=3
+\righthyphenmin=3
+\begin{document}
+\twocolumn[
+\icmltitle{The Statistical Value of Adaptive Feature Queries}
+\begin{icmlauthorlist}
+\icmlauthor{Anonymous Authors}{anon}
+\end{icmlauthorlist}
+\icmlaffiliation{anon}{Anonymous Institution}
+\icmlcorrespondingauthor{Anonymous Author}{anonymous@example.org}
+\icmlkeywords{model evaluation, adaptive feature acquisition, statistical learning theory, minimax estimation, rounds of adaptivity}
+\vskip 0.3in
+]
+\printAffiliationsAndNotice{}
+
+\begin{abstract}
+Questionnaires limit respondent burden, clinics limit tests per patient, and budgeted classifiers limit acquisitions per input, so many population quantities must be estimated from records that each reveal only $b$ of $m$ features. We quantify what a collector gains by choosing each question after seeing earlier answers instead of pre-committing to a feature set, when the target is a population functional such as the accuracy of a frozen rule or the gain of a model update. For any menu of query protocols the first-order minimax constant is a finite convex program whose converse holds for biased and sequential estimators. Pre-committed forms need at most $2^{b-1}$ times as many records as branching interviews, and this is sharp. The gain accrues over rounds: $r$ batches of questions lose at most a factor $2^{b-r}$, and a binary pointer-tree contrast shows that this is tight up to polynomial factors in $b$, so two rounds can lose almost the whole exponent and $\Omega(b/\log b)$ rounds are needed to come within polynomial factors of full branching. At a given population the gain lies between the inverse energy explained by the best single form and the effective number of question paths of the branching tree, and certified column generation computes it exactly over all depth-$b$ trees. On retrained random-forest updates and survey screening trees the realized gain is a factor between one and two; it is stable under the smoothing and resampling of the evaluation law, is detected in advance by the bracket, and is largely missed by branching designs restricted to the models' own trees. The completion-only path-guessing baseline of the classical adaptivity simulation needs up to 25 times as many respondents; optimized pre-committed scores remove all but the intrinsic part of that cost.
+\end{abstract}
+
+\section{Introduction}
+Population quantities are often estimated from records that each reveal only a few features. Questionnaires cap respondent burden, clinical protocols cap the tests ordered per patient, and budgeted classifiers acquire only a few inputs per case at deployment \citep{turney1995,trapeznikov2013,nan2017}. Two kinds of collection respect such a cap. A collector can pre-commit to a feature set for each record, as in split questionnaires, matrix sampling and fixed laboratory panels \citep{raghunathan1995,chipperfield2009}. Alternatively, it can choose each question after seeing earlier answers, as in skip logic, sequential testing and the acquisition path of a decision tree. This paper asks how many more records pre-commitment costs when the target is a population quantity such as the accuracy of a frozen screening rule or the accuracy gain of a model update.
+
+Classical adaptivity results measure queries per input. A depth-$b$ decision tree is simulated non-adaptively by reading all of its $2^b-1$ nodes, and the huge-object model separates adaptive and non-adaptive testers by their query counts \citep{goldreich2022,chakraborty2023,adar2024}. Under a per-record cap, the price of non-adaptivity is paid instead in the number of records. Planned-missingness theory evaluates a given form menu \citep{robins1994,tsiatis2006}, and active feature acquisition optimizes individual predictions \citep{ma2019,covert2023}. Our question compares protocol classes at their statistical optima. The answer depends on how the cap is imposed, on how many rounds of questions are allowed, and on the population.
+
+\paragraph{Contributions.}
+\begin{itemize}\itemsep1pt\parskip0pt
+\item \emph{Exact characterization (Theorem~\ref{thm:char}).} For any finite menu of interviews, the first-order minimax constant is a finite convex program. Its converse holds for biased estimators, for cross-record adaptation and for interview choices that see the current label, and a finite-sample version characterizes the minimax risk within a universal constant for every contrast, identifiable or not.
+\item \emph{Sharp worst-case value (Theorem~\ref{thm:universal}).} Pre-committed forms need at most $\min\{2^{b-1},\binom{m-1}{b-1}\}$ times as many records as branching, with equality at an address contrast. The full exponent is nearly attained already when $m\le b^2$. Under a mean instead of a maximum budget the ratio is at most $m/b$.
+\item \emph{Rounds of adaptivity (Theorem~\ref{thm:rounds}).} With $r$ batches the loss is at most $2^{b-r}$. Pointer-chasing contrasts separate $r$ from $r+1$ rounds, and a binary pointer tree shows that $r$ rounds can lose a factor $2^{b-1}/(3b)^r$: the exponent of the $r$-round gap is $b-O(r\log b)$, so a bounded number of rounds loses almost the whole exponent and $\Omega(b/\log b)$ rounds are necessary to come within polynomial factors of branching.
+\item \emph{Population-specific value (Theorem~\ref{thm:bracket}).} The gain at a given population lies between the inverse energy that the best single form explains and the R\'enyi effective number of the branching tree's question paths. Column generation with an exact dynamic-programming pricing step computes the branching constant over \emph{all} depth-$b$ trees with certified bounds, and a two-phase design learns the optimal population-specific design from the audit itself while staying exactly unbiased (Proposition~\ref{prop:selfcalmain}).
+\item \emph{Experiments.} On 180 binding random-forest updates at cap three, the best pre-committed design needs a median 1.51 times (up to 1.85) as many records as the best branching design; the median is 1.31 at cap two and 1.24 at cap four with six features; the exact ratios move by at most 8\% under smoothing masses between 0.1\% and 10\% and under resampling of the evaluation records; and branching menus restricted to the forests' own trees capture a median of 17\% of the gain on the log scale. On budgeted screening questionnaires the factor reaches 1.98 on survey data and is exactly one on thyroid data, where the bracket detects the absence of a gain from reference data alone. Completion-only path guessing, the estimator behind the classical adaptivity simulation, needs up to 25 times as many respondents. When complete source records exist and the conditional law of unasked items transports, imputation closes the gap; we report this as it is.
+\end{itemize}
+
+\section{Estimand and Acquisition Protocols}\label{sec:setup}
+Let $X$ take values in a finite profile space $\X$, by default $\{-1,1\}^m$, and let $Y\in\{-1,1\}$ be a label. Freeze two rules $p_0,p_1:\X\to[0,1]$ that predict $+1$ with probabilities $p_j(x)$, put $d=p_1-p_0$, and define
+\begin{equation}
+ \Delta(P)=\E_P[Yd(X)].\label{eq:gain}
+\end{equation}
+This is the accuracy difference of the two rules. For deterministic rules it is the usual thresholded accuracy difference; for probabilistic ones it is the accuracy of randomized decisions. The choice $p_0\equiv1/2$ makes $\Delta$ an affine function of the accuracy of $p_1$ alone. Brier and clipped log-loss improvements have the form $a(X)+Yc(X)$ and are handled by the same score programs (Appendix~\ref{app:metrics}). Labels are recorded for every sampled record and charged separately. The cap $b$ bounds feature queries per record.
+
+\paragraph{Protocols.}
+An interview $\iota$ maps a profile $x$ to a transcript $\ell_\iota(x)$. A \emph{fixed form} queries a coordinate set chosen before the record is seen. An \emph{$r$-round interview} queries batches $B_1,B_2(x_{B_1}),\ldots,B_r$, each chosen from the answers to earlier batches, with $\sum_s|B_s|\le b$. A \emph{branching interview} is a decision tree of depth at most $b$, that is, a $b$-round interview with one question per round. The menus satisfy $\A_{\rm fixed}=\A_1\subseteq\A_2\subseteq\cdots\subseteq\A_b=\A_{\rm branch}$. Across records, a protocol may use all previous records to choose the next interview. Our lower bounds even allow the current label to be seen first. Let $R_\A(d,n)$ denote the minimax mean squared error over protocols and estimators that use $n$ records and interviews from $\A$. Figure~\ref{fig:queries} contrasts a fixed form with a tree.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figures/v13_protocols.pdf}
+\caption{A two-query branching interview asks $X_2$ after $X_1=+1$ and $X_3$ after $X_1=-1$. A fixed form commits to $\{1,2\}$ or $\{1,3\}$ before the record is seen; it completes the tree's path only for some profiles, but its unbiased score can use every observed answer.}
+\label{fig:queries}
+\end{figure}
+
+\paragraph{Identification.}
+Let $\Hh_\A$ be the span of functions constant on the transcript cells of $\A$. The gain is identifiable for all populations exactly when $d\in\Hh_\A$. On the cube, fixed forms of size $b$ and depth-$b$ trees give the same condition, Fourier degree $\deg(d)\le b$ in the characters $\chi_S(x)=\prod_{j\in S}x_j$. It holds for every probability average of depth-$b$ trees, such as a depth-limited random forest, and for differences of two such ensembles, even when they use many features. Thresholds and nonlinear links can raise the degree. If $d\notin\Hh_\A$, the irreducible squared error is $\delta^2$ with $\delta=\inf_{v\in\Hh_\A}\|d-v\|_\infty$, and Appendix~\ref{app:workflow} certifies such floors for trained GBDT and MLP updates.
+
+\paragraph{Three constants.}
+$V(d,\A)$ is the worst case over populations of $\lim_n nR_\A(d,n)$; $W_\A(P)$ is the smallest variance of a pointwise-unbiased design at a population $P$, and $M_\A(P)=W_\A(P)+\Delta(P)^2$ its second moment. Ratios of $V$ compare protocol classes in the worst case; ratios of $W$ compare them at $P$ and equal the ratio of records needed there.
+
+\section{An Exact Characterization}\label{sec:general}
+Choose interview probabilities $q_\iota$ and transcript tables $g_\iota$. The score $Yg_\iota(\ell_\iota(X))/q_\iota$ is unbiased for $Yd(X)$ at every profile exactly when $\sum_\iota g_\iota(\ell_\iota(x))=d(x)$ for all $x$. Define
+\begin{equation}
+ V(d,\A)=\inf_{\substack{q,g:\ \sum_\iota g_\iota=d}}\ \max_{x\in\X}
+             \sum_\iota\frac{g_\iota(\ell_\iota(x))^2}{q_\iota},\label{eq:unbiasedprogram}
+\end{equation}
+where a zero-probability interview has a zero table.
+
+\begin{theorem}[Exact characterization]\label{thm:char}
+Let $\X$ and $\A$ be finite and $d\in\Hh_\A$. Then $nR_\A(d,n)\to V(d,\A)$, and an iid design with the unbiased score attains $V/n$ for every $n$. The converse applies to biased estimators, to designs that adapt across records, and to interview choices that depend on the current label. Moreover
+\[
+ V(d,\A)=\sup_{\mu,h}\frac{\langle d,h\rangle_\mu^2}{\max_{\iota\in\A}\|\E_\mu[h\mid\ell_\iota(X)]\|_\mu^2},
+\]
+over strictly positive profile laws $\mu$ and witnesses $h$ with nonzero denominator. For every contrast $d$, identifiable or not, and every $n$, the minimax risk $R_\A(d,n)$ lies within a universal factor $104$ of
+\begin{equation}
+ \Phi_n(d,\A)=\inf_{q,g}\max_{x\in\X}\Big[\big(d(x)-s_g(x)\big)^2+\frac1n\sum_\iota\frac{g_\iota(\ell_\iota(x))^2}{q_\iota}\Big],\!\!\label{eq:phimain}
+\end{equation}
+where $s_g(x)=\sum_\iota g_\iota(\ell_\iota(x))$ is the mean score at profile $x$.
+\end{theorem}
+Formal statements and proofs are Theorems~\ref{thm:finite}--\ref{thm:asym} (Appendices~\ref{app:generalstatements}--\ref{app:general}). The dual compares the signal $\langle d,h\rangle_\mu$ of a perturbation of the label mean with the largest projection energy that one interview can capture. A change of measure, the KL chain rule and a local van Trees argument turn this into minimax risk. These are established tools for linear functionals \citep{donoho1994,juditsky2009,polyanskiy2026} and for information-constrained estimation with a prescribed channel family \citep{acharya2019,barnes2020}; what is new is that the witness is controlled simultaneously for every interview of a menu, including label-dependent choices, which yields exact constants for \emph{comparing} query classes.
+
+\paragraph{Approximately identifiable contrasts.}
+The program \eqref{eq:phimain} trades a uniform approximation error against the variance of the approximant's score; for $d\notin\Hh_\A$ it decreases to $\delta^2$, so thresholded or link-transformed updates have minimax risk $\delta^2+\Theta(1/n)$ with constants determined by \eqref{eq:phimain}; Appendix~\ref{app:floor-rate} gives the explicit envelope $\delta^2\le R_\A(d,n)\le\inf_v\{\|d-v\|_\infty^2+V(v,\A)/n\}$ over approximants $v\in\Hh_\A$, and Appendix~\ref{app:workflow} certifies brackets of $\delta$ for GBDT and MLP updates. The exact first-order constant of the biased regime is not determined here.
+
+\paragraph{Population-specific constants.}
+For a fixed law $P$ of $(X,Y)$ and $t(x,y)=yd(x)$, let
+\begin{equation}
+ W_{\A}(P)=\inf_{q,H:\,\E[H\mid X,Y]=t(X,Y)}\Var_{P,q}(H),\label{eq:mainW}
+\end{equation}
+where the score must be unbiased at every profile and label but may be tuned to $P$. At a full-support $P$, $W_\A(P)/n$ is the local asymptotic minimax risk over \emph{arbitrary} estimators that use the capped records alone, in shrinking neighborhoods of $P$ (Proposition~\ref{prop:local}). Ratios $W_{\rm fixed}(P)/W_{\rm branch}(P)$ therefore compare protocol classes at that population for every such estimator; estimators that import complete records from another source lie outside this information set (Section~\ref{sec:experiments}).
+
+\section{How Much Can Adaptivity Be Worth?}\label{sec:gap}
+\begin{theorem}[Sharp gap]\label{thm:universal}
+For $1\le b\le m$ and a nonzero contrast of degree at most $b$ on $\{-1,1\}^m$,
+\begin{equation}
+ 1\le\frac{V_{\rm fixed}(d,b)}{V_{\rm branch}(d,b)}
+ \le K_{m,b}:=\min\Big\{2^{b-1},\binom{m-1}{b-1}\Big\}.\label{eq:universal}
+\end{equation}
+The supremum over dimensions is $2^{b-1}$, attained at $m=b-1+2^{b-1}$. For every $b\ge2$ there is an example with $m\le b^2$ and ratio at least $2^{b-b/(\kappa+1)-\kappa}$, where $\kappa=\lfloor\log_2 b\rfloor$.
+\end{theorem}
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{figures/v13_constructions.pdf}
+\caption{The three constructions behind Theorems~\ref{thm:universal} and~\ref{thm:rounds}. (a) Address contrast: $\kappa=b-1$ address bits select one of $D=2^\kappa$ data bits; branching reads the address and then the selected bit, while any fixed set of $b$ coordinates explains at most a fraction $1/D$ of the target's energy under the uniform law, so pre-committed forms need $D$ times as many records. (b) Path guessing: a fixed form draws one of a tree's at most $2^{b-1}$ padded path sets and rescales the tree's score by $1/q_S$ when the path completes inside it; at a population, $q_S\propto w_S^{1/2}$ gives the effective number of paths $N_P$. (c) Binary pointer tree: $L=b-1$ levels of pointer bits select a child and the target is the data bit at the reached leaf; a round that reads $a$ pointer bits raises the conditional probability of the most likely leaf by at most a factor $1+2a$.}
+\label{fig:constructions}
+\end{figure*}
+
+\paragraph{Proof idea.}
+Pad every root-to-leaf path of a tree to $b$ distinct coordinates. Its first $b-1$ answers determine the path's coordinate set, so a tree has at most $K_{m,b}$ distinct sets. A fixed form draws one set uniformly before the record, follows the tree when it can, and multiplies a completed score by the number of sets (Figure~\ref{fig:constructions}b). The mean is unchanged and the second moment grows by at most $K_{m,b}$. For sharpness, let $\kappa=b-1$ address bits select one of $D=2^\kappa$ data bits, $d(A,Z)=Z_A$ (Figure~\ref{fig:constructions}a). Branching reads the address and then the selected bit, so $V_{\rm branch}=1$. Under the uniform law, a form $T$ with $s$ address and $r$ data bits explains energy
+\begin{equation}
+ \|\E[d\mid X_T]\|_2^2=r2^{s-2\kappa}\le2^{-\kappa},\qquad r+s\le\kappa+1,\label{eq:addressinformation}
+\end{equation}
+and the dual in Theorem~\ref{thm:char} gives $V_{\rm fixed}\ge D$. Products of address blocks keep their projection energies multiplicative even when a form reallocates queries across blocks; this gives the polynomial-dimensional example (Appendix~\ref{app:productaddress}). Both constants in \eqref{eq:universal} are worst cases over populations taken separately; Section~\ref{sec:population} compares the classes at one population.
+
+\paragraph{Hard caps versus mean budgets.}
+The exponential gap requires that \emph{every} record obey the cap. If only the expected number of queries is at most $b$, querying all $m$ features with probability $b/m$ identifies every contrast and bounds the ratio by $m/b$. For the address with cap $B$ and mean budget $b$ the exact coefficients are $V^{b,B}_{\rm fixed}=DB/[b(B-\kappa)]$ and $V^{b,B}_{\rm branch}=1$ for $\kappa+1\le b\le B\le\kappa+D$ (Proposition~\ref{prop:hybrid}), so raising the hard cap moves the ratio continuously from $D$ to $m/b$.
+
+\begin{theorem}[Rounds of adaptivity]\label{thm:rounds}
+Let $V_r$ denote the constant for $r$-round interviews with at most $b$ queries.
+\textup{(a)} For every nonzero contrast of degree at most $b$ and $1\le r\le b$,
+$V_{\rm branch}\le V_r\le\min\{2^{b-r},\binom{m-r}{b-r}\}V_{\rm branch}$.
+\textup{(b)} For $r,\kappa\ge1$ and $b=r\kappa+1$, the pointer-chasing contrast $N_{r,\kappa}$ on $m=\Theta(2^{r\kappa})$ coordinates satisfies $V_{r+1}(N_{r,\kappa})=V_{\rm branch}(N_{r,\kappa})=1$ and $2^\kappa/b\le V_r(N_{r,\kappa})\le2^\kappa$.
+\textup{(c)} For $b\ge2$, the binary pointer tree $B_{b-1}$ on $m=2^b-1$ coordinates satisfies $V_{\rm branch}(B_{b-1})=1$ and, for $2\le r\le b$,
+\[
+ V_r(B_{b-1})\ \ge\ \frac{2^{b-1}}{r\,b\,(1+2b/(r-1))^{r-1}}\ \ge\ \frac{2^{b-1}}{(3b)^r}.
+\]
+Hence $2^{b-2}/(b(2b+1))\le\sup_{m,d}V_2/V_{\rm branch}\le2^{b-2}$, and the exponent of the $r$-round gap lies between $b-1-r\log_2(3b)$ and $b-r$.
+\end{theorem}
+
+In $N_{r,\kappa}$, a $\kappa$-bit register points to one of $2^\kappa$ registers at the next level, $r$ levels deep, and the last pointer selects a data bit; following one level per round computes the contrast in $r+1$ rounds, while in $r$ rounds the selected data bit is read only by a lucky guess of probability at most $2^{-\kappa}$ per question (Appendix~\ref{app:roundshier}). This separates consecutive numbers of rounds but leaves the exponent for a fixed small $r$ open. The binary pointer tree closes most of that gap (Figure~\ref{fig:constructions}c). Its pointer bits form a complete binary tree of depth $L=b-1$ whose leaves carry the data bits, and the contrast is the data bit at the leaf reached by following the pointers; this is the tree evaluation instance of \citet{cook2012}, which \citet{li2026regex} use with a deterministic adversary to show that exact evaluation under a cap of $B$ queries per round needs $L/\lceil\log_2(B+1)\rceil$ rounds. Under a total per-record cap, exact evaluation in few rounds is impossible for every strategy, and the question becomes how much variance the shortfall costs. One question per round follows the path. For the lower bound, let $M_t$ be $2^{L}$ times the conditional probability of the most likely leaf given the transcript of the first $t$ rounds. A round that reads $a_t$ pointer bits satisfies $\E[M_t\mid\text{past}]\le(1+2a_t)M_{t-1}$, because a newly read bit can only double the probability of a leaf below it, whereas the data bit of the selected leaf can be read only with probability proportional to $M_{t-1}$. A supermartingale argument over the $r$ rounds bounds the probability of ever reading the selected data bit by $rb(1+2b/(r-1))^{r-1}2^{-L}$, and the dual of Theorem~\ref{thm:char} converts this into the bound on $V_r$ (Appendix~\ref{app:roundshier}). The bound is informative for $b\ge10$; for smaller $b$ only a constant separation $4/3$ between two rounds and branching is known, and whether the polynomial factors can be removed is open. Questionnaire pages, clinic visits and laboratory batches are rounds in this sense.
+
+\section{The Value of Adaptivity at a Population}\label{sec:population}
+The worst-case constants are attained by extremal populations. For a fixed $P$ we bracket the gain by two interpretable quantities. Let $\tau$ be a depth-$b$ tree that computes $d$, let $S_\tau(x)$ be the padded coordinate set of the path of $x$, and put $w_S=\E_P[t^2\mathbf 1\{S_\tau(X)=S\}]/\E_P[t^2]$. Define
+\begin{gather*}
+ N_P(\tau)=\Big(\sum_Sw_S^{1/2}\Big)^2,\\
+ \Gamma_P=\max_{|T|=b}\frac{\E_P\big[\E_P[t\mid X_T,Y]^2\big]}{\E_P[t^2]}.
+\end{gather*}
+$N_P$ is the exponential R\'enyi entropy of order $1/2$ of the path weights: the effective number of question sets the tree uses at $P$. $\Gamma_P$ is the largest fraction of the target's energy that any single form explains.
+
+\begin{theorem}[Population-specific bracket]\label{thm:bracket}
+If a depth-$b$ tree $\tau$ computes $d$, then $M_{\rm branch}(P)=\E_P[t^2]$ and
+\[
+ \frac1{\Gamma_P}\ \le\ \frac{M_{\rm fixed}(P)}{M_{\rm branch}(P)}\ \le\ N_P(\tau)\ \le\ K_{m,b}.
+\]
+On the variance scale, with $\sigma_P^2=\E_P[t^2]-\Delta^2$ and $\Delta=\Delta(P)$,
+\[
+ \frac{\E_P[t^2]/\Gamma_P-\Delta^2}{\sigma_P^2}\le\frac{W_{\rm fixed}(P)}{W_{\rm branch}(P)}\le\frac{N_P(\tau)\E_P[t^2]-\Delta^2}{\sigma_P^2}.
+\]
+Both second-moment inequalities are equalities, with value $D$, for the address contrast under the uniform law. For every menu $\A$ and witness $h$, $M_\A(P)\ge\E_P[th]^2/\max_{\iota\in\A}\E_P[\E_P[h\mid\ell_\iota(X),Y]^2]$.
+\end{theorem}
+
+The upper bound optimizes path guessing with $q_S\propto w_S^{1/2}$. The lower bound is Cauchy--Schwarz applied to the decomposition $\sum_\iota g_\iota=t$, and the variance scale follows because every design in \eqref{eq:mainW} is unbiased (Appendix~\ref{app:population}). Adaptivity pays when the tree's questions diverge over many well-populated paths ($N_P$ large) and when no fixed set of $b$ questions explains most of the target ($\Gamma_P$ small). Correlated features and shared top splits raise $\Gamma_P$ and shrink the gain. Both ends are computable from reference data before any collection.
+
+\paragraph{Computing the branching constant exactly.}
+When no single tree computes $d$, as for a random forest, the optimal branching design mixes many trees. The program for $M_{\rm branch}(P)$ has one column per depth-$b$ tree, which for $m=12$ and $b=3$ is about $1.5\times10^7$ trees. The last inequality of Theorem~\ref{thm:bracket} makes column generation exact and certifiable. Given the dual witness $h$ of a restricted master problem, the projection energy of a tree is a sum over its leaves, so the most informative tree is found by dynamic programming over partial assignments in $O(m^b2^b)$ time. Its energy yields a lower bound on $M_{\rm branch}$ over all trees, the master value yields an upper bound, and the tree is added as a new column (Appendix~\ref{app:forestexact}). The master has $O(\binom mb2^b)$ form variables plus $2^b$ per tree; we solve it for $m\le12$ and $b\le5$, and larger menus need restricted masters with the same certificates.
+
+\paragraph{Optimal pre-committed designs.}
+The fixed class is computed by the same program restricted to forms. On the cube, pointwise unbiasedness $\sum_Tg_{T,y}(x_T)=yd(x)$ is equivalent to matching Fourier coefficients, $\sum_{T\supseteq S}\widehat g_{T,y}(S)=y\widehat d(S)$ for $|S|\le b$. The design problem
+\begin{equation}
+\begin{aligned}
+ \min_{q,g}\ &\sum_{T,u,y}P_T(u,y)\,\frac{g_{T,y}(u)^2}{q_T}\\
+ \text{s.t.}\ &\text{these identities and }\textstyle\sum_Tq_T=1
+\end{aligned}\label{eq:formprogram}
+\end{equation}
+is a second-order cone program with $O(\binom mb2^b)$ variables that never enumerates the $2^m$ profiles. Its tables use every answer on a form and include all shared-coordinate control variates (Proposition~\ref{prop:sharing}). The identities hold at every profile, so a design fitted on reference marginals $\widehat P_T$ stays exactly unbiased when the reference is wrong, and calibration error only inflates the variance. In coarsening terms, \eqref{eq:formprogram} computes the optimal augmentation of inverse-probability weighting for the form menu jointly with the form probabilities \citep{robins1994,tsiatis2006}.
+
+\paragraph{Learning the design without reference records.}
+\begin{proposition}[Two-phase self-calibration]\label{prop:selfcalmain}
+Let a pilot of $n_1\to\infty$, $n_1=o(n)$, records be interviewed with the uniform design on $\A$, let the cell masses of every interview be estimated from the pilot and smoothed by a mass $\alpha_n\to0$ with $\alpha_n n_1^{1/2}\to\infty$, and let the remaining records use the design that solves \eqref{eq:mainW} at the estimated masses with a vanishing floor on the interview probabilities. The resulting estimator is exactly unbiased for every population, and $n$ times its variance converges in probability to $W_\A(P)$.
+\end{proposition}
+Every cell mass is estimable from the records assigned its interview, and the pointwise constraints keep every fitted design unbiased, so learning the design costs variance only (Appendix~\ref{app:selfcal}); in Section~\ref{sec:experiments} reference records play the role of the pilot.
+
+\input{v13_experiments_main}
+
+\section{Related Work}\label{sec:related}
+\paragraph{Adaptivity in query models.} Within-input adaptivity is classical in decision-tree and property-testing complexity, including round hierarchies for testers \citep{canonne2018}, pointer chasing in communication \citep{nisan1993}, and round-versus-query tradeoffs for evaluating a pointer tree exactly \citep{cook2012,li2026regex}; these results count queries or rounds on a worst-case input, whereas ours measure the variance that a shortfall of rounds costs under a per-record cap. In the huge-object model, adaptive, locally bounded and non-adaptive testers of a long string queried at few positions are separated by query complexity \citep{goldreich2022,chakraborty2023,adar2024}; the classical conversion of a $q$-query adaptive tester reads all $2^q-1$ tree nodes and violates a per-record cap, whereas our simulation keeps the cap and pays in variance, and our lower bounds are exact estimation constants valid for biased and label-dependent procedures. Horvitz--Thompson weighting over random query paths also appears in recent lower bounds for adaptive relaxed locally decodable codes \citep{goldberg2026}. Information-constrained estimation fixes a per-sample channel family \citep{acharya2019,barnes2020}; here the channel family is the set of coordinate-query trees, and its geometry determines the gap. Adaptivity gaps in stochastic probing compare policies on one input \citep{gupta2016,hellerstein2022}.
+
+\paragraph{Missing data by design and adaptive testing.} Split questionnaires and matrix sampling assign fixed forms \citep{raghunathan1995,graham2006,thomas2006,chipperfield2009,rhemtulla2012}, and optimal split designs choose the forms by information criteria for a working model \citep{adiguzel2008}. Known-coarsening theory gives efficient augmented estimators for a fixed coarsening mechanism \citep{robins1994,tsiatis2006}; our fixed-form score program implements that augmentation over all forms of a menu, with unbiasedness that survives calibration error (Appendix~\ref{app:pathdesign}). Adaptive two-phase, multiwave and responsive designs adapt the sampling of units across waves \citep{groves2006,tao2020,chen2020,chen2022}, whereas the branching considered here happens within a record under a hard cap. Multistage adaptive testing routes each student to a later block on the basis of earlier answers, so its stages are rounds in our sense; its gains for population estimates are assessed under item-response models \citep{yamamoto2018,fink2024,konig2026}, adaptive inventories pick each respondent's next item to minimize the posterior variance of that respondent's latent trait \citep{montgomery2020,zhang2020}, and dynamic question design picks the next question by expected information gain about an aggregate parameter under a Bayesian model \citep{fukuda2026}. These lines evaluate or optimize one protocol under a model; we compare protocol classes at their minimax optima without a response model.
+
+\paragraph{Evaluation and acquisition in ML.} Active testing, active statistical inference and prediction-powered inference allocate labels \citep{kossen2021,zrnic2024,angelopoulos2023}. Active feature acquisition and test-time cost-sensitive classifiers choose features for individual predictions \citep{turney1995,trapeznikov2013,nan2017,ma2019,covert2023}, and the value of such a policy is estimated from retrospective data by missing-data and off-policy methods \citep{vonkleist2025}. Learning with limited attribute observation fits predictors from a few attributes per example \citep{bendavid1998,cesa2011,hazan2012}. We study the statistical cost of the acquisition class itself, for population functionals.
+
+\section{Discussion and Limitations}\label{sec:discussion}
+Within-record adaptivity has a sharp worst-case value of $2^{b-1}$, accrues round by round with a nearly tight hierarchy, and at a given population is governed by the path entropy of the branching tree and the best single form's explained energy. Exact computations show that ordinary models realize gains between one and two at caps of two to six, and that the bracket of Theorem~\ref{thm:bracket} identifies tasks without a gain in advance; restricted branching designs miss most of the gain, and completion-only path guessing exceeds it severalfold in cost.
+
+The framework covers one known low-degree functional per design, not the many estimands of a multipurpose survey. The analysis assumes that answers do not depend on the acquisition mode or question order, that requested answers are returned, and that labels are observed for every sampled record. These assumptions are the first-order practical obstacle: in the position-effect model of Appendix~\ref{app:measurement}, a 10\% chance that the last answer flips biases both branching and form scores by 0.5 to 1.8 branching standard errors at $n=1000$, which is comparable to the sampling gains reported here. The identification results concern finite domains and low-degree contrasts; thresholded or link-transformed ensembles often exceed small caps, and their floors must be certified first (Appendix~\ref{app:workflow}). Population-specific constants use the target law, which a fitted design approximates from reference records or a pilot at a cost of 3--7\% in our experiments. When complete reference records exist and the conditional law of unasked items transports, imputation matches branching; when the cap is relaxable and labels are expensive, complete records can be cheaper than any capped design (Appendix~\ref{app:costchoice}). The exact programs scale as $\binom mb2^b$ and $m^b2^b$ and were run for $m\le12$ and $b\le6$. The exact frontier of $V_{\rm fixed}/V_{\rm branch}$ at fixed $(m,b)$, the polynomial factors in the round hierarchy, and the first-order constant of the biased regime remain open.
+
+\section*{Impact Statement}
+Shorter adaptive questionnaires and test sequences can reduce respondent and patient burden. Branching exposes people to different questions; order effects, selective nonresponse and subgroup-specific burdens can bias estimates or hide unequal outcomes, and population-average gains do not imply subgroup gains, so deployments should monitor both.
+
+\bibliography{refs}
+\bibliographystyle{icml2026}
+\clearpage
+\onecolumn
+\raggedbottom
+\appendix
+\renewcommand{\thesection}{A\arabic{section}}
+\input{appendix_v13}
+\end{document}

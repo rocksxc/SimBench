@@ -1,0 +1,110 @@
+\section{Actual Archives and the Size of the Benefit}\label{sec:exp}
+We distinguish an analysis of genuinely incomplete records from controlled
+comparisons where complete records allow exact evaluation. The new tasks,
+splits and summaries were specified before fitting their models.
+
+\paragraph{A frozen comparison on preassigned PISA forms.}
+The U.S. public-use student file contains 4,978 students in 162 schools
+\citep{pisaus2014}. We use the common report of grade repetition in grades
+1--6 as the binary target and three binary response indicators from each
+of three rotated question sets. The estimand concerns reported responses;
+asked-but-unanswered items count as nonendorsements, while items absent
+from a student's assigned form remain unobserved. The 226 records without
+a valid common target response are excluded, defining the respondent
+population being compared. The original instrument's limit is 30 minutes;
+six of nine refers only to our selected predictors.
+
+Forty schools train the old ensemble, another forty train the new one, and
+the remaining 82 supply 2,441 audit records. Each ensemble averages three
+block-specific forests, fitted using only students who received that
+block. The contrast depends on all nine predictors. Every pair of blocks
+occurs in a form, so both the accuracy and Brier differences decompose
+into observable functions (Appendix~\ref{app:pisa}). We freeze the models
+and form-score tables before examining the audit outcomes. Calibration
+uses incomplete training records; there are no complete reference records
+with which to perform a direct audit.
+
+\input{v11_pisa_main}
+
+Table~\ref{tab:pisa} compares optimized scores, a simple inverse-probability
+block/pair score, and twenty logistic chained-equation imputations with
+Rubin combination \citep{vanbuuren2011}. Survey-weighted intervals use the
+80 supplied Fay replicates \citep{kastberg2014}. All three Brier intervals
+include zero: these data do not establish an improvement in probability
+quality. The methods give similar estimates and widths; optimization is
+not automatically better after fitting. The randomized-accuracy gain is
+about 4.1 percentage points, a different target. Both rules threshold to
+the negative class everywhere on this cube, so their deterministic
+accuracy difference is zero.
+
+The design interpretation assumes invariant reported answers across forms
+and randomized assignment retained in the common-target respondent
+population. Nine duplicated-item diagnostics find two unadjusted
+$p<0.05$ differences, neither surviving Bonferroni correction. This check
+does not verify invariance. MI adds a working imputation model. Because
+complete-data truth and a branching counterfactual are unavailable, this
+analysis measures neither coverage nor an adaptivity ratio.
+
+\paragraph{Independent forest updates under a binding cap.}
+On WDBC, Spambase and Ionosphere, twenty fixed splits each fit independent
+old and new random forests, using disjoint training records
+\citep{wolberg1993,spambase1999,ionosphere1989}. Each forest has twenty
+depth-three trees. Nested sets of 3, 6, 9 and 12 training-binarized features
+give 240 tasks, all with cap $b=3$. Probability averages remain degree at
+most three, even when their active feature set is larger. This statement
+does not cover thresholding the ensemble. Existing model-training records
+calibrate the score tables, and held-out records evaluate their exact
+conditional variances.
+
+The fixed menu contains every feature triple. The branching menu contains
+those forms and all forty component trees, with jointly optimized leaf
+scores. It can choose a component tree and follow its path, but cannot
+evaluate the whole forest in three queries. Thus $\Var(Yd)$ is a lower
+bound, not the denominator of the reported branching comparison.
+
+\input{v11_forest_main}
+
+All 180 tasks with 6--12 candidate features have more than three active
+coordinates. Their fitted variance ratios have medians 1.03--1.12 across
+datasets; none of the 240 tasks exceeds 1.5. Figure~\ref{fig:forestbinding}
+reports every task and its distribution. Oracle optimization on the same
+menus gives similar modest gaps. Its fixed-form lower bound divided by a
+feasible branching variance lower-bounds the unrestricted intrinsic ratio;
+its upper endpoint only concerns the supplied branch menu. More elaborate
+branching strategies can still improve on that menu.
+
+This also clarifies the smaller independent-tree experiment. Among its
+70 probability-output comparisons, 60 already have active feature count
+above the cap. Their population ratios have medians 1.353 (SUSHI) and
+1.295 (SAPA), while global coefficients remain near equality. For
+threshold outputs, 52 of 58 nonzero comparisons are nonbinding. Structural
+ties explain most threshold results, but do not explain away the modest
+probability-output gaps (Appendix~\ref{app:binding}).
+
+\paragraph{Controlled gaps, transfer and operational costs.}
+Depth-six CART/root refinements isolate a contrast that branching can
+compute in six queries. Exhaustive lower bounds over all fixed six-feature
+forms certify median population ratios at least 1.883 on SUSHI and 1.474
+on SAPA. These are controlled stress tests, distinct from the independent
+forest updates. The complete-calibration version is an efficiency
+diagnostic: its 500 independent target-population records already suffice
+for a direct audit at the chosen precision. Transferring calibration
+across SAPA age groups avoids that interpretation. Brier and clipped
+log-loss comparisons retain median fitted variance ratios 2.350 and 2.623,
+with conditional Wald coverage near 95\%. A separate restricted-pilot
+experiment charges all newly collected calibration records
+(Appendices~\ref{app:transfer} and~\ref{app:em}).
+
+If the cap can be relaxed, compare complete acquisition using its actual
+label cost. With fixed/complete variance ratio $\rho>1$, fixed form size
+$b$ and complete size $m$, their continuous cost crossover is
+\begin{equation}
+ c_Y^*=\frac{m-b\rho}{\rho-1}.\label{eq:costcross}
+\end{equation}
+Median crossovers on the controlled tasks are 3.16 and 3.74 feature-cost
+units. At $c_Y=10$, complete records cost less on 45/45 SUSHI and 19/25
+SAPA tasks. Figure~\ref{fig:costchoice} makes this conditional choice
+explicit. When the cap is immutable, complete acquisition is inadmissible.
+For nonlinear updates, the bias certificate must be checked first:
+WDBC GBDT/MLP budget curves reject overly tight caps regardless of sample
+size (Appendix~\ref{app:budgetcurve}).

@@ -1,0 +1,35 @@
+\section{When Asking Changes the Answer}\label{app:measurement}
+Let $P$ describe latent complete records and let $K_T$ be the distribution
+of the recorded transcript given a latent record under form $T$. A frozen
+score estimates
+\[
+ \widetilde\Delta_{q,K}
+   =\E_{P,q,K_T}H_T(O_T),
+\]
+which can differ from the latent $\Delta=\E_P[Yd(X)]$. A branching policy
+has its own sequential measurement kernel and hence its own mean score.
+Pointwise unbiasedness for unchanged answers does not equate these means
+under arbitrary collection-specific kernels. Randomized common anchors
+identify mode or position differences for those anchors; identifying the
+latent target additionally needs a measurement model or a reference.
+
+We perform an exact semi-synthetic sensitivity calculation on the ten
+binary tasks. At query position $j=1,\ldots,6$, independently flip the
+answer with probability $\epsilon(j-1)/5$, for
+$\epsilon\in\{0,0.01,0.03,0.05,0.1\}$. Labels are unchanged. Fixed forms
+ask coordinates in increasing index order. Branching routes on the
+\emph{recorded} noisy answers and stops at its leaf; its probability output
+and old stump both use those answers. We sum all $2^6$ flip patterns to
+obtain exact conditional first and second score moments, averaging over
+people and fixed-form assignment. This is an illustrative position model,
+not an estimated response-error process for either source survey.
+
+\input{v8_measurement_table}
+
+At a last-position flip probability of 0.1, median absolute bias in units
+of a clean branching standard error at $n=1000$ is 0.53/0.66 for
+branching/form scores on SUSHI and 1.79/1.51 on SAPA. Thus a measurement
+effect can dominate the sampling gain, and neither design is uniformly
+more robust in this model. Repeating a fixed biased score at larger $n$
+reduces its sampling variance but leaves its measurement bias unchanged.
+

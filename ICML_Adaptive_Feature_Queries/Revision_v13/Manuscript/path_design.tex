@@ -1,0 +1,68 @@
+\section{Learning a Design from a Compact Tree}\label{app:pathdesign}
+Fix a tree that recovers $t(z)=yd(x)$ within $b$ distinct queries. Pad each path deterministically to $b$ coordinates. Enumerate its distinct path sets $\mathcal S=\{S_1,\ldots,S_L\}$ and let $S(z)$ denote the reached set. If an assigned fixed form $S_j$ permits following the padded tree to completion, then $S(z)=S_j$, as in Appendix~\ref{app:universal}. For any strictly positive form law $q$, the score
+\[
+ H_q(z,J)=\frac{t(z)}{q_J}\mathbf1\{S(z)=S_J\},\qquad J\sim q,
+\]
+is computable from the selected form and label. It is unbiased conditional on every full record. With $w_j=\E_P[t(Z)^2\mathbf1\{S(Z)=S_j\}]$,
+\begin{equation}
+ \Var_P H_q=\sum_{j=1}^L\frac{w_j}{q_j}-\Delta(P)^2.
+ \label{eq:pathvariance}
+\end{equation}
+Within this importance-score family the unconstrained optimum is $q_j\propto\sqrt{w_j}$, with infimal second moment $(\sum_j\sqrt{w_j})^2$. Zero-mass cells are handled by limits. We enforce $q_j\ge\beta/L$ with $\beta=0.1$, ensuring global unbiasedness even on path sets absent from calibration. If some $w_j>0$, the constrained optimum satisfies $q_j=\max\{\beta/L,c\sqrt{w_j}\}$, with $c$ chosen to normalize the probabilities. If all weights vanish, every feasible $q$ is optimal. Iteratively fixing cells below the floor computes the positive-weight solution without profile enumeration. This oracle optimizes a specified score family, not all fixed-form estimators.
+
+\subsection{A Worked Two-Question Example}
+Let $d(x)=[(1+x_1)x_2+(1-x_1)x_3]/2$. Branching queries $x_1$ and then $x_2$ when $x_1=1$, or $x_3$ when $x_1=-1$. The two fixed forms are
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+Form & Probability & Observed score\\
+\midrule
+$\{1,2\}$ & $1/2$ & $2Yx_2\mathbf1\{x_1=1\}$\\
+$\{1,3\}$ & $1/2$ & $2Yx_3\mathbf1\{x_1=-1\}$\\
+\bottomrule
+\end{tabular}
+\end{center}
+At every full record the mean score is $Yd$ and its second moment is two. The branching score has second moment one. For an independent fair label both score means vanish, so their sample-mean variances are exactly $2/n$ and $1/n$. This describes these concrete estimators; the minimax results additionally justify their worst-case comparison against all protocols.
+
+\subsection{A Finite Calibration Guarantee}
+Suppose the tree is fitted independently of $r$ calibration records and $|t|\le M$. Full calibration records reveal $W_j=t^2\mathbf1\{S=S_j\}$ directly. Alternatively, assign each calibration person a uniformly random fixed path set. On successful completion return $W_j=L t^2\mathbf1\{J=j,S=S_j\}$ and return zero on failure. This alternative obeys the same fixed per-person cap and uses only observable quantities. In both cases $\E W=w$. Let $\widehat w$ be the mean and let $\widehat q$ minimize $\sum_j\widehat w_j/q_j$ subject to $q_j\ge\beta/L$.
+
+\begin{proposition}[Learning path-set probabilities]\label{prop:pilot}
+Let $q_\beta^\star$ be the population optimum with the same probability floor. Set $B=M^2$ for full calibration or $B=LM^2$ for uniformly assigned fixed calibration. With probability at least $1-\alpha$ over the $r$ independent calibration records,
+\[
+ \Var_P H_{\widehat q}-\Var_P H_{q_\beta^\star}
+ \le\frac{2LB}{\beta}\sqrt{\frac{2(L\log2+\log(1/\alpha))}{r}}.
+\]
+The resulting audit mean on fresh respondents remains globally unbiased for every realized calibration sample.
+\end{proposition}
+\begin{proof}
+Each calibration vector has at most one nonzero entry and $\|W\|_1\le B$. For any sign vector $\sigma\in\{-1,1\}^L$, $\sigma^TW\in[-B,B]$. Hoeffding's inequality and a union bound over $2^L$ vectors give
+\[
+ \|\widehat w-w\|_1
+ =\max_\sigma\sigma^T(\widehat w-w)
+ \le B\sqrt{2(L\log2+\log(1/\alpha))/r}.
+\]
+The difference between the empirical and population second-moment objective is uniformly at most $(L/\beta)\|\widehat w-w\|_1$. Empirical minimization costs at most twice this uniform deviation. Subtracting the common $\Delta^2$ proves the bound. Pointwise conditional unbiasedness holds for each positive $q$, hence also conditional on the entire calibration sample.
+\end{proof}
+The bound is conservative and becomes informative only with sufficiently large calibration samples. It proves consistency relative to a constrained family oracle, not a calibration-free optimality claim. Form enumeration takes time polynomial in the given tree's size and $m$; that tree may itself have exponentially many leaves in $b$. A deployment needs only its form probabilities and the tree, not a table over all $s^m$ profiles.
+
+\subsection{Higher-Dimensional Benchmark}
+SUSHI uses all 28 pairwise comparisons among the eight items outside each target pair. SAPA uses the first twenty other items in the fixed order A1--A5, C1--C5, E1--E5, N1--N5, O1--O5, dropping rows missing any selected item or target. A separate SAPA-ordinal condition retains the original six-valued features; its target is still binary at threshold four. Feature choices use neither labels nor held-out performance. SUSHI pairwise features are dependent, and no independence assumption is used to evaluate risk.
+
+The current main experiment uses one fixed person-level permutation, seed 20261106. The first 800 complete records fit a depth-six CART tree with minimum leaf size 25; the next 500 calibrate the score; the remainder define the empirical population. The old rule uses the root child's frequency and the new rule the reached leaf frequency. This is a controlled refinement, chosen because the target is exactly computable by branching within the cap. Both binary datasets' full target lists are included. Ordinal and depth-three results remain secondary diagnostics in Appendix~\ref{app:operational}.
+
+Calibration-only fitting and the empirical-population oracle use the same frozen rules and evaluation population. The supplied path menu is a tractable implementation choice. All-form lower bounds in the supplementary report separately certify the loss beyond that menu.
+
+\subsection{Confidence Intervals and Costs}
+Conditional on calibration, each path score has magnitude at most $M/q_{\min}$. Thus the ordinary score mean has a distribution-free $(1-\alpha)$ confidence interval with half-width
+\[
+ \frac{M}{q_{\min}}\sqrt{\frac{2\log(2/\alpha)}n},
+\]
+intersected with $[-M,M]$. The branching score has the same bound with $q_{\min}=1$. These Hoeffding intervals are valid but conservative; they are not claims of optimal interval width or power. The paper's risk comparisons concern MSE and do not order intervals for biased estimators.
+
+For a menu with known per-person costs $c_\iota>0$, let $c(q)=\sum_\iota q_\iota c_\iota$. An iid unbiased score mean with $n$ respondents uses expected cost $nc(q)$, so its worst-case MSE-times-cost upper criterion is $c(q)\max_x\sum_\iota g_\iota(x)^2/q_\iota$. Set $r_\iota=q_\iota/c(q)$. Joint cost-weighted design becomes the convex program
+\[
+ U_c(d,\A)=\inf_{\substack{r,g:\,\sum_\iota c_\iota r_\iota=1\\ \sum_\iota g_\iota=d}}
+              \max_x\sum_\iota\frac{g_\iota(x)^2}{r_\iota}.
+\]
+Conversely $q_\iota=r_\iota/\sum_jr_j$ recovers the design, proving equivalence of the two criteria. For fixed forms, $c_\iota$ may include recruitment, the label and item-specific costs. For a branching tree, taking $c_\iota$ as its maximum path cost gives a conservative criterion. This uses expected total expenditure and continuous sample-size scaling; it does not impose an almost-sure stopping budget or establish a sharp adaptivity ratio for arbitrary costs.

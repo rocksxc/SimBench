@@ -1,0 +1,36 @@
+\begin{table}[h]
+\centering
+\caption{Audit simulations with $n=1000$ target respondents and 400 replications (seed 0). Bias, standard deviation and RMSE are multiplied by 100; coverage of nominal 95\% intervals has Monte Carlo standard error about 0.011. MI: ten proper hot-deck imputations from complete source records.}
+\label{tab:mi}
+\small
+\begin{tabular}{lllrrrrrr}
+\toprule
+Data, $b$ & Target & Design & Bias & SD & RMSE & Coverage & Width \\
+\midrule
+BRFSS, 4 & random half & branching & -0.14 & 2.96 & 2.96 & 0.955 & 11.70 \\
+ &  & fitted fixed form & -0.11 & 3.60 & 3.60 & 0.965 & 14.42 \\
+ &  & fixed form + MI & -0.42 & 2.58 & 2.61 & 0.993 & 13.21 \\
+BRFSS, 4 & other sex & branching & 0.05 & 3.06 & 3.05 & 0.953 & 11.69 \\
+ &  & fitted fixed form & 0.06 & 3.12 & 3.11 & 0.948 & 11.89 \\
+ &  & fixed form + MI & 0.33 & 3.02 & 3.03 & 0.955 & 11.87 \\
+BRFSS, 5 & random half & branching & -0.05 & 2.92 & 2.92 & 0.950 & 11.60 \\
+ &  & fitted fixed form & -0.06 & 3.19 & 3.18 & 0.955 & 12.85 \\
+ &  & fixed form + MI & -0.06 & 2.68 & 2.68 & 0.975 & 12.41 \\
+BRFSS, 5 & other sex & branching & 0.08 & 2.89 & 2.89 & 0.965 & 11.42 \\
+ &  & fitted fixed form & 0.11 & 3.44 & 3.44 & 0.938 & 13.12 \\
+ &  & fixed form + MI & -0.47 & 2.81 & 2.85 & 0.983 & 12.22 \\
+Thyroid, 4 & random half & branching & 0.12 & 2.45 & 2.45 & 0.935 & 9.37 \\
+ &  & fitted fixed form & 0.10 & 2.45 & 2.45 & 0.940 & 9.54 \\
+ &  & fixed form + MI & 0.05 & 2.36 & 2.36 & 0.955 & 9.56 \\
+Thyroid, 4 & other sex & branching & -0.03 & 2.35 & 2.34 & 0.945 & 9.03 \\
+ &  & fitted fixed form & -0.01 & 2.37 & 2.37 & 0.948 & 9.22 \\
+ &  & fixed form + MI & -0.17 & 2.30 & 2.30 & 0.958 & 9.22 \\
+Thyroid, 5 & random half & branching & 0.12 & 2.45 & 2.45 & 0.935 & 9.37 \\
+ &  & fitted fixed form & 0.13 & 2.52 & 2.52 & 0.927 & 9.51 \\
+ &  & fixed form + MI & 0.08 & 2.45 & 2.45 & 0.940 & 9.53 \\
+Thyroid, 5 & other sex & branching & -0.03 & 2.35 & 2.34 & 0.945 & 9.03 \\
+ &  & fitted fixed form & -0.06 & 2.41 & 2.41 & 0.943 & 9.21 \\
+ &  & fixed form + MI & -0.26 & 2.32 & 2.33 & 0.950 & 9.22 \\
+\bottomrule
+\end{tabular}
+\end{table}

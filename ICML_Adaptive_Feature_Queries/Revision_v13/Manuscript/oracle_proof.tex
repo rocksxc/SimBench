@@ -1,0 +1,55 @@
+Taking the sample mean gives variance $\{\sum_\iota q_\iota\E_P H_\iota^2-\Delta(P)^2\}/n$. The optimum of this one-person score problem is also the exact pointwise optimum over all globally unbiased procedures, including those that choose a later person's form using earlier observations. We state the result for arbitrary finite observation maps to make its scope precise.
+
+\begin{proposition}[Pointwise oracle under sequential form choice]\label{prop:pointwise}
+Let $Z$ have an arbitrary law $P$ on a finite space, let $t(Z)$ be known, and let $o_\iota(Z)$ be a finite menu of observation maps whose cells span $t$. Put $\Delta(P)=\E_P t$ and
+\begin{equation}
+ W(P)=\inf_{q,H:\,\sum_\iota q_\iota H_\iota(o_\iota(z))=t(z)\ \forall z}
+       \left\{\sum_\iota q_\iota\E_P H_\iota(o_\iota(Z))^2-\Delta(P)^2\right\}.
+ \label{eq:pointwiseoracle}
+\end{equation}
+Given $n$ iid records, consider protocols that choose the map for person $i$ before observing any part of $Z_i$, using all previous observations and independent randomness. Among estimators that are unbiased under every law and have finite second moment under every law,
+\[
+       \inf_{\text{such protocols and estimators}}\Var_P(\widehat\Delta)
+          =W(P)/n
+\]
+for every $P$, including laws with zero-mass cells. An iid form mixture and its score mean attain the infimum whenever the program has a minimizer, and otherwise approach it.
+\end{proposition}
+
+\begin{proof}
+The upper bound follows by using any feasible pair $(q,H)$ independently on the $n$ people. For the converse, first suppose $P$ has full support. For a fixed form law $q$, let $W_q(P)$ be the value in \eqref{eq:pointwiseoracle} with $q$ fixed. Write $c=t-\Delta(P)$ and let $\Pi_\iota h=\E_P[h(Z)\mid o_\iota(Z)]$ on the mean-zero space $L^2_0(P)$. A minimum-norm decomposition gives
+\begin{equation}
+ W_q(P)=\sup_{h\in L^2_0(P)}
+   \frac{\langle c,h\rangle_P^2}{\sum_\iota q_\iota\|\Pi_\iota h\|_{2,P}^2}.
+ \label{eq:pointwisedual}
+\end{equation}
+The value is infinite when the numerator is nonzero and the denominator is zero; $0/0$ contributes zero. To verify the identity, center any feasible score by setting $K_\iota=H_\iota-\Delta(P)$. Its weighted means sum to zero. Subtracting the individual means $\E_P K_\iota$ from the $K_\iota$ preserves $\sum_\iota q_\iota K_\iota=c$ and decreases the objective by $\sum_\iota q_\iota(\E_P K_\iota)^2$. It therefore suffices to minimize $\sum_\iota q_\iota\|K_\iota\|_2^2$ over centered tables with weighted sum $c$. On the product of these centered transcript spaces, the map $K\mapsto\sum_\iota q_\iota K_\iota$ has adjoint $h\mapsto(\Pi_\iota h)_\iota$ in the weighted inner product. Minimum-norm duality, followed by optimization over the scale of $h$, gives \eqref{eq:pointwisedual}. Forms of mass zero are omitted. If the constraint is infeasible, separation gives a zero-denominator witness, so the extended-value identity remains valid.
+
+Fix any admissible sequential protocol and reveal its independent random seed. For a centered $h$, use the submodel $P_\theta(z)=P(z)(1+\theta h(z))$ for sufficiently small $|\theta|$. If person $i$ receives form $A_i$, the likelihood score contributed by that person's observation at $\theta=0$ is $\Pi_{A_i}h(Z_i)$. Form-choice probabilities add no likelihood term because the protocol, conditional on its past observations and seed, is fixed rather than a function of the unknown $\theta$. These scores are martingale differences: $Z_i$ is independent of the previous records and $\E_Ph=0$. Thus the score $S_h$ of the entire experiment satisfies
+\begin{equation}
+ \E_P S_h^2=n\sum_\iota\bar q_\iota\|\Pi_\iota h\|_{2,P}^2,
+ \qquad
+ \bar q_\iota=\frac1n\sum_{i=1}^n\Pr_P(A_i=\iota).
+ \label{eq:sequentialinformation}
+\end{equation}
+The probabilities in $\bar q$ may depend on $P$, but $\bar q$ is a valid design distribution for the pointwise oracle. Differentiating global unbiasedness along the submodel gives
+\[
+ \E_P[(\widehat\Delta-\Delta(P))S_h]=\E_P[ch].
+\]
+Cauchy--Schwarz and \eqref{eq:pointwisedual} then imply
+\[
+ \Var_P(\widehat\Delta)\ge W_{\bar q}(P)/n\ge W(P)/n.
+\]
+This argument allows a nonlinear estimator and arbitrary dependence of later forms on earlier observations.
+
+It remains to treat a law $P$ on the boundary of the simplex. Let $P_\epsilon=(1-\epsilon)P+\epsilon P_0$ for a fixed full-support law $P_0$. For a fixed protocol, condition on the entire sequence of latent full records and average only over its independent random seed. Since the record space is finite and the estimator has finite second moment under $P_0$, every resulting conditional second moment is finite. The estimator's first and second moments are therefore finite polynomials in the cell probabilities; in particular its variance is continuous at $P$. If $F(P)=W(P)+\Delta(P)^2$, the feasible set defining $F$ is population-independent and its objective is linear in the population law for each design. Hence
+\[
+ F(P_\epsilon)\ge(1-\epsilon)F(P),\qquad
+ \liminf_{\epsilon\downarrow0}W(P_\epsilon)\ge W(P).
+\]
+Apply the already proved lower bound at $P_\epsilon$ and pass to the limit. This proves the result at every law.
+\end{proof}
+
+For our empirical benchmark, take $Z=(X,Y)$, $t(Z)=Yd(X)$ and $o_T(Z)=(X_T,Y)$. Each fixed form must be chosen before the current person's features or label are seen, as in Section~2. The proposition applies conditionally on the frozen training data. Its oracle chooses a protocol using $P$, then requires that same protocol and estimator to be unbiased under every alternative law. This permits a distribution-specific benchmark without allowing the trivial constant estimator $\Delta(P)$. The lower bound covers predetermined form counts and adaptation across respondents. It does not cover estimators that are biased at other populations, such as the fitted imputation comparator.
+
+\subsection{Computing and Evaluating the Oracle}
+All three-feature-and-label marginals used in the numerical solvers were positive, although the proposition also permits empty full-profile cells.

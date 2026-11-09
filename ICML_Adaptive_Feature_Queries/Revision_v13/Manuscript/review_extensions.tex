@@ -1,0 +1,103 @@
+\section{Instance Certificates, Rounds and Observation Timing}\label{app:instances}
+\subsection{Instance-Specific Coefficients}
+Suppose a depth-$b$ tree $\tau$ computes $d$ exactly, let $M=\|d\|_\infty>0$, and let $L_\tau$ be its number of distinct padded path sets. Under the uniform law on the binary cube, put
+\[
+ E_b(d)=\max_{|T|\le b}\sum_{S\subseteq T}\widehat d(S)^2.
+\]
+Then
+\begin{equation}
+ \max\left\{1,\frac{\|d\|_{2,\U}^4}{M^2 E_b(d)}\right\}
+ \le \frac{V_{\rm fixed}(d,b)}{V_{\rm branch}(d,b)}
+ \le \min\{L_\tau,K_{m,b}\},\qquad V_{\rm branch}(d,b)=M^2.
+ \label{eq:instanceinterval}
+\end{equation}
+Indeed the tree score $d$ has maximum second moment $M^2$, while Jensen gives that lower bound for every unbiased representation. The variance dual with $\mu=\U,h=d$ gives the first inequality; Parseval identifies its denominator as $E_b(d)$. Simulating $\tau$ gives the $L_\tau$ bound, and the universal theorem supplies $K_{m,b}$. This certificate is instance-specific but still concerns worst-case populations. It does not bound the ratio $W(P)/\Var_P(Yd)$ at an individual population by the same instance coefficient ratio: the denominator of that latter ratio is a population variance, not $M^2$.
+
+The path-set bound need not be attainable for a given tree. On four
+coordinates with cap three, take the chain querying $X_4$, stopping on its
+negative branch, then querying $X_3$, stopping on its negative branch,
+and otherwise querying $X_2$. Padding early leaves with the smallest unused
+coordinates yields the three sets $\{1,2,4\}$, $\{1,3,4\}$ and
+$\{2,3,4\}$, so $L_\tau=3$. Nevertheless every assignment of values to
+the original leaves depends only on $X_2,X_3,X_4$. One fixed triple
+computes it, and the coefficient ratio is one for every nonzero assignment.
+Thus $L_\tau$ is a simulation upper bound and can depend on padding; it
+is not a sharp invariant of every underlying tree.
+
+For four features, our coefficient solver minimizes $v$ subject to $\sum_\iota M_\iota g_\iota=d$, $\sum_\iota q_\iota=1$, and $\sum_\iota g_\iota(x)^2/q_\iota\le v$ on all sixteen profiles. Here $M_\iota$ lifts a triple-score table. An implementable score supplies an upper bound. A nonnegative probability vector $\mu$ and arbitrary vector $h$ supply the lower bound
+\[
+ \frac{(h^Td)^2}{\max_\iota\sum_C (\sum_{x\in C}h_x)^2/\mu(C)},
+\]
+where $C$ ranges over form $\iota$'s cells. This follows directly from Cauchy--Schwarz applied to every unbiased decomposition. We normalize the nonnegative state dual, add $10^{-12}$ mass per state, and evaluate this expression; no solver-reported objective is treated as a certificate without reconstruction. The returned primal tables are projected onto the exact observation-span constraint. The supplement records both bounds and the numerical equality residual.
+
+\input{four_bit_certificate}
+
+\subsection{Two Rounds Already Attain the Universal Extremum}\label{app:rounds}
+An $R$-round interview uses at most $R$ batches, choosing each batch of coordinates using only the preceding batches' answers, with at most $b$ coordinates in total. Let $V_R$ use all such interviews. One round is the fixed-form menu and $b$ rounds suffice for full branching. For any $R\ge2$,
+\[
+ 1\le V_{\rm fixed}/V_R\le K_{m,b},\qquad
+ \sup_{m,d\ne0}\frac{V_{\rm fixed}(d,b)}{V_R(d,b)}=2^{b-1},
+\]
+where the supremum is over identifiable binary contrasts. The upper bound follows from menu inclusion. The address construction attains equality using two batches: all address bits, then the addressed data bit. Thus the universal extremum measures the value of permitting a second batch; it does not require $b$ sequential rounds.
+
+The block construction also needs at most two rounds throughout its identifiable budget curve. At $b=2k+R$, $0\le R\le k$, use the paper's three-query strategy on $R$ blocks and two-query strategy on the others. Ask the first two queries in every block together; then ask the selected third coordinate in the $R$ adaptive blocks. At $b\ge3k$ this already evaluates the contrast exactly. The address and block examples do not separate two rounds from unrestricted branching. Corollary~\ref{cor:roundseparation} supplies such a constant separation with a different four-feature contrast; a general exponential hierarchy remains unsettled here.
+
+\subsection{Labels and Across-Person Adaptation}
+Let $R_{\rm pre}$ require selecting the interview independently of the current label, and let $R_{\rm label}$ allow observing that label first, while both permit adaptation across people. For an identifiable contrast, Theorem~\ref{thm:asym} and the iid upper construction imply
+\[
+ \lim_{n\to\infty}nR_{\rm pre}(d,n)
+ =\lim_{n\to\infty}nR_{\rm label}(d,n)=V(d,\A).
+\]
+Thus neither access to earlier people nor early access to the current label reduces the first-order worst-case coefficient relative to an optimal iid design.
+
+There is also an exact statement for the \emph{finite program}. If one extends $\Phi_n$ to separate form laws and score tables for $y=-1,+1$, its objective is the maximum over these labels of their individual worst-profile quadratic objectives. Multiplying the negative-label tables by $-1$ turns both subproblems into the definition of $\Phi_n(d,\A)$. Each has value at least $\Phi_n$, and using the same form law and sign-adjusted tables attains it. Early labels therefore do not improve this program. This is not an equality claim for the exact finite-$n$ minimax risks, which the program bounds only within a constant.
+
+\section{Efficiency and Augmented Fixed Forms}\label{app:augmentation}
+\subsection{Relation to the Missing-Data Efficiency Bound}
+Fix a known form law $q$ and a full-support law $P$ on the finite complete-record space. The observed record is $O=(A,o_A(Z))$. Its score along a centered complete-data perturbation $h$ is $\E_P[h(Z)\mid O]$. A mean-zero observed influence function $\phi(O)$ for $\Delta=\E_Pt$ must therefore satisfy
+\[
+ \E[\phi(O)\mid Z]=t(Z)-\Delta.
+\]
+Conversely this equation gives the required pairing with every complete-data score, and hence an influence function in this finite regular model. Minimizing $\E\phi^2$ is the efficiency bound. Substituting $\phi=H-\Delta$ identifies it with the fixed-design population variance $W_q(P)$ (the finite-sample oracle of the supplementary report). This is the usual known-coarsening influence-function geometry \citep{robins1994,tsiatis2006}, not a new asymptotic efficiency formula. The proposition's additional statement is finite-$n$ pointwise optimality over globally unbiased nonlinear estimators and sequential form assignments, together with its extension to boundary laws. It does not assert a finite-sample bound for all locally regular biased estimators.
+
+Fixed random forms implement planned missingness. A tree's terminal cell is generated using observed answers, so its known acquisition mechanism is a designed coarsening-at-random mechanism \citep{heitjan1991,gill1997}. This description does not cover arbitrary unrecorded selection or nonresponse.
+
+\subsection{Common-Feature Augmentation}
+All padded path sets contain the root feature. For any fixed function $c=c(X_{\rm root},Y)$ and positive $q$, the observable score
+\[
+ H=c+\frac{\mathbf1\{S=S_J\}}{q_J}(t-c)
+\]
+has conditional mean $t$ at every complete record. Its variance is
+\[
+ \Var H=\Var t+\E[(q_{S}^{-1}-1)(t-c)^2].
+\]
+Both identities follow by averaging over the independently assigned form. A fitted $c$ need not improve held-out variance. Our root comparator uses the calibration mean in each root-value-and-label cell, with one pseudo-observation at the overall mean, and the original fitted path-form law.
+
+\subsection{Optimizing Scores on Observed Prefixes}\label{app:prefix}
+A fixed form can follow the tree until the next requested coordinate is unavailable. Record that stopping node (or the reached leaf) and the label. For a tree with $K$ leaves, each form induces a partition of the $K$ leaves: all leaves below a stopping node belong to one cell. This transcript is computable solely from the assigned form. Let $M_\iota$ be its leaf-to-cell incidence matrix and $d_\ell$ the known contrast at leaf $\ell$. For a calibrated joint law $\widehat p(\ell,y)$, solve
+\begin{equation}\label{eq:mainprefix}
+ \min_{q,g}\sum_{\iota,y,C}\widehat p_y(C)\frac{g_{\iota,y,C}^2}{q_\iota},
+ \qquad \sum_\iota M_\iota g_{\iota,y}=y d,\quad
+ \sum_\iota q_\iota=1,\quad q_\iota\ge\beta/L.
+\end{equation}
+This is a convex quadratic-perspective program with $2K$ equality constraints and at most $2LK$ score entries. It is polynomial in the supplied tree/menu representation and numerical precision under the usual conic-optimization model, without enumerating $s^m$ raw profiles. The output score $g_{\iota,y,C}/q_\iota$ is globally unbiased because the equality holds on every leaf for either label. The optimum is only for this specified prefix transcript and form menu.
+
+The original completion-only score is feasible in this program. So is a root augmentation that is constant on the prefix cells, including the binary-root comparator. At the same reference law the optimum weakly improves these contained score families. With ordinal features, the full root value can distinguish records within a prefix cell; the corresponding root comparator is not necessarily contained in this program. For positive cell masses, eliminating the scores gives an efficient numerical formulation. Set $D_{\iota,y}=\operatorname{diag}(\widehat p_y(C))$ and
+\[
+ A_y(q)=\sum_\iota q_\iota M_\iota D_{\iota,y}^{-1}M_\iota^T,\qquad
+ F(q)=\sum_y d^T A_y(q)^{-1}d.
+\]
+Every leaf is a singleton in at least one path form, so $A_y(q)$ is positive definite. Its gradient is the negative cell-weighted squared score. The tangent gives a lower certificate over the floored simplex; reconstructed scores give a feasible upper value. Calibration uses one half-count per leaf-and-label state. The model, calibration sample and evaluation sample remain disjoint as in Appendix~\ref{app:pathdesign}. The current primary-split comparisons use the same trees, respondents and caps across score families. Calibration optimality need not imply optimality at the evaluation population.
+
+\section{A Computable Workflow for Dense Updates}\label{app:dense}
+On a finite binary cube let $\mathsf F$ contain the $p$ parity columns of degrees at most $b$. Compute the identification floor by the linear program
+\[
+ \delta=\min_{\gamma\in\mathbb R^p,e\ge0}\{e:-e\mathbf1\le d-\mathsf F\gamma\le e\mathbf1\},
+\]
+where only $e$ is constrained to be nonnegative and $\gamma$ is unrestricted. A dual witness $h$ with $\mathsf F^Th=0$ and $\|h\|_1\le1$ certifies $\delta\ge h^Td$. For an audit of size $n$, select a variance-aware approximation by minimizing
+\[
+ \|d-\mathsf F\gamma\|_\infty^2+\|\gamma\|_1^2/n.
+\]
+For each respondent draw a parity term $S$ with probability $|\gamma_S|/\|\gamma\|_1$, ask its at most $b$ coordinates, and return $Y\operatorname{sgn}(\gamma_S)\|\gamma\|_1\chi_S(X)$. The empty term requires no feature. If all coefficients vanish, return zero. The conditional mean is $Y(\mathsf F\gamma)(X)$ and the second moment is $\|\gamma\|_1^2$, proving the displayed uniform MSE bound. This converts approximation into an implementable audit while reporting the unavoidable lower floor $\delta^2$ separately.
+
+The demonstration uses the primary split of all 45 SUSHI and 25 binary SAPA targets, taking the first eight of the larger benchmark's features. Logistic regressions fitted on 800 records use respectively the first four and all eight features; their predicted positive-class probabilities define the old and new rules. Regularization is $C=1$ with a 1,000-iteration cap. On all $2^8$ profiles we compute the degree-three linear program and the variance-aware approximation for $n=1000$, then evaluate its exact score moments on the remaining respondents. The floor treats all 256 binary profiles as admissible; a smaller support reflecting ranking consistency defines a different identification problem. This is an executable eight-feature workflow; full-cube enumeration remains exponential in dimension. In larger problems it requires a certified optimization or approximation oracle, not just evaluation on a calibration sample.

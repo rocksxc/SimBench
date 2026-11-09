@@ -1,0 +1,32 @@
+\section{Exact Branching Constants by Column Generation}\label{app:forestexact}
+\paragraph{Program.}
+For a menu $\A$ and a law $P$ on $\{0,1\}^m\times\{0,1\}$, the population program minimizes $\sum_{\iota,c,z}P_\iota(c,z)g_{\iota,z}(c)^2/q_\iota$ over $q$ in the simplex and tables $g$, subject to the Fourier identities $\sum_\iota\widehat{L_\iota g_{\iota,z}}(S)=(2z-1)\widehat d(S)$ for all $|S|\le b$ and both labels. These identities are equivalent to pointwise unbiasedness at every profile because every transcript function and $d$ have degree at most $b$. The objective is $M_\A(P)$. We solve it as a second-order cone program with Clarabel through CVXPY, and repair the linear constraints by a least-norm correction, so the residual is below $10^{-9}$.
+
+\paragraph{Pricing.}
+Let $\eta_z$ be the multipliers of the Fourier identities and $H_z=\sum_{|S|\le b}\eta_z(S)\chi_S$. By the dual in Theorem~\ref{thm:bracket}(a), every interview $\iota$ has information $I_\iota=\sum_{c,z}\big(2^{-m}\sum_{x\in c}H_z(x)\big)^2/P(c,z)$, and $(\langle\eta,\widehat t\rangle)^2/\max_\iota I_\iota$ is a lower bound on $M_\A(P)$. For a depth-$b$ tree, $I_\iota$ is a sum over leaves, and each leaf is a cell of the $b$-set of coordinates on its path. A dynamic program over partial assignments therefore finds the tree of largest information. For $b=3$ it evaluates $m(m-1)(m-2)\cdot8$ leaf values, and for general $b$ it runs in $O(m^b2^b)$ time. Each iteration adds up to six trees whose information exceeds the current menu maximum. It records the master value, an upper bound, and the certified lower bound computed with the maximum over \emph{all} trees. Column generation stops when the bounds agree to relative error $10^{-6}$ or no tree improves.
+
+\paragraph{Population and fitted designs.}
+The oracle law is the held-out empirical law mixed with $1\%$ uniform mass over the cube and both labels. Without this full-support mixture, empty cells would make the information of some trees infinite and would let scores on unobserved cells absorb unbiasedness constraints at no cost. Fitted designs run the same column generation on the training law smoothed with $10\%$ uniform mass, with a $5\%$ floor on menu probabilities. The resulting tables are evaluated on the held-out law.
+
+\paragraph{Results.}
+All 240 tasks converged. The largest relative gap between certified bounds was $9\times10^{-7}$, the median number of iterations was 50 and the maximum 130. Table~\ref{tab:forestexact} reports medians, and per-task values are released. The restricted menu of the earlier analysis consisted of all triples and the forty component trees. Its ratio is the value at the first iteration, and it captured a median of 17\% of the exact log-ratio. The diagnostic $\Gamma_{\rm branch}/\Gamma_{\rm fixed}$, the ratio of the best single-tree and best single-form explained energies of $t$, has correlation 0.44 with the exact ratio across the 180 binding tasks.
+
+\section{Budgeted Screening Trees: Details}\label{app:screening}
+\paragraph{Data.}
+BRFSS items: high blood pressure, high cholesterol, body-mass index at least 30, smoking, stroke, heart disease, physical activity, heavy drinking, fair or poor general health, difficulty walking, age group 60 or older, and income in the five lowest categories. The target is the dataset's binary diabetes-or-prediabetes indicator. Thyroid items, from the pooled ann-thyroid training and test files: age above its upper quartile, sex, thyroxine treatment, thyroid surgery, query hypothyroid, goitre, TSH above its upper quartile, T3, TT4 and FTI below their lower quartiles, T4U above its upper quartile, and sickness. Quartiles come from the training file and no labels are used for the thresholds. The target is any abnormal class.
+
+\paragraph{Splits and models.}
+For the random-half target, a random half of records is the source. For the shifted target, BRFSS uses sex and thyroid uses the recorded sex item, with the source being one group and the target the other. Up to 20,000 source records train a class-balanced CART tree of depth $b$ (minimum leaf size 50 for BRFSS and 10 for thyroid). Up to 20,000 further source records form the calibration reference for fitted designs, smoothed with $10\%$ uniform mass. Seeds $0,1,2$ vary the split and the tree.
+
+\paragraph{Designs.}
+The oracle fixed design solves the population program over all $\binom{12}b$ forms. Path guessing chooses uniformly among the tree's padded path sets and returns the completion-only score, with second moment $K\E_P[t^2]$ for $K$ path sets. The $r$-round designs follow the tree for $r-1$ questions and then, at each reached node, use the best fixed form of the remaining size inside that node's subcube, with pointwise unbiasedness on the subcube. Their second moments add over nodes.
+
+\input{v12_screening_detail}
+
+\paragraph{Multiple imputation.}
+The audit simulations draw $n=1000$ target respondents with replacement, 400 replications per setting. Branching averages $t$. The fixed-form score draws a form from the fitted design and averages its score. Multiple imputation uses the same observed forms and answers. For each of $M=10$ imputations it draws Bayesian-bootstrap weights over the complete source records. It imputes the unasked items of each respondent from a donor drawn with those weights among source records that agree on the asked items and the label, and averages $Yd(X)$ over the imputed profiles. Rubin's rules with Rubin's degrees of freedom give the interval. Truth is the accuracy contrast on the full target sample.
+
+\input{v12_mi_table}
+
+\paragraph{Software.}
+The new computations use Python 3.13.5, NumPy 2.5.4, SciPy 1.18.1, scikit-learn 1.9.1, pandas 3.1.1 and CVXPY 1.9.3 with Clarabel 0.11.1. On six checked forest tasks, the forest contrasts fitted with this scikit-learn version are identical to those fitted with the pinned version 1.8.0 of the earlier release. The PISA sensitivity analysis uses the pinned versions and reproduces the released Brier estimate exactly. All screening and forest task files, summaries and generating scripts are released.

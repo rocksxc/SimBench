@@ -1,0 +1,186 @@
+\section{Expected Budgets and a Local Efficiency Comparison}\label{app:costlocal}
+\subsection{The Expected-Budget and Hybrid Address Coefficients}\label{app:expectedproof}
+A mean feature budget $b$ bounds the conditional expected number of queries on
+each new respondent, for every past history and every input profile. A fixed
+form has no input-dependent length, so its distribution satisfies
+$\sum_Tq_T|T|\le b$. In the hybrid model it also obeys $|T|\le B$ almost surely;
+branching procedures obey the corresponding expected-length and depth
+constraints. The label is observed in both models and is charged separately.
+These conventions impose a uniform design constraint, not a budget that holds
+only under an unknown favorable population. Write $R^{b,B}_{\rm fixed}(n)$ and
+$R^{b,B}_{\rm branch}(n)$ for the minimax risks with these constraints.
+
+\begin{proposition}[Exact address interpolation]\label{prop:hybrid}
+Let $d(A,Z)=Z_A$ have $\kappa\ge1$ address bits and $D=2^\kappa$ data bits, so $m=\kappa+D$.
+For $\kappa+1\le b\le B\le m$, with integer $B$,
+\[
+ \lim_{n\to\infty}nR^{b,B}_{\rm fixed}(n)
+ =\frac{DB}{b(B-\kappa)},\qquad
+ \lim_{n\to\infty}nR^{b,B}_{\rm branch}(n)=1.
+\]
+In particular the mean-budget comparison ($B=m$) has exact ratio $m/b$.
+For an arbitrary nonzero contrast on $m$ binary features and $0<b\le m$,
+the mean-budget fixed-to-branching first-order ratio is at most $m/b$. If $m\ge3$ and
+$\lfloor\log_2m\rfloor+1\le b\le m$, the supremum over contrasts is between
+$m/(2b)$ and $m/b$.
+\end{proposition}
+\begin{proof}
+For the upper construction, with probability $b/B$ ask all $\kappa$ address bits
+and a uniformly sampled set of $B-\kappa$ data bits; otherwise ask no features.
+Return $DB/[b(B-\kappa)]$ times $Yd$ when the selected set contains the addressed
+bit, and zero otherwise. The nonzero-score probability is
+$b(B-\kappa)/(BD)$ at every profile. Hence the score is pointwise unbiased, its
+second moment is $DB/[b(B-\kappa)]$, its maximum query count is $B$, and its
+expected count is $b$. Branching evaluates the address in $\kappa+1$ queries.
+The usual full-information Bernoulli submodel gives its matching coefficient
+one.
+
+For the fixed-form lower bound use uniform independent feature bits and the
+label submodel $P_\theta(x,y)=2^{-m}(1+\theta y d(x))/2$. A form observing
+$s$ address bits and $r$ data bits has information at zero
+$J_T=r2^{s-2\kappa}$. Put $c=s+r$. We claim
+\begin{equation}
+             J_T\le\frac{c(B-\kappa)}{BD}\quad(c\le B).
+             \label{eq:informationpercost}
+\end{equation}
+The empty form has zero information. If $1\le c\le \kappa+1$, the inequality
+$r2^{1-r}\le1$ gives $J_T\le2^{c-1-2\kappa}$; the sequence $2^{c-1}/c$ is
+nondecreasing, so $J_T/c\le1/[D(\kappa+1)]\le(B-\kappa)/(BD)$.
+If $c\ge \kappa+1$, write $j=\kappa-s\ge0$ and $r_0=c-\kappa\ge1$. Then
+$(r_0+j)2^{-j}\le r_0$, giving $J_T\le(c-\kappa)/D$.
+The ratio $(c-\kappa)/c$ is increasing in $c$, proving
+\eqref{eq:informationpercost} in this case as well.
+
+Conditionally on any previous records, the randomized form therefore has
+information at zero at most $b(B-\kappa)/(BD)$. For $|\theta|\le\eta<1$, its
+information is at most this quantity divided by $1-\eta$, since the
+conditional score is bounded by one. The sequential likelihood score is a
+martingale sum. Applying the scalar van Trees argument of
+Appendix~\ref{app:general}, then taking $n\to\infty$ and $\eta\downarrow0$,
+proves the converse for arbitrary estimators. The same argument allows a
+label-dependent form distribution when its conditional expected cost is
+bounded for each label. Thus the bound does not rely on unbiasedness or an
+iid allocation of forms.
+
+For general $d$, query the entire profile with probability $b/m$ and return
+$(m/b)Yd$ on that event, zero otherwise. Its second moment is at most
+$(m/b)\|d\|_\infty^2$, whereas even full information has first-order minimax
+coefficient $\|d\|_\infty^2$. For the stated factor-two lower bound, choose
+the largest $\kappa\ge1$ such that $m'=\kappa+2^\kappa\le m$, and ignore the remaining
+coordinates. Then $m'>m/2$ and $\kappa+1\le b$. If $b\le m'$, the address ratio
+is $m'/b$; if $b>m'$, the universal lower bound one is already at least
+$m/(2b)$. This proves both assertions. Existence of the general
+first-order coefficients also follows by the same finite-menu program with
+its compact, linear expected-cost constraints.
+\end{proof}
+
+The interpolation does not claim a sharp hybrid supremum over all contrasts.
+It identifies an exact family and the order of the unrestricted mean-budget
+supremum in the indicated budget range. For example, $\kappa=3$ gives $m=11$:
+at mean budget $b=4$, increasing the permitted maximum from $B=4$ to $11$
+reduces the exact address coefficient from $8$ to $11/4$. Paying for labels
+does not invalidate either experiment. If one label and each feature cost
+one and the hard total-answer cap is $b_{\rm total}$, replace the feature
+cap by $b_{\rm total}-1$. With a label cost $c_Y$, a padded $b$-feature
+protocol costs $c_Y+b$ per person; that common cost is positive and need not
+be small.
+
+\subsection{Why Population-Specific Efficiency Also Constrains Biased Estimators}
+\label{app:localminimax}
+The result below is a finite-state application of local asymptotic efficiency
+and optimal design, rather than a new general efficiency principle
+\citep{robins1994,tsiatis2006,hahn2011,barnes2020}. It supplies the local
+interpretation missing from a comparison based only on globally unbiased
+estimators.
+
+Write $Z=(X,Y)$, $t(Z)=Yd(X)$, and let $P$ assign positive probability to
+every state in a specified finite space $\mathcal Z$. A fixed interview
+$\iota$ reveals $O_\iota=(\ell_\iota(X),Y)$. The menu is finite and the interview for
+the current respondent is chosen before their answers, although all previous
+respondents may be used. Put
+\[
+ W_{\mathcal A}(P)=\inf_{q,H:\,\sum_\iota q_\iota H_\iota(O_\iota(z))=t(z)\ \forall z}
+                      \Var_{P,q}(H_A(O_A)).
+\]
+For $c>0$ define the local risk, with the center $P$ available to the procedure,
+\[
+ L_{n,c}(P)=\inf_{\pi,\widehat\Delta}
+       \sup_{\substack{Q\text{ a probability law}\\
+                        \|Q-P\|_2\le c/\sqrt n}}
+       n\E_Q[(\widehat\Delta-\E_Qt)^2].
+\]
+
+\begin{proposition}[Local minimax counterpart]\label{prop:local}
+If $t$ is identifiable from the menu, then
+\[
+ \lim_{c\to\infty}\liminf_{n\to\infty}L_{n,c}(P)
+ =\lim_{c\to\infty}\limsup_{n\to\infty}L_{n,c}(P)
+ =W_{\mathcal A}(P).
+\]
+The infimum permits biased and nonlinear estimators and history-dependent
+form choices. If one allowed branching interview computes $t$, its local
+constant is $\Var_P(t)$; the local fixed-to-branching ratio is therefore
+$W_{\rm fixed}(P)/\Var_P(t)$ when the denominator is nonzero.
+\end{proposition}
+\begin{proof}
+Choose an orthonormal matrix $U$ spanning the zero-sum tangent space of the
+probability simplex and parameterize $P_\theta=P+U\theta$. The derivative of
+the target is the vector $v=U^{\mathsf T}t$. If $A_\iota$ is the incidence matrix
+of the observed cells, the information matrix of one observation is
+\[
+ I_\iota(P)=U^{\mathsf T}A_\iota^{\mathsf T}
+           \operatorname{diag}(A_\iota P)^{-1}A_\iota U.
+\]
+Every nonempty observed cell has positive mass. For a design $q$, elementary
+least squares for its score functions gives
+\[
+ \inf_{H:\,\sum_\iota q_\iota H_\iota=t}\Var_{P,q}(H)
+     =v^{\mathsf T}\left(\sum_\iota q_\iota I_\iota(P)\right)^\dagger v,
+\]
+with the value $+\infty$ when $v$ is outside the matrix range.
+Indeed, a centered observation function $\phi$ must satisfy
+$\E[\phi\,s]=v$, where $s$ is the observation score vector. Its
+minimum squared norm is the displayed quadratic form. Because $P$ has full
+support, these moment constraints and $\E\phi=0$ are equivalent to
+$\sum_\iota q_\iota\phi_\iota(O_\iota(z))=t(z)-\E_Pt$ for every $z$.
+
+For the converse place a smooth product prior on a cube of radius
+$c/(\sqrt{\dim(\theta)}\sqrt n)$ in tangent coordinates, vanishing at its
+boundary. Its information matrix is $nC_0/c^2$ for a fixed positive-definite
+$C_0$. The prior is inside the required Euclidean ball and, for sufficiently
+large $n$, inside the probability simplex. Uniformly on it,
+$I_\iota(P_\theta)=I_\iota(P)+O(c/\sqrt n)$ in operator norm. Under any sequential
+protocol the likelihood scores form martingale differences. After averaging
+over both the prior and histories, their total information divided by $n$
+is $\sum_\iota\bar q_\iota I_\iota(P)+O(c/\sqrt n)$ for some $\bar q$ in the simplex.
+Integration by parts and matrix Cauchy--Schwarz (the multivariate van Trees
+inequality) bound the normalized Bayes risk below by
+\[
+ v^{\mathsf T}\left(\sum_\iota\bar q_\iota I_\iota(P)+C_0/c^2+
+                 \epsilon_n I\right)^{-1}v,
+ \qquad \epsilon_n\to0
+\]
+for fixed $c$, with a nonnegative uniform error bound $\epsilon_n$.
+This uses no unbiasedness or regularity of the estimator.
+Minimize over $\bar q$, take $n\to\infty$, then $c\to\infty$.
+Compactness of the design simplex and the variational identity
+$v^{\mathsf T}M^\dagger v=\sup_u(2v^{\mathsf T}u-u^{\mathsf T}Mu)$,
+with the same infinite-value convention, show that this limit is
+$\min_qv^{\mathsf T}(\sum_\iota q_\iota I_\iota(P))^\dagger v=W_{\mathcal A}(P)$.
+
+For the upper bound choose a minimizing fixed design and its globally
+unbiased score at the center $P$. Its iid mean has normalized risk
+$\Var_{Q,q}(H)$, which converges uniformly to $W_{\mathcal A}(P)$ on each
+shrinking ball. A procedure approaching the infimum gives the same argument
+if desired. Full observation has constant $\Var_P(t)$ and cannot be improved
+by coarsening; a branching interview computing $t$ attains it.
+\end{proof}
+
+The center-dependent local design is an oracle, not a calibration algorithm.
+The full-support qualification is essential to this regular argument. We
+report both empirical-population coefficients and a fixed $1\%$
+uniformly smoothed population in the eight-feature experiment; only the
+latter directly satisfies this proposition on its stated profile space.
+The finite-sample globally unbiased bound applies at
+boundary empirical laws. Neither result says that a biased estimator cannot
+improve at a single distribution or at a small finite sample size.

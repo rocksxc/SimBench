@@ -1,0 +1,170 @@
+\section{Certificates over All Forms and Precision-Cost Comparisons}\label{app:allforms}
+\subsection{A Population Witness that Checks Every Fixed Form}
+For a centered function $h(X,Y)$ under $P$, put
+\[
+ I_T(h)=\E_P\!\left[\E_P[h\mid X_T,Y]^2\right],\qquad
+ \mathcal L_P(h)=\frac{\E_P[(t-\Delta)h]^2}
+                         {\max_{|T|=b} I_T(h)}.
+\]
+For any globally pointwise-unbiased score $H$, with form chosen before this
+person's answers, conditioning and Cauchy--Schwarz give
+\[
+ \E_P[(t-\Delta)h]
+ =\E_{P,q}[(H-\Delta)\E(h\mid X_T,Y)],\qquad
+ \Var_{P,q}(H)\ge\mathcal L_P(h).
+\]
+Consequently $W_{\rm fixed}(P)\ge\mathcal L_P(h)$. By
+Proposition~\ref{prop:pointwise}, $\mathcal L_P(h)/n$ also bounds globally
+unbiased sequential estimators. The one-dimensional submodel with density
+$1+\theta h$ on the support of $P$ gives the corresponding local asymptotic
+lower bound for arbitrary estimators. It does not give a pointwise
+finite-sample lower bound for biased procedures. Since conditional projection
+norms increase on refinement, checking all size-$b$ forms also checks every
+smaller form.
+
+For the empirical law of $N_e$ records, a form's information is
+\[
+ I_T(h)=\frac1{N_e}\sum_{c:N_{T,c}>0}
+                 \frac{(\sum_{i:O_{T,i}=c}h_i)^2}{N_{T,c}},
+ \qquad O_{T,i}=(X_{i,T},Y_i).
+\]
+We optimize witnesses constant on a tree-leaf/label cell, starting from the
+path-form menu and adding up to five most-violated forms per iteration.
+The separation step exhaustively evaluates all $\binom mb$ forms. A restricted
+witness space can weaken the lower bound but cannot turn it into a
+menu-restricted lower bound. We retain the best certified witness, irrespective
+of whether optimization converges. Scores are quantized to $2^{-28}$,
+recentered, and re-evaluated; cell sums use extended precision. The reported
+bound subtracts $10^{-12}$ from the absolute covariance and adds $10^{-10}$
+to the maximum information before division. These are numerical certificates;
+the separate four-bit product certificate below uses exact rational arithmetic.
+
+The full primary-split census consists of all 45 SUSHI targets and all
+25 binary SAPA targets. Each tree has depth six, 800 training and 500
+historical calibration records; the remaining records define $P$. Thus
+targets and populations match the larger-table primary split. Every task
+checks 376,740 forms for SUSHI or 38,760 for SAPA. The initial ten-task
+subset was chosen by task order to keep exhaustive computation manageable;
+it contained only SAPA's A-domain targets and was not representative of
+all domains. The complete census removes that task-selection limitation
+within this benchmark. The underlying dataset/model-family limitation
+remains. No full $2^m$ cube is needed for the population witness.
+
+The released task rows give each bound and a maximizing form, while the
+companion witness file permits re-evaluation. The new tasks are also
+checked on the maximizing form and 100 randomly selected forms by an
+independent NumPy grouping calculation. Table~\ref{tab:allformdetail}
+separates each SAPA domain and the ten-task diagnostic subset from the remaining tasks.
+
+\input{v9_all_form_detail}
+
+\subsection{Respondent Counts for a Target Interval Width}\label{app:precision}
+For the first five tasks in each binary dataset, consider target half-widths $e=0.01,0.025$.
+For each unbiased score of variance $v$ we use the planning count
+\[
+ n_e=\max\{30,\lceil 1.9599639845^2v/e^2\rceil\}.
+\]
+The variance here is the exact evaluation-population variance, so this is an
+oracle benchmark planning curve, not a sample-size prescription learned
+from 500 calibration records. At that count, 2,000 new iid audit replications
+check ordinary studentized Wald coverage and mean half-width. Both the
+design and score were fitted before the evaluation population was used.
+Counts are not tuned by searching the coverage simulations. We report
+coverage rather than promise that normal approximations guarantee 95\% at
+every finite sample size.
+
+Branching, prefix and complete-form scores obey the hard cap. A fourth
+method uses the stratified proxy correction from Appendix~\ref{app:validation}:
+\[
+ H_{\rm val}=c(U)+\frac{R}{\pi(U)}\{t-c(U)\}.
+\]
+It may acquire all features and belongs to the relaxed-cap comparison.
+Its calibration-only proxy and validation probability are chosen separately
+at label costs $c_Y=1,100$. We integrate its two possible score values per
+record with probabilities $1-\pi(U)$ and $\pi(U)$. Costs charge initial
+features, expected validation features and every label. Branching is charged
+by its actual path length. All calibration records are historical in this
+experiment; fresh pilot costs are analyzed separately in Appendix~\ref{app:em}.
+
+\input{v8_precision_detail}
+
+\subsection{Probability-Floor Sensitivity}\label{app:floor}
+We repeat complete-form fitting at $\beta=0.01,0.05,0.1,0.2$ on the same ten
+tasks. At each floor, the existing 350/150 internal split selects uniform
+shrinkage from $0.02,0.1,0.3,1$, then the score is refitted on all 500
+calibration records. This comparison holds the full-form score family fixed;
+it does not add the optional prefix fallback. Evaluation records choose
+neither floor nor shrinkage. The medians range from 3.302 to 3.374 on SUSHI
+and 2.420 to 2.436 on SAPA. The released task rows include probabilities
+and selected shrinkage; these ten tasks do not establish universal
+insensitivity to the floor.
+
+\section{When Asking Changes the Answer}\label{app:measurement}
+Let $P$ describe latent complete records and let $K_T$ be the distribution
+of the recorded transcript given a latent record under form $T$. A frozen
+score estimates
+\[
+ \widetilde\Delta_{q,K}
+   =\E_{P,q,K_T}H_T(O_T),
+\]
+which can differ from the latent $\Delta=\E_P[Yd(X)]$. A branching policy
+has its own sequential measurement kernel and hence its own mean score.
+Pointwise unbiasedness for unchanged answers does not equate these means
+under arbitrary collection-specific kernels. Randomized common anchors
+identify mode or position differences for those anchors; identifying the
+latent target additionally needs a measurement model or a reference.
+
+We perform an exact semi-synthetic sensitivity calculation on the ten
+binary tasks. At query position $j=1,\ldots,6$, independently flip the
+answer with probability $\epsilon(j-1)/5$, for
+$\epsilon\in\{0,0.01,0.03,0.05,0.1\}$. Labels are unchanged. Fixed forms
+ask coordinates in increasing index order. Branching routes on the
+\emph{recorded} noisy answers and stops at its leaf; its probability output
+and old stump both use those answers. We sum all $2^6$ flip patterns to
+obtain exact conditional first and second score moments, averaging over
+people and fixed-form assignment. This is an illustrative position model,
+not an estimated response-error process for either source survey.
+
+\input{v8_measurement_table}
+
+At a last-position flip probability of 0.1, median absolute bias in units
+of a clean branching standard error at $n=1000$ is 0.53/0.66 for
+branching/form scores on SUSHI and 1.79/1.51 on SAPA. Thus a measurement
+effect can dominate the sampling gain, and neither design is uniformly
+more robust in this model. Repeating a fixed biased score at larger $n$
+reduces its sampling variance but leaves its measurement bias unchanged.
+
+\section{A Product Counterexample with an Exact Rational Certificate}
+\label{app:nonmultiplicative}
+Let $f$ be the four-feature contrast in Proposition~\ref{prop:fourbit} and
+$\alpha=(7+2\sqrt2)/4$. On two disjoint blocks define $F(x,z)=f(x)f(z)$.
+Then
+\[
+ V_{\rm branch}(F,6)=1,\qquad
+ V_{\rm fixed}(F,6)<\frac{541}{100}<\alpha^2.
+\]
+In particular the fixed coefficient is not generally multiplicative when
+forms can reallocate queries between blocks. The exact product-address
+result requires its separate information-per-cost argument.
+
+Here is a finite rational certificate for the strict upper bound. The
+supplement's \texttt{product\_certificate.csv} supplies positive integers
+$Q_T$, their sum $Q_\Sigma$, and integers $G_{T,c}$ for all 28 six-feature
+forms and 64 cells per form. Set
+\[
+ q_T=Q_T/Q_\Sigma,\qquad g_{T,c}=G_{T,c}/2^{28}.
+\]
+On each of the 256 sign profiles, the supplied exact-arithmetic checker
+verifies
+\[
+ \sum_TG_{T,c_T(x,z)}=2^{28}F(x,z),\qquad
+ \sum_T\frac{Q_\Sigma G_{T,c_T(x,z)}^2}{2^{56}Q_T}<541/100.
+\]
+These finite integer/rational inequalities directly imply feasibility
+and the stated uniform second-moment upper bound; a solver status or
+floating-point objective is not used as the proof. The certificate includes
+forms allocating two and four coordinates to the two blocks, as well as
+three and three. The checker can verify the released certificate without
+calling an optimizer. For context, the separate numerical primal/dual
+bracket is $[5.40562454,5.40562463]$, whereas $\alpha^2=6.03737373\ldots$;
+the exact argument only asserts the displayed strict upper bound.

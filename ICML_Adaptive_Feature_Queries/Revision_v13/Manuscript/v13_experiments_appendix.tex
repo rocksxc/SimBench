@@ -1,0 +1,19 @@
+\section{Cap, Dimension and Evaluation-Law Sensitivity: Details}\label{app:capsens}
+\paragraph{Data access and verification.}
+All inputs are public. Spambase and Ionosphere were obtained from the PMLB mirror of the UCI files \citep{romano2021pmlb}, the CDC diabetes indicators from a public mirror of the Kaggle release that the UCI entry references, the thyroid files from public mirrors of the UCI release, and WDBC from scikit-learn. Each mirror was verified by reproducing stored v12 results exactly: the fixed-form second moment, the certified branching bounds and $\Gamma_P$ of one forest task per dataset, and the screening-tree constants of one BRFSS and one thyroid run, agree with the released values to nine decimals, which also confirms identical record order.
+
+\paragraph{Cap grid.}
+For $b\in\{2,4\}$ the forests have depth $b$ and the cap equals $b$; everything else follows the $b=3$ protocol (twenty trees per forest, $\sqrt m$ features per split, minimum leaf size $\max\{3,n_0/30\}$, median binarization and feature choice on the training records). Column generation over all depth-$b$ trees prices by dynamic programming over partial assignments and stops at a relative gap of $10^{-6}$ or when no tree improves the dual bound; the fitted all-tree design is obtained by the same column generation on the smoothed training law and evaluated on the held-out law. Five splits per dataset and dimension are used. The $b=2$ grid ($m\in\{6,9,12\}$, 45 tasks) and the $b=4$ cell at $m=6$ (15 tasks) are complete and certified to a relative bracket width below $10^{-5}$. At $b=4$ the number of depth-four trees grows quickly with $m$ and certified column generation took about 46 and 51 minutes for the two WDBC splits at $m=9$ that finished (exact ratios 1.46 and 1.55, fitted 1.54 and 1.66, compressed menu 1.02 and 1.03); the remaining $b=4$ cells at $m\ge9$ and the whole $b=5$ grid were stopped unfinished and are not reported. The two partial results are released as such in \texttt{forest\_capgrid\_partial} and enter no table or summary statistic.
+\input{v13_capgrid_detail}
+
+\paragraph{Smoothing mass and resampling.}
+For the fifteen $b=3$ tasks with $m=12$ (five splits per dataset) we recompute the exact constants with uniform mass $\alpha\in\{0.1\%,1\%,5\%,10\%\}$ mixed into the held-out empirical law, and, at $\alpha=1\%$, on five bootstrap resamples of the held-out records with the trained forests fixed.
+\input{v13_sensitivity_detail}
+
+\paragraph{Predicting the gain from reference data.}
+For every forest task and screening run we recompute the lower end of the variance-scale bracket of Theorem~\ref{thm:bracket} on the reference law alone (training records for the forests, source calibration records for the screening trees) and compare it with the realized exact ratio on the target law.
+\input{v13_predictor_detail}
+
+\section{Model-Assisted Imputation on the Same Source Records}\label{app:regimp}
+The simulated audits of Appendix~\ref{app:screening} are repeated with a model-assisted estimator that uses the same complete source records as multiple imputation: for every audit respondent, the conditional mean of $t$ given the asked items and the label is estimated by the average over the source donor pool, and the estimator is the mean of these conditional means with a naive standard error that ignores imputation uncertainty.
+\input{v13_mi_table}

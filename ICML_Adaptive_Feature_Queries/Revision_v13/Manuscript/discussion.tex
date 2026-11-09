@@ -1,0 +1,129 @@
+\section{Related Work}
+Fixed forms implement planned missingness and matrix sampling
+\citep{raghunathan1995,graham2006,adiguzel2008,chipperfield2018,ncesbooklets}.
+Branching is a designed coarsening mechanism using observed answers
+\citep{heitjan1991,gill1997}. Known-coarsening efficiency, augmentation
+and optimized two-phase sampling have an extensive theory
+\citep{robins1994,tsiatis2006,hahn2011,tao2020,berrett2024}.
+Our population-specific local result applies this theory to the finite
+interview menu. Proposition~\ref{prop:pointwise}
+adds a finite-$n$ statement for globally unbiased, possibly nonlinear
+sequential estimators, including boundary populations. The complete-form
+program implements the known influence-function constraint in a sparse
+product basis. Responsive survey designs use accumulating paradata to change
+collection effort and control nonresponse and costs \citep{groves2006}.
+Our distinction is feedback within a record under a fixed query cap.
+Multistage and adaptive tests usually target individual
+ability rather than a population model contrast \citep{vanderlinden2010,yan2014}.
+
+The minimax tools draw on convex duality, moduli and optimal contrast design
+\citep{donoho1991,donoho1994,juditsky2009,polyanskiy2026,elfving1952,sagnol2011}.
+The information-contraction argument has direct precedents in inference
+under restricted channels and communication \citep{acharya2019,barnes2020,acharya2022}.
+Classical adaptivity results depend on the information model
+\citep{novak1996,arias2013,gupta2016}; huge-object testing explicitly
+separates queries within and across samples \citep{goldreich2022,chakraborty2023,adar2024}.
+Reading every node of a depth-$b$ binary tree uses at most $2^b-1$ fixed
+queries. That classical simulation violates our per-person cap. Randomly
+selecting a path preserves the cap and pays through score variance instead.
+Address examples in stochastic Boolean evaluation compare query cost on
+one input \citep{hellerstein2022}; here the loss is respondent count for
+estimating a population functional. Local differential privacy also separates
+forms of interaction \citep{joseph2019}, but constrains randomized privacy
+channels rather than the number of revealed coordinates. Our contribution is
+the exact coefficient under the stated query constraints, including
+cross-block allocations and mixed expected/maximum budgets.
+
+Active evaluation and prediction-powered inference allocate labels or
+combine proxy predictions with complete corrections
+\citep{sawade2010,sawade2012,kossen2021,angelopoulos2023,zrnic2024,ppi2024}.
+Feature-value acquisition can support model induction \citep{saartsechansky2009}
+or individual prediction \citep{ma2019,covert2023,trapeznikov2013,nan2017,vonkleist2025}.
+EDDI selects information for target-variable prediction; conditional-mutual-information
+policies similarly optimize individual predictive loss. Restricted-attribute learning
+fits a predictor \citep{bendavid1998,birkendorf1998,cesa2011}.
+MultiPPI jointly allocates observations and estimator weights under an overall
+budget, with a minimax characterization for known covariance classes
+\citep{cowenbreen2026}. Active MultiPPI studies instance-conditional predictor
+routing and label allocation under expected cost \citep{brawand2026}.
+Our sharp comparison instead fixes the maximum unknown coordinates revealed
+from each record and allows feedback within that record.
+Our target is a frozen population contrast, with input acquisition charged
+per person. A proxy-plus-complete-residual design becomes a natural
+alternative when some people may exceed the feature cap.
+
+\section{Choosing a Collection Design}\label{sec:guidance}
+The resource constraint and available records determine the admissible
+comparison. A historical sample can estimate the target directly when it
+represents the target population; an external reference can calibrate scores
+without that transport assumption. Table~\ref{tab:decision} gives defaults that do not require
+an unobserved validation estimate of imputation bias.
+
+\begin{table}[t]
+\centering
+\caption{Default choices. Training records are common historical inputs;
+new calibration records count toward the chosen budget.}
+\label{tab:decision}
+\small
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{p{.43\columnwidth}p{.49\columnwidth}}
+\toprule
+Available information / constraint & Default audit \\
+\midrule
+Target-representative complete records or recorded predictions and label & Use their paired differences before collecting more records. \\
+Hard cap; branching computes the contrast & Average $Yd$ from branching. \\
+Hard cap; bias floor exceeds target half-width & Increase the cap, narrow a justified population class, or change the estimand. \\
+Existing randomized forms; contrast covered & Keep the recorded allocation; fit scores from separate incomplete records and use the survey variance design. \\
+Fixed forms required; feasible contrast; external reference & Fit pointwise-unbiased form scores; include any certified approximation bias. \\
+Fixed forms; no usable calibration & Prespecify a positive design and unbiased score. Charge any pilot and test its cost sensitivity. \\
+Occasional complete records allowed & Compare full-record averaging and stratified residual correction under the actual cost model. \\
+Labels dominate cost; cap can be relaxed & Compare complete records or residual correction; saving a few features may save little total cost. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Fixed-form scores are the default when the acquisition protocol must stay
+fixed, the cap is binding, and inference must remain valid without trusting
+an imputation model. These conditions define their use, rather than a claim
+that they dominate branching or admissible complete-record collection.
+When reference records describe another population, their direct mean is a
+transport estimator and needs its own justification. Pointwise-unbiased form
+scores instead target the population supplying the new audit records.
+With no calibration, a uniform mixture over path sets and completion
+weighting is a simple valid default when a capped tree computes the contrast.
+A conservative reference can instead fit prefix or form scores; a wrong
+reference affects variance, not unbiasedness. A restricted pilot can improve
+the reference, but its acquisition cost and reuse variance must be included.
+The experiments report multiple pilot sizes and weights rather than select
+a universal pilot fraction from evaluation data.
+
+For frozen imputation bias $\mathfrak b_I$ and variances $\sigma_I^2,\sigma_U^2$,
+imputation has smaller MSE exactly when
+$n\mathfrak b_I^2<\sigma_U^2-\sigma_I^2$. This explains why a fitted proxy can win at
+small $n$ and lose as the audit grows with calibration held fixed.
+For inference about $\Delta$, use a certified bias bound or independent
+validation. A proxy's uncorrected interval covers its own mean. The
+bias-expanded interval in Section~2 instead carries the approximation error
+explicitly; it remains informative only when that error is below the desired
+precision. Its finite-domain implementation and continuous-model rejection
+certificates are in Appendix~\ref{app:workflow}.
+
+The sharp gap concerns a hard cap and a supremum over dimensions.
+The fixed dimension-to-cap frontier and an exponential two-round versus
+fully sequential separation remain undetermined. The independent-forest
+experiment gives modest gains for the tested branching menu, while
+controlled tree refinements give larger certified population gaps. PISA
+supplies an actual secondary model comparison on incomplete archival data,
+with no observed complete-data truth or branching alternative. The
+GBDT/MLP experiments instead test budget feasibility. These analyses do
+not establish deployment performance or a typical exponential benefit.
+
+Order and context can change measured answers \citep{schuman1981}.
+Appendix~\ref{app:measurement} explicitly distinguishes the latent target
+from the mean score under a collection-specific measurement channel.
+A prospective bridge design should randomize collection mode, randomize
+permitted item positions, and retain common anchors at matched positions.
+Within each prespecified subgroup, report response rates, query counts and
+anchor differences by mode. These comparisons can detect measurement and
+burden disparities; they do not identify every unobserved counterfactual
+answer. The present data provide retrospective and sensitivity evidence.

@@ -1,0 +1,21 @@
+\begin{table*}[t]
+\centering
+\caption{Calibration in both directions. Ratios are medians; coverage averages 1,000 simulated audits of size 1,000 per case. Source discrepancy is the median absolute difference of reference and evaluation means. Misses count source-reference intervals that omit the empirical target, a descriptive transport diagnostic.}
+\label{tab:transferdetail}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{llrrrrrr}
+\toprule
+Metric & Direction & Cases & Matched & Shifted & Coverage & Discrepancy & Misses \\
+\midrule
+Randomized accuracy & $\le25\to>25$ & 25 & 2.542 & 2.548 & 0.950 & 0.0053 & 1/25 \\
+Randomized accuracy & $>25\to\le25$ & 25 & 2.455 & 2.518 & 0.947 & 0.0082 & 8/25 \\
+Threshold accuracy & $\le25\to>25$ & 23 & 1.049 & 1.056 & 0.949 & 0.0206 & 5/23 \\
+Threshold accuracy & $>25\to\le25$ & 23 & 1.054 & 1.055 & 0.950 & 0.0220 & 10/23 \\
+Brier improvement & $\le25\to>25$ & 25 & 2.372 & 2.351 & 0.951 & 0.0029 & 4/25 \\
+Brier improvement & $>25\to\le25$ & 25 & 2.237 & 2.349 & 0.950 & 0.0049 & 5/25 \\
+Clipped log loss & $\le25\to>25$ & 25 & 2.596 & 2.555 & 0.949 & 0.0143 & 3/25 \\
+Clipped log loss & $>25\to\le25$ & 25 & 2.596 & 2.641 & 0.948 & 0.0181 & 4/25 \\
+\bottomrule
+\end{tabular}
+\end{table*}

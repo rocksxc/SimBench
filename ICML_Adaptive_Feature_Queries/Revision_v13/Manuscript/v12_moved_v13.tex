@@ -1,0 +1,49 @@
+\section{Fixed-Form Scores from Shared Coordinates}\label{sec:pathdesign}
+A form can reveal useful coordinates even when it fails to complete a tree path. For a frozen depth-$b$ tree, take the coordinate set on each root-to-leaf path, extend it to size $b$ with fixed unused coordinates, and retain the $L$ distinct sets as a tractable menu. Let $g_{T,y}(u)$ be a table on \emph{all} answers $u$ to form $T$, and let $\widehat P_T(u,y)$ be calibrated marginal frequencies. For binary features solve
+\begin{align}
+ \min_{q,g}\quad&\sum_{T,u,y}\widehat P_T(u,y)
+                       \frac{g_{T,y}(u)^2}{q_T},\label{eq:fullprogram}\\
+ \text{subject to}\quad&\sum_{T\supseteq S}\widehat g_{T,y}(S)
+                   =y\widehat d(S)\quad\text{for every }S,y,\nonumber\\
+ &\sum_Tq_T=1,\qquad q_T\ge\beta/L.\nonumber
+\end{align}
+Here $\widehat g_{T,y}(S)$ is the Fourier coefficient of the table on its own form; it is a linear transform of $g$. We use $\beta=0.1$ for fitted designs in the earlier experiments and $\beta=0.05$ in Section~\ref{sec:experiments}. These constraints are exactly equivalent to $\sum_Tg_{T,y}(x_T)=yd(x)$. Returning $g_{T,Y}(X_T)/q_T$ is therefore globally unbiased even when the reference frequencies are inaccurate; the reference affects only the variance.
+
+There are at most $2L2^b$ score entries and coefficient constraints, and the program avoids enumerating the $2^m$ full profiles. Pairwise shared-coordinate corrections span the complete unbiased score space on the supplied menu over the full binary cube (Proposition~\ref{prop:sharing}). A correction adds $f(X_{T\cap T'},Y)/q_T$ on form $T$ and subtracts it divided by $q_{T'}$ on form $T'$. The optimization therefore includes every such control variate. In the language of coarsening at random, \eqref{eq:fullprogram} chooses the optimal augmentation of the inverse-probability-weighted score under the reference law, jointly with the form probabilities. For ordinal data, the implementation uses tensor contrasts on categories defined by the frozen tree's thresholds.
+
+For an existing randomized archive, keep its known $q$ fixed and optimize only the tables. Form-specific marginal frequencies can be estimated from incomplete training records; they need not be assembled into a joint reference distribution. Identification then requires coverage by the actual form menu, not only the degree bound for the menu of all size-$b$ forms.
+
+A \emph{completion-only} score returns an inverse-probability weighted target on a matching padded path and zero otherwise; the experiments call its uniform version path guessing. The \emph{prefix} comparator uses the answers along the tree up to its first unavailable query, discarding other coordinates on the form. With restricted pilot records, its leaf--label reference can be fitted by EM from the observed form, stopping node and label (the supplementary report).
+
+\paragraph{Proper scoring rules.}
+For Brier improvement, with $z=(Y+1)/2$,
+\[
+ (p_0-z)^2-(p_1-z)^2=d(1-p_0-p_1)+Yd.
+\]
+In the form program, replace $Yd$ by this known target and impose separate coefficient identities for each label. The same unbiasedness guarantee holds. For ensembles of degree $r$, Brier loss can require degree $2r$; log loss can introduce still higher interactions. Appendix~\ref{app:metrics} gives the identification conditions and explains why AUC requires a separate pairwise design.
+
+\section{Choosing a Collection Design}\label{sec:guidance}
+The resource constraint and available records determine the admissible comparison. A historical sample can estimate the target directly when it represents the target population; an external reference can calibrate scores without that transport assumption. Table~\ref{tab:decision} summarizes defaults.
+
+\begin{table}[h]
+\centering
+\caption{Default choices. Training records are common historical inputs; new calibration records count toward the chosen budget.}
+\label{tab:decision}
+\small
+\begin{tabular}{p{.45\textwidth}p{.47\textwidth}}
+\toprule
+Available information / constraint & Default audit \\
+\midrule
+Target-representative complete records or recorded predictions and label & Use their paired differences before collecting more records. \\
+Hard cap; branching computes the contrast & Average $Yd$ from branching. \\
+Hard cap; bias floor exceeds target half-width & Increase the cap, narrow a justified population class, or change the estimand. \\
+Existing randomized forms; contrast covered & Keep the recorded allocation; fit scores from separate incomplete records and use the survey variance design. \\
+Fixed forms required; feasible contrast; external reference & Fit pointwise-unbiased form scores; include any certified approximation bias. \\
+Fixed forms; no usable calibration & Prespecify a positive design and unbiased score. Charge any pilot and test its cost sensitivity. \\
+Occasional complete records allowed & Compare full-record averaging and stratified residual correction under the actual cost model. \\
+Labels dominate cost; cap can be relaxed & Compare complete records or residual correction; saving a few features may save little total cost. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+For frozen imputation bias $\mathfrak b_I$ and variances $\sigma_I^2,\sigma_U^2$, imputation has smaller MSE exactly when $n\mathfrak b_I^2<\sigma_U^2-\sigma_I^2$. A fitted proxy can therefore win at small $n$ and lose as the audit grows with calibration held fixed. For inference about $\Delta$, use a certified bias bound or independent validation. A prospective bridge design should randomize collection mode and permitted item positions, and retain common anchors at matched positions, so that measurement and burden disparities can be detected \citep{schuman1981}.

@@ -1,0 +1,96 @@
+\section{General Statistical Guarantees}\label{app:generalstatements}
+For a design distribution $q$ on $\A$ and a table $g_\iota$ on each transcript alphabet, abbreviate $g_\iota(x)=g_\iota(\ell_\iota(x))$ and $s_g(x)=\sum_\iota g_\iota(x)$. Define
+\begin{align}
+ B_n(q,g;x)&=(d(x)-s_g(x))^2+
+              \frac1n\sum_{\iota\in\A}\frac{g_\iota(x)^2}{q_\iota},\nonumber\\
+ \Phi_n(d,\A)&=\inf_{q,g}\ \max_{x\in\X}B_n(q,g;x).
+ \label{eq:program}
+\end{align}
+A design of mass zero may only have a zero table, in which case its contribution is zero. The first term permits a controlled approximation of the update. The second accounts for observing only one of the tables per respondent.
+
+\begin{theorem}[Finite-sample audit risk]\label{thm:finite}
+For every finite $\X,\A$, every contrast $d$ and every $n\ge1$,
+\[
+       \Phi_n(d,\A)/104 \ \le\ R_\A(d,n)\ \le\ \Phi_n(d,\A).
+\]
+The upper bound uses one iid design and the mean of $Yg_\iota(\ell_\iota(X))/q_\iota$. The lower bound allows the choice of interview to depend on all previous records.
+\end{theorem}
+
+The constant 104 is conservative. This is a convex quadratic-perspective program with a finite second-order cone formulation. Its size depends on enumerated profiles and interviews; Section~\ref{sec:pathdesign} instead uses a compact tree representation for a restricted menu.
+
+\begin{samepage}
+\begin{theorem}[Exact leading variance]\label{thm:asym}
+If $d\in\Hh_{\A}$, then $\lim_{n\to\infty}nR_\A(d,n)=V(d,\A)$ for fixed $d,\X,\A$. An iid design and an unbiased score give risk at most $V(d,\A)/n$ for every $n$.
+\end{theorem}
+\end{samepage}
+
+An optimal iid design already achieves the first-order worst-case coefficient. The lower bound even permits observing the current label before selecting an interview, so early labels do not improve this coefficient either. Within-person branching changes the available observation maps themselves. Population-specific performance can still benefit from learning a design from previous people.
+
+\paragraph{Why the characterization holds.}
+Conditioning on the complete record bounds the score mean's squared bias and variance by \eqref{eq:program}. For the converse, put $\Pi_\iota h=\E_\mu[h\mid\ell_\iota(X)]$ and $J_\mu(h)=\max_\iota\|\Pi_\iota h\|_{2,\mu}^2$. Convex duality gives
+\begin{equation}
+ \Phi_n(d,\A)=\sup_{\mu,h}
+ \frac{\ip{d}{h}^2}{\|h\|_{2,\mu}^2+nJ_\mu(h)}.\label{eq:dual}
+\end{equation}
+A witness perturbs the conditional label mean. Its numerator measures the change in the target, while $J_\mu(h)$ limits information from each interview. A change of measure and the KL chain rule handle sequential choices; a local van Trees argument gives the exact coefficient. Appendix~\ref{app:general} gives the duality and information proofs. These are established tools for linear-functional estimation; the sharp comparison of query menus is the main result.
+
+\subsection{An Exact One-Feature Audit}
+For an additive contrast $d(x)=c_0+\sum_{j=1}^m c_j x_j$ on the unrestricted sign cube, put $M=\sum_{j=0}^m |c_j|=\|d\|_\infty$.
+\begin{proposition}\label{prop:add}
+For every $n\ge1$ the minimax risk is $M^2/(1+\sqrt n)^2$ both with full profiles and with at most one feature query.
+\end{proposition}
+Choose $j$ with probability $|c_j|/M$, interpret $x_0=1$, and return the sign $Y\sgn(c_j)x_j$. Its mean is $\Delta/M$. Estimating that mean reduces to a binomial problem. A population concentrated at an extremal profile gives the same binomial problem to an evaluator who sees all features (Appendix~\ref{app:sign}). Equality concerns worst-case populations. The best length at equal monetary cost can differ for particular populations.
+
+
+\section{Additional Sharpness Results}
+\begin{proposition}[Finite-sample address gap]\label{prop:finiteaddress}
+For the address contrast with $D=2^{b-1}$, every $n\ge1$ satisfies
+\[
+ D\left(\frac{\sqrt n+1}{\sqrt n+\pi\sqrt D}\right)^2
+ \le\frac{R_{\rm fixed}(b,n)}{R_{\rm branch}(b,n)}\le D.
+\]
+In particular, $n\ge60D$ suffices for a ratio at least $D/2$.
+\end{proposition}
+Appendix~\ref{app:addressfinite} proves the result by a finite-width van Trees bound and a constant-risk shrinkage estimator.
+
+\begin{corollary}[Finite answer alphabets]\label{cor:alphabet}
+For features with at most $s\ge2$ answers and nonzero identifiable $d$, the coefficient ratio is at most $\min\{s^{b-1},\binom{m-1}{b-1}\}$. Its supremum over dimensions is $s^{b-1}$, attained at $m=b-1+s^{b-1}$.
+\end{corollary}
+The proof uses an $s$-ary address and the same simulation (Appendix~\ref{app:alphabet}); ordinal features therefore need not be dichotomized for the theory.
+
+
+Consider the four-bit Boolean contrast
+\begin{equation}
+ f(x)=\tfrac12(x_1x_2+x_1x_3+x_4x_2-x_4x_3).
+ \label{eq:block}
+\end{equation}
+If $x_2=x_3$ then $f=x_1x_2$, and otherwise $f=x_4x_2$. This is the four-bit sortedness function up to sign and permutation \citep[Chapter~1]{odonnell2014}. Indeed, in the order $(x_3,x_1,x_2,x_4)$ it is positive exactly when the sequence changes sign at most once. On $k$ disjoint blocks let $d_k=\prod_{r=1}^k f(x^{(r)})$. The difference is realized by $p_1=(1+d_k)/2$ and $p_0=(1-d_k)/2$. Mixing a common rule into both predictors scales the contrast and its risks. The $4^k$ Fourier terms of $d_k$ all have degree $2k$ and coefficient magnitude $2^{-k}$.
+
+\begin{theorem}[Complete query-budget curve]\label{thm:gap}
+For $d_k$, both risks equal one for $b<2k$. For $2k\le b\le4k$ define
+\[
+ C_{\rm fixed}=2^{4k-b},\qquad
+ C_{\rm branch}=4^{(3k-b)_+}.
+\]
+In either class the minimax risk is $\Theta(\min\{1,C/n\})$, with absolute constants, and the exact first-order coefficient $V$ is $C$. At $b\ge3k$, branching attains the full-profile risk $1/(1+\sqrt n)^2$ at every $n$.
+\end{theorem}
+
+At $b=2k$ both interview types identify the gain and both pay a $4^k$ sample factor for fixed small error. At $b=3k$ branching needs only the full-data number of people, while fixed forms still pay $2^k$. These comparisons allow a different randomly chosen fixed form for every respondent. The penalty comes from committing to this person's questions before seeing their answers.
+
+Figure~\ref{fig:cost} in Appendix~\ref{app:gap} plots this exact synthetic budget curve.
+
+\paragraph{Where the exponents come from.}
+In each block, two, three and four fixed coordinates capture at most $1/4$, $1/2$ and all of its uniform Fourier mass. The masses multiply across blocks. Randomized signed-term scores attain the reciprocal second moments. A branching path with nonzero conditional mean must query at least two coordinates per block; at budget $2k+r$, at least $k-r$ blocks receive only two and each contributes at most $1/2$ in absolute conditional mean. These bounds yield the matching witnesses and scores (Appendix~\ref{app:gap}).
+
+\paragraph{Two rounds suffice for these extremal examples.}
+The address construction asks all address bits in one batch and the selected data bit in a second. The block family also attains its entire branching curve in two rounds. Consequently the sharp supremum of $V_{\rm fixed}/V_R$ is already $2^{b-1}$ for every allowed round count $R\ge2$ (Appendix~\ref{app:rounds}). This concerns fixed versus two-round interviews; a general separation between two rounds and unrestricted branching is a different question.
+
+
+\paragraph{An instance-specific comparison.}
+If a depth-$b$ tree $\tau$ computes $d$, then $V_{\rm branch}=M^2$ for $M=\|d\|_\infty$. Its number $L_\tau$ of padded path sets improves the universal upper bound. Write $E_b=\max_{|T|\le b}\sum_{S\subseteq T}\widehat d(S)^2$ using uniform Fourier coefficients. Then
+\[
+ \max\left\{1,\frac{\|d\|_{2,\U}^4}{M^2 E_b}\right\}
+ \le\frac{V_{\rm fixed}}{M^2}\le\min\{L_\tau,K_{m,b}\}.
+\]
+Appendix~\ref{app:instances} proves the interval. The eight-feature empirical diagnostic solves the coefficient program directly.
+

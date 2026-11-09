@@ -1,0 +1,94 @@
+\section{Complete Form Scores and Operational Comparisons}\label{app:operational}
+\subsection{Shared-Coordinate Corrections and the Complete Score Space}
+\label{app:fullscores}
+Fix a menu of coordinate sets $\mathcal T$. For binary features write
+$g_{T,y}(x_T)=\sum_{S\subseteq T}\gamma_{T,y,S}\chi_S(x)$.
+Uniqueness of the Fourier expansion gives the following elementary
+representation.
+
+\begin{proposition}[All shared-coordinate corrections]\label{prop:sharing}
+The score tables satisfy $\sum_Tg_{T,y}(x_T)=yd(x)$ on the full binary cube
+if and only if
+\[
+       \sum_{T\supseteq S}\gamma_{T,y,S}=y\widehat d(S)
+       \quad\text{for every }S.
+\]
+For a fixed positive design $q$, every change to a globally unbiased score
+is a sum of pairwise transfers of functions on shared coordinates:
+add $f(X_{T\cap T'},Y)/q_T$ to form $T$ and subtract the same function
+divided by $q_{T'}$ from form $T'$.
+\end{proposition}
+\begin{proof}
+Equate the coefficients of each $\chi_S$. For the second claim, any score
+difference has, for each $S$ and each label, coefficients summing to zero
+over forms containing $S$. Choose one of those forms as an anchor and
+transfer every other coefficient to or from the anchor. Each transfer is
+observable under both forms. Terms appearing in only one form must have
+zero difference. Summing the transfers proves the statement.
+\end{proof}
+Thus including all such terms uses the entire unbiased score space on the
+supplied menu. This is a product-basis implementation of standard control
+variates and known-coarsening influence-function optimization, not a new
+general missing-data efficiency bound.
+
+The implementation works in cell values. A block of the constraint matrix
+is the normalized Walsh transform of a form's table, placed in the rows of
+its contained coordinate subsets. If $F$ is the resulting matrix, the
+constraints are $Fg_y=y\widehat d$. Its rows are orthogonal:
+$FF^{\mathsf T}$ is diagonal, with entry
+$\sum_{T\supseteq S}2^{-|T|}$ for subset $S$. We use this identity to
+repair numerical equality residuals explicitly. Rotated second-order cones
+represent $g_{T,y}(u)^2\le q_Tv_{T,y}(u)$.
+
+For a given population, marginal form--label frequencies are sufficient for
+the objective. No full-profile enumeration is needed. With $L$ forms of
+size at most $b$, there are at most $2L2^b$ score entries and $2L2^b$
+coefficient constraints. A tree provides the target coefficients through
+its leaves, or by Fourier transforming its known completion-score
+decomposition. Choosing an unrestricted menu can still require
+$\binom mb$ forms; this implementation does not solve that combinatorial
+design problem.
+
+For ordinal features we split each coordinate at all thresholds used for it
+in the frozen tree, with a fixed middle cut for otherwise unused padding
+coordinates. We use orthonormal Helmert contrasts on those categories and
+their tensor products. The same argument is exact on the resulting product
+space. This retains every observed tree-threshold category, but not
+within-category distinctions between raw ordinal answers. Its cell count
+is $\sum_T\prod_{j\in T}s_j$, where $s_j$ is the category count.
+
+\paragraph{Calibration and certificates.}
+The larger-tree experiment uses a model fitting sample of
+800, the next 500 complete calibration records, and the disjoint remaining
+evaluation sample. A common 350/150 internal calibration split chooses
+among uniform joint-law shrinkage weights $0.02,0.1,0.3,1$ and the prefix
+baseline. Selection minimizes validation second moment, averaged over
+random form assignment. The selected method is refitted on all 500 records.
+The fitted design uses $q_T\ge0.1/L$. Evaluation records choose no
+hyperparameter or score.
+
+The menu oracle separately optimizes over every score unbiased on the full
+product profile space and all design probabilities on that same menu,
+without the probability floor.
+It is a benchmark, not a fitted method. We reconstruct feasible primal
+tables, and a dual witness provides its lower bound. For SUSHI this
+full-product unbiasedness requirement is more conservative than restricting
+it to ranking-feasible profiles; the eight-feature comparison separately
+examines both supports. For a quadratic
+objective with cell masses $p$, a witness $h_y$ on the coefficient constraints
+has information
+$I_T=\sum_{y,u}(F_T^{\mathsf T}h_y)_u^2/p_{T,y,u}$.
+With unrestricted probabilities the lower bound on the second moment is
+$(\sum_y h_y^{\mathsf T}y\widehat d)^2/\max_TI_T$.
+If $p_{T,y,u}=0$, the corresponding numerator must vanish; the code projects
+the witness onto those linear zero-cell constraints. Numerical bounds and
+equality residuals are retained for every task. This oracle quantifies
+the restriction to the chosen menu; it does not lower-bound the optimum
+over all possible fixed forms.
+
+The largest individual variance-ratio bracket width is 0.00177 on the
+binary tasks and 0.01639 on ordinal tasks. The displayed oracle summaries
+use the upper endpoints; both endpoints are released. These are numerical
+floating-point certificates, not interval-arithmetic proofs of exact
+real-number optima.
+

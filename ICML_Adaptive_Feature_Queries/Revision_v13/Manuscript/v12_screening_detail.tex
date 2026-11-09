@@ -1,0 +1,28 @@
+\begin{table}[h]
+\centering
+\caption{All screening settings: medians over three seeds of records needed relative to branching. Columns $r=2,\ldots$ follow the tree for $r-1$ questions and then use the best fixed form. Acc.: target accuracy of the screening decision. Paths: distinct padded path sets of the trained tree.}
+\label{tab:screeningdetail}
+\small
+\begin{tabular}{lllrrrrrrrrrr}
+\toprule
+Data & $b$ & Target & Acc. & Paths & Best & Fitted & Guess & $r=2$ & $r=3$ & $r=4$ & $r=5$ & $[1/\Gamma_P,N_P]$ \\
+\midrule
+BRFSS & 3 & random half & 0.629 & 2 & 1.00 & 1.04 & 2.1 & 1.00 &  &  &  & [1.00, 1.5] \\
+BRFSS & 3 & other sex & 0.741 & 1 & 1.00 & 1.04 & 1.0 & 1.00 &  &  &  & [1.00, 1.0] \\
+BRFSS & 4 & random half & 0.664 & 4 & 1.46 & 1.52 & 4.3 & 1.14 & 1.00 &  &  & [1.17, 3.3] \\
+BRFSS & 4 & other sex & 0.681 & 4 & 1.52 & 1.61 & 4.5 & 1.13 & 1.00 &  &  & [1.18, 3.9] \\
+BRFSS & 5 & random half & 0.675 & 7 & 1.28 & 1.32 & 7.8 & 1.15 & 1.10 & 1.00 &  & [1.04, 5.1] \\
+BRFSS & 5 & other sex & 0.734 & 6 & 1.43 & 1.52 & 7.6 & 1.27 & 1.19 & 1.00 &  & [1.13, 6.6] \\
+BRFSS & 6 & random half & 0.719 & 14 & 1.53 & 1.58 & 17.4 & 1.40 & 1.17 & 1.10 & 1.00 & [1.13, 11.8] \\
+BRFSS & 6 & other sex & 0.722 & 13 & 1.60 & 1.70 & 16.0 & 1.39 & 1.20 & 1.08 & 1.00 & [1.13, 10.9] \\
+Thyroid & 3 & random half & 0.823 & 3 & 1.00 & 1.04 & 4.4 & 1.00 &  &  &  & [1.00, 3.3] \\
+Thyroid & 3 & other sex & 0.819 & 3 & 1.00 & 1.04 & 4.4 & 1.00 &  &  &  & [1.00, 3.6] \\
+Thyroid & 4 & random half & 0.823 & 3 & 1.00 & 1.04 & 4.5 & 1.00 & 1.00 &  &  & [1.00, 3.4] \\
+Thyroid & 4 & other sex & 0.848 & 4 & 1.00 & 1.04 & 6.8 & 1.00 & 1.00 &  &  & [1.00, 5.0] \\
+Thyroid & 5 & random half & 0.823 & 6 & 1.00 & 1.03 & 9.7 & 1.00 & 1.00 & 1.00 &  & [1.00, 6.3] \\
+Thyroid & 5 & other sex & 0.848 & 5 & 1.00 & 1.04 & 8.7 & 1.00 & 1.00 & 1.00 &  & [1.00, 5.8] \\
+Thyroid & 6 & random half & 0.823 & 7 & 1.00 & 1.03 & 11.4 & 1.00 & 1.00 & 1.00 & 1.00 & [1.00, 6.7] \\
+Thyroid & 6 & other sex & 0.848 & 5 & 1.00 & 1.04 & 8.7 & 1.00 & 1.00 & 1.00 & 1.00 & [1.00, 6.1] \\
+\bottomrule
+\end{tabular}
+\end{table}

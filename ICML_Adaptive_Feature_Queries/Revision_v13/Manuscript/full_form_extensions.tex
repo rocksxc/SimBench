@@ -1,0 +1,272 @@
+\section{Complete Form Scores and Operational Comparisons}\label{app:operational}
+\subsection{Shared-Coordinate Corrections and the Complete Score Space}
+\label{app:fullscores}
+Fix a menu of coordinate sets $\mathcal T$. For binary features write
+$g_{T,y}(x_T)=\sum_{S\subseteq T}\gamma_{T,y,S}\chi_S(x)$.
+Uniqueness of the Fourier expansion gives the following elementary
+representation.
+
+\begin{proposition}[All shared-coordinate corrections]\label{prop:sharing}
+The score tables satisfy $\sum_Tg_{T,y}(x_T)=yd(x)$ on the full binary cube
+if and only if
+\[
+       \sum_{T\supseteq S}\gamma_{T,y,S}=y\widehat d(S)
+       \quad\text{for every }S.
+\]
+For a fixed positive design $q$, every change to a globally unbiased score
+is a sum of pairwise transfers of functions on shared coordinates:
+add $f(X_{T\cap T'},Y)/q_T$ to form $T$ and subtract the same function
+divided by $q_{T'}$ from form $T'$.
+\end{proposition}
+\begin{proof}
+Equate the coefficients of each $\chi_S$. For the second claim, any score
+difference has, for each $S$ and each label, coefficients summing to zero
+over forms containing $S$. Choose one of those forms as an anchor and
+transfer every other coefficient to or from the anchor. Each transfer is
+observable under both forms. Terms appearing in only one form must have
+zero difference. Summing the transfers proves the statement.
+\end{proof}
+Thus including all such terms uses the entire unbiased score space on the
+supplied menu. This is a product-basis implementation of standard control
+variates and known-coarsening influence-function optimization, not a new
+general missing-data efficiency bound.
+
+The implementation works in cell values. A block of the constraint matrix
+is the normalized Walsh transform of a form's table, placed in the rows of
+its contained coordinate subsets. If $F$ is the resulting matrix, the
+constraints are $Fg_y=y\widehat d$. Its rows are orthogonal:
+$FF^{\mathsf T}$ is diagonal, with entry
+$\sum_{T\supseteq S}2^{-|T|}$ for subset $S$. We use this identity to
+repair numerical equality residuals explicitly. Rotated second-order cones
+represent $g_{T,y}(u)^2\le q_Tv_{T,y}(u)$.
+
+For a given population, marginal form--label frequencies are sufficient for
+the objective. No full-profile enumeration is needed. With $L$ forms of
+size at most $b$, there are at most $2L2^b$ score entries and $2L2^b$
+coefficient constraints. A tree provides the target coefficients through
+its leaves, or by Fourier transforming its known completion-score
+decomposition. Choosing an unrestricted menu can still require
+$\binom mb$ forms; this implementation does not solve that combinatorial
+design problem.
+
+For ordinal features we split each coordinate at all thresholds used for it
+in the frozen tree, with a fixed middle cut for otherwise unused padding
+coordinates. We use orthonormal Helmert contrasts on those categories and
+their tensor products. The same argument is exact on the resulting product
+space. This retains every observed tree-threshold category, but not
+within-category distinctions between raw ordinal answers. Its cell count
+is $\sum_T\prod_{j\in T}s_j$, where $s_j$ is the category count.
+
+\paragraph{Calibration and certificates.}
+The larger-tree experiment uses a model fitting sample of
+800, the next 500 complete calibration records, and the disjoint remaining
+evaluation sample. A common 350/150 internal calibration split chooses
+among uniform joint-law shrinkage weights $0.02,0.1,0.3,1$ and the prefix
+baseline. Selection minimizes validation second moment, averaged over
+random form assignment. The selected method is refitted on all 500 records.
+The fitted design uses $q_T\ge0.1/L$. Evaluation records choose no
+hyperparameter or score.
+
+The menu oracle separately optimizes over every score unbiased on the full
+product profile space and all design probabilities on that same menu,
+without the probability floor.
+It is a benchmark, not a fitted method. We reconstruct feasible primal
+tables, and a dual witness provides its lower bound. For SUSHI this
+full-product unbiasedness requirement is more conservative than restricting
+it to ranking-feasible profiles; the eight-feature comparison separately
+examines both supports. For a quadratic
+objective with cell masses $p$, a witness $h_y$ on the coefficient constraints
+has information
+$I_T=\sum_{y,u}(F_T^{\mathsf T}h_y)_u^2/p_{T,y,u}$.
+With unrestricted probabilities the lower bound on the second moment is
+$(\sum_y h_y^{\mathsf T}y\widehat d)^2/\max_TI_T$.
+If $p_{T,y,u}=0$, the corresponding numerator must vanish; the code projects
+the witness onto those linear zero-cell constraints. Numerical bounds and
+equality residuals are retained for every task. This oracle quantifies
+the restriction to the chosen menu; it does not lower-bound the optimum
+over all possible fixed forms.
+
+The largest individual variance-ratio bracket width is 0.00177 on the
+binary tasks and 0.01639 on ordinal tasks. The displayed oracle summaries
+use the upper endpoints; both endpoints are released. These are numerical
+floating-point certificates, not interval-arithmetic proofs of exact
+real-number optima.
+
+\subsection{Independent Model Versions on Eight Features}\label{app:medium}
+For each of the 45 SUSHI and 25 binary SAPA primary-split tasks, we select
+eight target-excluding features at equally spaced indices of the existing
+feature list. A depth-two old classifier is fitted on the first 400 records;
+a depth-three new classifier is independently fitted on the next 400.
+Each uses minimum leaf size 20 and a fixed seed. The remaining records
+define the evaluation law. We examine both probability outputs and
+deterministic threshold outputs.
+
+The audit first follows the old tree, then the new tree, reusing an answer
+when both trees ask the same feature. Its cap is the maximum size of the
+union of the two reached paths over all 256 profiles, at most five. This
+cap is computed from the frozen rules, not chosen using the evaluation
+population. Hence the branching coefficient is $\|d\|_\infty^2$ and its
+population variance is $\Var_P(Yd)$. We optimize all fixed forms at that
+same cap, including every possible answer table. Both coefficients and
+population-specific variances have independently evaluated primal/dual
+bounds.
+
+For SUSHI, we additionally enumerate all $8!$ orders of the eight nontarget
+alternatives and retain only feasible profiles of the eight comparisons.
+The optimization is repeated on this ranking support, while retaining the
+same audit cap. This checks the effect of logical restrictions among
+pairwise comparisons. The target pair involves the two other alternatives,
+so either target label is compatible with each retained order. No
+individual-level source records are released.
+
+Besides the empirical population $P$, we report
+$P_{.01}=0.99P+0.01\U$, where $\U$ is uniform on the stated profile--label
+space. This fixed smoothing has full support and gives a direct
+example covered by Proposition~\ref{prop:local}. It is a diagnostic
+regularization of the population, not an estimate that the data-generating
+law has that contamination fraction.
+
+\input{v7_medium_table}
+\input{v7_full_table}
+
+\subsection{EM Calibration from Restricted Pilot Records}\label{app:em}
+For uniformly assigned forms, record only the form, stopping-prefix cell,
+and label. Let $N_{\iota,c,y}$ be the resulting counts, and let $c_\iota(\ell)$ be
+the observed prefix for leaf $\ell$. The joint leaf--label probabilities
+$p_{\ell y}$ maximize the penalized observed-data log likelihood
+\[
+ \sum_{\iota,c,y}N_{\iota,c,y}\log\!\left(\sum_{\ell:c_\iota(\ell)=c}p_{\ell y}\right)
+       +\tfrac12\sum_{\ell,y}\log p_{\ell y},
+ \qquad p\ge0,\quad\sum_{\ell,y}p_{\ell y}=1.
+\]
+Form-assignment probabilities are known constants in this likelihood.
+The half-count penalty prevents zero reference masses. The EM update
+assigns each cell count among its compatible leaves in proportion to their
+current probabilities, adds half a count to each leaf--label state, and
+renormalizes. It uses unmatched records as coarse observations; it is not
+allowed to use their hidden leaves. The implementation stops at maximum
+coordinate change below $10^{-9}$, or 2,000 iterations, and reports the
+achieved change and iteration count. A separate constrained-likelihood
+optimizer checks the update on a small example.
+
+The experiment freezes the 70 primary-split depth-six rules. Its population is the empirical law
+of all records after the 800 training records, rather than the held-out
+law of the conditional-calibration experiment. Each task has
+500 iid simulated pilots, at each of $n_0=100,250,500$ respondents. Pilot
+sizes share the beginning of the same random sequence to improve paired
+comparisons. Every pilot respondent obeys the six-feature cap, and every
+pilot record counts toward $N\in\{1000,2000,5000\}$.
+
+We compare matched-path reference counts with EM reference estimates,
+fitting the same prefix-score program afterwards. We also separate the
+reference estimate from the score used to reuse the pilot. One pilot score
+is completion-only weighting; a second is a globally unbiased prefix score
+with uniform form probabilities, fixed in advance from the 800 historical
+training records. The latter uses incomplete paths without fitting an
+estimator to the same pilot that is being averaged.
+
+For pilot mean $T_0$ and second-stage score mean $T_1$, use
+$\lambda T_0+(1-\lambda)T_1$. We compare $\lambda=0$, $\lambda=n_0/N$, and
+\[
+ \lambda_{\rm prior}=
+ \frac{\widehat V_1/(N-n_0)}{\widehat V_0/n_0+\widehat V_1/(N-n_0)},
+\]
+where both variance predictions come exclusively from the fixed historical
+reference, before sampling the pilot. These weights are not selected with
+evaluation data or with the realized pilot. Conditional on a pilot, the
+exact risk is
+\[
+ \lambda^2(T_0-\Delta)^2+
+       \frac{(1-\lambda)^2}{N-n_0}\Var_P(H_{\rm fitted}).
+\]
+The second-stage score remains unbiased for every fitted reference, so no
+cross term remains. Averaging this expression over pilots yields the
+reported risk estimates. Per-task Monte Carlo standard errors accompany
+each comparison. These are risk estimates conditional on the frozen model
+and empirical population, not independent replications of a deployment
+study. All newly acquired records are capped at six features; with unit
+feature and label costs the same comparison spends $7N$ total answers.
+
+\input{v7_em_table}
+
+At $N=1000,n_0=500$, changing only matched counts to EM while retaining
+completion-weighted count-proportional reuse changes the median risk ratio
+from 8.97 to 8.15 on SUSHI and from 7.30 to 7.02 on SAPA. Combining EM
+with the stable historical pilot score and prior weight gives 4.50 and
+3.05. The associated median per-task Monte Carlo standard errors are
+0.121 and 0.083. At $n_0=100$ this last protocol gives 4.08 and 2.97, with
+median errors 0.021 and 0.014. These paired comparisons identify the noisy
+pilot score as a separate cost from reference estimation. Across all
+105,000 fits, EM reached the specified coordinate tolerance in at most
+629 iterations; none hit the 2,000-iteration cap. No claim of global
+optimality over pilot sizes or allocation policies follows.
+
+\subsection{Intervals for Frozen Unbiased Scores}\label{app:coverage}
+With a fixed design fitted on separate historical or calibration records,
+the audit observations $H_1,\ldots,H_n$ are iid conditional on that fitting
+data and have mean $\Delta$. Use the ordinary sample variance
+$s_H^2=(n-1)^{-1}\sum_i(H_i-\overline H)^2$ and the Wald interval
+$\overline H\pm1.96s_H/\sqrt n$. For a finite menu with positive used
+probabilities and positive variance, its conditional coverage tends to
+$0.95$. This is an asymptotic statement; a small audit can miss rare large
+importance scores. A finite-sample alternative uses bounded-score
+concentration, at the cost of wider intervals.
+
+We evaluate conditional coverage on the first five primary-split tasks
+in each of SUSHI, binary SAPA and ordinal SAPA. The selection is by task
+order, not observed coverage. Models and the complete 500-record
+calibration are frozen. For each of $n=100,1000$, 2,000 iid empirical-population
+audits compare branching, prefix scores, calibrated full-form scores,
+and the fitted imputation comparator. Coverage is against the true gain of
+that empirical population. Simulation standard errors are reported.
+These results do not validate a Gaussian interval for an unknown imputation
+bias: its interval generally targets the imputed mean instead of $\Delta$.
+Nor do these single-stage intervals automatically cover an estimator that
+reuses an adaptive pilot. With a prespecified pilot weight, the two-stage
+variance must include both $\lambda^2s_0^2/r$ and
+$(1-\lambda)^2s_1^2/(N-r)$; further conditions or a sequential interval are
+needed to justify its normal approximation.
+
+\input{v7_coverage_table}
+
+\subsection{Stratified Validation under Expected Cost}\label{app:validation}
+To strengthen the relaxed-budget comparison, we also implement a two-phase
+augmentation related to known-coarsening estimators and prediction-powered
+inference \citep{robins1994,tao2020,ppi2024}. First observe a small fixed form
+and the label, denoted $U$. Independently conditional on $U$, acquire the
+remaining features with probability $\pi(U)>0$. For any frozen prediction
+$m(U)$, the score
+\[
+          H=m(U)+\frac{R}{\pi(U)}\{Yd(X)-m(U)\}
+\]
+is conditionally unbiased given $(X,Y)$, and
+\[
+ \Var(H)=\Var(Yd)+\E\!\left[(\pi(U)^{-1}-1)(Yd-m(U))^2\right].
+\]
+For a fixed expected validation fraction, minimizing the second term uses
+$\pi(u)$ proportional to the square root of the conditional squared
+residual, clipped to the permitted probability range. This is the usual
+Neyman allocation principle applied to augmentation residuals.
+
+The same 500 complete calibration records fit smoothed cell means and
+residual moments. Candidate initial forms are empty, the root alone, or
+the root plus one other feature from a path form. Candidate mean validation
+fractions are $0.05,0.1,0.2,0.4,0.7,1$, with $\pi\ge0.02$.
+The initial form and fraction minimize estimated variance times estimated
+cost using calibration alone. We then evaluate exact variance and expected
+cost on the held-out population. Illustrative label costs are
+$c_Y=1,10,100$ feature-answer units; these are sensitivity values, not
+measured medical prices. Branching is charged for its actual mean path
+length, not unused padding questions. The reported coefficient ratio is
+\[
+ \frac{[c_Y+|T|+(m-|T|)\E\pi(U)]\Var(H)}
+      {[c_Y+\E\operatorname{depth}(X)]\Var(Yd)}.
+\]
+This is a large-budget, expected-cost comparison conditional on available
+calibration. The validation decision depends on observed answers and can
+request a complete profile, so it belongs to a relaxed two-phase workflow,
+not to the hard-cap fixed-form class. It does not enforce an exact realized
+total answer budget. It is reported separately from the finite
+total-budget experiments to avoid conflating these constraints.
+
+\input{v7_validation_table}
