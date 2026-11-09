@@ -1,4 +1,4 @@
-# ICML 项目交接包 — v13（第二轮已完成评审并修改；第三轮评审见 ROUND_LOG_v13.md）
+# ICML 项目交接包 — v13（第三轮评审已完成：4/4/3，目标未达成；按用户要求在第四轮修改前暂停。详见 ROUND_LOG_v13.md 与 HANDOFF_v13.md 的“Where to start for round 4”）
 
 论文：**The Statistical Value of Adaptive Feature Queries**（目标 ICML 2027，尚未投稿）。本目录 = v13 的全部新工作；v11/v12 快照不在仓库中（见原交接包）。
 

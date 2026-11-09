@@ -1,4 +1,4 @@
-# Research handoff — v13 (round 2 reviewed, revision in progress -> round 3)
+# Research handoff — v13 (round 3 reviewed: 4/4/3; paused before round 4)
 
 Date: 2026-11-09. Paper: **The Statistical Value of Adaptive Feature Queries** (ICML 2027 target, not submitted). Current draft: `Manuscript/paper.pdf` (main text 8 pages incl. impact statement; appendix in citation order); legacy material: `Manuscript/legacy_supplement.pdf`. Source: `Manuscript/paper.tex` (spine `appendix_v13.tex`). The v11 and v12 snapshots are unchanged; all v13 work lives in this folder.
 
@@ -7,7 +7,14 @@ Date: 2026-11-09. Paper: **The Statistical Value of Adaptive Feature Queries** (
 | --- | --- | --- | --- |
 | 1 | PASS | v11: 3/3/3 | done -> v12 |
 | 2 | PASS (this session; plus a re-check of the new rounds theorem: tree evaluation / Li et al. 2026 are cited, the statistical question is distinct) | v12: R1 3, R2 4, R3 4 (`Reviews/round2_v12_*.md`) | v13 (this folder) |
-| 3 | pending | pending | — |
+| 3 | PASS (web re-check of the v13 contributions; adaptive-inventory papers cited) | v13: R1 4, R2 4, R3 3 (`Reviews/round3_v13_*.md`) | not started (paused at the user's request) |
+
+## Where to start for round 4 (from the round-3 reviews; all three reviewers agree on the first two)
+1. Make the submission self-contained: the appendix still names SUSHI, SAPA, "ten binary tasks", "70 controlled tree tasks", "eight-feature experiment", "v12", "earlier release" and "a separate supplementary report" (sections `v12_moved_v13`, `v8_measurement_v13`, `v9_extensions`, `metric_extensions`, `app_budgetcurve_v13`, `app_repro_v13`, and Figure 4). Either introduce those tasks properly or move every dependent section to `legacy_supplement.tex` and re-derive the Section 8 position-effect numbers (0.5-1.8 SE) on the BRFSS/thyroid/forest tasks that are in the paper.
+2. Presentation (2/4 from all three): shorter abstract with the regime stated (labels free and always observed; no trusted complete reference; degree <= b contrasts), a worked example of V, W, Gamma_P, N_P on a small tree, consistent theorem numbering between main text and appendix, define "binding", "Restr.", "Fix/full", state held-out sizes and the meaning of n0 in the leaf-size rule, rename "model-assisted" to regression imputation, drop the 25x headline.
+3. One experiment that changes the practical picture (R2/R3): a realistic shift where imputation from source records fails while the design-based capped audit stays valid; or exact optimal two-round designs at b=4-6 (column generation over A_r); or a scale demonstration at m >= 20-30 with certified restricted masters.
+4. Theory (R1): discuss LDP interactivity (Joseph-Mao-Neel-Roth 2019; Joseph-Mao-Roth 2020; Acharya et al.) and budgeted learning (Lizotte-Madani-Greiner); exact V_2 numerics on the binary pointer tree at b=3-6 or a tighter polynomial factor in Theorem 3(c); qualify "tight up to polynomial factors" (true for constant r only) and the worst-case-vs-fixed-population caveat in the abstract.
+5. Finish the cap grid (b=4 at m=9,12; b=5) on a machine with hours of compute; see Pitfalls for the commands.
 
 ## What changed from v12 to v13
 Theory: Theorem 3(c) binary pointer tree (near-tight round hierarchy, exponent b−O(r log b)); Corollary on the variance scale of the bracket; Proposition on two-phase self-calibration; main-text statement of the approximately identifiable regime via Phi_n.

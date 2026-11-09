@@ -32,3 +32,13 @@ Additional searches: Rényi effective number of tree paths / path-guessing varia
 - Regression imputation vs MI (`screening_mi_v13/`, BRFSS b=4,5, two targets, 400 replications): regimp RMSE 0.89-0.99 x branching with coverage 0.94-0.96; MI 0.88-0.99.
 - Reference-law predictor (`predictor_v13.csv`, 288 rows): screening Spearman 0.78 over 48 runs, never exceeds the lower end, 31/31 rule; forests Spearman 0.52 over 240 tasks, realized below the reference lower end in 75.
 - Manuscript: main text + impact statement end at the bottom of page 8, references start on page 9, 49 pages total, 0 unresolved references; legacy supplement 19 pages, 0 unresolved references. Review packet: `review_v13/` (49 pages, 204k chars).
+
+## Round 3 — simulated ICML 2027 reviews of v13 (fresh agents, same template and profiles; 2026-11-09)
+| Reviewer | Profile | Overall | Conf. | Sound/Pres/Sig/Orig |
+| --- | --- | --- | --- | --- |
+| R1 | learning theory / TCS | 4 Weak accept | 4 | 4/2/3/3 |
+| R2 | missing data / survey statistics | 4 Weak accept | 4 | 3/2/3/3 |
+| R3 | applied ML evaluation | 3 Weak reject | 4 | 3/2/3/3 |
+Full texts: `Reviews/round3_v13_R*.md`. Goal (all three >= 4) NOT met: R1 moved 3 -> 4 (proofs of Theorems 1-4 and Prop. 5 verified, Theorem 3(c) singled out as the most interesting contribution), R2 stayed at 4, R3 dropped 4 -> 3 (practical value "partly self-refuted" by the imputation result, toy scale, non-self-contained appendix).
+Common majors: (1) appendix references experiments the paper never introduces (SUSHI/SAPA, "ten binary tasks", "70 controlled tree tasks", "eight-feature experiment", "v12", "earlier release", "separate supplementary report"), and the Section 8 position-effect numbers (0.5-1.8 SE) rest on them; (2) main text too dense, Presentation 2 from all three; (3) realized gains 1-2x are matched by regression imputation / MI whenever complete source records exist, so the regime (no trusted complete reference, labels free, degree <= b contrasts) must be stated in the abstract; (4) exact computations stop at m <= 12 and the b=4 cells at m >= 9 were left incomplete; (5) Theorem 3(c) informative only for b >= 10 while experiments live at b <= 6; (6) 25x headline against a straw man; R1 also asks for the LDP interactivity literature (Joseph-Mao-Neel-Roth 2019; Joseph-Mao-Roth 2020) and budgeted learning (Lizotte-Madani-Greiner); R2 asks for held-out sample sizes, the meaning of n0 in the leaf-size rule, and a tighter upper end of the bracket; R2 and R3 both ask for a realistic shift where imputation from source records fails while the design-based audit stays valid, and for exact optimal two-round constants at b=4-6.
+Paused after this round at the user's request; no round-4 revision started.
