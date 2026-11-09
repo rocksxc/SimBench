@@ -1,0 +1,31 @@
+\section{Experiments}\label{sec:experiments}
+We compute the constants of Sections~\ref{sec:general}--\ref{sec:population} exactly for trained models with the solver of Section~\ref{sec:population}. Every population $P$ is a held-out or target empirical law mixed with a uniform mass of $1\%$ over profiles and labels, which gives full support; every design is pointwise unbiased; and every reported constant is certified by primal and dual bounds that agree to a relative error of at most $10^{-4}$. We report $W_{\rm fixed}/W_r$, the factor by which the best design of a class needs more records than the best branching design. Oracle designs are optimized at $P$; fitted designs are optimized on separate reference records and evaluated at $P$. Protocols, sample sizes, per-task values and sensitivity analyses are in Appendix~\ref{app:F}.
+
+\paragraph{Forest updates across caps.}
+On WDBC, Spambase and Ionosphere \citep{wolberg1993,spambase1999,ionosphere1989}, an old and a new random forest of twenty depth-$b$ trees are trained on disjoint records with $m\in\{6,9,12\}$ median-binarized features, and the remaining 269, 3,101 and 171 records define $P$. XXFORESTTEXT
+
+\input{v14_capgrid_table}
+
+\paragraph{Screening questionnaires.}
+A depth-$b$ screening tree asks at most $b$ questions per person, so a validation study under the same burden must respect the cap. We train class-balanced CART trees on twelve yes/no items of the CDC Diabetes Health Indicators, derived from the Behavioral Risk Factor Surveillance System (BRFSS; 253,680 respondents, target diabetes or prediabetes) \citep{cdcdiabetes2017}, and on twelve binarized thyroid items (7,200 patients, abnormal function) \citep{quinlan1986thyroid}, and validate them on a disjoint random half or on respondents of the other sex. Branching asks the tree's own questions and attains the full-information variance. XXSCREENTEXT
+
+\input{v14_screening_table}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figures/v14_rounds.pdf}
+\caption{Records needed relative to branching as a function of the number of rounds ($r=1$: fixed forms; $r=b$: branching). (a) BRFSS screening trees, exact optimal $r$-round designs (median over targets and seeds); crosses mark the heuristic second round of following the root question; dotted segments join round counts that were not computed. (b) Binary pointer tree under the uniform law, a lower bound on $V_r$ (Appendix~\ref{app:pointerexact}); dotted lines are the upper bounds $2^{b-r}$ of Theorem~\ref{thm:rounds}(a).}
+\label{fig:rounds}
+\end{figure}
+
+\paragraph{All 21 survey variables.}
+XXSCALETEXT
+
+\paragraph{Information versus design.}
+XXSHIFTTEXT
+
+\paragraph{Order effects.}
+XXORDERTEXT
+
+\paragraph{A real planned-missing archive.}
+PISA 2012 assigned three questionnaire forms at random, and no U.S. student answered all nine predictors of our block-averaged forest ensembles; every block pair appears on a form, so a Brier contrast is identifiable from the actual menu, and optimized form scores, a block-pair Horvitz--Thompson score and multiple imputation agree (Appendix~\ref{app:pisa}). The archive demonstrates identification from real fixed forms and has no branching counterfactual.

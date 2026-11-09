@@ -1,0 +1,45 @@
+\begin{table}[h]
+\centering
+\caption{Pre-specified shifts on BRFSS: simulated audits with $n=1000$ target respondents and 400 replications. Bias, SD and RMSE are multiplied by 100; coverage of nominal 95\% intervals has Monte Carlo standard error about 0.011. TV: total variation distance between source and target item profiles.}
+\label{tab:shift}
+\scriptsize
+\setlength{\tabcolsep}{2.6pt}
+\begin{tabular}{lrrlrrrrr}
+\toprule
+Shift & $b$ & TV & Design & Bias & SD & RMSE & Coverage & Width \\
+\midrule
+sex & 4 & 0.21 & branching & 0.05 & 3.06 & 3.05 & 0.953 & 11.69 \\
+ &  &  & fitted fixed form & 0.06 & 3.12 & 3.11 & 0.948 & 11.89 \\
+ &  &  & regression imputation & 0.32 & 3.01 & 3.03 & 0.940 & 11.50 \\
+ &  &  & multiple imputation & 0.33 & 3.02 & 3.03 & 0.955 & 11.87 \\
+sex & 5 & 0.21 & branching & 0.08 & 2.89 & 2.89 & 0.965 & 11.42 \\
+ &  &  & fitted fixed form & 0.11 & 3.44 & 3.44 & 0.938 & 13.12 \\
+ &  &  & regression imputation & -0.45 & 2.80 & 2.84 & 0.948 & 10.72 \\
+ &  &  & multiple imputation & -0.47 & 2.81 & 2.85 & 0.983 & 12.22 \\
+education & 4 & 0.47 & branching & 0.08 & 3.12 & 3.12 & 0.948 & 12.28 \\
+ &  &  & fitted fixed form & -0.06 & 3.60 & 3.60 & 0.960 & 14.20 \\
+ &  &  & regression imputation & 2.39 & 2.79 & 3.67 & 0.863 & 11.28 \\
+ &  &  & multiple imputation & 2.38 & 2.83 & 3.69 & 0.920 & 13.27 \\
+education & 5 & 0.47 & branching & 0.04 & 3.11 & 3.11 & 0.950 & 12.25 \\
+ &  &  & fitted fixed form & -0.03 & 3.39 & 3.38 & 0.953 & 13.28 \\
+ &  &  & regression imputation & 1.67 & 2.96 & 3.39 & 0.902 & 11.76 \\
+ &  &  & multiple imputation & 1.66 & 2.97 & 3.39 & 0.935 & 12.73 \\
+cost barrier & 4 & 0.41 & branching & -0.09 & 3.23 & 3.22 & 0.945 & 12.01 \\
+ &  &  & fitted fixed form & -0.18 & 3.80 & 3.80 & 0.943 & 14.75 \\
+ &  &  & regression imputation & 0.39 & 2.82 & 2.85 & 0.930 & 10.76 \\
+ &  &  & multiple imputation & 0.39 & 2.84 & 2.86 & 0.980 & 13.31 \\
+cost barrier & 5 & 0.41 & branching & 0.01 & 3.13 & 3.12 & 0.935 & 11.75 \\
+ &  &  & fitted fixed form & -0.10 & 3.89 & 3.89 & 0.938 & 14.45 \\
+ &  &  & regression imputation & -0.72 & 2.84 & 2.93 & 0.925 & 10.58 \\
+ &  &  & multiple imputation & -0.70 & 2.92 & 3.00 & 0.960 & 13.01 \\
+poor health & 4 & 0.68 & branching & 0.21 & 3.17 & 3.17 & 0.950 & 12.39 \\
+ &  &  & fitted fixed form & 0.23 & 3.23 & 3.23 & 0.950 & 12.59 \\
+ &  &  & regression imputation & 0.65 & 3.15 & 3.21 & 0.960 & 12.23 \\
+ &  &  & multiple imputation & 0.65 & 3.15 & 3.22 & 0.965 & 12.57 \\
+poor health & 5 & 0.68 & branching & 0.09 & 3.17 & 3.16 & 0.945 & 12.37 \\
+ &  &  & fitted fixed form & 0.14 & 3.94 & 3.94 & 0.940 & 15.04 \\
+ &  &  & regression imputation & 5.49 & 2.96 & 6.24 & 0.515 & 11.44 \\
+ &  &  & multiple imputation & 5.48 & 2.96 & 6.23 & 0.667 & 13.23 \\
+\bottomrule
+\end{tabular}
+\end{table}

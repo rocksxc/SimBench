@@ -1,0 +1,118 @@
+\section{Calibration Transport, Cost Crossovers, and Budget Curves}
+\subsection{Cross-Age Calibration and Proper Scores}\label{app:transfer}
+The protocol is fixed in \texttt{PROTOCOL\_v10.json}. Each of the 25 SAPA
+targets uses the same twenty target-excluding features as the main
+benchmark. We apply permutation seed 20261106 before dropping records
+missing a selected feature, target, or age. The first 800 records fit the
+depth-six tree with minimum leaf size 25 and tree seed 623. They belong
+to neither calibration nor evaluation. Age at most 25 defines the younger
+group and age above 25 the older group. Each group's first 500 remaining
+records form its reference sample; its remaining 305--370 records define
+the empirical evaluation law. Both directions are reported for every task.
+The matched reference is an explicitly additional diagnostic resource,
+not an assumed input to the source-reference audit. Conditional on the
+frozen model, target-representative complete records permit direct
+estimation whenever they are available.
+
+We compare probability-matching accuracy, threshold accuracy, Brier
+improvement and log-loss improvement clipped at 0.01 and 0.99. The loss
+tables use the same frozen root and leaf probabilities in every condition.
+Each target is constant on the same tree leaves, so branching calculates
+it using at most six features. The form program uses all observed form
+coordinates and separate constraints for each label. Its marginal
+reference tables mix the 500-record frequencies with 0.1 times the uniform
+law on each form--label space. This shrinkage and the probability floor
+$q_T\ge0.1/L$ are fixed before evaluation, without target-population tuning.
+No whole-profile enumeration is needed for this fit.
+
+For every source-fitted and matched-fitted score we compute conditional
+means and variances by exact finite sums over target records and random
+form assignment. We also draw 1,000 independent audits of size 1,000 and
+evaluate ordinary sample-variance Wald intervals. Numerical mean errors
+and algebraic constraint residuals are released. Coverage summaries average
+conditional simulations, with per-task Monte Carlo errors supplied; they
+do not estimate deployment-level uncertainty from 50 independent cohorts.
+Two thresholded tasks have identically zero contrasts in both directions
+and are reported separately. All other task/metric/direction combinations
+are included irrespective of the observed efficiency ratio.
+
+\input{v10_transfer_detail}
+
+The source-reference direct mean is also reported as a transport diagnostic.
+Its discrepancy from the target mean combines group differences and
+finite reference/evaluation samples. Counting whether its conventional
+500-record interval contains the empirical target is descriptive; it is
+not a repeated-sampling coverage estimate for a population-level age effect.
+Pointwise-unbiased form scores use source data only to choose variance,
+and target audit records to estimate the target mean.
+
+\subsection{Complete Records and Intermediate Label Cost}\label{app:cost10}
+For fixed fitted scores and a common target population, let
+$\sigma_F^2=\rho\sigma_B^2$ denote fixed and branching variances. Complete
+records compute the branching target directly and have variance
+$\sigma_B^2$. Ignoring the integer rounding of a planned sample size,
+the ratio of total costs for equal variance is
+\[
+ \frac{C_F}{C_{\rm complete}}=\rho\frac{c_Y+b}{c_Y+m}.
+\]
+Solving its equality with one yields \eqref{eq:costcross}. If $\rho=1$
+and $b<m$, the fixed design remains cheaper at every finite label cost;
+if $m-b\rho\le0$, complete acquisition is weakly cheaper for all
+nonnegative label costs. The released rows also use exact integer planning
+counts $n_B,n_F$ and their crossover
+$(mn_B-bn_F)/(n_F-n_B)$ whenever $n_F>n_B$.
+The same-population complete-reference half-width is
+$1.95996398454\sqrt{\sigma_B^2/500}$.
+
+Complete acquisition is admissible only in the relaxed-cap comparison.
+Randomly validating a subset of a larger enrolled cohort incurs a different
+cost if labels are obtained on every enrollee. The residual-correction
+comparator charges that cost explicitly; direct full-record sampling
+enrols only the records it actually observes. This distinction is necessary
+when label costs are substantial.
+
+The all-task cost and precision calculations use all 70 existing frozen
+score variances. Branching path lengths are recomputed from the same
+frozen training protocol, with exact target-variance agreement checked.
+Label costs are $0,1,3,10,30,100$. The ten-task correction diagnostic
+reoptimizes its source-calibrated candidate forms, validation fractions and
+within-form strata at $c_Y=10$, using the same candidate grid as
+Appendix~\ref{app:validation}. Its new conditional coverage simulation has
+2,000 audits per task. No calibration or pilot cost is silently included
+in the per-record costs: the displayed comparisons condition on a supplied
+reference, whereas Appendix~\ref{app:em} charges fresh capped calibration.
+
+\input{v10_cost_detail}
+
+\subsection{Identification Floors Across the Whole Budget Range}\label{app:budgetcurve}
+We reuse the twenty binary12 prediction grids from
+Appendix~\ref{app:nonlinear}, with no refitting or seed selection.
+For each cap from zero to twelve, we seek feasible primal and dual
+certificates for
+$\delta_b=\inf_{\deg(v)\le b}\|d-v\|_\infty$.
+The target comparison is with the fixed tolerance 0.025. Let $F_b$ contain
+the degree-at-most-$b$ Walsh columns. When the complementary set is
+smaller, an equivalent residual program minimizes $\|r\|_\infty$ subject
+to $F_{>b}^{\mathsf T}r=F_{>b}^{\mathsf T}d$; then $d-r$ has degree at
+most $b$. The code chooses the smaller coefficient representation.
+
+Every LP has a 45-second solver limit. A feasible Fourier truncation and
+its high-degree residual supply bounds if the optimizer does not finish.
+Primal coefficients are rounded to multiples of $2^{-36}$. Rounded dual
+vectors are projected exactly onto the high-degree Walsh subspace with
+integer transforms. Exact rational evaluation against the released
+binary64 targets gives certified endpoints, independently of solver status.
+At cap twelve the identity approximation has zero error exactly. A narrow
+bracket is not assumed when a solve reaches its time limit.
+
+Because $\delta_b$ is nonincreasing, bounds from other budgets tighten
+each bracket without changing its validity: the lower endpoint at $b$ is
+the largest lower endpoint over budgets at least $b$, and its upper
+endpoint is the smallest upper endpoint over budgets at most $b$.
+For each task we report the last budget certified insufficient and the
+first budget with an approximation residual strictly below 0.025.
+Budgets between these endpoints are unresolved by the released
+certificates. Crossing this approximation threshold permits, but does
+not by itself provide, a finite-sample interval of that half-width.
+
+\input{v10_budget_detail}

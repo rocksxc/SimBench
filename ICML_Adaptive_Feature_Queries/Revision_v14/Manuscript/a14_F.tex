@@ -1,0 +1,64 @@
+\section{Experimental Details}\label{app:F}
+Every experiment of Section~\ref{sec:experiments} is described here; no other experiment is used anywhere in the paper.
+
+\subsection{Data, Populations and Software}\label{app:capsens}
+\paragraph{Data.}
+WDBC (569 records, 30 continuous features) comes from scikit-learn \citep{wolberg1993}; Spambase (4,601 records) and Ionosphere (351 records) from the PMLB mirror of the UCI files \citep{spambase1999,ionosphere1989,romano2021pmlb}; the CDC Diabetes Health Indicators (253,680 respondents of the 2015 Behavioral Risk Factor Surveillance System) from a public mirror of the Kaggle release referenced by the UCI entry \citep{cdcdiabetes2017}; and the thyroid files (7,200 patients) from public mirrors of the UCI release \citep{quinlan1986thyroid}. Each mirror was checked by reproducing values computed from the original downloads to nine decimals, which also confirms the record order.
+
+\paragraph{Populations.}
+Every population $P$ is an empirical law of held-out or target records mixed with a uniform mass $\alpha$ over all profiles and both labels, $\alpha=1\%$ unless stated. Full support makes $W_\A(P)/n$ a local minimax risk (Proposition~\ref{prop:local}) and keeps every cell mass positive. Oracle designs are optimized at $P$; fitted designs are optimized on a reference law (training or source records, smoothed with $\alpha=10\%$) with a floor of $5\%/L$ on each of the $L$ interview probabilities of the final master problem, and evaluated at $P$. Every design is pointwise unbiased, so oracle and fitted designs differ only in variance.
+
+\paragraph{Software.}
+Python 3.13.5, NumPy 2.5.4, SciPy 1.18.1, scikit-learn 1.9.1, pandas 3.1.1, CVXPY 1.9.3 with Clarabel 0.11.1, single-threaded. All constants are computed by the solver of Appendix~\ref{app:engine}; it reproduces the values of an independent dense implementation on every overlapping task.
+
+\subsection{Forest Updates}\label{app:forestexact}
+\paragraph{Protocol.}
+For each dataset and seed, a random permutation assigns $n_{\rm old}$ records to train the old forest, the next $n_{\rm new}$ to train the new forest, and the remaining $n_{\rm eval}$ records to the evaluation law: $(n_{\rm old},n_{\rm new},n_{\rm eval})=(100,200,269)$ for WDBC, $(500,1000,3101)$ for Spambase and $(60,120,171)$ for Ionosphere. Continuous features are binarized at their training medians; $m$ features are chosen at equally spaced positions of the eligible feature list, without labels. Each forest has twenty trees of depth $b$, $\sqrt m$ features per split and minimum leaf size $\max\{3,n_{\rm old}/30\}$. The contrast $d$ is the difference of the two forests' predicted probabilities on the cube; it has degree at most $b$. The cap is binding for $m>b$. At $b=3$ twenty splits per $(m,\text{dataset})$ cell are used; at $b\in\{2,4,5\}$ five splits. At $m=12$ the held-out records occupy a median of 171, 388 and 121 of the 4,096 profiles for WDBC, Spambase and Ionosphere (ranges 164--180, 373--405 and 113--130 over twenty splits). Spambase, whose 3,101 held-out records cover few profiles densely, gives a median exact ratio of 1.58 at $b=3$, $m=12$, close to WDBC (1.66) and Ionosphere (1.73), so the gains are not an artifact of sparse held-out sets; Appendix~\ref{app:capsens} also varies the smoothing mass and resamples the held-out records.
+
+\paragraph{Designs and certificates.}
+The fixed constant optimizes over all $\binom mb$ forms; the branching constant over all depth-$b$ trees by column generation. The restricted menu adds only the forty component trees to the forms; at $b\ge4$ their short paths are padded to depth $b$, a refinement within the cap, so the restricted-menu ratios at $b\ge4$ are slightly more favourable to branching than at $b\le3$. At $b\in\{4,5\}$ column generation stops when the certified bounds agree to relative error $10^{-4}$ or no tree improves the master; over the 15 tasks computed with the new solver the largest relative gap of the reported ratio is 2e-08, the median number of iterations 28 and the median time 40 seconds per task on one core. At $b\in\{2,3\}$ the dense implementation certified every task to $10^{-6}$.
+
+\input{v12_forest_table}
+\input{v14_capgrid_detail}
+
+\paragraph{Smoothing mass and resampling.}
+For the fifteen $b=3$ tasks with $m=12$ (five splits per dataset) the exact constants are recomputed with $\alpha\in\{0.1\%,1\%,5\%,10\%\}$ and, at $\alpha=1\%$, on bootstrap resamples of the held-out records with the forests fixed.
+\input{v13_sensitivity_detail}
+
+\paragraph{Predicting the gain from reference data.}
+For every forest task at $b\in\{2,3,4\}$ (the grid available when this analysis was run) and every screening run, the lower end of the variance-scale bracket of Theorem~\ref{thm:bracket} is recomputed on the reference law alone and compared with the realized exact ratio.
+\input{v13_predictor_detail}
+The decision rule \emph{lower end at most 1.05 $\Rightarrow$ do not plan for a gain} has no misses in these data: all 17 screening runs with a realized gain above 1.25 have a reference lower end above 1.05, all 31 runs with a lower end at most 1.05 realize at most 1.25, and none of the 214 forest tasks with a realized gain above 1.25 has a lower end at most 1.05. The lower end is conservative for forests, where no single tree computes the contrast.
+
+\subsection{Screening Questionnaires}\label{app:screening}\label{app:screendetail}
+\paragraph{Items and targets.}
+BRFSS items: high blood pressure, high cholesterol, body-mass index at least 30, smoking, stroke, heart disease, physical activity, heavy drinking, fair or poor general health, difficulty walking, age 60 or older, and income in the five lowest categories; the target is the diabetes-or-prediabetes indicator. Thyroid items: age above its upper quartile, sex, thyroxine treatment, thyroid surgery, query hypothyroid, goitre, TSH above its upper quartile, T3, TT4 and FTI below their lower quartiles, T4U above its upper quartile, and sickness, with quartiles from the training file and no labels; the target is any abnormal class.
+
+\paragraph{Splits and trees.}
+For the random-half target, a random half of the records is the source; for the shifted target, the source is one sex and the target the other. Up to 20,000 source records train a class-balanced CART tree of depth $b$ (minimum leaf size 50 for BRFSS, 10 for thyroid); up to 20,000 further source records are the reference for fitted designs. The estimand is the target accuracy of the tree's decision, $d\in\{-1,1\}$, so $M_{\rm branch}=\E[t^2]=1$ and branching attains the full-information variance. Seeds $0,1,2$ vary the split and the tree.
+
+\paragraph{Designs.}
+Best: the optimal fixed design over all $\binom{12}b$ forms. Fitted: the same program on the source reference. PS: the optimized path-set design of Proposition~\ref{prop:uppermain}, at the target law and fitted. Guess: uniform path guessing with completion-only scores, second moment $K\E_P[t^2]$ for $K$ path sets. Two (heuristic): follow the root question, then use the best fixed form of the remaining size in the reached subcube. $r$-round (exact): the certified optimum over all $r$-round interviews. Lower: $1/\Gamma_P$ on the variance scale. Upper: $N_P$ on the variance scale.
+\input{v14_screening_detail}
+
+\subsection{All Twenty-One BRFSS Variables}\label{app:scale}
+All 21 variables of the CDC file are binarized at pre-specified cut points: high blood pressure, high cholesterol, cholesterol check, body-mass index at least 30, smoking, stroke, heart disease, physical activity, fruit, vegetables, heavy drinking, any health coverage, cost barrier to a doctor visit, fair or poor general health, at least 14 days of poor mental health, at least 14 days of poor physical health, difficulty walking, sex, age 60 or older, no college education, and income in the five lowest categories. Splits, trees and references are as for the twelve-item study (random-half target). The form program has $\binom{21}b$ forms, 1,330 at $b=3$ and 5,985 at $b=4$, and the profile cube has $2^{21}$ elements; the solver never enumerates the cube, and at $b=4$ one master problem over all forms certifies the optimum. Exact two-round optima and the cap $b=5$ were not completed at $m=21$ within the compute budget of this version.
+\input{v14_scale_table}
+
+\subsection{Imputation From Complete Source Records}\label{app:regimp}\label{app:shift}
+\paragraph{Simulated audits.}
+Each replication draws $n=1000$ target respondents with replacement; 400 replications per setting. Branching averages $t$. The fixed-form score draws a form from the fitted design and averages its score. Regression imputation uses the same observed forms and answers and replaces $t$ by its conditional mean given the asked items and the label among the complete source records, with a naive standard error. Multiple imputation draws, for each of ten imputations, Bayesian-bootstrap weights over the source records, imputes the unasked items of each respondent from a donor that agrees on the asked items and the label, and combines by Rubin's rules. Truth is the contrast on the full target sample. Regression imputation and MI use information that the capped audit does not collect: complete records whose conditional law of unasked items is assumed to transport to the target.
+
+\paragraph{Pre-specified shifts.}
+Before any result was computed we fixed four shifts defined by variables outside the twelve items: sex (female source, male target), education (college graduates, target without education beyond high school), cost barrier (no cost barrier to a doctor visit, target with a cost barrier) and physical-health burden (no poor physical-health days in the past month, target with at least 14). All four are reported. Table~\ref{tab:regimp} gives the random-half target and Table~\ref{tab:shift} the four shifts.
+\input{v13_mi_table}
+\input{v14_shift_table}
+
+Under the random-half target, MI intervals over-cover (0.975--0.993), so Rubin\textquotesingle s variance is conservative there. For a frozen imputation bias $\mathfrak b_I$ and per-record variances $\sigma_I^2$ and $\sigma_U^2$ of the imputation and design-based estimators, imputation has the smaller mean squared error exactly when $n\mathfrak b_I^2<\sigma_U^2-\sigma_I^2$, so a biased imputation can win at small $n$ and lose as the audit grows.
+
+\subsection{When Asking Changes the Answer}\label{app:measurement}
+Let $P$ describe latent complete records and let $K_T$ be the distribution of the recorded transcript given a latent record under form $T$. A frozen score then estimates $\E_{P,q,K}H_T(O_T)$, which can differ from $\Delta$; a branching policy has its own sequential kernel. We compute the resulting biases exactly on the screening trees of Appendix~\ref{app:screening}. The answer at query position $j=1,\ldots,b$ flips independently with probability $\epsilon(j-1)/(b-1)$, so the first answer is exact and the last flips with probability $\epsilon$; labels are unchanged. Branching routes on the recorded answers; fixed forms ask their coordinates in increasing index order and use the fitted design's scores. Summing over all $2^b$ flip patterns gives the exact mean and second moment of each design at the target law. This is an illustrative position model, not an estimated response-error process.
+\input{v14_position_table}
+
+\subsection{Cost Regimes Under a Relaxable Cap}\label{app:costchoice}
+Suppose each feature costs one unit and each label $c$ units, and the cap may be relaxed. A complete record costs $c+m$ and attains the full-information variance $\sigma_P^2$; a capped record costs at most $c+b$. For a screening tree, branching attains $\sigma_P^2$ at cost $c+b$ and therefore dominates complete records. Complete records are cheaper than the best fixed design exactly when $(c+m)/(c+b)<W_{\rm fixed}/\sigma_P^2$, that is, when $c>(m-\rho b)/(\rho-1)$ with $\rho=W_{\rm fixed}/\sigma_P^2$. For the BRFSS trees ($m=12$) the median $\rho$ is 1.49, 1.35, 1.58 at $b=4, 5, 6$, so complete records undercut the best fixed design once a label costs more than about 12, 15, 4 feature questions, respectively, while branching is never undercut. Under an immutable cap the complete-record alternative is unavailable.

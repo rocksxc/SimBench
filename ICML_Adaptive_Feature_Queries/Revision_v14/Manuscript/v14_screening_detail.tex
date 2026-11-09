@@ -1,0 +1,29 @@
+\begin{table}[h]
+\centering
+\caption{All screening settings (medians over three seeds). Ratios are records needed relative to branching. Best/Fitted: optimal and fitted fixed designs; PS: optimized path-set design (oracle/fitted); Guess: uniform path guessing; H2: heuristic two-round design; $r$: exact optimal $r$-round design; Lower, $N_P$: ends of Theorem~\ref{thm:bracket}.}
+\label{tab:screeningdetail}
+\scriptsize
+\setlength{\tabcolsep}{2.2pt}
+\begin{tabular}{lllrrrrrrrrrrrr}
+\toprule
+Data & $b$ & Target & Acc. & Paths & Best & Fitted & PS & PS fit & Guess & H2 & $r{=}2$ & $r{=}3$ & Lower & $N_P$ \\
+\midrule
+BRFSS & 3 & random half & 0.629 & 2 & 1.00 & 1.04 & 1.00 & 1.00 & 2.1 & 1.00 & 1.00 & -- & 1.00 & 1.5 \\
+BRFSS & 3 & other sex & 0.741 & 1 & 1.00 & 1.04 & 1.00 & 1.00 & 1.0 & 1.00 & 1.00 & -- & 1.00 & 1.0 \\
+BRFSS & 4 & random half & 0.664 & 4 & 1.46 & 1.52 & 1.50 & 1.52 & 4.3 & 1.14 & 1.00 & 1.00 & 1.17 & 3.3 \\
+BRFSS & 4 & other sex & 0.681 & 4 & 1.52 & 1.61 & 1.57 & 1.62 & 4.5 & 1.13 & 1.00 & 1.00 & 1.18 & 3.9 \\
+BRFSS & 5 & random half & 0.675 & 7 & 1.28 & 1.32 & 1.28 & 1.29 & 7.8 & 1.15 & 1.02 & 1.00 & 1.04 & 5.1 \\
+BRFSS & 5 & other sex & 0.734 & 6 & 1.43 & 1.52 & 1.44 & 1.50 & 7.6 & 1.27 & 1.00 & 1.00 & 1.13 & 6.6 \\
+BRFSS & 6 & random half & 0.719 & 14 & 1.53 & 1.58 & 1.53 & 1.56 & 17.4 & 1.40 & -- & -- & 1.13 & 11.8 \\
+BRFSS & 6 & other sex & 0.722 & 13 & 1.60 & 1.70 & 1.65 & 1.70 & 16.0 & 1.39 & 1.00 & 1.00 & 1.13 & 10.9 \\
+Thyroid & 3 & random half & 0.823 & 3 & 1.00 & 1.04 & 1.00 & 1.00 & 4.4 & 1.00 & 1.00 & -- & 1.00 & 3.3 \\
+Thyroid & 3 & other sex & 0.819 & 3 & 1.00 & 1.04 & 1.00 & 1.01 & 4.4 & 1.00 & 1.00 & -- & 1.00 & 3.6 \\
+Thyroid & 4 & random half & 0.823 & 3 & 1.00 & 1.04 & 1.00 & 1.00 & 4.5 & 1.00 & 1.00 & 1.00 & 1.00 & 3.4 \\
+Thyroid & 4 & other sex & 0.848 & 4 & 1.00 & 1.04 & 1.00 & 1.01 & 6.8 & 1.00 & 1.00 & 1.00 & 1.00 & 5.0 \\
+Thyroid & 5 & random half & 0.823 & 6 & 1.00 & 1.03 & 1.00 & 1.00 & 9.7 & 1.00 & 1.00 & 1.00 & 1.00 & 6.3 \\
+Thyroid & 5 & other sex & 0.848 & 5 & 1.00 & 1.04 & 1.00 & 1.01 & 8.7 & 1.00 & 1.00 & 1.00 & 1.00 & 5.8 \\
+Thyroid & 6 & random half & 0.823 & 7 & 1.00 & 1.03 & 1.00 & 1.00 & 11.4 & 1.00 & 1.00 & 1.00 & 1.00 & 6.7 \\
+Thyroid & 6 & other sex & 0.848 & 5 & 1.00 & 1.04 & 1.00 & 1.01 & 8.7 & 1.00 & 1.00 & 1.00 & 1.00 & 6.1 \\
+\bottomrule
+\end{tabular}
+\end{table}

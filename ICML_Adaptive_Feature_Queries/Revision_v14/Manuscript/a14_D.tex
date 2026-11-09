@@ -1,0 +1,190 @@
+\section{Rounds of Adaptivity}\label{app:D}
+\subsection{Rounds of Adaptivity}\label{app:roundshier}
+\paragraph{Interviews with $r$ rounds.}
+An $r$-round interview chooses coordinate batches
+$B_1,\;B_2(x_{B_1}),\;\ldots,\;B_r(x_{B_1\cup\cdots\cup B_{r-1}})$.
+Each batch is a function of the answers to earlier batches only, and
+$\sum_s|B_s|\le b$ on every input. Let $\A_r(b)$ be the finite menu of
+deterministic $r$-round interviews and $V_r(d,b)=V(d,\A_r(b))$; randomized
+interviews are mixtures and are already represented by the design
+probabilities in \eqref{eq:unbiasedprogram}. Fixed forms are $\A_1(b)$.
+Sequentializing each batch shows that every $r$-round interview is a depth-$b$
+tree, and a depth-$b$ tree is a $b$-round interview with one query per round.
+Hence $\A_1(b)\subseteq\A_2(b)\subseteq\cdots\subseteq\A_b(b)=\A_{\rm branch}(b)$
+and $V_1\ge V_2\ge\cdots\ge V_b=V_{\rm branch}$. All menus identify the same
+contrasts, $\deg(d)\le b$, because the two extreme menus do
+(Appendix~\ref{app:id}). Theorems~\ref{thm:finite} and~\ref{thm:asym} apply to
+each finite menu $\A_r(b)$, so the lower bounds below hold against biased,
+sequential and label-dependent procedures.
+
+\begin{theorem}[Rounds of adaptivity, full statement of Theorem~\ref{thm:rounds}]\label{thm:roundsfull}
+\textup{(a)} For $1\le r\le b\le m$ and every nonzero contrast of degree at most $b$ on $\{-1,1\}^m$,
+\[
+ V_{\rm branch}(d,b)\le V_r(d,b)\le
+ \min\Big\{2^{b-r},\binom{m-r}{b-r}\Big\}\,V_{\rm branch}(d,b).
+\]
+\textup{(b)} For integers $r,\kappa\ge1$ put $D=2^\kappa$ and $b=r\kappa+1$.
+The pointer-chasing contrast $N_{r,\kappa}$ defined below satisfies
+\[
+ V_{r+1}(N_{r,\kappa},b)=V_{\rm branch}(N_{r,\kappa},b)=1,\qquad
+ \frac{D}{b}\le V_r(N_{r,\kappa},b)\le D.
+\]
+\end{theorem}
+
+\begin{corollary}[Two rounds can be exponentially worse than branching]\label{cor:tworounds}
+For every $b\ge3$,
+\[
+ \sup_{m,d}\frac{V_2(d,b)}{V_{\rm branch}(d,b)}\ \ge\ \frac{2^{\lfloor(b-1)/2\rfloor}}{b},
+ \qquad
+ \sup_{m,d}\frac{V_r(d,b)}{V_{r+1}(d,b)}\ \ge\ \frac{2^{\lfloor(b-1)/r\rfloor}}{b}
+ \quad(1\le r<b).
+\]
+\end{corollary}
+\begin{proof}
+Take $\kappa=\lfloor(b-1)/r\rfloor\ge1$ and $N_{r,\kappa}$, which uses
+$r\kappa+1\le b$ queries along every path. Branching and $(r+1)$-round
+interviews still compute it exactly under the larger cap $b$, while the hit
+bound in the proof of part (b) uses only the total number $b$ of queries.
+For the first display use $r=2$ and $V_{\rm branch}\le V_3$.
+\end{proof}
+
+The constant separation $V_2\ge4/3$ of Corollary~\ref{cor:roundseparation}
+is therefore not the end of the hierarchy. Part (b) and the corollary place
+the exponent for $2\le r<b$ between $\lfloor(b-1)/r\rfloor-\log_2b$ and $b-r$;
+the binary pointer tree (Theorem~\ref{thm:binarytree}) raises the lower end to
+$b-1-r\log_2(3b)$, and Appendix~\ref{app:pointerexact} computes the constants of
+that tree exactly at small caps.
+
+\paragraph{Proof of part (a).}
+The left inequality is menu inclusion. For the right inequality pad a
+depth-$b$ tree $\tau$ as in Appendix~\ref{app:universal}, so that every path
+has $b$ distinct coordinates. In rounds $1,\ldots,r-1$ ask one question per
+round and follow $\tau$ exactly. This reaches a node $v$ of depth $r-1$,
+whose padded subtree has depth $b-r+1$. Its path sets all contain the subtree
+root and are determined by the first $b-r$ answers below $v$; hence their
+number $L_v$ is at most $2^{b-r}$, and also at most $\binom{m-r}{b-r}$
+because the remaining $b-r$ coordinates are chosen from the $m-r$
+coordinates not on the followed prefix or at $v$. In round $r$ choose one of
+these $L_v$ sets uniformly, independently of the person, and attempt to
+complete the path. On completion return $L_v$ times the tree score and
+otherwise zero. Conditionally on $x$ the mean equals the tree score and the
+second moment is $L_v$ times its square. The mixture and merging argument of
+Appendix~\ref{app:universal} applies verbatim to randomized branching
+designs, so every feasible branching design is simulated with second
+moment inflated by at most $\max_vL_v$.
+
+\paragraph{The pointer-chasing contrast.}
+Levels $\ell=1,\ldots,r$ consist of registers. Level $\ell$ has $D^{\ell-1}$
+registers $R_\ell(i_1,\ldots,i_{\ell-1})$, indexed by
+$(i_1,\ldots,i_{\ell-1})\in[D]^{\ell-1}$, and each register stores $\kappa$
+binary coordinates encoding an element of $[D]$. There are $D^r$ data
+coordinates $Z_{i_1\cdots i_r}$. The pointer path is $j_1=R_1$ and
+$j_\ell=R_\ell(j_1,\ldots,j_{\ell-1})$, and
+\[
+ N_{r,\kappa}(x)=Z_{j_1\cdots j_r}
+ =\sum_{i\in[D]^r}Z_i\prod_{\ell=1}^r\mathbf 1\{R_\ell(i_{<\ell})=i_\ell\}.
+\]
+Each register indicator has degree $\kappa$, so $\deg N_{r,\kappa}=r\kappa+1=b$.
+Reading the $\kappa$ coordinates of the level-$\ell$ register on the pointer
+path in round $\ell$, and the selected data coordinate in round $r+1$,
+computes the contrast with $b$ queries in $r+1$ rounds. With Jensen's
+inequality this gives $V_{r+1}=V_{\rm branch}=1$. For the upper bound
+$V_r\le D$, read the pointer registers of levels $1,\ldots,r-1$ in the first
+$r-1$ rounds. In round $r$, read the level-$r$ register together with one
+data coordinate $Z_{j_1\cdots j_{r-1}J}$, where $J$ is uniform on $[D]$ and
+drawn in advance. The score $DZ_{j_1\cdots j_{r-1}J}\mathbf 1\{J=j_r\}$ is
+unbiased with second moment $D$ at every profile.
+
+\paragraph{The lower bound $V_r(N_{r,\kappa},b)\ge D/b$.}
+Let $\U$ be the uniform law and write $c^\star=(j_1,\ldots,j_r)$ for the
+selected data cell. Since $\E_\U[N^2]=1$, the dual formula~\eqref{eq:vdual}
+with witness $h=N$ gives $V_r\ge1/\max_{\iota\in\A_r(b)}E_\iota$, where
+$E_\iota=\E_\U[\E_\U[N\mid\ell_\iota(X)]^2]$. Fix a deterministic $r$-round
+interview $\iota$.
+
+\emph{Step 1: a generous transcript.}
+Let $\iota^+$ ask the same questions as $\iota$, but at the end of every
+round additionally reveal the full content of every register touched in that
+round. The transcript of $\iota$ is a function of that of $\iota^+$, and
+conditional expectation onto a larger $\sigma$-field cannot decrease the
+second moment, so $E_\iota\le E_{\iota^+}$.
+
+\emph{Step 2: only the selected data coordinate carries signal.}
+Let ${\rm Obs}$ be the set of data coordinates queried by $\iota^+$. For a
+data cell $c$, on the transcript event $\{c\notin{\rm Obs}\}$ the transcript
+and the pointer path are functions of the coordinates other than $Z_c$,
+because the interview never reads $Z_c$. Since $Z_c$ is an independent
+uniform sign, $\E[Z_c\mathbf 1\{c^\star=c\}\mid\ell_{\iota^+}]$ vanishes there.
+Hence
+\[
+ \E[N\mid\ell_{\iota^+}]=\sum_{c\in{\rm Obs}}Z_c\,\PP(c^\star=c\mid\ell_{\iota^+}),
+\]
+so $|\E[N\mid\ell_{\iota^+}]|\le\PP(c^\star\in{\rm Obs}\mid\ell_{\iota^+})\le1$ and
+\[
+ E_{\iota^+}\le\E\big[\PP(c^\star\in{\rm Obs}\mid\ell_{\iota^+})\big]
+ =\PP(c^\star\in{\rm Obs}).
+\]
+
+\emph{Step 3: observing $c^\star$ in $r$ rounds requires a lucky guess.}
+Let $\G_t$ be the $\sigma$-field of the $\iota^+$ transcript before round $t$,
+and let $K_t$ be the largest $k$ such that the pointer registers
+$R_1,R_2(j_1),\ldots,R_k(j_{<k})$ are all revealed before round $t$; thus
+$K_1=0$ and $K_t$ is nondecreasing. A query of round $t$ is \emph{deep} if it
+touches a register of level at least $K_t+2$ or a data coordinate while
+$K_t\le r-1$; it is a \emph{hit} if, in addition, the touched register or
+data coordinate lies on the pointer path. Every deep location is indexed by a
+tuple whose $(K_t+1)$st entry is $\G_t$-measurable, and lies on the pointer
+path only if this entry equals $j_{K_t+1}$. The latter is the content of the
+register $R_{K_t+1}(j_{\le K_t})$, which is unrevealed before round $t$.
+For an adaptive sequence of queries to independent uniform coordinates, the
+unrevealed coordinates remain independent and uniform given the
+transcript. Hence $j_{K_t+1}$ is uniform on $[D]$ given $\G_t$, and every deep
+query is a hit with conditional probability at most $1/D$.
+
+If no hit occurs in rounds $1,\ldots,t$, then $K_{t+1}\le K_t+1$. Indeed,
+$K_{t+1}\ge K_t+2$ requires the pointer register of level $K_t+2$ to be
+revealed by the end of round $t$, say in round $t'\le t$. Since
+$K_{t'}\le K_t$, that query was deep in round $t'$ and lay on the pointer path,
+so it was a hit. By induction, without hits $K_t\le t-1\le r-1$ for every
+$t\le r$. Then every query of a data coordinate in rounds $1,\ldots,r$ is deep,
+and $c^\star$ can be queried only by a hit. Since the total number of queries
+is at most $b$,
+\[
+ \PP(c^\star\in{\rm Obs})\le\PP(\text{some hit})
+ \le\E\Big[\sum_{t=1}^r\sum_{\text{deep queries of round }t}\PP(\text{hit}\mid\G_t)\Big]
+ \le\frac bD .
+\]
+Combining the three steps gives $E_\iota\le b/D$ for every $\iota\in\A_r(b)$,
+and therefore $V_r\ge D/b$. \hfill$\square$
+
+\input{v13_rounds_tree}
+
+\paragraph{Interpretation.}
+Each round can advance the known part of the pointer path by at most one
+level unless a question lands on an unknown pointer target, which happens
+with probability at most $1/D$ per question. Additional questions within a
+round therefore do not substitute for a round. Practical counterparts of
+rounds are questionnaire pages, clinic visits and batches of laboratory
+orders. The address contrast of Theorem~\ref{thm:universal} is th
+\subsection{Two Rounds Already Attain the Universal Extremum}\label{app:rounds}
+An $R$-round interview uses at most $R$ batches, choosing each batch of coordinates using only the preceding batches' answers, with at most $b$ coordinates in total. Let $V_R$ use all such interviews. One round is the fixed-form menu and $b$ rounds suffice for full branching. For any $R\ge2$,
+\[
+ 1\le V_{\rm fixed}/V_R\le K_{m,b},\qquad
+ \sup_{m,d\ne0}\frac{V_{\rm fixed}(d,b)}{V_R(d,b)}=2^{b-1},
+\]
+where the supremum is over identifiable binary contrasts. The upper bound follows from menu inclusion. The address construction attains equality using two batches: all address bits, then the addressed data bit. Thus the universal extremum measures the value of permitting a second batch; it does not require $b$ sequential rounds.
+
+The block construction also needs at most two rounds throughout its identifiable budget curve. At $b=2k+R$, $0\le R\le k$, use the paper's three-query strategy on $R$ blocks and two-query strategy on the others. Ask the first two queries in every block together; then ask the selected third coordinate in the $R$ adaptive blocks. At $b\ge3k$ this already evaluates the contrast exactly. The address and block examples do not separate two rounds from unrestricted branching. Corollary~\ref{cor:roundseparation} supplies such a constant separation with a different four-feature contrast; a general exponential hierarchy remains unsettled here.
+
+\subsection{Labels and Across-Person Adaptation}
+Let $R_{\rm pre}$ require selecting the interview independently of the current label, and let $R_{\rm label}$ allow observing that label first, while both permit adaptation across people. For an identifiable contrast, Theorem~\ref{thm:asym} and the iid upper construction imply
+\[
+ \lim_{n\to\infty}nR_{\rm pre}(d,n)
+ =\lim_{n\to\infty}nR_{\rm label}(d,n)=V(d,\A).
+\]
+Thus neither access to earlier people nor early access to the current label reduces the first-order worst-case coefficient relative to an optimal iid design.
+
+There is also an exact statement for the \emph{finite program}. If one extends $\Phi_n$ to separate form laws and score tables for $y=-1,+1$, its objective is the maximum over these labels of their individual worst-profile quadratic objectives. Multiplying the negative-label tables by $-1$ turns both subproblems into the definition of $\Phi_n(d,\A)$. Each has value at least $\Phi_n$, and using the same form law and sign-adjusted tables attains it. Early labels therefore do not improve this program. This is not an equality claim for the exact finite-$n$ minimax risks, which the program bounds only within a constant.
+
+\input{a14_pointer}
+

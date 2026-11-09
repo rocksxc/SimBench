@@ -1,0 +1,28 @@
+\begin{table}[h]
+\centering
+\caption{Audit simulations with $n=1000$ target respondents and 400 replications. Bias, standard deviation and RMSE are multiplied by 100; coverage of nominal 95\% intervals has Monte Carlo standard error about 0.011. Regression imputation: conditional mean of $t$ given the asked items and the label from the complete source records, naive standard error. MI: ten proper hot-deck imputations from the same source records with Rubin\textquotesingle s rules.}
+\label{tab:regimp}
+\small
+\begin{tabular}{llrrrrr}
+\toprule
+Data, $b$, target & Design & Bias & SD & RMSE & Coverage & Width \\
+\midrule
+BRFSS, 4, random half & branching & -0.14 & 2.96 & 2.96 & 0.955 & 11.70 \\
+ & fitted fixed form & -0.11 & 3.60 & 3.60 & 0.965 & 14.42 \\
+ & fixed form + regression imputation & -0.45 & 2.59 & 2.63 & 0.955 & 10.27 \\
+ & fixed form + MI & -0.42 & 2.58 & 2.61 & 0.993 & 13.21 \\
+BRFSS, 4, other sex & branching & 0.05 & 3.06 & 3.05 & 0.953 & 11.69 \\
+ & fitted fixed form & 0.06 & 3.12 & 3.11 & 0.948 & 11.89 \\
+ & fixed form + regression imputation & 0.32 & 3.01 & 3.03 & 0.940 & 11.50 \\
+ & fixed form + MI & 0.33 & 3.02 & 3.03 & 0.955 & 11.87 \\
+BRFSS, 5, random half & branching & -0.05 & 2.92 & 2.92 & 0.950 & 11.60 \\
+ & fitted fixed form & -0.06 & 3.19 & 3.18 & 0.955 & 12.85 \\
+ & fixed form + regression imputation & -0.06 & 2.67 & 2.67 & 0.958 & 10.84 \\
+ & fixed form + MI & -0.06 & 2.68 & 2.68 & 0.975 & 12.41 \\
+BRFSS, 5, other sex & branching & 0.08 & 2.89 & 2.89 & 0.965 & 11.42 \\
+ & fitted fixed form & 0.11 & 3.44 & 3.44 & 0.938 & 13.12 \\
+ & fixed form + regression imputation & -0.45 & 2.80 & 2.84 & 0.948 & 10.72 \\
+ & fixed form + MI & -0.47 & 2.81 & 2.85 & 0.983 & 12.22 \\
+\bottomrule
+\end{tabular}
+\end{table}

@@ -1,0 +1,4 @@
+BRFSS 4 shift truth 0.3323 branch rmse 0.0305 cov 0.953 fixed rmse 0.0311 cov 0.948 regimp rmse 0.0303 cov 0.940 mi rmse 0.0303 cov 0.955 307s
+BRFSS 4 iid truth 0.3314 branch rmse 0.0296 cov 0.955 fixed rmse 0.0360 cov 0.965 regimp rmse 0.0263 cov 0.955 mi rmse 0.0261 cov 0.993 324s
+BRFSS 5 shift truth 0.3879 branch rmse 0.0289 cov 0.965 fixed rmse 0.0344 cov 0.938 regimp rmse 0.0284 cov 0.948 mi rmse 0.0285 cov 0.983 405s
+BRFSS 5 iid truth 0.3531 branch rmse 0.0292 cov 0.950 fixed rmse 0.0318 cov 0.955 regimp rmse 0.0267 cov 0.958 mi rmse 0.0268 cov 0.975 391s

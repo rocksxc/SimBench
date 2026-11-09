@@ -1,0 +1,8 @@
+\section{Reproducibility and Research Methods}\label{app:repro}
+The anonymous supplement contains the code of the solver and of every experiment, per-task results with certificates, logs, and the generators of all tables and figures. Source data are public and obtained separately; no individual survey records are redistributed.
+
+\paragraph{Checks.}
+The solver reproduces, on every task that overlaps with an independent dense implementation, the fixed constants, $\Gamma_P$ and the certified branching constants; every interview it generates is checked to partition the profile cube (for $m\le15$). Exact rational checks cover the hybrid-budget inequalities of Proposition~\ref{prop:hybrid}, small conic programs are solved independently, and the product counterexample of Appendix~\ref{app:structure} has a rational certificate checked on all 256 profiles. Nonlinear-model floor certificates (Appendix~\ref{app:workflow}) use exact integer nullspace checks and rational endpoint evaluation. Monte Carlo checks of the potential inequality~\eqref{eq:potential} and of greedy $r$-round strategies on pointer trees of depth $3$ to $10$ accompany the proof of Theorem~\ref{thm:binarytree}. These finite checks support the implementations and derivations; they do not replace the proofs.
+
+\paragraph{Research methods.}
+A generative language model participated in formulating research questions, deriving and checking proof arguments, implementing analyses, and drafting the manuscript; the authors remain responsible for all content.

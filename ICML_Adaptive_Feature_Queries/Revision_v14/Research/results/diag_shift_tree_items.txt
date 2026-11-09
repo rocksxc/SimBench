@@ -1,0 +1,8 @@
+sex 4 split items 5 [0, 1, 2, 8, 11] leaves 16
+sex 5 split items 10 [0, 1, 2, 3, 5, 7, 8, 9, 10, 11] leaves 32
+education 4 split items 5 [0, 1, 2, 8, 10] leaves 16
+education 5 split items 11 [0, 1, 2, 3, 4, 5, 6, 8, 9, 10, 11] leaves 32
+costbar 4 split items 6 [0, 1, 2, 5, 8, 10] leaves 16
+costbar 5 split items 11 [0, 1, 2, 3, 4, 5, 7, 8, 9, 10, 11] leaves 32
+physhlth 4 split items 7 [0, 1, 2, 5, 8, 10, 11] leaves 16
+physhlth 5 split items 10 [0, 1, 2, 3, 5, 7, 8, 9, 10, 11] leaves 31

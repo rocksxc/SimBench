@@ -1,0 +1,26 @@
+\subsection{Computing Optimal Designs for Every Protocol Class}\label{app:engine}
+All population constants in Section~\ref{sec:experiments} are computed by one column-generation solver whose cost depends on $\binom mb2^b$, not on the $2^m$ profiles.
+
+\paragraph{Cells and masses.}
+Pad every transcript of an interview to exactly $b$ coordinates. An interview of $\A_r$ is then a partition of the cube into cells $C(T,u)=\{x:x_T=u\}$ with $|T|=b$; for a fixed form all cells share $T$, for an $r$-round interview $T$ varies across cells. Padding refines a transcript and therefore never increases the optimal second moment. For a law $P$ that mixes records with a uniform mass $\alpha$ over profiles and labels, the masses $P(T,u,z)$ of all $\binom mb2^{b+1}$ cells are computed once from the records.
+
+\paragraph{Master problem.}
+For a list of interviews, minimize $\sum_{\iota,c,z}P(c,z)g_{\iota,z}(c)^2/q_\iota$ subject to $\sum_\iota q_\iota=1$ and the Fourier identities $\sum_{\iota,c}\widehat{\mathbf 1}_c(S)g_{\iota,z}(c)=(2z-1)\widehat d(S)$ for all $|S|\le b$, where $\widehat{\mathbf 1}_{C(T,u)}(S)=2^{-b}\chi_S(u)$ for $S\subseteq T$ and zero otherwise. Because cell indicators and $d$ have degree at most $b$, the identities are equivalent to pointwise unbiasedness at every profile. The problem is a second-order cone program; we solve it with Clarabel through CVXPY at tolerance $10^{-10}$. Inside column generation the solver\textquotesingle s solution steers the iteration; the final design is repaired to exact feasibility by the least-norm correction weighted by the interview probabilities, which adds the least second moment, so every reported upper bound is the second moment of an exactly pointwise-unbiased design. Looser solver tolerances produced visibly suboptimal masters in our tests, which the consistency checks of Appendix~\ref{app:F} (the fixed optimum may not exceed the path-set or fitted designs) detect.
+
+\paragraph{Pricing.}
+Let $\eta_z(S)$ be the multipliers of the identities. The information of a cell is
+\[
+ e(T,u)=\sum_z\frac{\psi_z(T,u)^2}{P(T,u,z)},\qquad \psi_z(T,u)=2^{-b}\sum_{S\subseteq T}\eta_z(S)\chi_S(u),
+\]
+a Walsh transform of $\eta$ restricted to $T$; all cells cost $O(\binom mbb2^b)$ operations. The information of an interview is the sum over its cells. The most informative interview in $\A_r$ is found by dynamic programming over partial assignments $(A,a)$, $|A|<b$:
+\[
+ V_1(A,a)=\max_{T\supseteq A,|T|=b}\ \sum_{u:\,u_A=a}e(T,u),\qquad
+ V_\rho(A,a)=\max_{B\supsetneq A,\,|B|\le b}\ \sum_{a':\,a'_A=a}V_{\rho-1}(B,a'),
+\]
+with $V_\rho(T,u)=e(T,u)$ for $|T|=b$; the best $r$-round interview has information $V_r(\emptyset,\emptyset)$, the best tree is the special case of singleton batches, and the best form is $\max_T\sum_ue(T,u)$. The program visits $O(\sum_{k\le b}\binom mk4^k)$ entries, and an optimal interview is reconstructed by following the maximizers.
+
+\paragraph{Certificates and stabilization.}
+Normalize $\eta$ so that $\sum_{z,S}\eta_z(S)(2z-1)\widehat d(S)=1$. By the last display of Theorem~\ref{thm:bracket}, $1/\max_{\iota\in\A_r}e(\iota)$ is a lower bound on $M_{\A_r}(P)$ for every such $\eta$, and the master value is an upper bound. Every pointwise-unbiased design also satisfies $M_\A(P)\ge\E_P[t^2]$ by Jensen\textquotesingle s inequality, which certifies designs that attain full information. Each iteration adds up to six (twelve for the forests and the 21-item study) interviews whose information exceeds the master\textquotesingle s maximum, and the solver stops when no interview of the class improves the master or when the bounds agree to a relative error of $10^{-7}$ ($10^{-4}$ for the forest tasks at $b\ge4$). Master duals of column generation are degenerate, and unstabilized pricing can stall for many iterations; we price at a convex combination, with equal weights, of the current dual and the dual with the best dual bound so far \citep{wentges1997}, and fall back to the current dual when the smoothed point finds no improving interview. Removing unused columns from the master made the iteration cycle in our tests, so the master keeps every generated interview. The master starts from the support of the optimal fixed design (and, for the forests, the padded component trees), so it stays small.
+
+\paragraph{Validation.}
+On stored tasks the solver reproduces the fixed constants, $\Gamma_P$ and the certified branching constants of an independent dense implementation (released with the code) to six significant digits, and every generated interview is checked to partition the cube. Branching and $r$-round designs at $m\le12$ converge in tens to a few hundred iterations; pricing is no longer the bottleneck, and the master problem dominates the running time (Appendix~\ref{app:forestexact}).

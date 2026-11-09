@@ -1,0 +1,14 @@
+\subsection{A Computable Upper End: the Optimized Path-Set Design}\label{app:upper}
+The upper end $N_P(\tau)$ of Theorem~\ref{thm:bracket} is the second moment of completion-only path guessing, which discards every answer on a form except a completed path. Optimizing the full score program on the same small menu tightens it without enumerating the $\binom mb$ forms.
+
+\begin{proposition}[Optimized path-set design]\label{prop:upper}
+Let a depth-$b$ tree $\tau$ compute $d$, let $S_1,\ldots,S_L$ be its distinct padded path sets ($L\le K_{m,b}$), and let $M_{\rm PS}(P)$ be the optimum of the population program \eqref{eq:mainW} over the fixed-form menu $\{S_1,\ldots,S_L\}$, with all pointwise-unbiased tables. Then
+\[
+ M_{\rm fixed}(P)\ \le\ M_{\rm PS}(P)\ \le\ N_P(\tau)\,M_{\rm branch}(P),
+\]
+and the same chain holds on the variance scale after subtracting $\Delta(P)^2$ and dividing by $\sigma_P^2$.
+\end{proposition}
+\begin{proof}
+The menu $\{S_1,\ldots,S_L\}$ is a set of fixed forms, so its optimum is at least the optimum over all forms. The menu also identifies $d$: every leaf indicator of $\tau$ depends only on that leaf's path coordinates, which lie in its padded set, so $d$ is a sum of tables on the $S_j$. Completion-only path guessing with $q_j\propto w_j^{1/2}$ is a feasible design in this program, and its second moment is $(\sum_jw_j^{1/2})^2\E_P[t^2]=N_P(\tau)\E_P[t^2]$ by \eqref{eq:pathvariance}; Theorem~\ref{thm:bracket} gives $M_{\rm branch}(P)=\E_P[t^2]$. Every design in the program is pointwise unbiased, so all three quantities exceed their variances by the same $\Delta(P)^2$.
+\end{proof}
+The program has at most $2L2^b$ score variables and is solved from reference marginals; Appendix~\ref{app:screendetail} compares $M_{\rm PS}$ with the all-forms optimum on every screening run. The two coincide whenever an optimal fixed design uses only path sets of $\tau$; in general the gap measures the value of forms that no path of the tree reads.

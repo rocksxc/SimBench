@@ -1,0 +1,34 @@
+\section{Experiments}\label{sec:experiments}
+We compute the constants of Sections~\ref{sec:general}--\ref{sec:population} exactly for trained models. The population $P$ is the held-out empirical law mixed with a uniform mass $\alpha$ over profiles and labels, $\alpha=1\%$ unless stated; it has full support, so $W_\A(P)$ is a local minimax risk. Fixed designs range over all $\binom mb$ forms with the pointwise-unbiased score program of Appendix~\ref{sec:pathdesign}. We report $W_{\rm fixed}/W_{\rm branch}$, the factor by which the best pre-committed design needs more records. \emph{Fitted} designs are optimized on separate reference records and evaluated on $P$.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{figures/v12_main.pdf}
+\caption{(a) Exact fixed/branching variance ratios for the 180 binding forest updates at cap $b=3$ against the ratio obtained when branching is restricted to the forests' own 40 component trees and all triples. (b) BRFSS screening trees: records needed relative to branching, median over two targets and three seeds.}
+\label{fig:v12main}
+\end{figure*}
+
+\paragraph{Independently retrained forests.}
+On WDBC, Spambase and Ionosphere \citep{wolberg1993,spambase1999,ionosphere1989}, twenty splits each fit an old and a new forest of twenty depth-$b$ trees on disjoint training records, using 3, 6, 9 or 12 median-binarized features. At cap $b=3$ the 180 tasks with more than three candidate features are binding, and column generation over all depth-3 trees converged on every task to certified relative error $10^{-6}$.
+
+\input{v12_forest_table}
+
+Table~\ref{tab:forestexact} and Figure~\ref{fig:v12main}(a) give three findings. First, adaptivity is worth a median factor 1.51 over the 180 binding tasks (maximum 1.85), and the factor grows with the number of candidate features. Second, a branching menu built from the forests' own component trees captures a median of only 17\% of this gain on the log scale; the optimal designs mix many trees that neither forest contains. Third, even optimal branching stays well above the full-information variance, because forty averaged trees spread the contrast over more coordinates than any three-question path can read.
+
+\paragraph{Cap, dimension and the evaluation law.}
+Table~\ref{tab:capgrid} repeats the exact computation for forests of depth $b=2$ and $b=4$ with cap $b$ on five splits per completed cell. XXCAPTEXT The ratios are not artifacts of the smoothing: XXSENSTEXT
+
+\input{v13_capgrid_table}
+
+\paragraph{Budgeted screening questionnaires.}
+A depth-$b$ screening tree asks at most $b$ questions per person, so a validation study under the same burden must also respect the cap. We train class-balanced CART trees of depth $b\in\{3,4,5,6\}$ on two datasets. The CDC Diabetes Health Indicators data, derived from the Behavioral Risk Factor Surveillance System \citep{cdcdiabetes2017}, provide twelve yes/no survey items for 253,680 respondents and the target diabetes or prediabetes. The thyroid data provide twelve binarized history and laboratory items for 7,200 patients and an abnormal-function target \citep{quinlan1986thyroid}, a standard benchmark for cost-sensitive test ordering \citep{turney1995}. Trees are trained on source records and validated on a target (a disjoint random half, or respondents of the other sex); the estimand is the target accuracy of the tree's deterministic decision, and branching asks the tree's own questions, attaining the full-information variance.
+
+\input{v12_screening_table}
+
+Table~\ref{tab:screening} and Figure~\ref{fig:v12main}(b) show that the gain depends on how many questions the screening decision needs. On BRFSS the best pre-committed design needs a median of 1.35--1.58 times as many respondents for $b=4,5,6$, and up to 1.98 times in a single run. On thyroid, every thresholded tree, up to depth six, depends on at most $b$ items. Then $\Gamma_P=1$, the best fixed form computes the decision, and pre-commitment costs nothing intrinsic. The bracket detects this from reference data before any collection. Completion-only path guessing, the estimator behind the classical simulation of a tree by fixed queries, needs up to 25 times as many respondents; optimized fixed-form scores remove most of this cost and leave only the intrinsic part. That part accrues over rounds: following the root question and then using the best fixed form, a feasible but not optimal two-round design, recovers a median 33--63\% of the log-gap depending on the cap, and three rounds recover 57--100\%. Fitted designs lose 3--7\% relative to their oracles. Every run lies inside the variance-scale bracket of Theorem~\ref{thm:bracket} up to the solver tolerance of $10^{-8}$, and the lower end is the closer bound. XXPREDTEXT
+
+\paragraph{Information versus design.}
+Multiple imputation from complete source records uses information the capped audit does not collect. In simulated audits of 1,000 respondents (Appendix~\ref{app:screening}), its RMSE is 0.88--1.00 times that of branching with coverage 0.94--0.99 under both targets, because the conditional law of unasked items transports here. XXREGIMP The design-based scores need neither the reference nor the transport assumption, and their RMSE is 1.00--1.22 times that of branching; the practical case for within-record adaptivity is the setting without a trusted complete reference.
+
+\paragraph{A real planned-missing archive.}
+PISA 2012 assigned three questionnaire forms at random, and no U.S. student answered all nine predictors of our block-averaged forest ensembles; every block pair appears on a form, so the Brier contrast is identifiable from the actual menu, and optimized form scores, a block/pair Horvitz--Thompson score and multiple imputation agree, with all intervals including zero (Appendix~\ref{app:pisa}). The archive demonstrates identification from real fixed forms and has no branching counterfactual.

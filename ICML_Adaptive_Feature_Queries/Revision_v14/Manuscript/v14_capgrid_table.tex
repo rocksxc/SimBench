@@ -1,0 +1,16 @@
+\begin{table}[t]
+\centering
+\caption{Exact records ratio $W_{\rm fixed}/W_{\rm branch}$ for independently retrained forest updates of depth $b$ with cap $b$ on WDBC, Spambase and Ionosphere: median [10th, 90th percentile] over binding tasks, medians by number of candidate features $m$, median ratio realized by designs fitted on training records, and median share of the log-gain captured when branching may use only the forests\textquotesingle{} own trees; -- marks cells not computed.}
+\label{tab:capgrid}
+\footnotesize
+\setlength{\tabcolsep}{2.4pt}
+\begin{tabular}{rrlrrrrr}
+\toprule
+$b$ & tasks & median [p10, p90] & $m{=}6$ & $m{=}9$ & $m{=}12$ & fitted & own \\
+\midrule
+2 & 45 & 1.31 [1.21, 1.44] & 1.31 & 1.25 & 1.34 & 1.31 & 49\% \\
+3 & 180 & 1.51 [1.33, 1.74] & 1.38 & 1.52 & 1.64 & 1.67 & 17\% \\
+4 & 15 & 1.24 [1.15, 1.31] & 1.24 & -- & -- & 1.27 & 26\% \\
+\bottomrule
+\end{tabular}
+\end{table}
