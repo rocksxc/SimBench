@@ -1,0 +1,192 @@
+\subsection{The Value of Adaptivity at a Given Population}\label{app:population}
+Fix a menu $\A$ and a law $P$ on $\X\times\{-1,1\}$. A \emph{design} is a
+probability vector $(q_\iota)$ on $\A$ with tables $g_\iota(\ell,y)$ that
+satisfy $\sum_\iota g_\iota(\ell_\iota(x),y)=t(x,y)=yd(x)$ for all $(x,y)$.
+Its score is $H=g_\iota(\ell_\iota(X),Y)/q_\iota$ with $\iota\sim q$ drawn
+independently of the record, which is unbiased for $t$ at every profile and
+label; conversely every function $H$ of $(\iota,\ell_\iota(X),Y)$ with
+$\E[H\mid X,Y]=t$ arises in this way. $W_\A(P)$ is the infimum of
+$\Var_{P,q}(H)$ over designs, $M_\A(P)=W_\A(P)+\Delta(P)^2$ the infimum of
+the second moment, and $\sigma_P^2=\Var_P(t)$. At a full-support law,
+$W_\A(P)$ is also the local asymptotic minimax risk over arbitrary estimators
+(Proposition~\ref{prop:local}), so ratios of $W$ are ratios of the numbers of
+records that two menus need. For a deterministic depth-$b$ tree $\tau$ that
+computes $d$, $S_\tau(x)$ is its padded path set and $\mathcal S_\tau$ the
+collection of these sets (Appendix~\ref{app:universal}).
+
+\begin{theorem}[Records needed at a population, full statement of Theorems~\ref{thm:universal}(ii), \ref{thm:rounds}(a) and~\ref{thm:bracket}]\label{thm:bracketfull}
+Let $d$ be a nonzero contrast of degree at most $b$ on $\{-1,1\}^m$ and $P$ any
+law on $\X\times\{-1,1\}$.
+
+\textup{(a) Uniform gap.} For $1\le r\le b$,
+\[
+ W_{\rm branch}(P)\ \le\ W_r(P)\ \le\ \min\Big\{2^{b-r},\binom{m-r}{b-r}\Big\}\,W_{\rm branch}(P),
+\]
+and in particular $W_{\rm fixed}(P)\le K_{m,b}W_{\rm branch}(P)$.
+
+\textup{(b) Witness bound.} For every menu $\A$, every constant $c$ and
+every function $h$ on $\X\times\{-1,1\}$ with $\E_P[(t-c)h]\ne0$,
+\[
+ W_\A(P)+(\Delta(P)-c)^2\ \ge\ \frac{\E_P[(t-c)h]^2}{\max_{\iota\in\A}\E_P\big[\E_P[h\mid\ell_\iota(X),Y]^2\big]}.
+\]
+With $c=0$ this bounds the second moment $M_\A(P)$, and with $c=\Delta(P)$ it
+bounds the variance $W_\A(P)$.
+
+\textup{(c) Bracket.} If a depth-$b$ tree $\tau$ computes $d$ and
+$\sigma_P^2>0$, then $W_{\rm branch}(P)=\sigma_P^2$ and
+\[
+ \frac1{\rho_P^2}\ \le\ \frac{W_{\rm fixed}(P)}{W_{\rm branch}(P)}\ \le\ N_P(\tau)\ \le\ |\mathcal S_\tau|\ \le\ K_{m,b},
+\]
+where
+\[
+ \rho_P^2=\max_{|T|=b}\frac{\Var_P\big(\E_P[t\mid X_T,Y]\big)}{\Var_P(t)},
+ \qquad
+ N_P(\tau)=\Big(\sum_{S\in\mathcal S_\tau}v_S^{1/2}\Big)^2,
+ \quad v_S=\frac{\E_P\big[(t-\Delta(P))^2\mathbf 1\{S_\tau(X)=S\}\big]}{\sigma_P^2}.
+\]
+More generally $W_{\rm fixed}(P)\le\big(\sum_S\E_P[(t-c)^2\mathbf 1\{S_\tau(X)=S\}]^{1/2}\big)^2-(\Delta(P)-c)^2$
+for every constant $c$.
+
+\textup{(d)} For the address contrast with $\kappa=b-1$ under the uniform law
+with independent uniform labels, $1/\rho_P^2=N_P(\tau)=K_{m,b}=D$, so all
+inequalities in \textup{(c)} are equalities.
+\end{theorem}
+
+The quantity $\rho_P^2$ is the largest fraction of the variance of the target
+that a single form explains, a population $R^2$. The weights $v_S$ sum to
+one, and $N_P(\tau)=\exp H_{1/2}(v)$ is the exponential of their R\'enyi
+entropy of order $1/2$: an effective number of question sets that the tree
+uses at $P$. Adaptivity can be valuable only when the tree's questions diverge
+over many well-populated paths, and it is valuable when in addition no fixed
+set of $b$ questions explains most of the variance of the target; correlated
+features and shared coordinates raise $\rho_P^2$.
+
+\begin{proof}
+\emph{(a)} The left inequality is menu inclusion. For the right one fix a
+branching design: trees $\tau$ with probabilities $q_\tau>0$ and tables
+$g_\tau(\ell,y)$ with $\sum_\tau g_\tau(\ell_\tau(x),y)=t(x,y)$, and write
+$H_\tau(x,y)=g_\tau(\ell_\tau(x),y)/q_\tau$, so that
+$\sum_\tau q_\tau H_\tau=t$ pointwise. Pad every tree as in
+Appendix~\ref{app:universal}; padding refines the transcript, so $H_\tau$
+is still a function of the padded leaf and the label. For a node $v$ of
+$\tau$ at depth $r-1$ (the root if $r=1$), the padded subtree below $v$ has
+depth $b-r+1$; let $\mathcal S_{\tau,v}$ be the collection of coordinate sets
+of its root-to-leaf paths and $L_{\tau,v}=|\mathcal S_{\tau,v}|$. These sets
+contain the coordinate asked at $v$ and are determined by the first $b-r$
+answers below $v$, so $L_{\tau,v}\le\min\{2^{b-r},\binom{m-r}{b-r}\}=:K_r$.
+Fix a constant $c$ and consider the following randomized $r$-round interview
+with at most $b$ queries. Draw $\tau\sim q$ and, independently of the record,
+one set $S_v$ uniformly from $\mathcal S_{\tau,v}$ for every node $v$ of
+depth $r-1$. In rounds $1,\ldots,r-1$ ask one question per round and follow
+$\tau$ to a node $v$; in round $r$ ask the coordinates of $S_v$. The path of
+$x$ below $v$ can be followed to a leaf exactly when its coordinate set equals
+$S_v$, which has conditional probability $1/L_{\tau,v}$ given $(x,y,\tau)$,
+and this event is measurable from the transcript. Return
+\[
+ \widetilde H=c+L_{\tau,v}\big(H_\tau(x,y)-c\big)\ \text{on completion},\qquad \widetilde H=c\ \text{otherwise}.
+\]
+The pair $(\tau,(S_v)_v)$ indexes a deterministic $r$-round interview, so
+$\widetilde H$ is a score of a design on $\A_r(b)$. Conditionally on $(x,y)$
+and $\tau$, its mean is $H_\tau(x,y)$ and
+$\E[(\widetilde H-c)^2\mid x,y,\tau]=L_{\tau,v}(H_\tau(x,y)-c)^2\le K_r(H_\tau(x,y)-c)^2$.
+Hence $\E[\widetilde H\mid X,Y]=t$, and with $H=H_\tau$ for $\tau\sim q$,
+\[
+ \Var(\widetilde H)=\E[(\widetilde H-c)^2]-(\Delta(P)-c)^2
+ \le K_r\,\E[(H-c)^2]-(\Delta(P)-c)^2 .
+\]
+Choose $c=\Delta(P)$: then $\E[(H-c)^2]=\Var(H)$ and
+$\Var(\widetilde H)\le K_r\Var(H)$. The constant $c$ is part of the score, not
+an estimate: the design is pointwise unbiased for every value of $c$, and
+$W_r(P)$ is by definition an infimum over designs that may be tuned to $P$.
+Taking the infimum over branching designs proves (a).
+
+\emph{(b)} Let $(q,g)$ be a design on $\A$ with score $H$. The tables
+$g_\iota-cq_\iota$ sum to $t-c$, and
+$\E[(H-c)^2]=\sum_\iota\|g_\iota-cq_\iota\|_P^2/q_\iota\ge(\sum_\iota\|g_\iota-cq_\iota\|_P)^2$
+by Cauchy--Schwarz in $q$. For every $h$,
+\[
+ \E_P[(t-c)h]=\sum_\iota\E_P\big[(g_\iota-cq_\iota)\,\E_P[h\mid\ell_\iota(X),Y]\big]
+ \le\Big(\sum_\iota\|g_\iota-cq_\iota\|_P\Big)\max_\iota\big\|\E_P[h\mid\ell_\iota(X),Y]\big\|_P,
+\]
+because $g_\iota-cq_\iota$ is a function of $(\ell_\iota(X),Y)$. Square, use
+$\E[(H-c)^2]=\Var(H)+(\Delta(P)-c)^2$ and take the infimum over designs.
+
+\emph{(c)} Following $\tau$ returns $t$ itself, and every unbiased score has
+$\Var(H)\ge\Var(\E[H\mid X,Y])=\sigma_P^2$, so $W_{\rm branch}(P)=\sigma_P^2$.
+For the lower bound apply (b) to the fixed forms with $c=\Delta(P)$ and
+$h=t-\Delta(P)$: the numerator is $\sigma_P^4$ and
+$\E_P[\E_P[t-\Delta\mid X_T,Y]^2]=\Var_P(\E_P[t\mid X_T,Y])$ because
+$\E_P[t\mid X_T,Y]$ has mean $\Delta(P)$. For the upper bound choose $q_S>0$
+on $\mathcal S_\tau$, draw $S$ before the person answers and return
+$c+(t(X,Y)-c)/q_S$ if the tree's path completes inside $S$ and $c$ otherwise.
+Completion occurs exactly when $S=S_\tau(X)$
+(Appendix~\ref{app:universal}), so the score is unbiased at every profile and
+label, and $\E[(H-c)^2]=\sum_Sq_S^{-1}\E_P[(t-c)^2\mathbf 1\{S_\tau(X)=S\}]$.
+Minimizing over the simplex gives
+$q_S\propto\E_P[(t-c)^2\mathbf 1\{S_\tau=S\}]^{1/2}$ and the value
+$(\sum_S\E_P[(t-c)^2\mathbf 1\{S_\tau=S\}]^{1/2})^2$; sets of zero weight are
+handled by letting their probability tend to zero. Subtracting
+$(\Delta(P)-c)^2$ gives the general statement, and $c=\Delta(P)$ gives
+$N_P(\tau)\sigma_P^2$. Finally $(\sum_Sv_S^{1/2})^2\le|\mathcal S_\tau|\sum_Sv_S=|\mathcal S_\tau|$
+by Cauchy--Schwarz, and $|\mathcal S_\tau|\le K_{m,b}$.
+
+\emph{(d)} Here $\Delta=0$, $t^2=1$ and the $D$ path sets are equally likely,
+so $N_P=D=K_{m,b}$. With independent labels,
+$\E[t\mid X_T,Y]=Y\E[d\mid X_T]$, whose second moment is at most $2^{-\kappa}=1/D$
+by~\eqref{eq:addressinformation}, so $1/\rho_P^2\ge D$.
+\end{proof}
+
+\paragraph{Relation to the uncentered bracket.}
+Setting $c=0$ in (b) and (c) gives the second-moment bracket
+$\E_P[t^2]/\Gamma_P\le M_{\rm fixed}(P)\le N^0_P(\tau)\E_P[t^2]$ with
+$\Gamma_P=\max_T\E_P[\E_P[t\mid X_T,Y]^2]/\E_P[t^2]$ and $N_P^0$ computed
+from the weights $\E_P[t^2\mathbf 1\{S_\tau=S\}]$. Subtracting $\Delta^2$
+turns it into a bracket for $W_{\rm fixed}/W_{\rm branch}$ with lower end
+$(\E_P[t^2]/\Gamma_P-\Delta^2)/\sigma_P^2$ and upper end
+$(N_P^0\E_P[t^2]-\Delta^2)/\sigma_P^2$. The centered lower end is never
+smaller: writing $s=\E_P[t^2]$ and $e=\Gamma_Ps$, the claim
+$(s-\Delta^2)^2\ge(s^2/e-\Delta^2)(e-\Delta^2)$ reduces to $s^2/e+e\ge2s$. The
+uncentered upper end is unbounded as $\Delta^2\to\E_P[t^2]$, that is for
+accurate rules, whereas the centered one never exceeds $K_{m,b}$; for the
+worked example of Section~\ref{sec:setup} with uniform profiles and a label
+that agrees with $d$ with probability $0.9$, the centered upper end is $2$ and
+the uncentered one is $(2-0.8^2)/0.36\approx3.78$. Centering is what makes part (a) hold at every
+population: without it, path guessing inflates the second moment by $K_r$
+and the variance by more.
+
+\paragraph{Label-dependent designs.}
+Labels are observed before the questions are asked, so a collector may let
+the interview probabilities depend on the label, as in outcome-dependent
+two-phase sampling. Write $\A^{\rm lab}$ for this larger class of designs on a
+menu $\A$: probability vectors $q_{\cdot\mid y}$ for $y=\pm1$ with tables that
+sum to $t(\cdot,y)$ for each label.
+
+\begin{proposition}[Label-dependent designs]\label{prop:labeldesign}
+\textup{(i)} $V(d,\A)$ is unchanged if interview probabilities may depend on
+the current label (Theorem~\ref{thm:asym}).
+\textup{(ii)} For every law $P$, $M_{\A}^{\rm lab}(P)=\sum_{y=\pm1}M_\A(P^{(y)})$,
+where $P^{(y)}=P(\cdot,y)$ is the sub-probability law of the profiles with
+label $y$ and $M_\A(P^{(y)})$ is the optimum of the program for the target
+$yd$ under that mass; hence $W^{\rm lab}_\A(P)=\sum_yM_\A(P^{(y)})-\Delta(P)^2\le W_\A(P)$.
+\textup{(iii)} Part \textup{(a)} of Theorem~\ref{thm:bracketfull} holds for
+label-dependent designs: $W^{\rm lab}_r(P)\le K_rW^{\rm lab}_{\rm branch}(P)$,
+and $W^{\rm lab}_{\rm branch}(P)=\sigma_P^2$ when a depth-$b$ tree computes
+$d$.
+\end{proposition}
+\begin{proof}
+(i) The converse of Theorem~\ref{thm:asym} allows the interview to depend on
+the current label, and label-independent designs attain $V$. (ii) The second
+moment of a label-dependent design is
+$\sum_y\sum_\iota\E_P[g_{\iota,y}(\ell_\iota(X))^2\mathbf 1\{Y=y\}]/q_{\iota\mid y}$,
+and neither the constraints nor the probability vectors couple the two
+labels. (iii) The simulation in the proof of
+Theorem~\ref{thm:bracketfull}(a) is carried out separately for each label
+with the same constant $c=\Delta(P)$; the conditional bound
+$\E[(\widetilde H-c)^2\mid x,y]\le K_r\E[(H-c)^2\mid x,y]$ holds for each
+$(x,y)$. The last statement is the Jensen bound.
+\end{proof}
+Each $M_\A(P^{(y)})$ is computed by the solver of Appendix~\ref{app:engine}
+with the same certificates. Appendix~\ref{app:screendetail} reports that
+label-dependent form probabilities lower the records ratio of the screening
+trees by at most \nLabelMax\%, and by at most \nStratMax\% when they are also
+stratified by sex.

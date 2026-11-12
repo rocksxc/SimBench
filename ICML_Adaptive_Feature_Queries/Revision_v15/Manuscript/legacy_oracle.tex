@@ -1,0 +1,8 @@
+\section{Empirical Oracle and Evaluation Details}\label{app:emp}
+\subsection{Finite-Sample Oracle for Sequential Designs}
+The fixed-form oracle is a pointwise benchmark. Let $z=(x,y)$, $t(z)=yd(x)$, and let $P$ now denote the held-out empirical law. The oracle may use $P$ to select a design and tables, but the resulting estimator must remain unbiased under every possible law. Otherwise the optimization would trivially return the constant $\Delta(P)$. The admissible score functions $H_\iota(\ell_\iota(x),y)$ therefore satisfy
+\begin{equation}
+             \sum_\iota q_\iota H_\iota(\ell_\iota(x),y)=yd(x)\qquad\text{for every }(x,y).\label{eq:unbpoint}
+\end{equation}
+\input{oracle_proof}
+

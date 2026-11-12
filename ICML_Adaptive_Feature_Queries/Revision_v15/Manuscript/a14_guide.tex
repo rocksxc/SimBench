@@ -1,0 +1,31 @@
+\section{Guide, Notation and a Worked Example}\label{app:notation}
+\paragraph{Guide.}
+Appendix~\ref{app:B} proves Theorem~\ref{thm:char}; Appendix~\ref{app:C} proves Theorem~\ref{thm:universal} and its extensions to finite samples, larger alphabets, polynomial dimension and mean budgets; Appendix~\ref{app:D} proves Theorem~\ref{thm:rounds}, including the product construction in polynomial dimension, and reports the round constants of the binary pointer tree at small caps; Appendix~\ref{app:E} proves the population statements (Theorems~\ref{thm:universal}(ii), \ref{thm:rounds}(a) and~\ref{thm:bracket}, Propositions~\ref{prop:labeldesign}, \ref{prop:upper} and~\ref{prop:selfcalmain}) and describes the solver and the form program; Appendix~\ref{app:F} gives every experimental detail; Appendix~\ref{app:G} treats contrasts of higher degree and other proper scores; Appendix~\ref{app:pisa} analyzes a real planned-missing archive; Appendix~\ref{app:repro} describes code and checks. Every experiment reported anywhere in this paper is described in Appendix~\ref{app:F}.
+
+\paragraph{Notation.}
+\begin{center}\small
+\begin{tabular}{lp{10.5cm}}
+\toprule
+Symbol & Meaning\\
+\midrule
+$d=p_1-p_0$, $t(x,y)=yd(x)$ & Contrast of the two frozen rules and the per-record target; $\Delta(P)=\E_P[t]$\\
+$\iota$, $\ell_\iota(x)$, $\A$ & Interview, its transcript, and a finite menu of interviews\\
+$\A_r(b)$ & $r$-round interviews with at most $b$ queries; $\A_1$ fixed forms, $\A_b$ branching trees\\
+$q_\iota$, $g_\iota$ & Interview probabilities and transcript score tables of a design\\
+$V(d,\A)$, $V_r$ & Worst-case first-order constant \eqref{eq:unbiasedprogram}; its value on $\A_r(b)$\\
+$\Phi_n(d,\A)$ & Finite-sample program \eqref{eq:phimain}, within a factor 104 of the minimax risk\\
+$W_\A(P)$, $M_\A(P)$ & Smallest variance and second moment of a pointwise-unbiased design at $P$; $M=W+\Delta^2$\\
+$\sigma_P^2$, $\rho_P^2$ & $\Var_P(t)$; largest share of it explained by one form, $\max_{|T|=b}\Var_P(\E_P[t\mid X_T,Y])/\sigma_P^2$\\
+$N_P(\tau)$ & R\'enyi-$1/2$ effective number of path sets, from the centered weights $v_S=\E_P[(t-\Delta)^2\mathbf 1\{S_\tau=S\}]/\sigma_P^2$\\
+$W_{\rm PS}(P)$ & Optimum over the padded path sets of a tree computing $d$ (Proposition~\ref{prop:upper})\\
+$W^{\rm lab}_\A(P)$ & Optimum when interview probabilities may depend on the label (Proposition~\ref{prop:labeldesign})\\
+$K_{m,b}$ & $\min\{2^{b-1},\binom{m-1}{b-1}\}$\\
+$\kappa$, $D=2^\kappa$ & Address bits and data bits of the address contrast; $L$ levels of the binary pointer tree\\
+$\U$ & Uniform law on the profile cube\\
+$B$; $n_1$ & Larger hard cap in the mixed-budget result; pilot size in Proposition~\ref{prop:selfcalmain}\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\paragraph{The worked example in full.}
+Let $m=3$, $b=2$ and $d(x)=[(1+x_1)x_2+(1-x_1)x_3]/2$, and let $P$ have uniform profiles and an independent uniform label, so that $\Delta(P)=0$ and $\sigma_P^2=\E[d^2]=1$. The tree asks $x_1$ and then $x_2$ or $x_3$; it computes $d$, so $V_{\rm branch}=1$ and $W_{\rm branch}(P)=1$. The Fourier expansion is $d=\tfrac12x_2+\tfrac12x_3+\tfrac12x_1x_2-\tfrac12x_1x_3$. Each coefficient carries a quarter of the variance, and every form of size two contains exactly two of the four sets: $\{1,2\}$ captures $x_2$ and $x_1x_2$, $\{1,3\}$ captures $x_3$ and $x_1x_3$, and $\{2,3\}$ captures $x_2$ and $x_3$. Hence $\rho_P^2=1/2$ and $W_{\rm fixed}(P)\ge2$. The two padded path sets $\{1,2\}$ and $\{1,3\}$ each carry weight $v_S=1/2$, so $N_P=(2\cdot2^{-1/2})^2=2$, and drawing either form with probability $1/2$ and returning $2Yx_2\mathbf1\{x_1=1\}$ or $2Yx_3\mathbf1\{x_1=-1\}$ attains second moment $2$ at every profile. Thus $V_{\rm fixed}=W_{\rm fixed}(P)=2=K_{3,2}$, both ends of Theorem~\ref{thm:bracket} coincide, and the optimized path-set design of Proposition~\ref{prop:upper} equals the optimum. If instead the label agrees with $d(X)$ with probability $0.9$, then $t=\pm1$ with $\Delta=0.8$ and $\sigma_P^2=0.36$; the centered weights are again $1/2$ each, so $N_P=2$ and the fixed design that returns $0.8+2(t-0.8)$ on a completed path and $0.8$ otherwise has variance $2\sigma_P^2$, whereas the uncentered path-guessing score has variance $2-0.64=1.36=3.78\,\sigma_P^2$. Section~\ref{sec:gap} generalizes the example to $\kappa$ address bits.

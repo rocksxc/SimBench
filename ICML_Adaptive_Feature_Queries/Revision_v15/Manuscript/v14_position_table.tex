@@ -1,0 +1,20 @@
+\begin{table}[h]
+\centering
+\caption{Position effects on the screening trees: median absolute bias in units of the clean branching standard error at $n=1000$, and the share of runs in which branching keeps the smaller RMSE at $n=1000$ (the last answer flips with probability $\epsilon$).}
+\label{tab:position}
+\small
+\begin{tabular}{llrrrr}
+\toprule
+Data & $\epsilon$ & branching & fitted form & oracle form & branching RMSE smaller \\
+\midrule
+BRFSS & 0.01 & 0.15 & 0.21 & 0.22 & 24/24 \\
+BRFSS & 0.03 & 0.45 & 0.64 & 0.65 & 24/24 \\
+BRFSS & 0.05 & 0.75 & 1.08 & 1.09 & 24/24 \\
+BRFSS & 0.1 & 1.54 & 2.17 & 2.20 & 24/24 \\
+Thyroid & 0.01 & 0.02 & 0.24 & 0.23 & 24/24 \\
+Thyroid & 0.03 & 0.06 & 0.71 & 0.70 & 24/24 \\
+Thyroid & 0.05 & 0.11 & 1.18 & 1.17 & 24/24 \\
+Thyroid & 0.1 & 0.21 & 2.37 & 2.34 & 23/24 \\
+\bottomrule
+\end{tabular}
+\end{table}

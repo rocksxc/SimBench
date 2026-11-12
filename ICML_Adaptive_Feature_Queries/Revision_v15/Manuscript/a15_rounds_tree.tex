@@ -1,0 +1,242 @@
+\paragraph{A binary pointer tree: few rounds lose almost the whole exponent.}
+The pointer-chasing family separates consecutive numbers of rounds, but its
+lower bound $2^{\lfloor(b-1)/r\rfloor}/b$ leaves the exponent for a fixed
+small number of rounds far below the upper bound $b-r$ of part~(a). The
+following contrast closes most of this gap. Let $L\ge1$ and $\beta=L+1$.
+Arrange $2^L-1$ \emph{pointer coordinates} as the internal nodes $u$ of a
+complete binary tree with levels $0,\ldots,L-1$ and attach $2^L$ \emph{data
+coordinates} $Z_v$ to its leaves $v$, so that a block has $2^{\beta}-1$
+coordinates. Encode the pointer coordinate of node $u$ as a bit
+$x_u\in\{0,1\}$ that selects one of the two children of $u$. The
+\emph{pointer path} starts at the root and descends through the selected
+children; let $c^\star(x)$ be the leaf it reaches, and
+\[
+ B_L(x)=Z_{c^\star(x)}=\sum_{v}Z_v\prod_{u\in{\rm path}(v)}\mathbf 1\{x_u\to v\},
+\]
+where ${\rm path}(v)$ is the set of the $L$ internal nodes above $v$ and
+$\{x_u\to v\}$ is the event that the bit of $u$ selects the child on the way
+to $v$. Each indicator has degree one, so $\deg B_L=L+1=\beta$, and following
+the path with one question per round computes $B_L$ with $\beta$ queries. The
+function is the tree evaluation problem of \citet{cook2012}; a deterministic
+adversary argument on the same instance shows that exact evaluation with at
+most $B$ queries per round needs $L/\lceil\log_2(B+1)\rceil$ rounds
+\citep{li2026regex}. Here the total number of queries is capped, exact
+evaluation in fewer than $\beta$ rounds is impossible for every strategy, and
+we quantify the variance that the missing rounds cost. To reach polynomial
+dimension we also take products: for $k\ge1$ let
+\[
+ B_L^{\otimes k}(x^{(1)},\ldots,x^{(k)})=\prod_{i=1}^kB_L(x^{(i)})
+\]
+on $k$ disjoint blocks, a contrast of degree $k\beta$ on $k(2^\beta-1)$
+coordinates.
+
+\begin{theorem}[Binary pointer trees and their products]\label{thm:binarytree}
+Let $L\ge1$, $\beta=L+1$, $k\ge1$ and $b\ge k\beta$, and let
+$d=B_L^{\otimes k}$ on $m=k(2^\beta-1)$ coordinates.
+\textup{(a)} $V_{\rm branch}(d,b)=1$ and $V_r(d,b)\le2^{b-r}$ for
+$1\le r\le b$.
+\textup{(b)} For every $1\le r\le b$,
+\[
+ V_r(d,b)\ \ge\ \frac{2^{k(\beta-1)}}{\big(1+\tfrac{2b}{rk}\big)^{rk}} .
+\]
+In particular the single tree $B_{b-1}$ on $m=2^b-1$ coordinates ($k=1$,
+$\beta=b$) satisfies $V_r(B_{b-1},b)\ge2^{b-1}/(1+2b/r)^r$, and
+$V_1(B_{b-1},b)\ge2^{b-1}/b$.
+\end{theorem}
+
+\begin{corollary}[Few rounds lose almost the whole exponent]\label{cor:fewrounds}
+\textup{(i)} For every $b\ge2$ and $1\le r\le b$,
+\[
+ \frac{2^{b-1}}{(1+2b/r)^{r}}\ \le\ \sup_{m,d}\frac{V_r(d,b)}{V_{\rm branch}(d,b)}\ \le\ 2^{b-r},
+ \qquad\text{in particular}\quad
+ \frac{2^{b-1}}{(b+1)^2}\ \le\ \sup_{m,d}\frac{V_2(d,b)}{V_{\rm branch}(d,b)}\ \le\ 2^{b-2}.
+\]
+Hence for every fixed $r$ the exponent of the $r$-round gap is $b-O(r\log b)$.
+\textup{(ii)} An $r$-round protocol that is within a factor $b^{c}$ of full
+branching on every contrast of degree at most $b$ needs
+$r\log_2(1+2b/r)\ge b-1-c\log_2b$, and therefore $r\ge0.37\,b-(1+c\log_2b)$
+rounds: a number of rounds linear in the cap.
+\textup{(iii)} Polynomial dimension. For every $b\ge4$ and $r\ge1$, with
+$\beta=\lfloor\log_2b\rfloor$ and $k=\lfloor b/\beta\rfloor$, the contrast
+$B_{\beta-1}^{\otimes k}$ has degree at most $b$, lives on $m\le b^2$
+coordinates, and satisfies $V_{\rm branch}=1$ and
+\[
+ \log_2V_r\ \ge\ \Big(\frac b\beta-1\Big)(\beta-1)-\frac{rb}{\beta}\log_2\Big(1+\frac{4\beta}{r}\Big)
+ \ =\ b-O\Big(\frac{r\,b\log\log b}{\log b}\Big)\quad(b\to\infty,\ r\text{ fixed}).
+\]
+\end{corollary}
+\begin{proof}
+(i) The upper bound is Theorem~\ref{thm:roundsfull}(a) and the lower bound is
+Theorem~\ref{thm:binarytree}(b) with $k=1$. (ii) Combine $V_r\le b^c$ with
+(i) and take logarithms. The function $f(r)=r\log_2(1+2b/r)$ is increasing
+and concave, and $f(\alpha^\star b)=b$ for the solution
+$\alpha^\star\approx0.376$ of $\alpha\log_2(1+2/\alpha)=1$, where
+$f'(\alpha^\star b)=\log_2(1+2/\alpha^\star)-2/((\alpha^\star+2)\ln2)>1.44$. By
+concavity $f(r)\le b-1.44(\alpha^\star b-r)$ for $r\le\alpha^\star b$, so
+$f(r)\ge b-1-c\log_2b$ forces
+$r\ge\alpha^\star b-(1+c\log_2b)/1.44$. (iii) Here $2^\beta\le b$, so
+$m=k(2^\beta-1)<kb\le b^2$, and $k\beta\le b<(k+1)\beta\le2k\beta$ gives
+$b/k<2\beta$. Theorem~\ref{thm:binarytree}(b) and $k\ge b/\beta-1$,
+$k\le b/\beta$ give the display; with $\beta=\lfloor\log_2b\rfloor$ the
+subtracted terms are $O(b/\log b)$ and $O(rb\log\log b/\log b)$.
+\end{proof}
+
+For two rounds the bound of (i) exceeds one once $2^{b-1}>(b+1)^2$, that is
+for $b\ge8$; for smaller caps Appendix~\ref{app:pointerexact} computes the
+round constants of $B_{b-1}$ numerically (two rounds lose at least $1.80$ at
+$b=3$ and $3.32$ at $b=4$). The single tree uses a number of coordinates
+exponential in $b$, like the address contrast; part (iii) removes this at the
+price of the lower-order term in the exponent, exactly as products of
+address blocks do for fixed forms (Proposition~\ref{prop:productaddress}).
+Whether the factor $(1+2b/r)^r$ can be removed, so that the $r$-round gap is
+$2^{b-r}$ up to constants, is open.
+
+\paragraph{Proof of Theorem~\ref{thm:binarytree}.}
+(a) Following the pointer path of every block returns $d$ itself with
+$k\beta\le b$ queries, so $V_{\rm branch}\le1$; every unbiased design has
+$\sum_\iota g_\iota(x)=d(x)=\pm1$, and Cauchy--Schwarz gives
+$\sum_\iota g_\iota(x)^2/q_\iota\ge1$ at every $x$, so $V_{\rm branch}\ge1$.
+The remaining inequality is Theorem~\ref{thm:roundsfull}(a).
+
+(b) Let $\U$ be the uniform law on all coordinates. Under $\U$ the blocks
+are independent, $\E_\U[d^2]=1$, and the pointer path of each block is a
+uniformly distributed root-to-leaf path. By the dual
+formula~\eqref{eq:vdual} with witness $h=d$,
+$V_r(d,b)\ge1/\max_{\iota\in\A_r(b)}E_\iota$ with
+$E_\iota=\E_\U[\E_\U[d\mid\ell_\iota(X)]^2]$. Fix a deterministic $r$-round
+interview $\iota$. Let $S_t$ be the set of coordinates it reads in round $t$;
+$S_t$ is a function of the transcript $T_{t-1}$ of rounds $1,\ldots,t-1$, and
+we may assume that no coordinate is read twice. For block $i$ write
+$a_{t,i}$ and $\lambda_{t,i}$ for the numbers of its pointer and data
+coordinates in $S_t$ and $n_{t,i}=a_{t,i}+\lambda_{t,i}$, so that
+$\sum_{t,i}n_{t,i}\le b$; let $I_{t,i}$ be the set of pointer coordinates of
+block $i$ read in rounds $1,\ldots,t$, ${\rm Obs}_{t,i}$ the set of its leaves
+whose data coordinate is read in rounds $1,\ldots,t$, and $c^\star_i$ the leaf
+selected in block $i$.
+
+\emph{Step 1: only selected leaves carry signal.}
+The event $\{T_r=\tau\}$ fixes the values of the coordinates read under
+$\tau$ and nothing else, so conditionally on the transcript the unread
+coordinates remain independent and uniform and the blocks remain
+independent. Hence
+$\E_\U[d\mid\ell_\iota]=\prod_i\E_\U[B_L(X^{(i)})\mid\ell_\iota]$. Within a
+block, the data coordinate of an unread leaf $v$ is independent of the
+transcript and of the pointer path, so
+$\E_\U[Z_v\mathbf 1\{c^\star_i=v\}\mid\ell_\iota]=0$, and
+\[
+ \big|\E_\U[B_L(X^{(i)})\mid\ell_\iota]\big|
+ =\Big|\sum_{v\in{\rm Obs}_{r,i}}Z_v\,\PP(c_i^\star=v\mid T_r)\Big|
+ \le\pi_{r,i},\qquad \pi_{t,i}:=\PP(c_i^\star\in{\rm Obs}_{t,i}\mid T_t).
+\]
+Since $0\le\pi_{r,i}\le1$,
+\begin{equation}
+ E_\iota\le\E\Big[\prod_{i=1}^k\pi_{r,i}^2\Big]\le\E\Big[\prod_{i=1}^k\pi_{r,i}\Big].\label{eq:allhit}
+\end{equation}
+
+\emph{Step 2: the conditional law of a selected leaf.}
+For a leaf $v$ of block $i$ let $R_t(v)=|{\rm path}(v)\cap I_{t,i}|$ be the
+number of pointer coordinates on its path read by the end of round $t$, and
+let $C_t(v)$ be the event that every one of them selects the child towards
+$v$. Since $c_i^\star=v$ exactly when all $L$ pointer coordinates on
+${\rm path}(v)$ select the child towards $v$, and the unread ones are
+uniform given $T_t$,
+\begin{equation}
+ \PP(c_i^\star=v\mid T_t)=\mathbf 1\{C_t(v)\}\,2^{R_t(v)-L}.\label{eq:leaflaw}
+\end{equation}
+
+\emph{Step 3: a potential for one block.}
+Put $M_{t,i}=\max_v\mathbf 1\{C_t(v)\}2^{R_t(v)}$ over the leaves of block
+$i$, so that $M_{0,i}=1$ and, by \eqref{eq:leaflaw},
+$\max_v\PP(c_i^\star=v\mid T_t)=M_{t,i}2^{-L}$, and put
+\[
+ Q_{t,i}=M_{t,i}+2^L\pi_{t,i},\qquad Q_{0,i}=1 .
+\]
+We claim
+\begin{equation}
+ \E[Q_{t,i}\mid T_{t-1}]\le(1+2a_{t,i}+\lambda_{t,i})\,Q_{t-1,i}\le(1+2n_{t,i})\,Q_{t-1,i}.\label{eq:potential}
+\end{equation}
+\emph{The most likely leaf.} We show
+$\E[M_{t,i}\mid T_{t-1}]\le(1+2a_{t,i})M_{t-1,i}$. Condition on $T_{t-1}$,
+which fixes $S_t$, drop the block index, and let $v^\star$ attain $M_t$. If no
+coordinate of $S_t$ lies on ${\rm path}(v^\star)$, then
+$R_t(v^\star)=R_{t-1}(v^\star)$ and $C_t(v^\star)=C_{t-1}(v^\star)$, so
+$M_t\le M_{t-1}$. Otherwise let $u$ be the deepest node of
+${\rm path}(v^\star)\cap S_t$, write ${\rm path}(u)$ for the nodes above $u$
+together with $u$ itself, and define
+\[
+ G(u)=\mathbf 1\{\text{every node of }({\rm path}(u)\setminus\{u\})\cap I_t\text{ selects towards }u\}\,2^{|{\rm path}(u)\cap I_t|},
+\]
+\[
+ F(u)=\max_{w\text{ below }u}\mathbf 1\{\text{every node of }({\rm path}(w)\setminus{\rm path}(u))\cap I_{t-1}\text{ selects towards }w\}\,2^{|({\rm path}(w)\setminus{\rm path}(u))\cap I_{t-1}|}.
+\]
+No node of ${\rm path}(v^\star)$ strictly below $u$ is read in round $t$, so
+every read node there belongs to $I_{t-1}$ and
+$\mathbf 1\{C_t(v^\star)\}2^{R_t(v^\star)}\le G(u)F(u)$: the factor $G(u)$
+accounts for the nodes of ${\rm path}(u)$ other than $u$ and for the count
+including $u$, the bound $\mathbf 1\{x_u\to v^\star\}\le1$ drops $u$'s own
+selection, and $F(u)$ dominates the contribution of the nodes below $u$
+because $w=v^\star$ is admissible in its maximum. Consequently
+$M_t\le M_{t-1}+\sum_{u\in S_t\cap U}G(u)F(u)$, the sum being over the
+pointer coordinates of the block in $S_t$. The quantity $F(u)$ is
+$T_{t-1}$-measurable. Given $T_{t-1}$, the $|{\rm path}(u)\cap S_t|-1$ newly
+read nodes strictly above $u$ select towards $u$ independently with
+probability $1/2$ each, so
+\[
+ \E[G(u)\mid T_{t-1}]
+ =\mathbf 1\{\text{every node of }{\rm path}(u)\cap I_{t-1}\text{ selects towards }u\}\,
+   2^{|{\rm path}(u)\cap I_{t-1}|}\cdot2 .
+\]
+Multiplying by $F(u)$ reassembles, for the leaf $w$ below $u$ attaining
+$F(u)$, exactly $2\cdot\mathbf 1\{C_{t-1}(w)\}2^{R_{t-1}(w)}\le2M_{t-1}$,
+because $u\notin I_{t-1}$. Summing over the $a_t$ pointer coordinates of the
+block in $S_t$ proves the claim.
+
+\emph{The leaves already read.} The sets ${\rm Obs}_{t-1,i}$ and $S_t$ are
+$T_{t-1}$-measurable and disjoint, so
+$\pi_{t,i}=\PP(c_i^\star\in{\rm Obs}_{t-1,i}\mid T_t)+\PP(c_i^\star\in S_t\mid T_t)$
+(we write $c_i^\star\in S_t$ when the data coordinate of that leaf is read in round $t$),
+and by the tower property and \eqref{eq:leaflaw},
+\[
+ \E[\pi_{t,i}\mid T_{t-1}]
+ =\pi_{t-1,i}+\PP(c_i^\star\in S_t\mid T_{t-1})
+ \le\pi_{t-1,i}+\lambda_{t,i}\,M_{t-1,i}\,2^{-L}.
+\]
+Adding $2^L$ times this inequality to the bound for $M_{t,i}$ gives
+$\E[Q_{t,i}\mid T_{t-1}]\le(1+2a_{t,i}+\lambda_{t,i})M_{t-1,i}+2^L\pi_{t-1,i}$,
+which is~\eqref{eq:potential}.
+
+\emph{Step 4: blocks multiply.}
+Given $T_{t-1}$ the batch $S_t$ is fixed, the answers of round $t$ in
+different blocks are independent, and $Q_{t,i}$ is a function of $T_{t-1}$
+and of the round-$t$ answers in block $i$. Hence
+$\E[\prod_iQ_{t,i}\mid T_{t-1}]=\prod_i\E[Q_{t,i}\mid T_{t-1}]\le\prod_i(1+2n_{t,i})\prod_iQ_{t-1,i}$.
+Let $\Psi_t=\prod_iQ_{t,i}\prod_{s\le t}\prod_i(1+2n_{s,i})^{-1}$. As the
+$n_{t,i}$ are $T_{t-1}$-measurable, $\E[\Psi_t\mid T_{t-1}]\le\Psi_{t-1}$ and
+$\E[\Psi_r]\le\Psi_0=1$.
+
+\emph{Step 5: combination.}
+The pathwise constraint $\sum_{t\le r}\sum_in_{t,i}\le b$ and the inequality
+between arithmetic and geometric means over the $rk$ pairs $(t,i)$ give
+$\prod_{t\le r}\prod_i(1+2n_{t,i})\le(1+2b/(rk))^{rk}$. Since
+$2^L\pi_{r,i}\le Q_{r,i}$,
+\[
+ \E\Big[\prod_{i=1}^k\pi_{r,i}\Big]\le2^{-Lk}\,\E\Big[\prod_iQ_{r,i}\Big]
+ =2^{-Lk}\,\E\Big[\Psi_r\prod_{t\le r}\prod_i(1+2n_{t,i})\Big]
+ \le2^{-k(\beta-1)}\Big(1+\frac{2b}{rk}\Big)^{rk}.
+\]
+With \eqref{eq:allhit} and the dual formula this proves the first statement
+of (b). For $r=1$ and $k=1$, \eqref{eq:leaflaw} at $t=0$ gives directly
+$\PP(c^\star\in{\rm Obs})\le\lambda_12^{-L}\le b2^{-L}$, which is the last
+statement. \hfill$\square$
+
+The argument is a potential-function version of the lucky-hit bound: a
+round can raise the conditional probability of the most likely leaf only by
+a factor linear in the number of pointer coordinates it reads, whereas
+following the path raises it by a factor two per question; the potential
+$Q$ adds the probability that a leaf already read is the selected one, which
+makes the bound multiplicative across blocks even though an interview may
+split its questions among blocks adaptively. As a numerical check, the
+released code verifies \eqref{eq:potential} exhaustively on the tree with
+$L=2$ (all 4,752 pairs of a state and a nonempty batch; the largest ratio of
+the two sides is exactly one) and on random states and batches for $L=3$
+and $L=4$ (largest ratio one and $0.83$).

@@ -1,0 +1,6 @@
+L=2 exhaustive: 4752 (state, batch) pairs; max E[Q_new]/((1+2a+lam) Q_old) = 1.0000; max against the sharper sum = 1.0000
+L=3 random: max ratio 1.0000; sharper 1.0000
+L=4 random: max ratio 0.8333; sharper 1.0000
+b=3 r=2: new bound 0.250, old bound 0.095, exact lower bound M_r(U) 1.800
+b=4 r=2: new bound 0.320, old bound 0.111, exact lower bound M_r(U) 3.324
+b=4 r=3: new bound 0.162, old bound 0.027, exact lower bound M_r(U) 1.800

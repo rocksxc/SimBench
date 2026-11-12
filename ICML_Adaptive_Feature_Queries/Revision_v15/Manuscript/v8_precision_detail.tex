@@ -1,0 +1,45 @@
+\begin{table*}[t]
+\centering
+\caption{Precision planning on five prespecified tasks per dataset. Counts and costs are medians; coverage and half-width are Monte Carlo means; minimum is across the five task coverage rates. Each rate uses 2,000 replications. $^\dagger$Validation belongs to the relaxed-cap class.}
+\label{tab:precisiondetail}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lrrrrrrrr}
+\toprule
+Data & $e$ & $c_Y$ & Method & $n_e$ & Cost & Cov. & Min. & Half-width \\
+\midrule
+SUSHI & 0.010 & 1 & Branching & 834 & 4906 & 0.952 & 0.948 & 0.0100 \\
+SUSHI & 0.025 & 1 & Branching & 134 & 788 & 0.947 & 0.941 & 0.0249 \\
+SUSHI & 0.010 & 1 & Prefix & 3299 & 23093 & 0.952 & 0.949 & 0.0100 \\
+SUSHI & 0.025 & 1 & Prefix & 528 & 3696 & 0.949 & 0.946 & 0.0249 \\
+SUSHI & 0.010 & 1 & Form scores & 2837 & 19859 & 0.950 & 0.943 & 0.0100 \\
+SUSHI & 0.025 & 1 & Form scores & 454 & 3178 & 0.950 & 0.939 & 0.0249 \\
+SUSHI & 0.010 & 1 & Validation$^\dagger$ & 1094 & 23194 & 0.950 & 0.943 & 0.0100 \\
+SUSHI & 0.025 & 1 & Validation$^\dagger$ & 176 & 3731 & 0.948 & 0.942 & 0.0249 \\
+SUSHI & 0.010 & 100 & Branching & 834 & 87472 & 0.950 & 0.946 & 0.0100 \\
+SUSHI & 0.025 & 100 & Branching & 134 & 14054 & 0.952 & 0.946 & 0.0249 \\
+SUSHI & 0.010 & 100 & Prefix & 3299 & 349694 & 0.948 & 0.943 & 0.0100 \\
+SUSHI & 0.025 & 100 & Prefix & 528 & 55968 & 0.951 & 0.947 & 0.0249 \\
+SUSHI & 0.010 & 100 & Form scores & 2837 & 300722 & 0.952 & 0.949 & 0.0100 \\
+SUSHI & 0.025 & 100 & Form scores & 454 & 48124 & 0.951 & 0.945 & 0.0250 \\
+SUSHI & 0.010 & 100 & Validation$^\dagger$ & 834 & 106752 & 0.953 & 0.950 & 0.0100 \\
+SUSHI & 0.025 & 100 & Validation$^\dagger$ & 134 & 17152 & 0.947 & 0.939 & 0.0249 \\
+SAPA & 0.010 & 1 & Branching & 648 & 3668 & 0.946 & 0.943 & 0.0100 \\
+SAPA & 0.025 & 1 & Branching & 104 & 589 & 0.945 & 0.931 & 0.0248 \\
+SAPA & 0.010 & 1 & Prefix & 1536 & 10752 & 0.950 & 0.947 & 0.0100 \\
+SAPA & 0.025 & 1 & Prefix & 246 & 1722 & 0.952 & 0.947 & 0.0249 \\
+SAPA & 0.010 & 1 & Form scores & 1233 & 8631 & 0.949 & 0.939 & 0.0100 \\
+SAPA & 0.025 & 1 & Form scores & 198 & 1386 & 0.951 & 0.948 & 0.0249 \\
+SAPA & 0.010 & 1 & Validation$^\dagger$ & 855 & 12797 & 0.951 & 0.943 & 0.0100 \\
+SAPA & 0.025 & 1 & Validation$^\dagger$ & 137 & 2048 & 0.947 & 0.945 & 0.0249 \\
+SAPA & 0.010 & 100 & Branching & 648 & 67820 & 0.950 & 0.943 & 0.0100 \\
+SAPA & 0.025 & 100 & Branching & 104 & 10885 & 0.949 & 0.946 & 0.0249 \\
+SAPA & 0.010 & 100 & Prefix & 1536 & 162816 & 0.949 & 0.945 & 0.0100 \\
+SAPA & 0.025 & 100 & Prefix & 246 & 26076 & 0.952 & 0.947 & 0.0249 \\
+SAPA & 0.010 & 100 & Form scores & 1233 & 130698 & 0.949 & 0.942 & 0.0100 \\
+SAPA & 0.025 & 100 & Form scores & 198 & 20988 & 0.948 & 0.942 & 0.0249 \\
+SAPA & 0.010 & 100 & Validation$^\dagger$ & 648 & 77760 & 0.955 & 0.949 & 0.0100 \\
+SAPA & 0.025 & 100 & Validation$^\dagger$ & 104 & 12480 & 0.948 & 0.945 & 0.0249 \\
+\bottomrule
+\end{tabular}
+\end{table*}

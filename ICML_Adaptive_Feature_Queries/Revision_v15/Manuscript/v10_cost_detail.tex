@@ -1,0 +1,48 @@
+\begin{table*}[t]
+\centering
+\caption{All-task planned fixed-form/complete-record cost ratios at half-width 0.025. Counts include integer rounding and a minimum of 30. The last column counts tasks on which complete acquisition is cheaper. Both designs condition on supplied calibration.}
+\label{tab:costdetail}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lrrrr}
+\toprule
+Data & $c_Y$ & Tasks & Cost ratio & Complete cheaper \\
+\midrule
+SUSHI & 0 & 45 & 0.726 & 1/45 \\
+SUSHI & 1 & 45 & 0.818 & 5/45 \\
+SUSHI & 3 & 45 & 0.984 & 17/45 \\
+SUSHI & 10 & 45 & 1.427 & 45/45 \\
+SUSHI & 30 & 45 & 2.103 & 45/45 \\
+SUSHI & 100 & 45 & 2.806 & 45/45 \\
+SAPA & 0 & 25 & 0.731 & 3/25 \\
+SAPA & 1 & 25 & 0.812 & 5/25 \\
+SAPA & 3 & 25 & 0.953 & 11/25 \\
+SAPA & 10 & 25 & 1.299 & 19/25 \\
+SAPA & 30 & 25 & 1.754 & 25/25 \\
+SAPA & 100 & 25 & 2.152 & 25/25 \\
+\bottomrule
+\end{tabular}
+\end{table*}
+\begin{table*}[t]
+\centering
+\caption{Intermediate-cost diagnostic at $c_Y=10$ on the ten fixed tasks. Validation is refitted at that cost, with 2,000 conditional coverage simulations per task. Other rows reuse verified variances.}
+\label{tab:cost10detail}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{llrrr}
+\toprule
+Data & Method & Records & Cost & Validation coverage \\
+\midrule
+SAPA & branching & 104 & 1525 & -- \\
+SAPA & complete & 104 & 3120 & -- \\
+SAPA & debiased proxy & 108 & 3120 & 0.946 \\
+SAPA & full form & 198 & 3168 & -- \\
+SAPA & prefix & 246 & 3936 & -- \\
+SUSHI & branching & 134 & 1994 & -- \\
+SUSHI & complete & 134 & 5092 & -- \\
+SUSHI & debiased proxy & 134 & 5092 & 0.948 \\
+SUSHI & full form & 454 & 7264 & -- \\
+SUSHI & prefix & 528 & 8448 & -- \\
+\bottomrule
+\end{tabular}
+\end{table*}

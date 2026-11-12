@@ -1,0 +1,6 @@
+('BRFSS', 6, 0, False) fixed 1.982 (v12 1.982) fit 2.059 PS 2.022 PSfit 2.058 lower 1.250 upperNP 11.785 r2 1.000 r3 1.000 r4 1.000 r5 1.000 r6 1.000 heur 1.555 1.397 1.182 1.000 pos0.1 b 2.25 f 2.50 580s
+('BRFSS', 6, 1, False) fixed 1.530 (v12 1.530) fit 1.580 PS 1.534 PSfit 1.558 lower 1.129 upperNP 15.166 r2 1.000 r3 1.000 r4 1.000 r5 1.000 r6 1.000 heur 1.400 1.173 1.052 1.000 pos0.1 b 1.71 f 2.27 592s
+('BRFSS', 6, 2, False) fixed 1.417 (v12 1.417) fit 1.475 PS 1.438 PSfit 1.467 lower 1.066 upperNP 10.853 r2 1.000 r3 1.000 r4 1.000 r5 1.000 r6 1.000 heur 1.232 1.169 1.097 1.000 pos0.1 b 1.01 f 1.57 796s
+('BRFSS', 6, 0, True) fixed 1.604 (v12 1.604) fit 1.700 PS 1.645 PSfit 1.705 lower 1.117 upperNP 9.877 r2 1.000 r3 1.000 r4 1.000 r5 1.000 r6 1.000 heur 1.385 1.168 1.055 1.000 pos0.1 b 0.87 f 1.41 875s
+('BRFSS', 6, 1, True) fixed 1.714 (v12 1.714) fit 1.827 PS 1.767 PSfit 1.852 lower 1.146 upperNP 10.945 r2 1.000 r3 1.000 r4 1.000 r5 1.000 r6 1.000 heur 1.476 1.347 1.118 1.000 pos0.1 b 1.65 f 2.37 654s
+('BRFSS', 6, 2, True) fixed 1.561 (v12 1.561) fit 1.664 PS 1.570 PSfit 1.647 lower 1.129 upperNP 18.919 r2 1.000 r3 1.000 r4 1.000 r5 1.000 r6 1.000 heur 1.322 1.202 1.078 1.000 pos0.1 b 1.99 f 2.70 604s

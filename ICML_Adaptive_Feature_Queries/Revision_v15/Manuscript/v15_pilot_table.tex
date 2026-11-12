@@ -1,0 +1,15 @@
+\begin{table}[h]
+\centering
+\caption{Learning the design from a pilot of the audit itself (BRFSS runs with a gain). The pilot interviews $n_1$ target respondents with the uniform design on the tree\textquotesingle s path sets; the path-set design is re-optimized at the estimated cell masses. Entries: variance of the learned design relative to the oracle path-set design at the target law, median over runs of the median over 40 pilot draws [largest 90th percentile over runs]. Cells: number of (form, pattern, label) masses to estimate. Reference: design fitted on 20,000 source records.}
+\label{tab:pilot}
+\small
+\begin{tabular}{rrrlllllr}
+\toprule
+$b$ & runs & cells & $n_1=250$ & $n_1=500$ & $n_1=1000$ & $n_1=2000$ & $n_1=4000$ & reference \\
+\midrule
+4 & 5 & 128 & 1.17 [1.42] & 1.09 [1.28] & 1.05 [1.13] & 1.03 [1.07] & 1.02 [1.05] & 1.01 \\
+5 & 6 & 416 & 1.86 [2.61] & 1.38 [1.99] & 1.19 [1.40] & 1.10 [1.17] & 1.05 [1.11] & 1.02 \\
+6 & 6 & 1728 & 2.58 [3.64] & 2.69 [3.24] & 2.05 [3.26] & 1.60 [2.42] & 1.30 [1.61] & 1.03 \\
+\bottomrule
+\end{tabular}
+\end{table}
