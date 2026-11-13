@@ -1,0 +1,17 @@
+\begin{table}[h]
+\centering
+\caption{Forest updates on $m=20$ median-binarized Spambase features (twenty-tree forests of depth $b$, 3,101 held-out records, 1\% smoothing). The fixed optimum is certified over all forms. Column generation over two-round and branching interviews was stopped after a wall-clock budget, so their constants are certified intervals and the ratios to branching are intervals: fixed / branch $\in[W_{\rm fixed}/\overline W_{\rm branch},\,W_{\rm fixed}/\underline W_{\rm branch}]$. Used: features on which the forests split. Iter.: column-generation iterations for branching.}
+\label{tab:forestscale}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{rrrrrllr}
+\toprule
+$b$ & seed & forms & used & fixed / complete & fixed / branch & two rounds / branch & iter. \\
+\midrule
+3 & 0 & 1,140 & 17 & 6.9 & [1.54, 1.54] & [1.00, 1.08] & 130 \\
+3 & 1 & 1,140 & 18 & 3.7 & [1.50, 1.50] & [1.00, 1.03] & 121 \\
+3 & 2 & 1,140 & 17 & 5.1 & [1.61, 1.61] & [1.04, 1.05] & 114 \\
+4 & 0 & 4,845 & 18 & 5.8 & [1.03, 5.76] & -- & 66 \\
+\bottomrule
+\end{tabular}
+\end{table}

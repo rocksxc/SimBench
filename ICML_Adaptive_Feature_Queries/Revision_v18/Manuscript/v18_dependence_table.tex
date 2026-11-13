@@ -1,0 +1,25 @@
+\begin{table}[h]
+\centering
+\caption{Constants within log-linear models at laws with dependence, relative to $\Var_P(t)$. Left: the address contrast with $b=3$ and the auxiliary features of Theorem~\ref{thm:structuredfull}(d) (14 features), along the pairwise laws $P_\beta\propto e^{\beta\mathcal Q}$ from the uniform law ($\beta=0$) towards the law on which the one-hot copy and the products are exact; the theorem gives a limit of at least $2^{b-1}/b=1.33$ for the ratio, and the bound of part (a) is 4. Right: the address contrast with label $Y=d(X)\xi$, $P(\xi=1)=$ acc, projected on the pairwise and three-way models by maximum likelihood; without a model the ratio is $2^{b-1}$ at each of these populations (Proposition~\ref{prop:labelnoise}). Values certified to $10^{-3}$ or better, except entries marked $^\ast$, where column generation over branching interviews was stopped by its budget and the ratio is a lower bound.}
+\label{tab:dependence}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{rrrr c rrrrrr}
+\toprule
+\multicolumn{4}{c}{strong couplings, $k=2$} & & \multicolumn{6}{c}{pairwise and three-way fits} \\
+\cmidrule{1-4}\cmidrule{6-11}
+$\beta$ & Fixed & Branch & Ratio & & $b$ & acc & $k=2$ ratio & $k=3$ fixed & $k=3$ branch & $k=3$ ratio \\
+\midrule
+0 & 0.333 & 0.333 & 1.00 & & 3 & 0.5 & 1.00 & 2.500 & 1.000 & 2.50 \\
+0.5 & 0.350 & 0.350 & 1.00 & & 3 & 0.6 & 1.00 & 2.516 & 1.000 & 2.52 \\
+1 & 0.432 & 0.425 & 1.02 & & 3 & 0.7 & 1.00 & 2.564 & 1.000 & 2.56 \\
+1.5 & 0.618 & 0.595 & 1.04 & & 3 & 0.8 & 1.00 & 2.636 & 1.000 & 2.64 \\
+2 & 0.839 & 0.761 & 1.10 & & 3 & 0.9 & 1.00 & 2.675 & 1.000 & 2.68 \\
+3 & 1.223 & 0.892 & 1.37 & & 3 & 0.97 & 1.00 & 2.463 & 1.000 & 2.46 \\
+4 & 1.465 & 0.934 & 1.57 & & 4 & 0.5 & 1.00 & 2.750 & 1.000 & 2.75 \\
+6 & 1.635 & 0.987$^\ast$ & 1.66 & & 4 & 0.7 & 1.00 & 2.857 & 1.000 & 2.86 \\
+ & & &  & & 4 & 0.9 & 1.00 & 3.187 & 1.000 & 3.19 \\
+ & & &  & & 4 & 0.97 & 1.00 & 3.352 & 1.000 & 3.35 \\
+\bottomrule
+\end{tabular}
+\end{table}

@@ -1,0 +1,18 @@
+(4, 0, False) PSopt 1.496 n1=1000 emp: cf 1.97 learn 1.55 all-in 1.65 | loglin: cf 1.86 learn 1.51 all-in 1.60 n1=2000 emp: cf 1.89 learn 1.53 all-in 1.63 | loglin: cf 1.84 learn 1.51 all-in 1.59 7s
+(4, 1, False) PSopt 1.458 n1=1000 emp: cf 1.92 learn 1.53 all-in 1.63 | loglin: cf 1.80 learn 1.48 all-in 1.56 n1=2000 emp: cf 1.85 learn 1.50 all-in 1.58 | loglin: cf 1.79 learn 1.48 all-in 1.56 7s
+(4, 2, False) PSopt 1.608 n1=1000 emp: cf 1.75 learn 1.64 all-in 1.67 | loglin: cf 1.71 learn 1.62 all-in 1.65 n1=2000 emp: cf 1.72 learn 1.63 all-in 1.65 | loglin: cf 1.70 learn 1.61 all-in 1.64 7s
+(4, 0, True) PSopt 1.000  1s
+(4, 1, True) PSopt 1.817 n1=1000 emp: cf 2.62 learn 1.93 all-in 2.12 | loglin: cf 2.47 learn 1.88 all-in 2.02 n1=2000 emp: cf 2.47 learn 1.90 all-in 2.05 | loglin: cf 2.40 learn 1.85 all-in 1.99 12s
+(4, 2, True) PSopt 1.570 n1=1000 emp: cf 2.10 learn 1.64 all-in 1.75 | loglin: cf 2.01 learn 1.59 all-in 1.70 n1=2000 emp: cf 2.03 learn 1.61 all-in 1.71 | loglin: cf 1.98 learn 1.59 all-in 1.69 9s
+(5, 0, False) PSopt 1.189 n1=1000 emp: cf 2.43 learn 1.43 all-in 1.67 | loglin: cf 1.71 learn 1.21 all-in 1.33 n1=2000 emp: cf 2.02 learn 1.31 all-in 1.49 | loglin: cf 1.69 learn 1.20 all-in 1.32 23s
+(5, 1, False) PSopt 1.281 n1=1000 emp: cf 2.24 learn 1.65 all-in 1.78 | loglin: cf 1.60 learn 1.31 all-in 1.38 n1=2000 emp: cf 1.94 learn 1.43 all-in 1.56 | loglin: cf 1.55 learn 1.30 all-in 1.36 26s
+(5, 2, False) PSopt 1.544 n1=1000 emp: cf 2.15 learn 1.74 all-in 1.85 | loglin: cf 1.79 learn 1.58 all-in 1.63 n1=2000 emp: cf 1.95 learn 1.64 all-in 1.72 | loglin: cf 1.77 learn 1.56 all-in 1.61 16s
+(5, 0, True) PSopt 1.261 n1=1000 emp: cf 2.19 learn 1.43 all-in 1.61 | loglin: cf 1.78 learn 1.30 all-in 1.43 n1=2000 emp: cf 1.92 learn 1.34 all-in 1.48 | loglin: cf 1.73 learn 1.28 all-in 1.40 34s
+(5, 1, True) PSopt 1.564 n1=1000 emp: cf 2.58 learn 1.89 all-in 2.03 | loglin: cf 1.98 learn 1.63 all-in 1.71 n1=2000 emp: cf 2.23 learn 1.74 all-in 1.87 | loglin: cf 1.91 learn 1.59 all-in 1.67 22s
+(5, 2, True) PSopt 1.439 n1=1000 emp: cf 2.99 learn 1.93 all-in 2.20 | loglin: cf 2.04 learn 1.49 all-in 1.64 n1=2000 emp: cf 2.46 learn 1.65 all-in 1.87 | loglin: cf 1.96 learn 1.47 all-in 1.60 67s
+(6, 0, False) PSopt 2.022 n1=1000 emp: cf 6.22 learn 4.03 all-in 4.60 | loglin: cf 3.15 learn 2.14 all-in 2.40 n1=2000 emp: cf 5.42 learn 3.30 all-in 3.77 | loglin: cf 2.93 learn 2.08 all-in 2.29 241s
+(6, 1, False) PSopt 1.534 n1=1000 emp: cf 5.51 learn 4.17 all-in 4.53 | loglin: cf 2.82 learn 1.60 all-in 1.91 n1=2000 emp: cf 5.37 learn 2.91 all-in 3.59 | loglin: cf 2.55 learn 1.58 all-in 1.82 274s
+(6, 2, False) PSopt 1.438 n1=1000 emp: cf 4.61 learn 3.18 all-in 3.57 | loglin: cf 2.17 learn 1.51 all-in 1.68 n1=2000 emp: cf 3.95 learn 2.25 all-in 2.65 | loglin: cf 2.07 learn 1.48 all-in 1.63 171s
+(6, 0, True) PSopt 1.645 n1=1000 emp: cf 4.70 learn 3.01 all-in 3.48 | loglin: cf 2.19 learn 1.74 all-in 1.85 n1=2000 emp: cf 3.65 learn 2.43 all-in 2.74 | loglin: cf 2.10 learn 1.69 all-in 1.80 124s
+(6, 1, True) PSopt 1.767 n1=1000 emp: cf 5.26 learn 3.55 all-in 4.13 | loglin: cf 2.51 learn 1.92 all-in 2.05 n1=2000 emp: cf 4.45 learn 2.73 all-in 3.16 | loglin: cf 2.32 learn 1.80 all-in 1.93 166s
+(6, 2, True) PSopt 1.570 n1=1000 emp: cf 6.06 learn 4.54 all-in 4.91 | loglin: cf 2.81 learn 1.66 all-in 1.95 n1=2000 emp: cf 6.04 learn 3.25 all-in 3.94 | loglin: cf 2.53 learn 1.63 all-in 1.85 305s

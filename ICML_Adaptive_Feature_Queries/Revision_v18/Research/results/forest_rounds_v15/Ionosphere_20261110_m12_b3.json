@@ -1,0 +1,23 @@
+{
+ "dataset": "Ionosphere",
+ "seed": 20261110,
+ "m": 12,
+ "b": 3,
+ "delta": 0.04997672132772758,
+ "second": 0.018633186569375657,
+ "full_var": 0.016135513894706317,
+ "fixed_M": 0.1225723086471169,
+ "round2_M_upper": 0.07310887861874846,
+ "round2_M_lower": 0.07310886594277871,
+ "round2_iterations": 49,
+ "branch_M_upper": 0.06736723288704706,
+ "branch_M_lower": 0.06736723287591746,
+ "branch_iterations": 43,
+ "fixed_ratio": 1.8510166490929316,
+ "round2_ratio": 1.0885106313793975,
+ "round2_recovered": 0.8622615820756666,
+ "branch_gap": 1.6520787283142964e-10,
+ "fixed_vs_full": 7.441636923125283,
+ "branch_vs_full": 4.020297130645457,
+ "seconds": 287.9124438762665
+}

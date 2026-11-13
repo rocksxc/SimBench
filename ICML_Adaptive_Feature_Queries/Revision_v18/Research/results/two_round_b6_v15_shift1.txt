@@ -1,0 +1,1 @@
+{'dataset': 'BRFSS', 'shift': True, 'b': 6, 'seed': 20261109, 'fixed_ratio': 1.7143633623873311, 'round2_ratio_upper': 1.0130767393951003, 'round2_ratio_lower': 1.0129492875919766, 'round2_iterations': 63, 'round2_optimal': False, 'round2_timed_out': True, 'interviews': 586, 'valid': True, 'fixed_seconds': 412.8337984085083, 'seconds': 4125.993112325668, 'budget': 3600.0}

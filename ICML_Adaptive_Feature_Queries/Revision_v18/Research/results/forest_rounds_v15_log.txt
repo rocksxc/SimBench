@@ -1,0 +1,61 @@
+60 tasks
+('WDBC', 20261108, 6, 3) fixed 1.330 r2 1.022 (rec 0.92) cap: fixed/full 1.86 branch/full 1.40 gap 1.6e-08 4s
+('WDBC', 20261109, 6, 3) fixed 1.383 r2 1.023 (rec 0.93) cap: fixed/full 2.00 branch/full 1.45 gap 4.3e-09 3s
+('WDBC', 20261110, 6, 3) fixed 1.381 r2 1.033 (rec 0.90) cap: fixed/full 2.15 branch/full 1.56 gap 6.5e-09 4s
+('WDBC', 20261111, 6, 3) fixed 1.375 r2 1.018 (rec 0.95) cap: fixed/full 2.62 branch/full 1.91 gap 1.3e-08 3s
+('WDBC', 20261112, 6, 3) fixed 1.319 r2 1.042 (rec 0.85) cap: fixed/full 2.11 branch/full 1.60 gap 2.7e-08 4s
+('Spambase', 20261108, 6, 3) fixed 1.441 r2 1.049 (rec 0.87) cap: fixed/full 2.25 branch/full 1.56 gap 3.4e-10 4s
+('Spambase', 20261109, 6, 3) fixed 1.260 r2 1.025 (rec 0.89) cap: fixed/full 1.81 branch/full 1.44 gap 1.9e-10 3s
+('Spambase', 20261110, 6, 3) fixed 1.660 r2 1.055 (rec 0.89) cap: fixed/full 2.62 branch/full 1.58 gap 5.7e-07 3s
+('Spambase', 20261111, 6, 3) fixed 1.347 r2 1.023 (rec 0.92) cap: fixed/full 1.82 branch/full 1.35 gap 4.3e-09 3s
+('Spambase', 20261112, 6, 3) fixed 1.490 r2 1.022 (rec 0.95) cap: fixed/full 2.77 branch/full 1.86 gap 2.9e-10 3s
+('Ionosphere', 20261108, 6, 3) fixed 1.432 r2 1.032 (rec 0.91) cap: fixed/full 2.51 branch/full 1.76 gap 1.0e-08 3s
+('Ionosphere', 20261109, 6, 3) fixed 1.340 r2 1.023 (rec 0.92) cap: fixed/full 1.87 branch/full 1.40 gap 1.3e-08 3s
+('Ionosphere', 20261110, 6, 3) fixed 1.353 r2 1.019 (rec 0.94) cap: fixed/full 2.43 branch/full 1.80 gap 2.1e-08 3s
+('Ionosphere', 20261111, 6, 3) fixed 1.413 r2 1.030 (rec 0.91) cap: fixed/full 2.32 branch/full 1.64 gap 5.7e-09 3s
+('Ionosphere', 20261112, 6, 3) fixed 1.315 r2 1.020 (rec 0.93) cap: fixed/full 1.69 branch/full 1.28 gap 7.5e-10 4s
+('WDBC', 20261108, 9, 3) fixed 1.349 r2 1.022 (rec 0.93) cap: fixed/full 2.73 branch/full 2.02 gap 8.2e-05 33s
+('WDBC', 20261109, 9, 3) fixed 1.430 r2 1.019 (rec 0.95) cap: fixed/full 3.66 branch/full 2.56 gap 9.1e-08 38s
+('WDBC', 20261110, 9, 3) fixed 1.711 r2 1.069 (rec 0.88) cap: fixed/full 6.97 branch/full 4.07 gap 1.7e-07 42s
+('WDBC', 20261111, 9, 3) fixed 1.623 r2 1.057 (rec 0.89) cap: fixed/full 4.38 branch/full 2.70 gap 2.3e-05 44s
+('WDBC', 20261112, 9, 3) fixed 1.597 r2 1.039 (rec 0.92) cap: fixed/full 4.59 branch/full 2.88 gap 1.0e-04 43s
+('Spambase', 20261108, 9, 3) fixed 1.718 r2 1.046 (rec 0.92) cap: fixed/full 4.09 branch/full 2.38 gap 7.9e-05 23s
+('Spambase', 20261109, 9, 3) fixed 1.471 r2 1.035 (rec 0.91) cap: fixed/full 3.27 branch/full 2.22 gap 1.0e-08 31s
+('Spambase', 20261110, 9, 3) fixed 1.476 r2 1.041 (rec 0.90) cap: fixed/full 3.78 branch/full 2.56 gap 7.9e-09 22s
+('Spambase', 20261111, 9, 3) fixed 1.527 r2 1.060 (rec 0.86) cap: fixed/full 2.94 branch/full 1.92 gap 9.3e-10 22s
+('Spambase', 20261112, 9, 3) fixed 1.400 r2 1.046 (rec 0.87) cap: fixed/full 2.39 branch/full 1.71 gap 4.2e-08 29s
+('Ionosphere', 20261108, 9, 3) fixed 1.508 r2 1.042 (rec 0.90) cap: fixed/full 3.23 branch/full 2.14 gap 2.2e-05 32s
+('Ionosphere', 20261109, 9, 3) fixed 1.614 r2 1.041 (rec 0.92) cap: fixed/full 4.23 branch/full 2.62 gap 2.4e-07 38s
+('Ionosphere', 20261110, 9, 3) fixed 1.764 r2 1.061 (rec 0.89) cap: fixed/full 4.84 branch/full 2.75 gap 3.1e-09 28s
+('Ionosphere', 20261111, 9, 3) fixed 1.597 r2 1.035 (rec 0.93) cap: fixed/full 4.14 branch/full 2.59 gap 7.7e-08 35s
+('Ionosphere', 20261112, 9, 3) fixed 1.455 r2 1.037 (rec 0.90) cap: fixed/full 2.51 branch/full 1.73 gap 6.5e-08 35s
+('WDBC', 20261108, 6, 4) fixed 1.220 r2 1.028 (rec 0.86) r3 1.005 (rec 0.98) cap: fixed/full 1.34 branch/full 1.10 gap 3.2e-08 38s
+('WDBC', 20261109, 6, 4) fixed 1.152 r2 1.014 (rec 0.90) r3 1.001 (rec 1.00) cap: fixed/full 1.24 branch/full 1.07 gap 4.8e-09 32s
+('WDBC', 20261110, 6, 4) fixed 1.264 r2 1.039 (rec 0.84) r3 1.005 (rec 0.98) cap: fixed/full 1.51 branch/full 1.20 gap 5.1e-09 34s
+('WDBC', 20261111, 6, 4) fixed 1.354 r2 1.062 (rec 0.80) r3 1.012 (rec 0.96) cap: fixed/full 1.59 branch/full 1.17 gap 4.1e-08 50s
+('WDBC', 20261112, 6, 4) fixed 1.227 r2 1.029 (rec 0.86) r3 1.002 (rec 0.99) cap: fixed/full 1.38 branch/full 1.12 gap 1.2e-08 38s
+('Spambase', 20261108, 6, 4) fixed 1.283 r2 1.047 (rec 0.82) r3 1.009 (rec 0.97) cap: fixed/full 1.53 branch/full 1.19 gap 1.2e-09 28s
+('Spambase', 20261109, 6, 4) fixed 1.282 r2 1.043 (rec 0.83) r3 1.005 (rec 0.98) cap: fixed/full 1.44 branch/full 1.12 gap 9.7e-06 23s
+('Spambase', 20261110, 6, 4) fixed 1.327 r2 1.042 (rec 0.85) r3 1.005 (rec 0.98) cap: fixed/full 1.57 branch/full 1.18 gap 9.2e-05 25s
+('Spambase', 20261111, 6, 4) fixed 1.230 r2 1.024 (rec 0.88) r3 1.002 (rec 0.99) cap: fixed/full 1.40 branch/full 1.14 gap 9.9e-09 26s
+('Spambase', 20261112, 6, 4) fixed 1.257 r2 1.041 (rec 0.82) r3 1.005 (rec 0.98) cap: fixed/full 1.90 branch/full 1.51 gap 4.3e-05 27s
+('Ionosphere', 20261108, 6, 4) fixed 1.204 r2 1.031 (rec 0.83) r3 1.003 (rec 0.98) cap: fixed/full 1.38 branch/full 1.15 gap 1.2e-07 37s
+('Ionosphere', 20261109, 6, 4) fixed 1.151 r2 1.021 (rec 0.85) r3 1.004 (rec 0.97) cap: fixed/full 1.27 branch/full 1.11 gap 7.9e-05 43s
+('Ionosphere', 20261110, 6, 4) fixed 1.239 r2 1.022 (rec 0.90) r3 1.001 (rec 0.99) cap: fixed/full 1.44 branch/full 1.16 gap 8.4e-05 42s
+('Ionosphere', 20261111, 6, 4) fixed 1.286 r2 1.034 (rec 0.87) r3 1.004 (rec 0.98) cap: fixed/full 1.46 branch/full 1.13 gap 9.3e-09 30s
+('Ionosphere', 20261112, 6, 4) fixed 1.126 r2 1.014 (rec 0.88) r3 1.001 (rec 0.99) cap: fixed/full 1.19 branch/full 1.05 gap 7.4e-05 32s
+('WDBC', 20261108, 12, 3) fixed 1.504 r2 1.041 (rec 0.90) cap: fixed/full 4.18 branch/full 2.78 gap 8.0e-05 427s
+('WDBC', 20261109, 12, 3) fixed 1.606 r2 1.054 (rec 0.89) cap: fixed/full 5.12 branch/full 3.19 gap 2.4e-07 385s
+('WDBC', 20261110, 12, 3) fixed 1.761 r2 1.063 (rec 0.89) cap: fixed/full 10.51 branch/full 5.97 gap 3.8e-09 287s
+('WDBC', 20261111, 12, 3) fixed 1.675 r2 1.059 (rec 0.89) cap: fixed/full 5.68 branch/full 3.39 gap 7.5e-08 262s
+('WDBC', 20261112, 12, 3) fixed 1.635 r2 1.047 (rec 0.91) cap: fixed/full 6.55 branch/full 4.01 gap 7.4e-08 258s
+('Spambase', 20261108, 12, 3) fixed 1.612 r2 1.057 (rec 0.88) cap: fixed/full 7.21 branch/full 4.47 gap 1.0e-07 76s
+('Spambase', 20261109, 12, 3) fixed 1.582 r2 1.065 (rec 0.86) cap: fixed/full 3.59 branch/full 2.27 gap 1.6e-07 165s
+('Spambase', 20261110, 12, 3) fixed 1.503 r2 1.043 (rec 0.90) cap: fixed/full 4.51 branch/full 3.00 gap 6.6e-05 72s
+('Spambase', 20261111, 12, 3) fixed 1.380 r2 1.029 (rec 0.91) cap: fixed/full 3.94 branch/full 2.86 gap 1.3e-05 142s
+('Spambase', 20261112, 12, 3) fixed 1.625 r2 1.040 (rec 0.92) cap: fixed/full 5.51 branch/full 3.39 gap 1.7e-08 89s
+('Ionosphere', 20261108, 12, 3) fixed 1.747 r2 1.055 (rec 0.90) cap: fixed/full 7.30 branch/full 4.18 gap 6.7e-08 278s
+('Ionosphere', 20261109, 12, 3) fixed 1.742 r2 1.071 (rec 0.88) cap: fixed/full 5.96 branch/full 3.42 gap 1.0e-07 295s
+('Ionosphere', 20261110, 12, 3) fixed 1.851 r2 1.089 (rec 0.86) cap: fixed/full 7.44 branch/full 4.02 gap 1.7e-10 288s
+('Ionosphere', 20261111, 12, 3) fixed 1.693 r2 1.069 (rec 0.87) cap: fixed/full 5.92 branch/full 3.50 gap 1.4e-07 293s
+('Ionosphere', 20261112, 12, 3) fixed 1.687 r2 1.069 (rec 0.87) cap: fixed/full 4.41 branch/full 2.61 gap 2.5e-09 286s

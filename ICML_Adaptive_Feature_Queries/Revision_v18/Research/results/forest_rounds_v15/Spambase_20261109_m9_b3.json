@@ -1,0 +1,23 @@
+{
+ "dataset": "Spambase",
+ "seed": 20261109,
+ "m": 9,
+ "b": 3,
+ "delta": -0.00975688648249171,
+ "second": 0.004488872610841333,
+ "full_var": 0.004393675777009103,
+ "fixed_M": 0.01445201938850713,
+ "round2_M_upper": 0.010200430853047383,
+ "round2_M_lower": 0.01020043084602815,
+ "round2_iterations": 31,
+ "branch_M_upper": 0.009854755495638393,
+ "branch_M_lower": 0.009854755397575207,
+ "branch_iterations": 34,
+ "fixed_ratio": 1.4710524371209568,
+ "round2_ratio": 1.0354191587332513,
+ "round2_recovered": 0.9098230441657207,
+ "branch_gap": 9.950849220669527e-09,
+ "fixed_vs_full": 3.267610830503289,
+ "branch_vs_full": 2.221274203452892,
+ "seconds": 31.07686471939087
+}
