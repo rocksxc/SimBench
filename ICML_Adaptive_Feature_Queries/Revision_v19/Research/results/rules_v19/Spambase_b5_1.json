@@ -1,0 +1,14 @@
+{
+ "dataset": "Spambase",
+ "b": 5,
+ "seed": 20261109,
+ "items": 12,
+ "n_target": 2301,
+ "n_train": 2300,
+ "features": 57,
+ "status": "ok",
+ "accuracy": 0.8508670143415906,
+ "fixed": 1.989244946738617,
+ "uniform": 8.375656860745663,
+ "seconds": 499.4464979171753
+}

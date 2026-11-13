@@ -1,0 +1,23 @@
+{
+ "dataset": "WDBC",
+ "seed": 20261110,
+ "m": 6,
+ "b": 3,
+ "delta": -0.016788107426214633,
+ "second": 0.004278620386461787,
+ "full_var": 0.003996779835507665,
+ "fixed_M": 0.008877898836914084,
+ "round2_M_upper": 0.00670852839410853,
+ "round2_M_lower": 0.006708528265047245,
+ "round2_iterations": 12,
+ "branch_M_upper": 0.006505767700848698,
+ "branch_M_lower": 0.006505767658260702,
+ "branch_iterations": 14,
+ "fixed_ratio": 1.3811309289032354,
+ "round2_ratio": 1.032577613519025,
+ "round2_recovered": 0.9007186506489242,
+ "branch_gap": 6.546190640115459e-09,
+ "fixed_vs_full": 2.15074601047373,
+ "branch_vs_full": 1.5572354260299208,
+ "seconds": 3.77248477935791
+}

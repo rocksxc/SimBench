@@ -1,0 +1,19 @@
+\begin{table*}[t]
+\centering
+\caption{BRFSS screening trees on twelve items (six runs per cap: two targets, three seeds): records needed relative to a branching interview that asks the tree\textquotesingle s own questions (which attains the full-information variance); medians over the six runs, range in brackets. \emph{Pre-committed forms without a model} (pointwise-unbiased scores): the optimal design at the target law; the design fitted on 20,000 source records; the design learned from a cross-fitted pilot of the audit itself with smoothed cell masses, all records charged ($N=4{,}000$; 1 when one form holds all the rule\textquotesingle s items); uniform randomization over all forms of the rule\textquotesingle s items and over the tree\textquotesingle s question paths, each with optimal tables. \emph{Two rounds}: the optimal two-round design (at $b=6$ the median includes certified upper bounds from feasible two-round designs for 4 runs, Table~\ref{tab:runs}). \emph{Bracket}: $[1/\rho_P^2,\ N_P]$ of Theorem~\ref{thm:bracket}. \emph{Within a model}: $W^{(k)}_{\rm fixed}/W^{(k)}_{\rm branch}$ at the order-$k$ log-linear fit of the target law.}
+\label{tab:screening}
+\footnotesize
+\setlength{\tabcolsep}{2.4pt}
+\begin{tabular}{r l r r r r r l l l}
+\toprule
+ & \multicolumn{5}{c}{pre-committed forms, no model} & two & bracket & \multicolumn{2}{c}{forms within a log-linear model} \\
+\cmidrule(lr){2-6}\cmidrule(lr){9-10}
+$b$ & optimal & reference & pilot & uniform, items & uniform, paths & rounds & $[1/\rho_P^2,N_P]$ & pairwise & three-way \\
+\midrule
+3 & 1.00 [1.00, 1.34] & 1.04 & -- & 1.00 & 1.03 & 1.00 & [1.00, 1.5] & 1.00 [1.00, 1.09] & 1.00 [1.00, 1.23] \\
+4 & 1.49 [1.00, 1.75] & 1.57 & 1.62 & 2.30 & 1.80 & 1.00 & [1.18, 3.3] & 1.09 [1.00, 1.13] & 1.28 [1.00, 1.40] \\
+5 & 1.35 [1.18, 1.54] & 1.42 & 1.53 & 2.04 & 1.72 & 1.00 & [1.08, 5.4] & 1.06 [1.02, 1.10] & 1.17 [1.08, 1.28] \\
+6 & 1.58 [1.42, 1.98] & 1.68 & 1.93 & 4.18 & 2.30 & $\le$1.05 & [1.13, 10.5] & 1.07 [1.05, 1.13] & $\ge$1.18 [1.15, 1.33] \\
+\bottomrule
+\end{tabular}
+\end{table*}

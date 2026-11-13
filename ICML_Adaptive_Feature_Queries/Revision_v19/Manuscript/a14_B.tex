@@ -1,0 +1,128 @@
+\section{Identification and the Exact Characterization}\label{app:B}
+\subsection{General Statistical Guarantees}\label{app:generalstatements}
+For a design distribution $q$ on $\A$ and a table $g_\iota$ on each transcript alphabet, abbreviate $g_\iota(x)=g_\iota(\ell_\iota(x))$ and $s_g(x)=\sum_\iota g_\iota(x)$. Define
+\begin{align}
+ B_n(q,g;x)&=(d(x)-s_g(x))^2+
+              \frac1n\sum_{\iota\in\A}\frac{g_\iota(x)^2}{q_\iota},\nonumber\\
+ \Phi_n(d,\A)&=\inf_{q,g}\ \max_{x\in\X}B_n(q,g;x).
+ \label{eq:program}
+\end{align}
+A design of mass zero may only have a zero table, in which case its contribution is zero. The first term permits a controlled approximation of the update. The second accounts for observing only one of the tables per respondent.
+
+\begin{theorem}[Finite-sample risk]\label{thm:finite}
+For every finite $\X,\A$, every contrast $d$ and every $n\ge1$,
+\[
+       \Phi_n(d,\A)/104 \ \le\ R_\A(d,n)\ \le\ \Phi_n(d,\A).
+\]
+The upper bound uses one iid design and the mean of $Yg_\iota(\ell_\iota(X))/q_\iota$. The lower bound allows the choice of interview to depend on all previous records.
+\end{theorem}
+
+The constant 104 is conservative. This is a convex quadratic-perspective program with a finite second-order cone formulation. Its size depends on enumerated profiles and interviews; Section~\ref{sec:pathdesign} instead uses a compact tree representation for a restricted menu.
+
+\begin{samepage}
+\begin{theorem}[Exact leading variance]\label{thm:asym}
+If $d\in\Hh_{\A}$, then $\lim_{n\to\infty}nR_\A(d,n)=V(d,\A)$ for fixed $d,\X,\A$. An iid design and an unbiased score give risk at most $V(d,\A)/n$ for every $n$.
+\end{theorem}
+\end{samepage}
+
+An optimal iid design already achieves the first-order worst-case coefficient. The lower bound even permits observing the current label before selecting an interview, so early labels do not improve this coefficient either. Within-person branching changes the available observation maps themselves. Population-specific performance can still benefit from learning a design from previous people.
+
+\paragraph{Why the characterization holds.}
+Conditioning on the complete record bounds the score mean's squared bias and variance by \eqref{eq:program}. For the converse, put $\Pi_\iota h=\E_\mu[h\mid\ell_\iota(X)]$ and $J_\mu(h)=\max_\iota\|\Pi_\iota h\|_{2,\mu}^2$. Convex duality gives
+\begin{equation}
+ \Phi_n(d,\A)=\sup_{\mu,h}
+ \frac{\ip{d}{h}^2}{\|h\|_{2,\mu}^2+nJ_\mu(h)}.\label{eq:dual}
+\end{equation}
+A witness perturbs the conditional label mean. Its numerator measures the change in the target, while $J_\mu(h)$ limits information from each interview. A change of measure and the KL chain rule handle sequential choices; a local van Trees argument gives the exact coefficient. Appendix~\ref{app:general} gives the duality and information proofs. These are established tools for linear-functional estimation; the sharp comparison of query menus is the main result.
+
+\subsubsection{An Exact One-Feature Example}
+For an additive contrast $d(x)=c_0+\sum_{j=1}^m c_j x_j$ on the unrestricted sign cube, put $M=\sum_{j=0}^m |c_j|=\|d\|_\infty$.
+\begin{proposition}\label{prop:add}
+For every $n\ge1$ the minimax risk is $M^2/(1+\sqrt n)^2$ both with full profiles and with at most one feature query.
+\end{proposition}
+Choose $j$ with probability $|c_j|/M$, interpret $x_0=1$, and return the sign $Y\sgn(c_j)x_j$. Its mean is $\Delta/M$. Estimating that mean reduces to a binomial problem. A population concentrated at an extremal profile gives the same binomial problem to an evaluator who sees all features (Appendix~\ref{app:sign}). Equality concerns worst-case populations. The best length at equal monetary cost can differ for particular populations.
+
+
+
+\subsection{Identifiability and Irreducible Error}\label{app:id}
+Let $L_\iota$ lift a transcript table to $\mathbb R^{\X}$, so $(L_\iota u)(x)=u(\ell_\iota(x))$. The space $\Hh_\A=\sum_\iota\mathrm{im}(L_\iota)$ is closed. Put $\delta=\inf_{v\in\Hh_\A}\|d-v\|_\infty$. In fact $\lim_{n\to\infty} R_\A(d,n)=\delta^2$. For the upper bound choose an approximant $v$ attaining $\delta$, decompose $v=\sum_\iota L_\iota g_\iota$, and give every used interview positive probability. The mean score is uniformly within $\delta$ of $\Delta$, and its variance tends to zero uniformly over $P$ since all alphabets are finite.
+
+If $\delta>0$, finite-dimensional norm duality gives a signed vector $w$ of $\ell_1$ norm one annihilating $\Hh_\A$ with $\sum_xw(x)d(x)=\delta$. This follows by separating $d$ from the open $\ell_\infty$ ball of radius $\delta$ around that subspace, or by duality of the linear program for uniform approximation. In particular $\sum_{x:\ell_\iota(x)=u} w(x)=0$ for every $\iota,u$. Give $X$ the law $|w|$, and in the two populations set $Y=\pm\sgn w(X)$. For each $y$, each transcript cell has identical joint probability with $Y=y$ in the two populations. This remains true if $y$ determines which interview is used. Sequentially conditioning on past records gives identical transcript laws for $n$ interviews while the gains are $\pm\delta$. The average of the two squared risks is at least $\delta^2$. The same reasoning gives necessity in the identification criterion.
+
+For a binary coordinate mask $T$ its cells span all characters $\chi_S$ with $S\subseteq T$ and no other characters, by the uniqueness of the multilinear expansion. A decision-tree leaf indicator is a product of up to $b$ factors $(1\pm x_i)/2$. Conversely the fixed query of $S$ recovers $\chi_S$ for every $|S|\le b$. This proves the common identification threshold.
+
+\subsection{The General Minimax Characterization}\label{app:general}
+Let $\|\cdot\|_\mu$ denote the norm in $L^2(\mu)$, identifying functions equal on the support of $\mu$. All objects below are finite-dimensional. We can take $q$ strictly positive when computing infima. If a feasible boundary design has $q_\iota=0$, its table is zero; mixing $q$ with a positive design and taking the mixture coefficient to zero recovers the same objective. Empty transcript cells can be discarded.
+
+\subsubsection{The Dual Form}
+For a fixed $\mu$ define, on the span of the transcript subspaces of $L^2(\mu)$,
+\[
+ N_\mu(v)=\inf_{\sum_\iota f_\iota=v}\sum_\iota\|f_\iota\|_\mu,\qquad f_\iota\in\mathrm{im}(L_\iota);
+\]
+extend it by $+\infty$ outside that span. The dual seminorm on the full space is $N_\mu^*(h)=\max_\iota\|\Pi_\iota h\|_\mu$. Indeed $|\ip{h}{\sum_\iota f_\iota}|\le\max_\iota\|\Pi_\iota h\|_\mu\sum_\iota\|f_\iota\|_\mu$, and a single normalized projection onto a maximizing subspace attains the bound. The closed unit ball of $N_\mu$ is the image of a compact product-space unit ball, so its squared norm is lower semicontinuous.
+
+Maximizing over profiles in \eqref{eq:program} is equivalent to maximizing its expectation over all $\mu$. The objective is continuous affine in $\mu$ on the compact probability simplex and continuous convex in $(q,g)$ for positive $q$. Sion's minimax theorem exchanges maximum and infimum \citep{sion1958}. For fixed tables, Cauchy--Schwarz and $q_\iota\propto\|L_\iota g_\iota\|_\mu$ give
+\[
+ \inf_q \sum_\iota\|L_\iota g_\iota\|_\mu^2/q_\iota
+      =\Big(\sum_\iota\|L_\iota g_\iota\|_\mu\Big)^2
+\]
+with zeros handled by limits. Thus at fixed $\mu$ the inner value is $\inf_v \{\|d-v\|_\mu^2+N_\mu(v)^2/n\}$. By finite-dimensional Fenchel duality this equals
+\[
+ \sup_h\{2\ip{d}{h}-\|h\|_\mu^2-nN_\mu^*(h)^2\}.
+\]
+To verify the factors, set $F(v)=\|d-v\|_\mu^2$ and $G(v)=N_\mu(v)^2/n$. Their conjugates satisfy
+\[
+ F^*(u)=\langle u,d\rangle_\mu+\|u\|_\mu^2/4,
+ \qquad G^*(u)=nN_\mu^*(u)^2/4.
+\]
+Fenchel duality gives $\inf_v(F+G)(v)=\sup_u[-F^*(-u)-G^*(u)]$; substituting $u=2h$ gives the displayed expression. There is no duality gap because the first squared norm is finite and continuous everywhere and the second is proper convex. Optimizing over the scale of $h$ proves \eqref{eq:dual}.
+
+\paragraph{Relation to fixed-channel constants.}
+For a prescribed iid observation kernel, the $\chi^2$-modulus bound of \citet{polyanskiy2026} brackets MSE between the squared modulus divided by $(1+\sqrt e)^2$ and the squared modulus, under its stated assumptions. \citet{juditsky2009} instead formulate their main comparison using a confidence-level error criterion. Neither modulus is the joint-design objective in \eqref{eq:program}. Our factor 104 is a conservative conversion for that objective under sequential interview choice, not an improvement on fixed-channel constants. The additional argument is a witness whose information is bounded simultaneously for every eligible interview, including the two choices selected by the current label.
+
+\subsubsection{Finite-Sample Converse}
+The upper bound in Theorem~\ref{thm:finite} follows from the conditional-score calculation in Section~\ref{sec:general}. For the lower bound fix $\mu,h$ and normalize $\|h\|_\mu^2+nJ_\mu(h)=1$. Write $C_\mu=1+\E_\mu|h|\le2$ and set
+\[
+ \nu(x)=\mu(x)(1+|h(x)|)/C_\mu,\qquad
+ u(x)=\mu(x)h(x)/\nu(x)
+\]
+on the support of $\mu$, with $u=0$ elsewhere. We have $\|u\|_\infty\le2$, $\nu\ge\mu/2$, and $\E_\nu[du]=\ip{d}{h}$. For every partition into transcript cells $C$,
+\[
+ \sum_C \nu(C)\,\E_\nu[u\mid C]^2
+  =\sum_{C:\nu(C)>0}\frac{\big(\sum_{x\in C}\mu(x)h(x)\big)^2}{\nu(C)}
+  \le 2\|\Pi_\iota h\|_\mu^2 .
+\]
+For $\vartheta=1/5$ define $P_\pm(x,y)=\nu(x)(1\pm \vartheta y u(x))/2$. Their gains are $\pm \vartheta\ip{d}{h}$. Condition on past interviews and on independent random coins. Under the null law with $X\sim\nu$ and $Y$ fair and independent, the probability $p_0(z)$ of a leaf $z=(y,C)$ changes to $p_\pm(z)=p_0(z)(1\pm \vartheta s_z)$ with $s_z=y\E_\nu[u\mid C]$. If the label selects interview $\iota_y$, the null second moment is
+\[
+ \E_0s_z^2=\frac12\sum_{y\in\{-1,1\}}\sum_{C\in \iota_y}
+       \nu(C)\E_\nu[u\mid C]^2
+ \le\frac12\sum_y 2\|\Pi_{\iota_y}h\|_\mu^2\le2J_\mu(h).
+\]
+Also $|s_z|\le2$. The conditional divergence satisfies
+\[
+ \KL(p_+\Vert p_-)\le\chi^2(p_+\Vert p_-)
+    \le \frac{4\vartheta^2}{1-2\vartheta}\E_0 s_z^2
+    \le \frac{8\vartheta^2}{1-2\vartheta}J_\mu(h).
+\]
+The bound is uniform in the realized past. Independent protocol randomness can be revealed at the start, then discarded by data processing. The KL chain rule bounds the divergence of the two full experiments by $8/15$. Pinsker's inequality bounds their total variation by $2/\sqrt{15}$. Classifying an estimate by the nearer of the two parameter values yields worst-case squared risk at least $\vartheta^2\ip{d}{h}^2(1-2/\sqrt{15})/2\ge\ip{d}{h}^2/104$. Taking the supremum in \eqref{eq:dual} proves Theorem~\ref{thm:finite}. The numerical inequality is equivalent to $15\cdot27^2>104^2$. The losses come from the change of measure, the KL-to-total-variation conversion, and testing two alternatives. The same calculation applies when the current label cannot select the form; this constant is not caused solely by label-dependent selection.
+
+\subsubsection{Exact First-Order Constant}
+Assume $d\in\Hh_\A$. Apply the same minimax exchange to \eqref{eq:unbiasedprogram}, retaining the affine pointwise constraint $s_g=d$. For strictly positive $\mu$ the pointwise constraint is equivalent to equality in $L^2(\mu)$, so the fixed-$\mu$ optimum is $N_\mu(d)^2$. Restricting the supremum to such $\mu$ preserves its value. Indeed mixing any $\mu$ with $\epsilon$ times a positive law gives an inner objective at least $(1-\epsilon)$ times the original one for every feasible design. By duality,
+\begin{equation}
+ V(d,\A)=\sup_{\mu>0,\,h:\,J_\mu(h)>0}
+                \frac{\ip{d}{h}^2}{J_\mu(h)}.\label{eq:vdual}
+\end{equation}
+The zero contrast has value zero. Equation~\eqref{eq:dual} and \eqref{eq:vdual} also give $n\Phi_n\to V$: the upper bound is $V$ by a zero-residual design, and every fixed witness in \eqref{eq:vdual} gives the matching lower limit.
+
+For a lower bound on $nR_\A$, fix positive $\mu,h$ and set $P_\theta(x,y)=\mu(x)(1+\theta y h(x))/2$, $|\theta|\le\eta<1/\|h\|_\infty$. Then $\Delta(P_\theta)=\theta c$, with $c=\ip{d}{h}$. For each history and deterministic choice of interviews the conditional leaf law has the form $p_\theta(z)=p_0(z)(1+\theta s_z)$. At the null $\E_0s_z^2\le J_\mu(h)$ and $|s_z|\le\|h\|_\infty$. Its Fisher information at $\theta$ is therefore at most $J_\mu(h)/(1-\eta\|h\|_\infty)$. Conditional likelihood scores are martingale differences, so the full information is bounded by $n$ times this quantity, including for a randomized protocol with its independent seed revealed.
+
+Use a smooth prior $\pi_\eta$ on $[-\eta,\eta]$ vanishing at both endpoints with finite information $I(\pi_\eta)$, for example $\eta^{-1}\cos^2(\pi \theta/(2\eta))$. Integration by parts in the joint data--parameter law gives $\E[(\widehat\Delta-\theta c)\partial_\theta\log(p_\theta\pi_\eta)]=c$. Cauchy--Schwarz gives the van Trees inequality \citep{gill1995}, here a lower bound of
+\[
+     \frac{c^2}{nJ_\mu(h)/(1-\eta\|h\|_\infty)+I(\pi_\eta)}
+\]
+on the prior risk, and hence on worst-case risk. First take $n\to\infty$ after multiplying by $n$, then $\eta\downarrow0$, then optimize \eqref{eq:vdual}. The means of the unbiased scores in \eqref{eq:unbiasedprogram} give the opposite inequality for every $n$, proving Theorem~\ref{thm:asym}.
+
+\subsubsection{When the Constant Is Attained in the Unbiased Class}
+For a fixed positive design law $q$ such that the eligible cells span $d$, the analogous program $V_q(d)$ fixes $q$ in \eqref{eq:unbiasedprogram}. Its value divided by $n$ is exactly the worst-case minimax MSE among globally unbiased estimators with iid design $q$. To see the lower bound, choose $X\sim\mu$ of full support and an independent fair label. For a symmetric unbiased statistic $U_n$ of observations $O_i=(\iota_i,\ell_{\iota_i},Y_i)$ put $H(O_1)=\E[U_n\mid O_1]-\E U_n$. Orthogonality of the one-observation projections gives $\Var U_n\ge n\E H^2$. Perturbing the joint law to $\mu(x)(1+t y h(x))/2$ and differentiating unbiasedness gives $\ip{d}{h}=n\E[H(O_1)Y_1h(X_1)]$ for all $h$. Thus $d=\sum_\iota L_\iota g_\iota$ with $g_\iota(\ell)=nq_\iota\E[YH\mid \iota,\ell]$. Jensen bounds $\Var U_n$ below by $n^{-1}\inf_{s_g=d}\sum_\iota\|L_\iota g_\iota\|_\mu^2/q_\iota$. Taking the supremum over full-support $\mu$ and exchanging extrema as above gives the claim. Symmetrization costs no risk with iid records.
+
+

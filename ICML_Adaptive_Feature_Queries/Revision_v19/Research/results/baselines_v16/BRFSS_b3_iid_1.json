@@ -1,0 +1,14 @@
+{
+ "dataset": "BRFSS",
+ "shift": false,
+ "b": 3,
+ "seed": 20261109,
+ "delta": 0.4719124881740776,
+ "path_sets": 4,
+ "items": 3,
+ "ps_oracle": 1.0000000000645024,
+ "uniform_ps": 1.7008660507434672,
+ "uniform_items": 1.0,
+ "item_forms": 1,
+ "seconds": 0.42702364921569824
+}

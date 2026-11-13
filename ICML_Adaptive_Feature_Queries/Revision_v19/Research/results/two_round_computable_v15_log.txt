@@ -1,0 +1,54 @@
+{'items': 2, 'computable': True, 'first_batch': [0, 8], 'rounds_needed': 1, 'dataset': 'BRFSS', 'b': 3, 'shift': False, 'seed': 20261108}
+{'items': 3, 'computable': True, 'first_batch': [0, 2, 8], 'rounds_needed': 1, 'dataset': 'BRFSS', 'b': 3, 'shift': False, 'seed': 20261109}
+{'items': 3, 'computable': True, 'first_batch': [0, 1, 8], 'rounds_needed': 1, 'dataset': 'BRFSS', 'b': 3, 'shift': False, 'seed': 20261110}
+{'items': 3, 'computable': True, 'first_batch': [0, 2, 8], 'rounds_needed': 1, 'dataset': 'BRFSS', 'b': 3, 'shift': True, 'seed': 20261108}
+{'items': 3, 'computable': True, 'first_batch': [0, 2, 8], 'rounds_needed': 1, 'dataset': 'BRFSS', 'b': 3, 'shift': True, 'seed': 20261109}
+{'items': 4, 'computable': True, 'first_batch': [0], 'rounds_needed': 2, 'dataset': 'BRFSS', 'b': 3, 'shift': True, 'seed': 20261110}
+{'items': 6, 'computable': True, 'first_batch': [0, 8], 'rounds_needed': 2, 'dataset': 'BRFSS', 'b': 4, 'shift': False, 'seed': 20261108}
+{'items': 5, 'computable': True, 'first_batch': [0, 8], 'rounds_needed': 2, 'dataset': 'BRFSS', 'b': 4, 'shift': False, 'seed': 20261109}
+{'items': 6, 'computable': True, 'first_batch': [0, 2], 'rounds_needed': 2, 'dataset': 'BRFSS', 'b': 4, 'shift': False, 'seed': 20261110}
+{'items': 4, 'computable': True, 'first_batch': [0, 1, 2, 8], 'rounds_needed': 1, 'dataset': 'BRFSS', 'b': 4, 'shift': True, 'seed': 20261108}
+{'items': 7, 'computable': True, 'first_batch': [0, 8], 'rounds_needed': 2, 'dataset': 'BRFSS', 'b': 4, 'shift': True, 'seed': 20261109}
+{'items': 6, 'computable': True, 'first_batch': [0, 2], 'rounds_needed': 2, 'dataset': 'BRFSS', 'b': 4, 'shift': True, 'seed': 20261110}
+{'items': 6, 'computable': False, 'first_batch': None, 'rounds_needed': None, 'dataset': 'BRFSS', 'b': 5, 'shift': False, 'seed': 20261108}
+{'items': 7, 'computable': True, 'first_batch': [0, 8], 'rounds_needed': 2, 'dataset': 'BRFSS', 'b': 5, 'shift': False, 'seed': 20261109}
+{'items': 8, 'computable': False, 'first_batch': None, 'rounds_needed': None, 'dataset': 'BRFSS', 'b': 5, 'shift': False, 'seed': 20261110}
+{'items': 7, 'computable': True, 'first_batch': [0, 1], 'rounds_needed': 2, 'dataset': 'BRFSS', 'b': 5, 'shift': True, 'seed': 20261108}
+{'items': 8, 'computable': True, 'first_batch': [0, 2, 8], 'rounds_needed': 2, 'dataset': 'BRFSS', 'b': 5, 'shift': True, 'seed': 20261109}
+{'items': 7, 'computable': True, 'first_batch': [0, 2, 8], 'rounds_needed': 2, 'dataset': 'BRFSS', 'b': 5, 'shift': True, 'seed': 20261110}
+{'items': 10, 'computable': False, 'first_batch': None, 'rounds_needed': None, 'dataset': 'BRFSS', 'b': 6, 'shift': False, 'seed': 20261108}
+{'items': 9, 'computable': False, 'first_batch': None, 'rounds_needed': None, 'dataset': 'BRFSS', 'b': 6, 'shift': False, 'seed': 20261109}
+{'items': 9, 'computable': False, 'first_batch': None, 'rounds_needed': None, 'dataset': 'BRFSS', 'b': 6, 'shift': False, 'seed': 20261110}
+{'items': 10, 'computable': True, 'first_batch': [0, 1, 2, 8], 'rounds_needed': 2, 'dataset': 'BRFSS', 'b': 6, 'shift': True, 'seed': 20261108}
+{'items': 10, 'computable': False, 'first_batch': None, 'rounds_needed': None, 'dataset': 'BRFSS', 'b': 6, 'shift': True, 'seed': 20261109}
+{'items': 10, 'computable': False, 'first_batch': None, 'rounds_needed': None, 'dataset': 'BRFSS', 'b': 6, 'shift': True, 'seed': 20261110}
+{'items': 3, 'computable': True, 'first_batch': [2, 6, 9], 'rounds_needed': 1, 'dataset': 'Thyroid', 'b': 3, 'shift': False, 'seed': 20261108}
+{'items': 3, 'computable': True, 'first_batch': [2, 6, 10], 'rounds_needed': 1, 'dataset': 'Thyroid', 'b': 3, 'shift': False, 'seed': 20261109}
+{'items': 3, 'computable': True, 'first_batch': [2, 6, 10], 'rounds_needed': 1, 'dataset': 'Thyroid', 'b': 3, 'shift': False, 'seed': 20261110}
+{'items': 3, 'computable': True, 'first_batch': [6, 9, 10], 'rounds_needed': 1, 'dataset': 'Thyroid', 'b': 3, 'shift': True, 'seed': 20261108}
+{'items': 3, 'computable': True, 'first_batch': [2, 6, 8], 'rounds_needed': 1, 'dataset': 'Thyroid', 'b': 3, 'shift': True, 'seed': 20261109}
+{'items': 2, 'computable': True, 'first_batch': [2, 6], 'rounds_needed': 1, 'dataset': 'Thyroid', 'b': 3, 'shift': True, 'seed': 20261110}
+{'items': 3, 'computable': True, 'first_batch': [2, 6, 9], 'rounds_needed': 1, 'dataset': 'Thyroid', 'b': 4, 'shift': False, 'seed': 20261108}
+{'items': 3, 'computable': True, 'first_batch': [2, 6, 10], 'rounds_needed': 1, 'dataset': 'Thyroid', 'b': 4, 'shift': False, 'seed': 20261109}
+{'items': 3, 'computable': True, 'first_batch': [2, 6, 10], 'rounds_needed': 1, 'dataset': 'Thyroid', 'b': 4, 'shift': False, 'seed': 20261110}
+{'items': 4, 'computable': True, 'first_batch': [2, 6, 9, 10], 'rounds_needed': 1, 'dataset': 'Thyroid', 'b': 4, 'shift': True, 'seed': 20261108}
+{'items': 4, 'computable': True, 'first_batch': [2, 6, 8, 9], 'rounds_needed': 1, 'dataset': 'Thyroid', 'b': 4, 'shift': True, 'seed': 20261109}
+{'items': 4, 'computable': True, 'first_batch': [2, 6, 7, 9], 'rounds_needed': 1, 'dataset': 'Thyroid', 'b': 4, 'shift': True, 'seed': 20261110}
+{'items': 3, 'computable': True, 'first_batch': [2, 6, 9], 'rounds_needed': 1, 'dataset': 'Thyroid', 'b': 5, 'shift': False, 'seed': 20261108}
+{'items': 3, 'computable': True, 'first_batch': [2, 6, 10], 'rounds_needed': 1, 'dataset': 'Thyroid', 'b': 5, 'shift': False, 'seed': 20261109}
+{'items': 3, 'computable': True, 'first_batch': [2, 6, 10], 'rounds_needed': 1, 'dataset': 'Thyroid', 'b': 5, 'shift': False, 'seed': 20261110}
+{'items': 4, 'computable': True, 'first_batch': [2, 6, 9, 10], 'rounds_needed': 1, 'dataset': 'Thyroid', 'b': 5, 'shift': True, 'seed': 20261108}
+{'items': 4, 'computable': True, 'first_batch': [2, 6, 8, 9], 'rounds_needed': 1, 'dataset': 'Thyroid', 'b': 5, 'shift': True, 'seed': 20261109}
+{'items': 4, 'computable': True, 'first_batch': [2, 6, 7, 9], 'rounds_needed': 1, 'dataset': 'Thyroid', 'b': 5, 'shift': True, 'seed': 20261110}
+{'items': 3, 'computable': True, 'first_batch': [2, 6, 9], 'rounds_needed': 1, 'dataset': 'Thyroid', 'b': 6, 'shift': False, 'seed': 20261108}
+{'items': 3, 'computable': True, 'first_batch': [2, 6, 10], 'rounds_needed': 1, 'dataset': 'Thyroid', 'b': 6, 'shift': False, 'seed': 20261109}
+{'items': 3, 'computable': True, 'first_batch': [2, 6, 10], 'rounds_needed': 1, 'dataset': 'Thyroid', 'b': 6, 'shift': False, 'seed': 20261110}
+{'items': 4, 'computable': True, 'first_batch': [2, 6, 9, 10], 'rounds_needed': 1, 'dataset': 'Thyroid', 'b': 6, 'shift': True, 'seed': 20261108}
+{'items': 4, 'computable': True, 'first_batch': [2, 6, 8, 9], 'rounds_needed': 1, 'dataset': 'Thyroid', 'b': 6, 'shift': True, 'seed': 20261109}
+{'items': 4, 'computable': True, 'first_batch': [2, 6, 7, 9], 'rounds_needed': 1, 'dataset': 'Thyroid', 'b': 6, 'shift': True, 'seed': 20261110}
+{'items': 2, 'computable': True, 'first_batch': [0, 13], 'rounds_needed': 1, 'dataset': 'BRFSS21', 'b': 3, 'shift': False, 'seed': 20261108}
+{'items': 3, 'computable': True, 'first_batch': [0, 3, 13], 'rounds_needed': 1, 'dataset': 'BRFSS21', 'b': 3, 'shift': False, 'seed': 20261109}
+{'items': 3, 'computable': True, 'first_batch': [0, 1, 13], 'rounds_needed': 1, 'dataset': 'BRFSS21', 'b': 3, 'shift': False, 'seed': 20261110}
+{'items': 6, 'computable': True, 'first_batch': [0, 13], 'rounds_needed': 2, 'dataset': 'BRFSS21', 'b': 4, 'shift': False, 'seed': 20261108}
+{'items': 5, 'computable': True, 'first_batch': [0, 13], 'rounds_needed': 2, 'dataset': 'BRFSS21', 'b': 4, 'shift': False, 'seed': 20261109}
+{'items': 6, 'computable': True, 'first_batch': [0, 3], 'rounds_needed': 2, 'dataset': 'BRFSS21', 'b': 4, 'shift': False, 'seed': 20261110}

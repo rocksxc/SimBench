@@ -1,0 +1,32 @@
+\begin{table}[h]
+\centering
+\caption{The pairwise working model as an estimator of the true accuracy contrast at the target law, which does not satisfy the model (BRFSS diabetes trees that depend on more than $b$ items). Designs: F, the optimal design-based forms; MF, forms optimal for the pairwise model at its fit; T, the rule\textquotesingle s own tree; MB, the branching design optimal for the pairwise model. The expected log-likelihood is maximised from 6 starts. Bias: pseudo-true contrast minus true contrast at the interior maximiser with the largest objective, in percent of the standard deviation of $t$. Variance: sandwich variance times $n$ relative to $\Var_P(t)$; a range is shown when the starts reach several interior maximisers. A dash: no start reached an interior stationary point (the maximiser is at the boundary of the model or the iteration did not converge). $^\dagger$: an interior maximiser exists but a start with a larger objective went to the boundary. MSE ratio: (bias$^2$ + variance$/n$) of MF over MB.}
+\label{tab:misspec}
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{rlrr rrrr llll rrr}
+\toprule
+ & & & & \multicolumn{4}{c}{bias (\% of SD of $t$)} & \multicolumn{4}{c}{sandwich variance} & \multicolumn{3}{c}{MSE, MF / MB} \\
+\cmidrule(lr){5-8}\cmidrule(lr){9-12}\cmidrule(lr){13-15}
+$b$ & target & seed & $K$ & F & MF & T & MB & F & MF & T & MB & 1k & 4k & 16k \\
+\midrule
+4 & random half & 0 & 6 & 0.6 & 0.8 & -- & 0.3 & 0.97 [0.97, 1.03] & 0.95 & -- & 1.57 & 0.64 & 0.75 & 1.13 \\
+4 & random half & 1 & 5 & 0.6 & 0.6 & -0.4 & 0.2 & 0.89 & 0.87 & 0.91 [0.87, 0.91] & 0.81 & 1.11 & 1.21 & 1.59 \\
+4 & random half & 2 & 6 & -0.6 & 0.4 & -- & 0.1 & 1.18 & 0.90 & -- & 0.81 & 1.13 & 1.17 & 1.35 \\
+4 & other sex & 1 & 7 & -- & -0.3 & -0.0 & -0.2 & -- & 0.93 & 1.00$^\dagger$ & 0.82 & 1.14 & 1.16 & 1.23 \\
+4 & other sex & 2 & 6 & -0.8 & -0.3 & -0.0 & -0.3 & 0.94 [0.91, 0.94] & 0.89 & 0.98 & 0.81 & 1.10 & 1.09 & 1.05 \\
+5 & random half & 0 & 6 & 0.0 & -0.0 & -0.4 & 0.2 & 0.82 & 0.81 & 0.83 & 0.80 [0.80, 0.81] & 1.01 & 1.00 & 0.95 \\
+5 & random half & 1 & 7 & -- & 1.1 & -- & 0.7 & -- & 0.81 & -- & 0.79 [0.79, 0.84] & 1.11 & 1.33 & 1.78 \\
+5 & random half & 2 & 8 & 0.4 & -0.0 & -- & -0.3 & 0.92$^\dagger$ & 0.90 & -- & 0.86 [0.86, 1.96] & 1.03 & 0.99 & 0.86 \\
+5 & other sex & 0 & 7 & 0.0 & -0.0 & -- & 0.2 & 0.82 & 0.81 & -- & 0.78 & 1.04 & 1.03 & 0.98 \\
+5 & other sex & 1 & 8 & -- & 0.2 & -- & -- & -- & 0.80 & -- & -- & -- & -- & -- \\
+5 & other sex & 2 & 7 & -0.7 & -0.1 & 0.2 & -0.5 & 0.93 & 0.80 & 0.80 [0.80, 0.86] & 0.77 & 1.01 & 0.92 & 0.69 \\
+6 & random half & 0 & 10 & -- & -- & -- & 0.4 & -- & -- & -- & 0.73 & -- & -- & -- \\
+6 & random half & 1 & 9 & -- & 1.5 & -- & 0.5 & -- & 0.76 [0.76, 0.76] & -- & 0.74 [0.74, 0.82]$^\dagger$ & 1.29 & 1.97 & 3.79 \\
+6 & random half & 2 & 9 & 0.6 & 0.4 & -- & 0.5 & 0.81$^\dagger$ & 0.80 [0.80, 0.80] & -- & 0.75 & 1.06 & 1.03 & 0.95 \\
+6 & other sex & 0 & 10 & -- & -0.1 & -- & -0.1 & -- & 0.81 & -- & 0.78 [0.78, 0.78] & 1.04 & 1.04 & 1.06 \\
+6 & other sex & 1 & 10 & -- & 0.4 & -- & -0.1 & -- & 0.76$^\dagger$ & -- & 0.78 [0.74, 0.78] & 1.00 & 1.06 & 1.29 \\
+6 & other sex & 2 & 10 & -- & 0.1 & -- & -0.4 & -- & 0.80 [0.80, 0.82] & -- & 0.75 & 1.04 & 0.96 & 0.75 \\
+\bottomrule
+\end{tabular}
+\end{table}

@@ -1,0 +1,45 @@
+\subsection{One-Sided Deterministic Updates Can Have an Exponential Gap}
+\label{app:indicatoraddress}
+Large global gaps do not require complementary classifiers. Let $A$ have
+$\kappa\ge1$ address bits, let $D=2^\kappa$, and write $Z_j\in\{0,1\}$
+for its data bits. The old rule always predicts $-1$, and the new rule
+predicts $+1$ exactly when $Z_A=1$. Their contrast is $d=Z_A\in\{0,1\}$.
+\begin{proposition}\label{prop:indicatoraddress}
+For this contrast, $m=\kappa+D$, $b=\kappa+1$, and
+\[
+ V_{\rm branch}(d,b)=1,\qquad
+ V_{\rm fixed}(d,b)=\frac{D^2}{4(D-1)}.
+\]
+The ratio is asymptotic to $2^{b-3}$. Multiplying the contrast by any
+$\epsilon\in(0,1]$ leaves the ratio unchanged.
+\end{proposition}
+\begin{proof}
+Put $\pi=D/[2(D-1)]$. Choose a data index $J$ uniformly, query all address
+bits and $Z_J$, and return the feature score
+\[
+ H=\pi+D\mathbf1\{J=A\}(Z_J-\pi).
+\]
+Its conditional mean is $d$. If $J=A$, its value is $D(d-1/2)$; otherwise
+it is $\pi$. Hence its conditional second moment is
+$D/4+(D-1)\pi^2/D=D^2/[4(D-1)]$ for either value of $d$.
+
+For the converse, let $\mu$ have a uniform address and independent
+Bernoulli$(\pi)$ data bits, and take $h=\pi+D(d-\pi)$.
+A fixed form with $s$ address bits and $r$ data bits has
+\[
+ \|\E_\mu[h\mid X_T]\|_\mu^2
+ =\pi^2+\pi(1-\pi)r2^s
+ \le\pi^2+D\pi(1-\pi)=:F,
+\]
+because $r+s\le\kappa+1$ implies $r2^s\le D$.
+Also $\langle d,h\rangle_\mu=D\pi-(D-1)\pi^2=F$.
+The variance dual therefore gives $V_{\rm fixed}\ge F=D^2/[4(D-1)]$.
+This calculation includes $D=2$, where $\pi=1$ and the lower bound is
+simply one. Branching evaluates $d$ exactly, and Jensen gives its matching
+coefficient one. Both coefficients scale by $\epsilon^2$.
+\end{proof}
+
+This is a constructed model family, not a claim about how frequently
+trained classifiers have such gaps. It separates the structural question
+from model-family labels: a GBDT or neural-network name alone determines
+neither identifiability nor the global efficiency ratio.

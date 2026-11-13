@@ -1,0 +1,8 @@
+sex 4 truth 0.3323 tv 0.209 branch bias 0.0005 rmse 0.0305 cov 0.953 fixed bias 0.0006 rmse 0.0311 cov 0.948 regimp bias 0.0032 rmse 0.0303 cov 0.940 mi bias 0.0033 rmse 0.0303 cov 0.955 331s
+sex 5 truth 0.3879 tv 0.209 branch bias 0.0008 rmse 0.0289 cov 0.965 fixed bias 0.0011 rmse 0.0344 cov 0.938 regimp bias -0.0045 rmse 0.0284 cov 0.948 mi bias -0.0047 rmse 0.0285 cov 0.983 530s
+education 4 truth 0.1367 tv 0.468 branch bias 0.0008 rmse 0.0312 cov 0.948 fixed bias -0.0006 rmse 0.0360 cov 0.960 regimp bias 0.0239 rmse 0.0367 cov 0.863 mi bias 0.0238 rmse 0.0369 cov 0.920 391s
+education 5 truth 0.1503 tv 0.468 branch bias 0.0004 rmse 0.0311 cov 0.950 fixed bias -0.0003 rmse 0.0338 cov 0.953 regimp bias 0.0167 rmse 0.0339 cov 0.902 mi bias 0.0166 rmse 0.0339 cov 0.935 324s
+costbar 4 truth 0.2471 tv 0.411 branch bias -0.0009 rmse 0.0322 cov 0.945 fixed bias -0.0018 rmse 0.0380 cov 0.943 regimp bias 0.0039 rmse 0.0285 cov 0.930 mi bias 0.0039 rmse 0.0286 cov 0.980 284s
+costbar 5 truth 0.3172 tv 0.411 branch bias 0.0001 rmse 0.0312 cov 0.935 fixed bias -0.0010 rmse 0.0389 cov 0.938 regimp bias -0.0072 rmse 0.0293 cov 0.925 mi bias -0.0070 rmse 0.0300 cov 0.960 344s
+physhlth 4 truth 0.0160 tv 0.681 branch bias 0.0021 rmse 0.0317 cov 0.950 fixed bias 0.0023 rmse 0.0323 cov 0.950 regimp bias 0.0065 rmse 0.0321 cov 0.960 mi bias 0.0065 rmse 0.0322 cov 0.965 206s
+physhlth 5 truth 0.0692 tv 0.681 branch bias 0.0009 rmse 0.0316 cov 0.945 fixed bias 0.0014 rmse 0.0394 cov 0.940 regimp bias 0.0549 rmse 0.0624 cov 0.515 mi bias 0.0548 rmse 0.0623 cov 0.667 271s

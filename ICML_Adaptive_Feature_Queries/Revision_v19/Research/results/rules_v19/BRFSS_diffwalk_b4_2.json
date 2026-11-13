@@ -1,0 +1,11 @@
+{
+ "dataset": "BRFSS:diffwalk",
+ "b": 4,
+ "seed": 20261110,
+ "items": 4,
+ "n_target": 126840,
+ "n_train": 20000,
+ "features": 21,
+ "status": "trivial",
+ "seconds": 0.5676240921020508
+}
