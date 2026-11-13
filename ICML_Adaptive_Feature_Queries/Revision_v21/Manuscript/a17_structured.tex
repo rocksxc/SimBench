@@ -1,0 +1,495 @@
+\subsection{The Value of Adaptivity in a Structured Model}\label{app:structured}
+The constants $V$ and $W_\A(P)$ are for an analyst who assumes nothing about
+the law of the unasked features. Here the law of $(X,Y)$ is known to lie in a
+model, and we ask what remains of the gap between pre-committed and branching
+questions. The answer is the content of Theorem~\ref{thm:structuredfull}: the
+simulation bound survives in every model; when the features are independent given the label a design matters only through its inclusion probabilities, and the gap is at most a factor two; in a model with interactions of
+order at most $k$ the exponential gap becomes polynomial in the cap at
+product laws and near them, and it disappears for the address contrast when
+$k=2$; but parsimony alone does not help, because pairwise laws with strong
+couplings can encode the address structure and bring the exponential gap
+back.
+
+\paragraph{Constants in a model.}
+Let $P$ have full support and let $\mathcal T\subseteq L^2_0(P)$ be a linear
+space of mean-zero functions of $(X,Y)$, the tangent space at $P$ of a smooth
+parametric model $\mathcal M\ni P$. For an interview $\iota$ and $h\in L^2(P)$
+write $J_\iota(h)=\E_P\big[\E_P[h\mid\ell_\iota(X),Y]^2\big]$, the Fisher
+information that the records of $\iota$ carry about the direction $h$, and
+for a design $q$ on a menu $\A$ let $J_q=\sum_\iota q_\iota J_\iota$. Define
+\begin{equation}
+ W^{\mathcal T}_\A(P)=\inf_q\ \sup_{h\in\mathcal T}\ \frac{\langle t-\Delta(P),h\rangle_P^2}{J_q(h)},\label{eq:WT}
+\end{equation}
+with $0/0=0$ and the value $+\infty$ if $\langle t-\Delta,h\rangle_P\ne0=J_q(h)$
+for some $h\in\mathcal T$. If $s=(s_1,\ldots,s_p)$ is a basis of
+$\mathcal T$, $v=\E_P[(t-\Delta)s]$ and
+$I_\iota=\E_P\big[\E_P[s\mid\ell_\iota,Y]\E_P[s\mid\ell_\iota,Y]^{\mathsf T}\big]$,
+then $W^{\mathcal T}_\A(P)=\min_qv^{\mathsf T}(\sum_\iota q_\iota I_\iota)^\dagger v$,
+with the value $+\infty$ when $v$ is outside the range of the matrix, a
+$c$-optimal design problem. For $\mathcal T=L^2_0(P)$ this is the constant
+$W_\A(P)$ of \eqref{eq:mainW} (proof of Proposition~\ref{prop:local}), and
+$\mathcal T\subseteq\mathcal T'$ implies
+$W^{\mathcal T}_\A(P)\le W^{\mathcal T'}_\A(P)\le W_\A(P)$: a model can only
+lower the constant of a menu, and the question is whether it lowers the
+constant of fixed forms by more than that of branching.
+
+\begin{proposition}[Local minimax risk in a model]\label{prop:localmodel}
+Let $\{P_\theta:\theta\in\Theta\subseteq\mathbb R^p\}$ be a model on the finite
+space $\X\times\{-1,1\}$ with $\theta_0$ in the interior of $\Theta$,
+$P_{\theta_0}=P$ of full support,
+$\theta\mapsto P_\theta$ continuously differentiable with a Jacobian of rank
+$p$ at $\theta_0$, and let $\mathcal T$ be the span of its scores at
+$\theta_0$. For every sequence of protocols that choose each record's
+interview from $\A$ using the previous records, and every sequence of
+estimators,
+\[
+ \lim_{c\to\infty}\liminf_{n\to\infty}\ \sup_{\|\theta-\theta_0\|\le c/\sqrt n}
+     n\,\E_\theta\big[(\widehat\Delta-\Delta(P_\theta))^2\big]\ \ge\ W^{\mathcal T}_\A(P).
+\]
+\end{proposition}
+\begin{proof}
+This is the converse half of the proof of Proposition~\ref{prop:local} with
+the tangent coordinates $P+U\theta$ of the simplex replaced by the model's
+own parameter, and with two changes. The cube of radius $c/\sqrt{pn}$ around
+$\theta_0$ that carries the smooth product prior lies in $\Theta$ for large
+$n$ because $\theta_0$ is interior. On this cube the information matrix of
+one record of interview $\iota$ is $I_\iota(\theta)=I_\iota+o(1)$ and the
+gradient of $\theta\mapsto\Delta(P_\theta)$, which is no longer linear, is
+$v+o(1)$, uniformly, by continuous differentiability. The multivariate
+van Trees inequality then bounds the normalized Bayes risk below by
+$(v+o(1))^{\mathsf T}(\sum_\iota\bar q_\iota I_\iota+C_0/c^2+\epsilon_nI)^{-1}(v+o(1))$
+for some $\bar q$ in the simplex; the matrix is bounded below by $C_0/c^2$
+uniformly in $\bar q$, so the $o(1)$ terms vanish in the limit for fixed $c$.
+Minimizing over $\bar q$ and letting $n\to\infty$ and then $c\to\infty$ gives
+$\min_qv^{\mathsf T}(\sum_\iota q_\iota I_\iota)^\dagger v$.
+\end{proof}
+Like $W_\A(P)$ in Proposition~\ref{prop:local}, the constant is local, with
+the center $P$ available to the procedure: when $\sum_\iota q_\iota I_\iota$
+is nonsingular at a minimizing design, the maximum-likelihood estimator of
+$\Delta(P_\theta)$ under that design attains it for regular models such as
+the log-linear models below. A minimizing design may have singular
+information, and then $\Delta(P_\theta)$ need not be identified from its
+records away from $P$; this happens for the address contrast under the
+pairwise model below, whose optimal designs read only data bits. The value
+is then approached, up to a factor $1/(1-\epsilon)$, by mixing the design with
+a mass $\epsilon$ of interviews that identify the model. We use the lower
+bound, the comparison of menus, and the simulations of
+Appendix~\ref{app:modelexp}.
+
+\paragraph{Models of bounded interaction order.}
+Number the label as coordinate $m+1$. The \emph{order-$k$ model}
+$\mathcal M_k$ is the hierarchical log-linear model
+$\log p(x,y)=\sum_{A:\,|A|\le k}\theta_A\chi_A(x,y)$ over
+$A\subseteq[m+1]$; $k=2$ has main effects and pairwise interactions and
+$k=m+1$ is saturated. Its tangent space at any of its laws is
+$\mathcal T_k=\mathrm{span}\{\chi_A-\E_P\chi_A:1\le|A|\le k\}$, and we write
+$W^{(k)}_\A(P)$ for \eqref{eq:WT} with $\mathcal T=\mathcal T_k$. A
+\emph{product law} makes $X_1,\ldots,X_m,Y$ independent; it lies in every
+$\mathcal M_k$.
+
+\begin{theorem}[Adaptivity in a model, full statement of Theorem~\ref{thm:structured}]\label{thm:structuredfull}
+Let $1\le b\le m$ and let $d$ be a contrast of degree at most $b$.
+
+\textup{(a) Every model.} For every depth-$b$ tree $\tau$ with padded path
+sets $\mathcal S_\tau$ and every law $P$, the uniform design on
+$\mathcal S_\tau$ satisfies
+\begin{equation}
+ \frac1{|\mathcal S_\tau|}\sum_{S\in\mathcal S_\tau}J_S(h)\ \ge\ \frac{J_\tau(h)}{|\mathcal S_\tau|}
+ \qquad\text{for every }h\in L^2(P),\label{eq:infodom}
+\end{equation}
+where $J_S$ is the information of the form $S$. Consequently, for every
+tangent space $\mathcal T$ and $1\le r\le b$,
+\[
+ W^{\mathcal T}_{\rm branch}(P)\ \le\ W^{\mathcal T}_r(P)\ \le\ \min\Big\{2^{b-r},\binom{m-r}{b-r}\Big\}\,W^{\mathcal T}_{\rm branch}(P).
+\]
+
+\textup{(b) Features independent given the label.} Let $\mathcal M_{\rm ci}$
+be the model of all full-support laws under which $X_1,\ldots,X_m$ are
+independent given $Y$, with tangent space $\mathcal T_{\rm ci}$ and constants
+$W^{\rm ci}_\A$; for designs whose interview probabilities $q_\iota(y)$ may depend on the record's label, $W^{\rm ci,lab}_\A$ is \eqref{eq:WT} with $J_q(h)=\sum_yP(y)\sum_\iota q_\iota(y)\,\E[\E[h\mid\ell_\iota(X),Y]^2\mid Y=y]$ (Proposition~\ref{prop:localmodel} applies to such designs with the menu of pairs of interviews, one for each label). For $P\in\mathcal M_{\rm ci}$ let $\phi^y_j$ be $X_j$
+standardized under $P(\cdot\mid Y=y)$,
+$\hat d^{\,y}_j=\E_P[d(X)\phi^y_j(X_j)\mid Y=y]$, and
+\[
+ M_b(c)=\min\Big\{\sum_{j=1}^m\frac{c_j^2}{\pi_j}:\ 0\le\pi_j\le1,\ \sum_{j=1}^m\pi_j\le b\Big\}\qquad(0/0=0).
+\]
+Then, for every contrast $d$ and every law $P\in\mathcal M_{\rm ci}$:
+\begin{enumerate}
+\item[\textup{(i)}] if the design may depend on the record's label, fixed
+forms, $r$-round interviews for every $r$ and branching interviews have the
+same constant,
+$W^{\rm ci,lab}(P)=\Var_P(\E_P[t\mid Y])+\sum_yP(y)\,M_b(\hat d^{\,y})$;
+\item[\textup{(ii)}] for designs chosen without the label,
+$W^{\rm ci,lab}(P)\le W^{\rm ci}_{\rm branch}(P)\le W^{\rm ci}_{r}(P)\le W^{\rm ci}_{\rm fixed}(P)=\Var_P(\E_P[t\mid Y])+M_b(\bar c)\le2\,W^{\rm ci,lab}(P)$,
+where $\bar c_j^{\,2}=\sum_yP(y)(\hat d^{\,y}_j)^2$;
+\item[\textup{(iii)}] if $P$ is a product law with $P(Y=1)=1/2$, then also in
+the pairwise model
+$W^{(2)}_{\rm fixed}(P)=W^{(2)}_{r}(P)=W^{(2)}_{\rm branch}(P)=(\E_Pd)^2+M_b(\hat d)$
+for every $r$, with $\hat d_j=\E_P[d(X)\phi_j(X_j)]$.
+\end{enumerate}
+The minimum is attained by $\pi_j=\min\{1,|c_j|/\lambda\}$ for the $\lambda$
+that makes the sum equal to $b$ (and by $\pi_j=\mathbf 1\{c_j\ne0\}$ if at most $b$ of the
+$c_j$ are nonzero); it equals $(\sum_j|c_j|)^2/b$ when
+$b\max_j|c_j|\le\sum_j|c_j|$.
+
+\textup{(c) Bounded interaction order at product laws.} Let $P$ be a product
+law whose coordinates and label take each value with probability at least
+$\lambda\in(0,1/2]$, and let $2\le k\le b+1$. For every depth-$b$ tree
+$\tau$, the fixed design $q^\tau_S=P(S_\tau(X)=S)$ satisfies
+$\sum_Sq^\tau_SJ_S(h)\ge J_\tau(h)/\nu_k$ for every $h\in\mathcal T_k$,
+with
+\[
+ \nu_k=\nu_k(b,\lambda)=\sum_{j=1}^{k}\binom{b+1}{j}\Big(\frac{1-\lambda}{\lambda}\Big)^{j},
+\]
+and therefore
+\[
+ W^{(k)}_{\rm fixed}(P)\ \le\ \min\{K_{m,b},\ \nu_k(b,\lambda)\}\ W^{(k)}_{\rm branch}(P).
+\]
+At uniform laws $\nu_k=\sum_{j=1}^k\binom{b+1}{j}\le(b+1)^k$.
+The bound is stable: if $k\le b$ and $P_0$ is such a product law, then for
+every $\epsilon>0$ there is a neighbourhood of $P_0$ in $\mathcal M_k$ on
+which $W^{(k)}_{\rm fixed}(P)\le(1+\epsilon)\,\nu_k(b,\lambda)\,W^{(k)}_{\rm branch}(P)$.
+
+\textup{(d) The address contrast.} Let $d$ be the address contrast with
+$\kappa=b-1$ address bits and $D=2^\kappa$ data bits, and $P$ the uniform law
+with an independent uniform label, so that $\sigma_P^2=1$ and
+$W_{\rm fixed}(P)/W_{\rm branch}(P)=2^{b-1}$. Write
+$N(s,j)=\sum_{i=0}^{j}\binom si$. Then
+\[
+ W^{(2)}_{\rm fixed}(P)=W^{(2)}_{\rm branch}(P)=\frac1b,
+\]
+and for $3\le k\le b+1$,
+\[
+ W^{(k)}_{\rm branch}(P)\le1,\qquad
+ W^{(k)}_{\rm fixed}(P)\ \ge\ L_k(b)=\frac{N(b-1,k-2)^2}{\max_{0\le s\le b-1}(b-s)\,N(s,k-2)}\ \ge\ \frac1b\binom{b-1}{k-2}.
+\]
+Here $L_3(b)=b^2/\lfloor(b+1)^2/4\rfloor<4$ and $L_{b+1}(b)=2^{b-1}$. For
+$k=3$, moreover, $W^{(3)}_{\rm fixed}(P)<4$ for every $b\ge2$, and already
+two-round interviews give
+\[
+ W^{(3)}_{\rm branch}(P)\ \le\ U_3(b)=\min_{\substack{s+r=b,\ s,r\ge1\\ r\le2^{\kappa-s}}}
+   \Big(\frac{\kappa}{s\sqrt r}+\frac{\kappa-s}{s\sqrt b}\Big)^2=\frac{9+o(1)}{b},
+\]
+so that $W^{(3)}_{\rm fixed}(P)/W^{(3)}_{\rm branch}(P)\ge L_3(b)/U_3(b)=(4/9+o(1))\,b$.
+
+\textup{(e) Strong dependence.} Let $b\ge3$, $\kappa=b-1$ and $D=2^\kappa$.
+Add to the $\kappa+D$ coordinates of the address contrast $2D$ auxiliary
+binary features $s,p\in\{0,1\}^D$, which $d$ does not depend on; write $z_j$
+for the indicator of $Z_j=1$. (Coding a feature by $\{0,1\}$ is an affine
+change of the $\pm1$ coordinate and leaves every $\mathcal M_k$ unchanged.)
+For every $\epsilon>0$ there is a full-support law $P$ in the pairwise model
+$\mathcal M_2$ on these $m=b-1+3\cdot2^{b-1}$ features and the label, under
+which, with probability at least $1-\epsilon$, $s$ is the one-hot code of the
+address and $p_j=s_jz_j$ for all $j$, such that for every $k\ge2$,
+\[
+ \frac{W^{(k)}_{\rm fixed}(P)}{W^{(k)}_{\rm branch}(P)}\ \ge\ (1-\epsilon)\,\frac{2^{b-1}}{b}.
+\]
+For $b=2$ the same construction gives only the trivial bound one.
+\end{theorem}
+
+Part (a) is the model-level form of Theorem~\ref{thm:simulation}: with
+probability $1/|\mathcal S_\tau|$ a record of the uniform path-set design
+contains the transcript that $\tau$ would have produced, whatever the analyst
+intends to do with it, so the factor $2^{b-1}$ bounds the value of branching
+for maximum likelihood in any model, for Bayesian analysis and for
+imputation alike. Part (b) is the benign extreme: when the features are independent given the label, whatever their association with the label and whatever the accuracy of the rule, a record contributes to the estimate only through which coordinates it reveals, and inclusion probabilities are all that a design controls. Any pair of inclusion vectors that a tree realizes is realized by a label-dependent mixture of forms, so adaptivity within the record has no first-order value once the label may be used. Without the label, a tree can use early answers as a proxy for the label and realize inclusion vectors that differ between the classes, which no label-blind mixture of forms does; the factor two in (ii) bounds this advantage, and it is nearly attained: if one feature is a 1\%-noisy copy of the label and the rule averages one of two groups of fair coins according to that feature, label-blind forms need $1.31$, $1.47$ and $1.57$ times the records of the tree that asks the copy first, at $b=3,4,5$, about $2(b-1)/b$. The model is the one behind naive-Bayes classifiers and latent-class analyses with the outcome as the class; it is a submodel of $\mathcal M_2$, and (iii) shows that at balanced product laws the feature-by-feature interactions of $\mathcal M_2$ change nothing. Away from those laws they do: for random depth-$b$ rules at product laws with an unbalanced label, and at laws of $\mathcal M_{\rm ci}$ with label-dependent features, the pairwise constants computed by the solver differ by up to 15\% between forms and branching (a numerical exploration with the solver of Section~\ref{sec:general}). Parts (c) and (d) say that, at laws without dependence,
+the bound is far from attained when the model is parsimonious. Under the
+order-$k$ model at uniform laws the price of pre-commitment is at most
+$(b+1)^k$ for every contrast, and for the address contrast, which attains
+$2^{b-1}$ without a model, it is exactly one under the pairwise model, a case of (b)(iii), and
+$2^{b-1}$ again at $k=b+1$, when the model contains the interaction of all
+$b$ queried items with the label. In between it is polynomial. Under the
+order-$k$ model forms need at least $L_k(b)\ge\binom{b-1}{k-2}/b$ times the
+records of the rule's own tree, a polynomial of degree $k-3$. Under the
+three-way model this factor stays below four, but the rule's own tree is no
+longer the best branching design once $b\ge6$: an interview that reads some
+address bits and then several data bits consistent with them needs only
+$U_3(b)=O(1/b)$, so the gap grows at least linearly in the cap ($U_3=1$ for
+$b\le5$; the bound $L_3/U_3$ is $3.09$ at $b=6$, $4.10$ at $b=8$ and $9.28$ at
+$b=20$). At product laws the exponential separation is thus a statement about
+interactions of order growing with the cap. Part (e) shows that this reading
+needs weak dependence and not only a parsimonious model. In the law of part
+(e) the address bits, their one-hot copy and the product indicators are tied
+by strong pairwise couplings, as dummy-coded categorical items and derived
+indicators are in a real questionnaire. On the set that carries almost all of
+the mass the target is a polynomial of degree two, so it is nearly in the
+tangent space of the pairwise model, the model is of no help, and forms need $2^{b-1}/b$ times the records
+of the rule's tree, within a factor $b$ of the bound of part (a). The order
+of a log-linear model therefore measures parsimony only relative to the
+coding of the features. The values of the constants along a path from the
+uniform law to this law, and at pairwise fits of noisy address populations,
+are in Table~\ref{tab:dependence}. The exact worst-case exponent at product laws,
+between $\max\{k-3,1\}$ and $k$ for $k\ge3$, is open, and so is a bound of
+type (c) at laws with dependence among the features, where conditional
+expectations of low-order monomials are no longer low-order; Appendix~\ref{app:modelexp}
+computes the constants there.
+
+\begin{proof}
+\emph{(a)} Fix $S\in\mathcal S_\tau$ and let $G_S=\{x:S_\tau(x)=S\}$. The
+event $G_S$ is determined by $x_S$: starting at the root, follow $\tau$ on
+the coordinates in $S$; the path of $x$ stays inside $S$ and is padded to $S$
+exactly when $S_\tau(x)=S$. On $G_S$ the transcript $\ell_\tau(x)$ is a
+function of $x_S$. Hence, by Jensen's inequality for the conditional
+expectation given the coarser information,
+\[
+ J_S(h)\ \ge\ \E\big[\E[h\mid X_S,Y]^2\mathbf 1_{G_S}\big]\ \ge\ \E\big[\E[h\mid\ell_\tau(X),Y]^2\mathbf 1_{G_S}\big],
+\]
+and summing over $S\in\mathcal S_\tau$, whose events $G_S$ partition $\X$,
+gives $\sum_SJ_S(h)\ge J_\tau(h)$, which is \eqref{eq:infodom}. A tree that
+is not padded, or repeats a question, is refined by a padded tree, whose
+information $J$ is at least as large by the same Jensen step, so an optimal
+branching design may be taken to consist of padded trees. If $q$ is a
+design on trees that attains $W^{\mathcal T}_{\rm branch}(P)$, the fixed
+design $\sum_\tau q_\tau\,\mathrm{Unif}(\mathcal S_\tau)$ has
+$J(h)\ge J_q(h)/\max_\tau|\mathcal S_\tau|$ for every $h$, so the supremum in
+\eqref{eq:WT} grows by at most $\max_\tau|\mathcal S_\tau|\le K_{m,b}$
+(Appendix~\ref{app:universal}). For $r$ rounds, replace the forms by the
+$r$-round interviews of the proof of Theorem~\ref{thm:roundsfull}(a), which
+follow $\tau$ for $r-1$ rounds and ask one of at most
+$\min\{2^{b-r},\binom{m-r}{b-r}\}$ guessed completions in the last batch. For every profile exactly one
+completion is correct, the event that a given completion is correct is
+determined by that interview's transcript, on it the transcript determines
+$\ell_\tau$, and the completions are drawn uniformly, so the two inequalities
+above apply with these events in place of the $G_S$.
+
+\emph{(b)} The scores of $\mathcal M_{\rm ci}$ at $P$ are the functions
+$h(x,y)=c(y)+\sum_jg_j(x_j,y)$ with $\E c(Y)=0$ and $\E[g_j(X_j,Y)\mid Y]=0$,
+that is, $g_j(x_j,y)=\beta_{y,j}\phi^y_j(x_j)$; these three kinds of terms are
+orthogonal in $L^2(P)$. Let $\iota$ be a padded interview of any class, chosen
+possibly as a function of $y$, and let $S(x)$ be the set of coordinates it
+queries on the profile $x$. A transcript is a cylinder event $\{X_S=u\}$, and
+given $Y=y$ the coordinates outside $S$ keep their conditional laws, so
+\[
+ \E[h\mid\ell_\iota(X),Y]=c(Y)+\sum_{j\in S(X)}g_j(X_j,Y).
+\]
+The event that $\iota$ queries $j$ is determined by the answers to the
+coordinates queried before $j$ (in earlier batches, for an $r$-round
+interview), which are independent of $X_j$ given $Y$. Hence
+$\E[g_j\mathbf 1\{j\in S(X)\}\mid Y]=0$ and
+$\E[g_j^2\mathbf 1\{j\in S(X)\}\mid Y=y]=\pi^\iota_j(y)\beta_{y,j}^2$ with
+$\pi^\iota_j(y)=P(j\in S(X)\mid Y=y)$. For $i\ne j$, split the event
+$\{i,j\in S(X)\}$ according to which of the two is queried later (in an arbitrary order if they are in the same batch), say $j$ at
+a node $v$ of the interview: the event of reaching $v$ and the value $g_i$
+depend on coordinates other than $j$, so
+$\E[g_ig_j\mathbf 1\{\text{$j$ is queried at $v$ after $i$}\}\mid Y]=0$. Therefore
+\[
+ J_\iota(h)=\E[c(Y)^2]+\sum_yP(y)\sum_j\pi^\iota_j(y)\,\beta_{y,j}^2 ,
+\]
+and for a design the same holds with $\pi_j(y)=\sum_\iota q_\iota(y)\pi^\iota_j(y)$.
+The projection of $t-\Delta$ on $\mathcal T_{\rm ci}$ has the components
+$c^\ast(y)=\E[t\mid Y=y]-\Delta$ and
+$\beta^\ast_{y,j}=\E[t\phi^y_j\mid Y=y]=\pm\hat d^{\,y}_j$, so by the
+Cauchy--Schwarz inequality in these orthogonal coordinates the supremum in
+\eqref{eq:WT} equals
+\[
+ \Var_P(\E[t\mid Y])+\sum_yP(y)\sum_j\frac{(\hat d^{\,y}_j)^2}{\pi_j(y)} .
+\]
+A design enters only through the inclusion vectors $\pi(y)$. Every padded
+interview asks exactly $b$ coordinates of every record, so each $\pi(y)$ lies
+in the hypersimplex $H_b=\{\pi\in[0,1]^m:\sum_j\pi_j=b\}$, whose extreme points
+are the indicator vectors of the forms; the objective is nonincreasing in $\pi$, so the constraint $\sum_j\pi_j\le b$ of $M_b$ may be taken with equality. Label-dependent mixtures of forms
+therefore realize every pair $(\pi(-1),\pi(1))\in H_b^2$, which is all that
+any design of any class can realize; minimizing over each $\pi(y)$ separately
+gives (i). Without the label, mixtures of forms realize exactly the pairs
+with $\pi(-1)=\pi(1)$, which gives the formula for $W^{\rm ci}_{\rm fixed}$,
+and the other classes lie between it and (i) because the menus are nested.
+If $\pi^\ast(y)$ are optimal in (i), the common vector
+$\pi=(\pi^\ast(-1)+\pi^\ast(1))/2\ge\pi^\ast(y)/2$ at most doubles every
+term, which gives the last inequality of (ii). The form of the minimizer of
+$M_b$ follows from the Lagrange conditions of the convex program. For (iii),
+at a product law with a balanced label the standardized monomials
+$\phi_A$, $A\subseteq[m+1]$, are orthonormal and $\langle t,\phi_A\rangle=0$
+unless $A$ contains the label, because $\E Y=0$; the gradient in
+$\mathcal T_2$ is supported on $\{m+1\}$ and the pairs $\{j,m+1\}$, where it
+equals $\E d$ and $\hat d_j$. For an interview chosen without the label, the
+information matrix in the basis $\{\phi_A\}$ has no entries between sets with
+and without the label, since $\E\phi_{m+1}=0$ and $\phi_{m+1}^2$ has mean one,
+and on the sets with the label it is the diagonal matrix with entries one and
+$\pi^\iota_j$ by the computation above. The value $v^{\mathsf T}I^\dagger v$
+is then $(\E d)^2+\sum_j\hat d_j^{\,2}/\pi_j$ for every design, and the
+inclusion vectors of all classes fill $H_b$.
+
+\emph{(c)} Let $\phi_j$ be the standardized $j$th variable and
+$\phi_A=\prod_{j\in A}\phi_j$; at a product law the $\phi_A$,
+$A\subseteq[m+1]$, are orthonormal, and $\{\phi_A:1\le|A|\le k\}$ is a basis of
+$\mathcal T_k$. Write $h=\sum_Aa_A\phi_A$. A transcript of a padded interview
+is a cylinder event $\{X_S=u\}$, so the coordinates outside $S$ keep their
+marginal laws given the transcript and
+$\E[\phi_A\mid\ell,Y]=\phi_A\mathbf 1\{A\subseteq S\cup\{m+1\}\}$. For a form
+this gives $J_S(h)=\sum_{A\subseteq S\cup\{m+1\}}a_A^2$. For the tree,
+\[
+ J_\tau(h)=\E\Big[\Big(\sum_{A\in\mathcal A(X)}a_A\phi_A\Big)^2\Big]
+   \le\E\Big[\Big(\sum_{A\in\mathcal A(X)}\phi_A^2\Big)\Big(\sum_{A\in\mathcal A(X)}a_A^2\Big)\Big]
+   \le\nu_k\sum_Aa_A^2\,P\big(A\setminus\{m+1\}\subseteq S_\tau(X)\big),
+\]
+where $\mathcal A(x)$ is the collection of sets $A\subseteq S_\tau(x)\cup\{m+1\}$ with $1\le|A|\le k$,
+because $\phi_j^2\le(1-\lambda)/\lambda$ and at most $\binom{b+1}{j}$ sets of
+size $j$ lie in $S_\tau(X)\cup\{m+1\}$. The last sum is
+$\sum_Sq^\tau_SJ_S(h)$. Mixing over the trees of an optimal branching design
+gives the bound with $\nu_k$, and (a) gives the bound with $K_{m,b}$.
+
+\emph{(d)} Here $\Delta=0$, $t=Yd$ and $\phi_A=\chi_A$. The gradient is
+$v_A=\E[t\chi_A]$, which vanishes unless $A=B\cup\{j\}\cup\{m+1\}$ with $B$ a
+set of address bits and $j$ a data bit, and then $|v_A|=2^{-\kappa}$ since
+$\hat d(B\cup\{j\})=\E[\mathbf 1\{\text{address}=j\}\chi_B]=\pm2^{-\kappa}$. In
+$\mathcal T_k$ there are $D\,N(\kappa,k-2)$ such sets. By the computation in
+(c), the information matrix of a fixed design $q$ in the basis $\chi_A$ is
+diagonal with entries $c_A(q)=P_q(A\setminus\{m+1\}\subseteq S)$, so
+\[
+ W^{(k)}_{\rm fixed}(P)=\min_q\sum_A\frac{v_A^2}{c_A(q)}\ \ge\ \min_q\frac{(\sum_A|v_A|)^2}{\sum_Ac_A(q)}
+   \ \ge\ \frac{N(\kappa,k-2)^2}{\max_{s}(b-s)N(s,k-2)},
+\]
+by Cauchy--Schwarz, since a form with $s$ address bits and $b-s$ data bits
+contains $(b-s)N(s,k-2)$ of the sets $B\cup\{j\}$. The maximum is at most
+$bN(\kappa,k-2)$, which gives $L_k(b)\ge N(\kappa,k-2)/b\ge\binom{b-1}{k-2}/b$.
+For $k=3$, $N(s,1)=1+s$ and $\max_s(b-s)(1+s)=\lfloor(b+1)^2/4\rfloor$; for
+$k=b+1$, $N(s,\kappa)=2^s$ and the maximum is $2^\kappa$ at $s=\kappa$. The
+tree that reads the address and the selected bit observes $t$, so
+$W^{(k)}_{\rm branch}\le W_{\rm branch}=\sigma_P^2=1$. For the upper bound at
+$k=3$, draw $s=\lfloor b/2\rfloor$ address bits and $b-s$ data bits uniformly.
+Then $c_A=(b-s)/D$ for the $D$ sets with $B=\emptyset$ and
+$c_A=s(b-s)/(\kappa D)$ for the $\kappa D$ sets with $|B|=1$, so
+\[
+ W^{(3)}_{\rm fixed}(P)\le\frac1{b-s}+\frac{\kappa^2}{s(b-s)}
+   \le\frac2b+\frac{4(b-1)^2}{b^2-1}=\frac2b+4-\frac8{b+1}<4,
+\]
+using $s(b-s)\ge(b^2-1)/4$ and $b-s\ge b/2$. At $b=3$ and $b=4$ the first
+bound equals $2.50$ and $2.75$, the values of Table~\ref{tab:addressmodel}.
+
+For the bound on branching at $k=3$ we use weak duality in \eqref{eq:WT}: if
+a design $q$ has scores $H_\iota(\ell_\iota,Y)$ with
+$\sum_\iota q_\iota\E[H_\iota h]=\langle t-\Delta,h\rangle_P$ for all
+$h\in\mathcal T$, then
+$\langle t-\Delta,h\rangle_P^2=(\sum_\iota q_\iota\E[H_\iota\E[h\mid\ell_\iota,Y]])^2\le\sum_\iota q_\iota\E[H_\iota^2]\,J_q(h)$
+by Cauchy--Schwarz, so $W^{\mathcal T}_\A(P)\le\sum_\iota q_\iota\E[H_\iota^2]$.
+Fix $s,r\ge1$ with $s+r=b$ and $r\le2^{\kappa-s}$. With probability
+$1-\epsilon$, draw a set $S_a$ of $s$ address bits uniformly, read them, and
+then read a set $R$ of $r$ data bits drawn uniformly among the $2^{\kappa-s}$
+data bits whose index agrees with the answers on $S_a$; the score is
+$c\,Y\sum_{j\in R}Z_j/(1-\epsilon)$ with $c=\kappa/(rs)$. With probability
+$\epsilon$, read a uniform set $R'$ of $b$ data bits; the score is
+$-\delta\,Y\sum_{j\in R'}Z_j/\epsilon$ with $\delta=(\kappa-s)/(sb)$. This is a
+mixture of two-round interviews. Given the profile, data bit $j$ belongs to
+$R$ with probability $r2^{s-\kappa}\mathbf 1\{j\text{ agrees with the address on }S_a\}$,
+and averaging the indicator over $S_a$ gives
+$2^{-s}\sum_BP(B\subseteq S_a)\chi_B(\text{address})\chi_B(j)$ over sets $B$ of
+address bits, with $P(B\subseteq S_a)=1$ for $B=\emptyset$ and $s/\kappa$ for
+$|B|=1$. The conditional mean of the score given $(X,Y)$ is therefore
+$Y\sum_jZ_j2^{-\kappa}\sum_Bw_B\chi_B(\text{address})\chi_B(j)$ with
+$w_\emptyset=cr-\delta b=1$ and $w_B=crs/\kappa=1$ for $|B|=1$, whereas
+$t=Y\sum_jZ_j2^{-\kappa}\sum_B\chi_B(\text{address})\chi_B(j)$. The two
+functions have the same coefficients on all sets of at most three
+coordinates, hence the same inner product with every $h\in\mathcal T_3$, and
+\[
+ W^{(3)}_{\rm branch}(P)\le\frac{c^2r}{1-\epsilon}+\frac{\delta^2b}{\epsilon},
+ \qquad\min_\epsilon=\big(c\sqrt r+\delta\sqrt b\big)^2
+ =\Big(\frac{\kappa}{s\sqrt r}+\frac{\kappa-s}{s\sqrt b}\Big)^2 ,
+\]
+since the data bits are independent of the address and of each other. The
+choice $s=\kappa$, $r=1$ is the rule's own tree and gives one. With
+$s=\lceil3b/4\rceil$, which is admissible for large $b$, the two terms are
+$(8/3+o(1))/\sqrt b$ and $(1/3+o(1))/\sqrt b$, so $U_3(b)=(9+o(1))/b$, and
+$L_3(b)\to4$.
+
+For $k=2$ the gradient is supported on the $D$ pairs $\{j,m+1\}$ with $j$ a
+data bit. Forms of $b$ data bits drawn uniformly have $c_{\{j,m+1\}}=b/D$ and
+value $D\,2^{-2\kappa}D/b=1/b$, and the display gives
+$W^{(2)}_{\rm fixed}\ge D^2\,2^{-2\kappa}/b=1/b$. For a branching design, let
+$I$ be its information matrix and $I_{vv}$ the block of the $D$ pairs. Then
+$v^{\mathsf T}I^\dagger v=\sup_u(2v^{\mathsf T}u-u^{\mathsf T}Iu)\ge\sup_{u\text{ supported on the block}}(2v^{\mathsf T}u-u^{\mathsf T}I_{vv}u)=v^{\mathsf T}I_{vv}^{\dagger}v$,
+with the value $+\infty$ if some $c_j$ below vanishes.
+For data bits $j\ne l$ the entry of a tree is
+$\E[X_jX_l\mathbf 1\{j,l\in S_\tau(X)\}]$, which is zero: on the event that $l$
+is read after $j$, the indicator is determined by the answers read before
+$l$, and $X_l$ is independent of them with mean zero; the other order is
+symmetric. So $I_{vv}$ is diagonal with entries $c_j=P(j\text{ is read})$,
+$\sum_jc_j\le b$, and $v^{\mathsf T}I_{vv}^{\dagger}v=\sum_j2^{-2\kappa}/c_j\ge1/b$.
+Mixtures of trees have the same diagonal block structure by linearity.
+
+\emph{(c), stability.} Let $k\le b$, let $h_a=\sum_Aa_A(\chi_A-\E_P\chi_A)$
+for a coefficient vector $a$ of Euclidean norm one over the sets with
+$1\le|A|\le k$, and write $J^P$ for information at the law $P$. The menus of
+forms and of padded depth-$b$ trees are finite, and for full-support laws
+$(P,a)\mapsto J^P_\iota(h_a)$ is continuous, so
+$\omega(\delta)=\sup\{|J^P_\iota(h_a)-J^{P_0}_\iota(h_a)|:\|P-P_0\|\le\delta,\ \|a\|=1,\ \iota\}$
+tends to zero with $\delta$. Every set $A$ with $|A|\le k\le b$ lies in
+$S\cup\{m+1\}$ for some form $S$, so the uniform design $u$ on all forms has
+$c_0=\min_{\|a\|=1}J^{P_0}_u(h_a)>0$. For a tree $\tau$ and $\eta\in(0,1)$ put
+$q^{\tau,\eta}=(1-\eta)q^\tau+\eta u$ with $q^\tau$ from (c) at $P_0$. Then
+$J^{P_0}_{q^{\tau,\eta}}(h_a)\ge\max\{(1-\eta)J^{P_0}_\tau(h_a)/\nu_k,\ \eta c_0\}$,
+and for $\|P-P_0\|\le\delta$ with $\omega(\delta)\le\eta c_0/2$,
+\[
+ J^P_\tau(h_a)\le J^{P_0}_\tau(h_a)+\omega\le\frac{\nu_k}{1-\eta}\big(J^P_{q^{\tau,\eta}}(h_a)+\omega\big)+\omega
+ \le\frac{\nu_k}{1-\eta}\Big(1+\frac{4\omega}{\eta c_0}\Big)J^P_{q^{\tau,\eta}}(h_a),
+\]
+using $J^P_{q^{\tau,\eta}}(h_a)\ge\eta c_0/2$ and $\nu_k\ge1$. The tangent
+space $\mathcal T_k$ at $P$ consists of the multiples of the $h_a$, so the
+fixed design $\sum_\tau q_\tau q^{\tau,\eta}$ built from an optimal branching
+design $q$ at $P$ has information at least
+$(1-\eta)(1+4\omega/(\eta c_0))^{-1}/\nu_k$ times that of $q$ in every
+direction of $\mathcal T_k$. Choosing $\eta$ and then $\delta$ small gives
+the factor $(1+\epsilon)\nu_k$. The radius $\delta$ depends on $m$, $b$, $k$,
+$\lambda$ and $\epsilon$ and is not explicit.
+
+\emph{(e)} Write the address as $a\in\{-1,1\}^\kappa$, identify a data index
+$j$ with its sign vector, and let $\langle a,j\rangle\in\{-\kappa,\ldots,\kappa\}$
+be their inner product, which equals $\kappa$ exactly when $j$ is the index
+selected by $a$. With $z_j=(1+Z_j)/2$ define the quadratic function
+\[
+ \mathcal Q(a,s,z,p)=\sum_js_j\langle a,j\rangle-(\kappa+1)\Big(\sum_js_j-1\Big)^2
+   -\sum_j\big(3p_j+s_jz_j-2p_js_j-2p_jz_j\big),
+\]
+and let $P_\beta$ be the law with $P_\beta(x)\propto e^{\beta\mathcal Q(x)}$ and an
+independent uniform label. $\mathcal Q$ is a polynomial of degree two in the binary
+features, so $P_\beta\in\mathcal M_2$ for every $\beta\ge0$, with full
+support. The last sum is the standard penalty for a product of two binary
+variables \citep{boros2002}: each term is nonnegative and vanishes exactly
+when $p_j=s_jz_j$. If exactly one $s_j$ equals one, the first two terms equal
+$\langle a,j\rangle\le\kappa$, with equality exactly when $j$ is the selected
+index; if none does they equal $-(\kappa+1)$; and if $n\ge2$ do, they are at
+most $n\kappa-(\kappa+1)(n-1)^2<\kappa$. So $\mathcal Q\le\kappa$ with equality
+exactly on the set where $s$ is the one-hot code of the address and
+$p_j=s_jz_j$ for all $j$, and as $\beta\to\infty$ the law $P_\beta$ converges
+to the law $P_\infty$ under which the address, the data bits and the label
+are independent and uniform and $s$ and $p$ are these functions of them.
+
+On the support of $P_\infty$,
+$d=Z_{a}=\sum_js_j(2z_j-1)=2\sum_jp_j-1$, so $t=h_0$ almost surely for the
+polynomial $h_0=Y(2\sum_jp_j-1)$ of degree two in $(p,Y)$, whose centered
+version lies in $\mathcal T_2\subseteq\mathcal T_k$ at every $P_\beta$. By
+\eqref{eq:WT},
+\[
+ W^{(k)}_{\rm fixed}(P_\beta)\ \ge\ \frac{\mathrm{Cov}_{P_\beta}(t,h_0)^2}{\max_SJ^{P_\beta}_S(h_0-\E_{P_\beta}h_0)} .
+\]
+For a bounded function $h$ and an interview $\iota$,
+$J^P_\iota(h)=\sum_c\E_P[h\mathbf 1_c]^2/P(c)$ over the transcript cells, and
+a cell contributes at most $\|h\|_\infty^2P(c)$, so $J^{P_\beta}_S\to
+J^{P_\infty}_S$ and the right-hand side converges to
+$1/\max_SJ^{P_\infty}_S(t)$, because $\mathrm{Var}_{P_\infty}(t)=1$. Fix a
+form $S$ of $b$ of the $m$ features, with data bits $R_z$ and product bits
+$R_p$. Under $P_\infty$ and given that the selected index is $j$, the
+features in $S$ other than $Z_j$ and $p_j$ are functions of the address and
+of data bits independent of $Z_j$, while $p_j=z_j$; hence the conditional
+mean of $Z_j$ given $X_S$ and the selected index $j$ is $Z_j$ or $2p_j-1$ if
+$j\in R_z\cup R_p$ and zero otherwise. Therefore
+$|\E[d\mid X_S]|\le P(\text{selected index}\in R_z\cup R_p\mid X_S)$ and
+\[
+ J^{P_\infty}_S(t)=\E\big[\E[d\mid X_S]^2\big]\le P(\text{selected index}\in R_z\cup R_p)\le\frac bD .
+\]
+So $\liminf_\beta W^{(k)}_{\rm fixed}(P_\beta)\ge D/b$. The tree that reads the
+address and the selected data bit computes $d$ at every profile, so
+$W^{(k)}_{\rm branch}(P_\beta)\le W_{\rm branch}(P_\beta)=\mathrm{Var}_{P_\beta}(t)=1$,
+because $t=\pm1$ and the independent uniform label gives $\Delta(P_\beta)=0$.
+Taking $\beta$ large gives the claim, and $P_\beta$ puts mass tending to one
+on the support of $P_\infty$. For $b=2$ the bound $D/b$ equals one.
+\end{proof}
+
+\paragraph{Computed constants for the address contrast.}
+Table~\ref{tab:addressmodel} lists the constants of
+Theorem~\ref{thm:structuredfull}(d) for $b=3$ and $b=4$, computed by the
+model version of the solver (Appendix~\ref{app:modelexp}). Under the
+three-way model the gap is $2.50$ and $2.75$ against the lower bounds
+$L_3(3)=2.25$ and $L_3(4)=2.67$, and at these caps the optimal branching
+design is the rule's own tree ($U_3=1$ for $b\le5$); under the pairwise model
+both classes need $1/b$ of the records that the design-based branching
+optimum needs.
+\input{v21_address_table}

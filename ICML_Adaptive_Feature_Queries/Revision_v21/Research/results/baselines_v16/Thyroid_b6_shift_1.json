@@ -1,0 +1,14 @@
+{
+ "dataset": "Thyroid",
+ "shift": true,
+ "b": 6,
+ "seed": 20261109,
+ "delta": 0.6951147933719305,
+ "path_sets": 5,
+ "items": 4,
+ "ps_oracle": 1.000000000169364,
+ "uniform_ps": 1.2664553961645952,
+ "uniform_items": 1.0,
+ "item_forms": 1,
+ "seconds": 0.3085649013519287
+}

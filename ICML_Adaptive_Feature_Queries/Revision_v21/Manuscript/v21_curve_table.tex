@@ -1,0 +1,21 @@
+\begin{table}[h]
+\centering
+\caption{Simulated audits under three collection designs with the same cap (12 BRFSS trees: caps 4 and 5, two targets, three seeds; 400 replications per tree and size). Entries are ratios of mean squared errors, the finite-sample analogue of a records ratio: median over trees [minimum, maximum]. Design-based: the fitted form score against the mean of $t$ under branching. EM-2 and EM-3: the EM estimate under the pairwise and three-way log-linear models (EM from the uniform law, stopped when the estimate of the contrast changes by less than $10^{-5}$ or after 500 iterations; this is the maximum-likelihood estimate where the likelihood has an interior maximiser and an early-stopped iterate elsewhere, Table~\ref{tab:misspec}), on the fitted forms (optimized for the design-based score) and on forms optimized for the pairwise model, each against the same model fitted to branching records (the rule administered and padded to $b$ questions). Last column: the pairwise EM estimate on fitted forms against the design-based mean under branching.}
+\label{tab:curve}
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{rllllll}
+\toprule
+ & Design-based & \multicolumn{2}{c}{EM-2: forms / branching records} & \multicolumn{2}{c}{EM-3: forms / branching records} & EM-2 on forms / \\
+$n$ & forms / branching & fitted forms & model forms & fitted forms & model forms & design-based branching \\
+\midrule
+500 & 1.49 [1.04, 1.78] & 1.00 [0.93, 1.18] & 0.94 [0.84, 1.09] & 1.46 [1.02, 1.77] & 1.32 [1.00, 1.72] & 0.96 [0.83, 1.18] \\
+1,000 & 1.52 [1.03, 1.89] & 1.04 [0.90, 1.17] & 0.98 [0.88, 1.15] & 1.46 [0.94, 1.76] & 1.34 [1.00, 1.51] & 0.96 [0.79, 1.21] \\
+2,000 & 1.40 [1.05, 1.73] & 1.03 [0.92, 1.28] & 1.00 [0.85, 1.26] & 1.30 [1.06, 1.63] & 1.34 [1.00, 1.69] & 0.91 [0.84, 1.25] \\
+4,000 & 1.51 [1.03, 2.03] & 1.07 [0.93, 1.74] & 1.01 [0.93, 1.62] & 1.35 [1.01, 1.80] & 1.27 [1.00, 1.56] & 0.97 [0.89, 1.64] \\
+8,000 & 1.48 [1.04, 1.80] & 1.04 [0.86, 2.25] & 1.00 [0.83, 2.30] & 1.26 [1.04, 1.58] & 1.27 [1.00, 1.47] & 0.93 [0.82, 1.92] \\
+16,000 & 1.55 [1.03, 1.91] & 1.04 [0.94, 3.36] & 1.03 [0.81, 3.37] & 1.33 [1.02, 1.67] & 1.29 [1.00, 1.54] & 1.09 [0.89, 2.88] \\
+32,000 & 1.54 [1.05, 1.80] & 1.08 [0.74, 4.97] & 1.05 [0.59, 4.95] & 1.50 [1.02, 1.93] & 1.43 [1.00, 1.93] & 1.10 [0.91, 4.51] \\
+\bottomrule
+\end{tabular}
+\end{table}

@@ -1,0 +1,7 @@
+('further', 'BRFSS:heart', 6, 0, False) 13 2.449597631935017 21 2s
+('further', 'Spambase', 6, 2, False) 13 2.3438803640892063 9 1s
+('further', 'BRFSS:heart', 6, 1, False) 14 2.1974605402899314 21 3s
+('further', 'BRFSS:heart', 6, 2, False) 14 2.208161887427817 24 3s
+('further', 'Spambase', 6, 1, False) 14 2.6684145365203173 12 2s
+('further', 'BRFSS:stroke', 6, 2, False) 15 2.695187647990701 19 7s
+('further', 'BRFSS:stroke', 6, 0, False) 16 3.9733569887949183 26 22s

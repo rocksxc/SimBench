@@ -1,0 +1,11 @@
+{
+ "dataset": "BRFSS:heart",
+ "b": 6,
+ "seed": 20261109,
+ "items": 14,
+ "n_target": 126840,
+ "n_train": 20000,
+ "features": 21,
+ "status": "skipped",
+ "seconds": 0.3249542713165283
+}

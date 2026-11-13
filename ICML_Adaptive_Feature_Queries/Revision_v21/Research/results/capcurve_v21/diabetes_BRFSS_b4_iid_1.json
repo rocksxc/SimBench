@@ -1,0 +1,16 @@
+{
+ "kind": "diabetes",
+ "dataset": "BRFSS",
+ "b": 4,
+ "seed": 20261109,
+ "shift": false,
+ "items": 5,
+ "curve": {
+  "0": 1.4062743665904036,
+  "1": 1.0
+ },
+ "skipped": [],
+ "path_set": 1.4583416762916985,
+ "close": 1,
+ "seconds": 0.550835371017456
+}

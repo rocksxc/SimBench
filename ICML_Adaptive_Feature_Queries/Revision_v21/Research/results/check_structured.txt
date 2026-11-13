@@ -1,0 +1,3 @@
+(a) min over trials of sum_S J_S(h) / J_tau(h): 1.0000 (must be >= 1)
+(b) min over trials of nu_k * sum_S q_S J_S(h) / J_tau(h): 72.0316 (must be >= 1)
+(c) closed forms of L_k(b) verified for b = 2..12; L_3: [2.25, 2.667, 2.778, 3.0, 3.062, 3.2] L_4: [4.0, 6.125, 8.643, 11.636, 14.667, 17.521]

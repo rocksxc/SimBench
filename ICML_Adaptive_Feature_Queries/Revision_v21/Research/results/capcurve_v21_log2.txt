@@ -1,0 +1,15 @@
+('further', 'BRFSS:highbp', 6, 2, False) K 9 curve 0:1.213 1:1.076 2:1.017 PS 1.213 skipped [] 24s
+('further', 'BRFSS:highbp', 6, 1, False) K 10 curve 0:1.380 1:1.167 2:1.064 PS 1.383 skipped [] 142s
+('further', 'BRFSS:diffwalk', 6, 0, False) K 10 curve 0:1.747 1:1.369 2:1.150 PS 1.783 skipped [] 157s
+('further', 'BRFSS:diffwalk', 6, 1, False) K 10 curve 0:1.776 1:1.308 2:1.119 PS 1.941 skipped [] 161s
+('further', 'BRFSS:diffwalk', 6, 2, False) K 10 curve 0:1.613 1:1.256 2:1.101 PS 1.672 skipped [] 156s
+('further', 'Spambase', 5, 2, False) K 11 curve 0:1.917 1:1.531 2:1.286 PS 2.005 skipped [] 1062s
+('further', 'BRFSS:stroke', 6, 1, False) K 11 curve 0:1.742 1:1.380 2:1.192 PS 1.853 skipped [] 1089s
+('further', 'Spambase', 5, 1, False) K 12 curve 0:1.989 1:1.556 PS 2.107 skipped [2] 772s
+('further', 'BRFSS:heart', 6, 0, False) K 13 curve  PS 2.450 skipped [0, 1, 2] 2s
+('further', 'Spambase', 6, 2, False) K 13 curve  PS 2.344 skipped [0, 1, 2] 1s
+('further', 'BRFSS:heart', 6, 1, False) K 14 curve  PS 2.197 skipped [0, 1, 2] 3s
+('further', 'BRFSS:heart', 6, 2, False) K 14 curve  PS 2.208 skipped [0, 1, 2] 3s
+('further', 'Spambase', 6, 1, False) K 14 curve  PS 2.668 skipped [0, 1, 2] 2s
+('further', 'BRFSS:stroke', 6, 2, False) K 15 curve  PS 2.695 skipped [0, 1, 2] 7s
+('further', 'BRFSS:stroke', 6, 0, False) K 16 curve  PS 3.973 skipped [0, 1, 2] 22s

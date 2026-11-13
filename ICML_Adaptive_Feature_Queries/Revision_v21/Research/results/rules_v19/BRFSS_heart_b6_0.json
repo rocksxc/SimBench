@@ -1,0 +1,14 @@
+{
+ "dataset": "BRFSS:heart",
+ "b": 6,
+ "seed": 20261108,
+ "items": 13,
+ "n_target": 126840,
+ "n_train": 20000,
+ "features": 21,
+ "status": "ok",
+ "accuracy": 0.7216885052034059,
+ "fixed": 2.3785396561022796,
+ "uniform": 16.75686792035018,
+ "seconds": 1953.4112374782562
+}

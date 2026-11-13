@@ -1,0 +1,18 @@
+\begin{table*}[t]
+\centering
+\caption{BRFSS diabetes screening trees on twelve items (six runs per cap: two targets, three seeds): records needed relative to a branching interview that asks the tree\textquotesingle s own $b$ questions, which attains the full-information variance; medians over the six runs, range in brackets for the first column. \emph{Pre-committed forms} with pointwise-unbiased scores: the optimal design with forms of size $b$ at the target law, and with one or two extra questions per record (forms on the rule\textquotesingle s items); uniform randomization over all forms of the rule\textquotesingle s items with optimal tables; the design learned from a cross-fitted pilot of the audit itself with smoothed cell masses, all records charged ($N=4{,}000$; a run in which one form holds all the rule\textquotesingle s items needs no pilot and counts as 1). \emph{Two rounds}: the optimal two-round design of size $b$ (at $b=6$ the median includes certified upper bounds from feasible two-round designs for 4 runs, Table~\ref{tab:runs}). \emph{Pairwise model}: $W_{\rm fixed}/W_{\rm branch}$ within the pairwise log-linear model at its fit. Bracket, reference-fitted designs and the three-way model: Table~\ref{tab:screeningfull}.}
+\label{tab:screening}
+\footnotesize
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{r l r r r r r r}
+\toprule
+ & \multicolumn{3}{c}{optimal forms of size} & two & uniform & pilot, & pairwise \\
+\cmidrule(lr){2-4}
+$b$ & $b$ & $b+1$ & $b+2$ & rounds & forms & all-in & model \\
+\midrule
+4 & 1.49 [1.00, 1.75] & 1.11 & 1.00 & 1.00 & 2.30 & 1.62 & 1.09 \\
+5 & 1.35 [1.18, 1.54] & 1.08 & 1.00 & 1.00 & 2.04 & 1.53 & 1.06 \\
+6 & 1.58 [1.42, 1.98] & 1.24 & 1.09 & $\le$1.05 & 4.18 & 1.93 & 1.07 \\
+\bottomrule
+\end{tabular}
+\end{table*}

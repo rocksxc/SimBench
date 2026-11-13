@@ -1,0 +1,9 @@
+{
+ "kind": "further",
+ "dataset": "BRFSS:diffwalk",
+ "b": 4,
+ "seed": 20261110,
+ "shift": false,
+ "items": 4,
+ "trivial": true
+}

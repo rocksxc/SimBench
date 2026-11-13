@@ -1,0 +1,22 @@
+{
+ "kind": "further",
+ "dataset": "BRFSS:stroke",
+ "b": 4,
+ "seed": 20261109,
+ "shift": false,
+ "items": 6,
+ "delta_fit": 0.582653144261786,
+ "var_fit": 0.6605153134818543,
+ "ci_label": 0.4547873302835451,
+ "ci_blind": 0.4551987770177637,
+ "ci_full": 0.40122630025928646,
+ "ci_ratio_upper": 1.0009047013995795,
+ "bracket": {
+  "lower": 1.1209719456347438,
+  "upper": 3.831323752551253,
+  "path_sets": 4
+ },
+ "rules_v19_status": "ok",
+ "fixed": 1.3662104918255853,
+ "seconds": 0.34501123428344727
+}

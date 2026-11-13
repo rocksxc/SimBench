@@ -1,0 +1,18 @@
+{
+ "kind": "further",
+ "dataset": "BRFSS:diffwalk",
+ "b": 6,
+ "seed": 20261110,
+ "shift": false,
+ "items": 10,
+ "curve": {
+  "0": 1.6126532879196724,
+  "1": 1.25645360074676,
+  "2": 1.1006989959980336
+ },
+ "skipped": [],
+ "path_set": 1.6722855030048736,
+ "path_sets": 10,
+ "close": 4,
+ "seconds": 155.58950877189636
+}

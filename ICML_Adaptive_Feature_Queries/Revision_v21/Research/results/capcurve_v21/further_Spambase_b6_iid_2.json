@@ -1,0 +1,18 @@
+{
+ "kind": "further",
+ "dataset": "Spambase",
+ "b": 6,
+ "seed": 20261110,
+ "shift": false,
+ "items": 13,
+ "curve": {},
+ "skipped": [
+  0,
+  1,
+  2
+ ],
+ "path_set": 2.3438803640892063,
+ "path_sets": 9,
+ "close": 7,
+ "seconds": 1.4687609672546387
+}

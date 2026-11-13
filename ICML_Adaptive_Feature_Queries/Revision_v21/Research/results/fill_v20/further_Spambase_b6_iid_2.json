@@ -1,0 +1,22 @@
+{
+ "kind": "further",
+ "dataset": "Spambase",
+ "b": 6,
+ "seed": 20261110,
+ "shift": false,
+ "items": 13,
+ "delta_fit": 0.7770808077217946,
+ "var_fit": 0.39614541827044336,
+ "ci_label": 0.19082849371621158,
+ "ci_blind": 0.20306100693423423,
+ "ci_full": 0.14564724601631393,
+ "ci_ratio_upper": 1.0641021316041728,
+ "bracket": {
+  "lower": 1.2867847282821114,
+  "upper": 8.058724822803969,
+  "path_sets": 9
+ },
+ "rules_v19_status": "unfinished",
+ "fixed": 2.1278084949544174,
+ "seconds": 1445.8876178264618
+}

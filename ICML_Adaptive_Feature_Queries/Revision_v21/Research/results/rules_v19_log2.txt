@@ -1,0 +1,10 @@
+('BRFSS:diffwalk', 4, 0) trivial K 4  1s
+('BRFSS:diffwalk', 4, 2) trivial K 4  1s
+('BRFSS:diffwalk', 4, 1) ok K 5 acc 0.789 fixed 1.237 uniform 1.401 boot [1.235, 1.239] model2 1.057 3s
+('BRFSS:diffwalk', 5, 0) ok K 7 acc 0.789 fixed 1.478 uniform 1.989 boot [1.471, 1.481] model2 1.082 60s
+('BRFSS:diffwalk', 5, 2) ok K 7 acc 0.826 fixed 1.322 uniform 1.934 boot [1.316, 1.329] model2 1.039 53s
+('Spambase', 4, 0) ok K 6 acc 0.873 fixed 1.396 uniform 2.208 boot [1.356, 1.455] model2 1.034 5s
+('BRFSS:diffwalk', 5, 1) ok K 8 acc 0.763 fixed 1.556 uniform 2.813 boot [1.548, 1.559] model2 1.091 128s
+('Spambase', 4, 1) ok K 8 acc 0.874 fixed 2.059 uniform 5.130 boot [1.942, 2.146] model2 1.179 48s
+('Spambase', 4, 2) ok K 8 acc 0.855 fixed 1.951 uniform 4.464 boot [1.889, 2.004] model2 1.246 60s
+('Spambase', 5, 1) ok K 12 acc 0.851 fixed 1.989 uniform 8.376 boot [-] model2 - 499s

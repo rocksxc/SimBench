@@ -1,0 +1,28 @@
+\begin{table}[h]
+\centering
+\caption{Further rules: class-balanced depth-$b$ trees for four other BRFSS outcomes (trained on 20,000 respondents with the 21 binarized variables, diabetes status included as a feature) and for Spambase (57 binarized features, 2,300 training records), three seeds each; target law on a disjoint half. Runs: with a gain / trivial (the rule depends on at most $b$ items, ratio 1) / not computed (5 rules with more than 13 items; 0 runs not finished). For 10 of the runs with a gain only the optimal forms were computed, without the bootstrap, the uniform design and the model fit. Last column: for the runs that were not computed, the bracket $[1/\rho_P^2,N_P]$ of Theorem~\ref{thm:bracket} over forms on the rule\textquotesingle s items. For the runs with a gain: number $K$ of items the rule depends on; records needed relative to branching by the optimal forms on these items, median [range]; the largest distance, over the runs, from this ratio to the 5th or the 95th percentile of 20 bootstrap resamples of the target records with the tree fixed, relative to the ratio (runs with $K\le11$); uniform randomization over all forms of the rule\textquotesingle s items with optimal tables; and the ratio within the pairwise model at the pairwise fit (runs with $K\le10$).}
+\label{tab:rules}
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{lllllllll}
+\toprule
+target & $b$ & runs & $K$ & optimal forms & bootstrap & uniform, items & pairwise & bracket if not computed \\
+\midrule
+BRFSS, heart disease & 4 & 3 / 0 / 0 & 5--7 & 1.29 [1.16, 1.53] & $\pm$0.5\% & 2.15 [1.44, 3.22] & 1.10 [1.06, 1.18] & -- \\
+ & 5 & 3 / 0 / 0 & 8--10 & 1.67 [1.57, 2.23] & $\pm$0.4\% & 3.73 [2.93, 8.92] & 1.19 [1.15, 1.24] & -- \\
+ & 6 & 1 / 0 / 2 & 13--13 & 2.38 [2.38, 2.38] & -- & 16.76 [16.76, 16.76] & -- & [1.16, 16.5], [1.14, 17.4] \\
+BRFSS, stroke & 4 & 3 / 0 / 0 & 6--6 & 1.37 [1.30, 1.44] & $\pm$0.3\% & 1.95 [1.91, 2.05] & 1.12 [1.12, 1.23] & -- \\
+ & 5 & 3 / 0 / 0 & 8--9 & 1.32 [1.30, 1.79] & $\pm$0.6\% & 3.24 [2.19, 3.74] & 1.10 [1.08, 1.28] & -- \\
+ & 6 & 1 / 0 / 2 & 11--11 & 1.74 [1.74, 1.74] & -- & -- & -- & [1.43, 20.0], [1.20, 15.9] \\
+BRFSS, high blood pressure & 4 & 3 / 0 / 0 & 5--5 & 1.25 [1.16, 1.33] & $\pm$0.3\% & 1.57 [1.51, 1.59] & 1.01 [1.01, 1.01] & -- \\
+ & 5 & 3 / 0 / 0 & 6--6 & 1.13 [1.13, 1.13] & $\pm$0.3\% & 1.41 [1.41, 1.41] & 1.01 [1.00, 1.01] & -- \\
+ & 6 & 3 / 0 / 0 & 7--10 & 1.21 [1.07, 1.38] & $\pm$0.2\% & 1.31 [1.31, 1.31] & 1.00 [1.00, 1.00] & -- \\
+BRFSS, difficulty walking & 4 & 1 / 2 / 0 & 5--5 & 1.24 [1.24, 1.24] & $\pm$0.2\% & 1.40 [1.40, 1.40] & 1.06 [1.06, 1.06] & -- \\
+ & 5 & 3 / 0 / 0 & 7--8 & 1.48 [1.32, 1.56] & $\pm$0.6\% & 1.99 [1.93, 2.81] & 1.08 [1.04, 1.09] & -- \\
+ & 6 & 3 / 0 / 0 & 10--10 & 1.75 [1.61, 1.78] & -- & -- & -- & -- \\
+Spambase, spam & 4 & 3 / 0 / 0 & 6--8 & 1.95 [1.40, 2.06] & $\pm$5.7\% & 4.46 [2.21, 5.13] & 1.18 [1.03, 1.25] & -- \\
+ & 5 & 3 / 0 / 0 & 10--12 & 1.99 [1.92, 2.04] & -- & 8.38 [8.38, 8.38] & -- & -- \\
+ & 6 & 2 / 0 / 1 & 11--13 & 1.94 [1.76, 2.13] & -- & -- & -- & [1.27, 8.4] \\
+\bottomrule
+\end{tabular}
+\end{table}

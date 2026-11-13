@@ -1,0 +1,8 @@
+gadget b=3 beta=0.00 k=2 fixed 0.3333 branch 0.3333 [lower 0.3333] ratio 1.000 tree 1.0 1s
+gadget b=3 beta=0.50 k=2 fixed 0.3504 branch 0.3495 [lower 0.3495] ratio 1.003 tree 0.9999999999999962 78s
+gadget b=3 beta=1.00 k=2 fixed 0.4318 branch 0.4254 [lower 0.4254] ratio 1.015 tree 0.999999999999992 57s
+gadget b=3 beta=1.50 k=2 fixed 0.6184 branch 0.5952 [lower 0.5952] ratio 1.039 tree 0.9999999999999828 38s
+gadget b=3 beta=2.00 k=2 fixed 0.8391 branch 0.7611 [lower 0.7611] ratio 1.102 tree 1.0000000000000093 47s
+gadget b=3 beta=3.00 k=2 fixed 1.2232 branch 0.8918 [lower 0.8918] ratio 1.372 tree 0.9999999999999988 74s
+gadget b=3 beta=4.00 k=2 fixed 1.4655 branch 0.9343 [lower 0.9343] ratio 1.569 tree 1.0000000000000027 104s
+gadget b=3 beta=6.00 k=2 fixed 1.6346 branch 0.9874 [lower 0.7953] ratio 1.655 tree 0.9999999999999964 409s

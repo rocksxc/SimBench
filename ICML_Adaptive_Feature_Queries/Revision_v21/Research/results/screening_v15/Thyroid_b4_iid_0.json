@@ -1,0 +1,20 @@
+{
+ "dataset": "Thyroid",
+ "shift": false,
+ "b": 4,
+ "seed": 20261108,
+ "m": 12,
+ "delta": 0.6467999999999999,
+ "second": 1.0,
+ "full_var": 0.5816497600000001,
+ "prevalence": 0.07472222222222222,
+ "fixed_ratio": 1.0000000021589464,
+ "centered_upper": 2.3679907775807765,
+ "path_sets": 3,
+ "uniform_ht_ratio": 11.27386308901769,
+ "uniform_opt_ratio": 5.253721166941601,
+ "label_fixed_M": 1.0000000427253002,
+ "label_fixed_ratio": 1.0000000734553731,
+ "label_fixed_ratio_lower": 1.0,
+ "seconds": 15.174610376358032
+}

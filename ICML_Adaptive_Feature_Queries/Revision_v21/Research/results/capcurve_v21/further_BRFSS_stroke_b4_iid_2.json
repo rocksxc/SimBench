@@ -1,0 +1,17 @@
+{
+ "kind": "further",
+ "dataset": "BRFSS:stroke",
+ "b": 4,
+ "seed": 20261110,
+ "shift": false,
+ "items": 6,
+ "curve": {
+  "0": 1.302781935523832,
+  "1": 1.1257746606578654,
+  "2": 1.0
+ },
+ "skipped": [],
+ "path_set": 1.323541052323368,
+ "close": 2,
+ "seconds": 0.42758893966674805
+}

@@ -1,0 +1,28 @@
+\begin{table}[h]
+\centering
+\caption{Learning the design from a pilot of the audit itself, with the pilot charged (BRFSS runs with a gain; medians over runs of the median over 30 pilots). Pilot: per-record variance of the cross-fitted scores of the $n_1$ pilot respondents (uniform design on the path sets). Learned: per-record variance of the path-set design learned from the pilot. All-in: variance of the estimator that uses all $N=4n_1$ records with weights proportional to sample sizes, $[n_1\cdot\text{pilot}+3n_1\cdot\text{learned}]/N$. All entries are relative to branching; the last columns give the oracle path-set design and the oracle design over all forms. Cells: number of (form, pattern, label) masses to estimate.}
+\label{tab:pilot}
+\small
+\begin{tabular}{rrrrrrrrr}
+\toprule
+$b$ & runs & cells & $n_1$ & pilot & learned & all-in & oracle PS & oracle all forms \\
+\midrule
+3 & 1 & 32 & 250 & 1.56 & 1.37 & 1.42 & 1.34 & 1.34 \\
+ &  &  & 500 & 1.53 & 1.36 & 1.40 &  &  \\
+ &  &  & 1000 & 1.52 & 1.35 & 1.39 &  &  \\
+ &  &  & 2000 & 1.51 & 1.35 & 1.39 &  &  \\
+4 & 5 & 128 & 250 & 2.43 & 1.80 & 1.96 & 1.57 & 1.52 \\
+ &  &  & 500 & 2.13 & 1.71 & 1.75 &  &  \\
+ &  &  & 1000 & 1.99 & 1.64 & 1.67 &  &  \\
+ &  &  & 2000 & 1.90 & 1.61 & 1.65 &  &  \\
+5 & 6 & 416 & 250 & 3.26 & 2.46 & 2.61 & 1.36 & 1.35 \\
+ &  &  & 500 & 2.95 & 1.90 & 2.09 &  &  \\
+ &  &  & 1000 & 2.31 & 1.66 & 1.80 &  &  \\
+ &  &  & 2000 & 1.99 & 1.54 & 1.63 &  &  \\
+6 & 6 & 1728 & 250 & 4.53 & 4.15 & 4.24 & 1.61 & 1.58 \\
+ &  &  & 500 & 5.57 & 4.21 & 4.59 &  &  \\
+ &  &  & 1000 & 5.40 & 3.71 & 4.13 &  &  \\
+ &  &  & 2000 & 4.79 & 2.76 & 3.30 &  &  \\
+\bottomrule
+\end{tabular}
+\end{table}

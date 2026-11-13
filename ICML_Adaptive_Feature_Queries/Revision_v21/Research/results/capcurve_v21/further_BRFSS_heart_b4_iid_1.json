@@ -1,0 +1,16 @@
+{
+ "kind": "further",
+ "dataset": "BRFSS:heart",
+ "b": 4,
+ "seed": 20261109,
+ "shift": false,
+ "items": 5,
+ "curve": {
+  "0": 1.1598072008309652,
+  "1": 1.0
+ },
+ "skipped": [],
+ "path_set": 1.1598072000110948,
+ "close": 1,
+ "seconds": 0.3828854560852051
+}

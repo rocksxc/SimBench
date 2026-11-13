@@ -1,0 +1,22 @@
+{
+ "kind": "further",
+ "dataset": "BRFSS:highbp",
+ "b": 6,
+ "seed": 20261109,
+ "shift": false,
+ "items": 10,
+ "delta_fit": 0.4385962817149056,
+ "var_fit": 0.8076333016658591,
+ "ci_label": 0.4649926952315021,
+ "ci_blind": 0.46561308273761326,
+ "ci_full": 0.43482802109534746,
+ "ci_ratio_upper": 1.0013341876388022,
+ "bracket": {
+  "lower": 1.0970149728574072,
+  "upper": 10.833707221537454,
+  "path_sets": 15
+ },
+ "rules_v19_status": "unfinished",
+ "fixed": 1.3798737342828988,
+ "seconds": 33.762925148010254
+}

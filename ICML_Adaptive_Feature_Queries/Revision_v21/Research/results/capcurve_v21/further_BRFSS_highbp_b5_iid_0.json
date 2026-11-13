@@ -1,0 +1,16 @@
+{
+ "kind": "further",
+ "dataset": "BRFSS:highbp",
+ "b": 5,
+ "seed": 20261108,
+ "shift": false,
+ "items": 6,
+ "curve": {
+  "0": 1.1286721987526869,
+  "1": 1.0
+ },
+ "skipped": [],
+ "path_set": 1.1286721977691891,
+ "close": 1,
+ "seconds": 0.3992276191711426
+}
