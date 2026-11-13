@@ -1,0 +1,19 @@
+\begin{table}[h]
+\centering
+\caption{Forest updates by cap and dimension (medians over splits). Fixed/branch at $b=3$ uses twenty splits per dataset (Table~\ref{tab:forestexact}); the two-round columns use five splits per dataset and the solver of Appendix~\ref{app:engine}: $W_2/W_{\rm branch}$, the share of the log-gap that the second round recovers (median and minimum over tasks), and the largest relative gap between the certified bounds of the branching constant.}
+\label{tab:capdetail}
+\small
+\begin{tabular}{rrrrrrrrrr}
+\toprule
+$b$ & $m$ & WDBC & Spambase & Ionosphere & fitted & $W_2/W_{\rm branch}$ & recovered & min & width \\
+\midrule
+2 & 6 & 1.31 & 1.35 & 1.31 & 1.31 & -- & -- & -- & -- \\
+2 & 9 & 1.23 & 1.25 & 1.44 & 1.26 & -- & -- & -- & -- \\
+2 & 12 & 1.27 & 1.35 & 1.42 & 1.35 & -- & -- & -- & -- \\
+3 & 6 & 1.36 & 1.41 & 1.36 & -- & 1.023 & 92\% & 85\% & 6e-07 \\
+3 & 9 & 1.57 & 1.45 & 1.61 & -- & 1.041 & 90\% & 86\% & 1e-04 \\
+3 & 12 & 1.66 & 1.58 & 1.73 & 1.67 & 1.057 & 89\% & 86\% & 8e-05 \\
+4 & 6 & 1.23 & 1.28 & 1.20 & 1.27 & 1.031 & 85\% & 80\% & 9e-05 \\
+\bottomrule
+\end{tabular}
+\end{table}

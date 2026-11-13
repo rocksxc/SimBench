@@ -1,0 +1,54 @@
+\begin{table}[h]
+\centering
+\caption{A working model on the capped records: simulated BRFSS audits with $n=1000$ and $n=16,000$ target respondents (400 replications each). Design-based scores (branching; fitted fixed form) against the EM estimate (early-stopped; maximum likelihood where an interior maximiser exists) under a two-way log-linear model for the label and the items the rule uses, fitted by EM to the fitted-form records (EM, fitted forms) and to balanced random forms (EM, uniform forms). Bias, SD and RMSE are multiplied by 100; coverage of nominal 95\% intervals (delete-a-group jackknife for EM) has Monte Carlo standard error about 0.011. -- not computed.}
+\label{tab:em}
+\scriptsize
+\setlength{\tabcolsep}{2.8pt}
+\begin{tabular}{lrrlrrrrrrrr}
+\toprule
+ & & & & \multicolumn{4}{c}{$n=1000$} & \multicolumn{4}{c}{$n=16,000$} \\
+Shift & $b$ & items & Estimator & Bias & SD & RMSE & Cov. & Bias & SD & RMSE & Cov. \\
+\midrule
+none & 4 & 6 & branching & -0.01 & 3.05 & 3.05 & 0.950 & -0.01 & 0.76 & 0.76 & 0.943 \\
+ &  &  & fitted fixed form & -0.07 & 3.71 & 3.70 & 0.950 & -0.03 & 0.88 & 0.88 & 0.953 \\
+ &  &  & EM, fitted forms & 0.74 & 2.88 & 2.97 & 0.935 & 0.77 & 0.76 & 1.08 & 0.855 \\
+ &  &  & EM, uniform forms & 0.20 & 4.91 & 4.91 & 0.953 & 0.50 & 1.19 & 1.29 & 0.922 \\
+none & 5 & 6 & branching & 0.00 & 3.06 & 3.06 & 0.940 & -0.03 & 0.75 & 0.75 & 0.940 \\
+ &  &  & fitted fixed form & 0.04 & 3.37 & 3.37 & 0.950 & -0.03 & 0.84 & 0.84 & 0.938 \\
+ &  &  & EM, fitted forms & 0.20 & 2.75 & 2.75 & 0.948 & 0.14 & 0.71 & 0.72 & 0.932 \\
+ &  &  & EM, uniform forms & 0.15 & 4.25 & 4.25 & 0.960 & 0.18 & 1.13 & 1.14 & 0.932 \\
+sex & 4 & 4 & branching & 0.15 & 2.96 & 2.96 & 0.958 & -0.05 & 0.77 & 0.77 & 0.935 \\
+ &  &  & fitted fixed form & 0.18 & 3.00 & 3.00 & 0.955 & -0.04 & 0.78 & 0.78 & 0.943 \\
+ &  &  & EM, fitted forms & 0.51 & 2.79 & 2.84 & 0.955 & 0.37 & 0.69 & 0.78 & 0.920 \\
+ &  &  & EM, uniform forms & -0.11 & 5.33 & 5.33 & 0.925 & 0.35 & 1.22 & 1.27 & 0.943 \\
+sex & 5 & 7 & branching & 0.13 & 2.87 & 2.87 & 0.955 & -0.08 & 0.74 & 0.74 & 0.940 \\
+ &  &  & fitted fixed form & 0.02 & 3.29 & 3.29 & 0.960 & -0.04 & 0.84 & 0.84 & 0.950 \\
+ &  &  & EM, fitted forms & 0.03 & 2.75 & 2.75 & 0.953 & 0.02 & 0.68 & 0.68 & 0.930 \\
+ &  &  & EM, uniform forms & -0.46 & 4.16 & 4.19 & 0.963 & -0.01 & 1.00 & 1.00 & 0.938 \\
+education & 4 & 5 & branching & -0.15 & 2.85 & 2.86 & 0.970 & 0.01 & 0.77 & 0.77 & 0.953 \\
+ &  &  & fitted fixed form & -0.25 & 3.42 & 3.42 & 0.973 & 0.01 & 0.86 & 0.86 & 0.958 \\
+ &  &  & EM, fitted forms & -0.63 & 2.81 & 2.88 & 0.968 & -0.45 & 0.74 & 0.87 & 0.920 \\
+ &  &  & EM, uniform forms & -0.84 & 5.00 & 5.06 & 0.958 & -0.44 & 1.25 & 1.32 & 0.925 \\
+education & 5 & 6 & branching & -0.15 & 2.83 & 2.83 & 0.970 & 0.01 & 0.77 & 0.77 & 0.948 \\
+ &  &  & fitted fixed form & -0.04 & 3.02 & 3.01 & 0.978 & -0.00 & 0.86 & 0.86 & 0.938 \\
+ &  &  & EM, fitted forms & -0.36 & 2.51 & 2.54 & 0.963 & -0.17 & 0.72 & 0.74 & 0.953 \\
+ &  &  & EM, uniform forms & -0.65 & 4.14 & 4.18 & 0.978 & -0.20 & 1.03 & 1.05 & 0.950 \\
+cost barrier & 4 & 5 & branching & 0.13 & 3.18 & 3.18 & 0.935 & -0.04 & 0.74 & 0.74 & 0.953 \\
+ &  &  & fitted fixed form & -0.07 & 3.85 & 3.85 & 0.960 & -0.02 & 0.94 & 0.94 & 0.943 \\
+ &  &  & EM, fitted forms & 0.79 & 2.99 & 3.09 & 0.920 & 0.68 & 0.70 & 0.98 & 0.870 \\
+ &  &  & EM, uniform forms & 0.45 & 4.85 & 4.87 & 0.930 & 0.69 & 1.13 & 1.32 & 0.922 \\
+cost barrier & 5 & 8 & branching & 0.01 & 3.08 & 3.08 & 0.938 & -0.03 & 0.74 & 0.74 & 0.953 \\
+ &  &  & fitted fixed form & -0.11 & 3.79 & 3.78 & 0.943 & 0.01 & 0.93 & 0.93 & 0.953 \\
+ &  &  & EM, fitted forms & 0.48 & 3.01 & 3.04 & 0.932 & 0.33 & 0.68 & 0.75 & 0.935 \\
+ &  &  & EM, uniform forms & 0.41 & 3.71 & 3.73 & 0.963 & 0.45 & 0.89 & 0.99 & 0.945 \\
+poor health & 4 & 4 & branching & -0.21 & 3.21 & 3.21 & 0.948 & -0.00 & 0.77 & 0.77 & 0.958 \\
+ &  &  & fitted fixed form & -0.19 & 3.23 & 3.23 & 0.960 & -0.00 & 0.79 & 0.79 & 0.955 \\
+ &  &  & EM, fitted forms & -0.72 & 3.07 & 3.15 & 0.943 & -0.60 & 0.74 & 0.95 & 0.885 \\
+ &  &  & EM, uniform forms & -0.75 & 4.84 & 4.90 & 0.958 & -0.69 & 1.19 & 1.38 & 0.940 \\
+poor health & 5 & 7 & branching & -0.28 & 3.26 & 3.27 & 0.948 & -0.03 & 0.77 & 0.76 & 0.958 \\
+ &  &  & fitted fixed form & -0.37 & 4.00 & 4.02 & 0.953 & -0.07 & 0.99 & 0.99 & 0.948 \\
+ &  &  & EM, fitted forms & -0.83 & 2.97 & 3.08 & 0.950 & -0.69 & 0.74 & 1.01 & 0.882 \\
+ &  &  & EM, uniform forms & -0.73 & 4.20 & 4.26 & 0.948 & -0.62 & 1.05 & 1.21 & 0.890 \\
+\bottomrule
+\end{tabular}
+\end{table}

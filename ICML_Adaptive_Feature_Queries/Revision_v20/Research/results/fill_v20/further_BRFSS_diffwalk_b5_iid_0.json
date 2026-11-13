@@ -1,0 +1,22 @@
+{
+ "kind": "further",
+ "dataset": "BRFSS:diffwalk",
+ "b": 5,
+ "seed": 20261108,
+ "shift": false,
+ "items": 7,
+ "delta_fit": 0.5592824445540725,
+ "var_fit": 0.6872031472136206,
+ "ci_label": 0.38400138151858326,
+ "ci_blind": 0.3849088801290342,
+ "ci_full": 0.3389912998266744,
+ "ci_ratio_upper": 1.0023632691290383,
+ "bracket": {
+  "lower": 1.1691816566555866,
+  "upper": 5.961381775787379,
+  "path_sets": 7
+ },
+ "rules_v19_status": "ok",
+ "fixed": 1.477835692136325,
+ "seconds": 0.29155659675598145
+}

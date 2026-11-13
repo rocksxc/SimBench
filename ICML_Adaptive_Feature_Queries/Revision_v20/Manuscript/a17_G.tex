@@ -1,0 +1,71 @@
+\section{Proper Scores and Pairwise Targets}\label{app:metrics}
+The score-design method applies to a bounded known record-level target
+$t(x,y)$, without requiring that it be a randomized classification gain.
+For a label observed separately, write
+\[
+ t(x,y)=a(x)+yc(x),\qquad
+ a(x)=\frac{t(x,1)+t(x,-1)}2,\quad
+ c(x)=\frac{t(x,1)-t(x,-1)}2.
+\]
+On a finite domain, identification under arbitrary joint populations is
+equivalent to $a,c\in\Hh_\A$. On the full binary cube with cap $b$, this is
+$\deg(a),\deg(c)\le b$. Indeed the observation span on $(x,y)$ is
+$\Hh_\A\otimes\operatorname{span}\{1,y\}$: a table may have separate
+entries for the two labels. Its orthogonal complement gives indistinguishable
+populations whenever the target lies outside that span. In particular the
+common identification criterion for fixed forms and branching still applies.
+
+For $z=(y+1)/2$ and $d=p_1-p_0$, the improvement in Brier loss is
+\[
+ t_{\rm Br}(x,y)=(p_0-z)^2-(p_1-z)^2
+                =d(1-p_0-p_1)+yd.
+\]
+Thus degree at most $r$ for each probability function implies degree at most
+$2r$ for this target's feature-only component and at most $r$ for its label
+component. The bound can be strict because terms cancel. The actual degree,
+or a certified approximation residual, determines the necessary cap.
+Doubling is attainable: take $p_0=1/2$ and
+$p_1=1/2+\gamma(x_1x_2+x_3x_4)$, with $0<\gamma\le1/4$.
+The accuracy contrast has degree two, whereas the Brier feature-only
+component is $-2\gamma^2(1+x_1x_2x_3x_4)$ and has degree four.
+For a common depth-$b$ tree whose leaf values determine both probabilities,
+the complete loss difference is still computable along that same path.
+
+For log loss, clip each probability to a fixed interval
+$[\eta,1-\eta]$, $0<\eta<1/2$, before defining the target. Then
+\[
+ \begin{split}
+ a_{\log}&=\tfrac12\log\frac{p_1(1-p_1)}{p_0(1-p_0)},\\
+ c_{\log}&=\tfrac12\log\frac{p_1(1-p_0)}{p_0(1-p_1)}.
+ \end{split}
+\]
+These formulas estimate improvement of the clipped rules. A logarithm of
+an ensemble average can introduce interactions of every order, even when
+each probability has a low-degree representation. A common tree partition
+again avoids that issue because the transformed values are constant on leaves.
+
+The full-form program in Section~\ref{sec:pathdesign} replaces its
+right-hand side by $\widehat t_y(S)$ for each label. Its pointwise identity,
+population-specific variance objective, and invariance of unbiasedness to
+calibration error remain unchanged. The symmetric-label minimax formula
+$V(d,\A)$ and its sharp ratio were proved for $Yd(X)$; this extension of
+the estimator does not assert that the identical formula is the global
+minimax coefficient for every proper score. The path simulation does preserve
+any bounded target's conditional mean and multiplies its conditional
+second moment by at most the number of padded path sets.
+
+\paragraph{AUC needs a pair design.}
+Let $X^+\sim P(X\mid Y=1)$ and $X^-\sim P(X\mid Y=-1)$ be independent.
+For a frozen score $s$, define
+$k_s(x^+,x^-)=\mathbf1\{s(x^+)>s(x^-)\}
++\tfrac12\mathbf1\{s(x^+)=s(x^-)\}$.
+The AUC difference is $\E[k_{s_1}-k_{s_0}]$ under the product of these two
+conditional laws. Disjoint labeled case--control pairs give iid pair targets;
+one can design unbiased scores on pair transcripts, retaining a separate
+cap on each member. This differs from a single-record target: using all
+case--control pairs introduces U-statistic dependence, and the sharp
+single-record coefficient ratio cannot be asserted for that design.
+Class prevalence, label-screening cost and the availability of both classes
+must also enter an acquisition comparison. We establish the record-level
+Brier/log-loss extension here and leave pair-design optimality unclaimed.
+

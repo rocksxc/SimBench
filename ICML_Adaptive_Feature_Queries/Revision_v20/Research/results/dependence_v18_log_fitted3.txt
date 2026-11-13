@@ -1,0 +1,6 @@
+fitted b=3 acc=0.50 design 4.000 k=2 fixed 0.3333 branch 0.3333 ratio 1.000 | k=3 fixed 2.5000 branch 1.0000 ratio 2.500 0s
+fitted b=3 acc=0.60 design 4.000 k=2 fixed 0.3317 branch 0.3317 ratio 1.000 | k=3 fixed 2.5160 branch 1.0000 ratio 2.516 0s
+fitted b=3 acc=0.70 design 4.000 k=2 fixed 0.3266 branch 0.3266 ratio 1.000 | k=3 fixed 2.5637 branch 1.0000 ratio 2.564 0s
+fitted b=3 acc=0.80 design 4.000 k=2 fixed 0.3180 branch 0.3180 ratio 1.000 | k=3 fixed 2.6359 branch 1.0000 ratio 2.636 0s
+fitted b=3 acc=0.90 design 4.000 k=2 fixed 0.3056 branch 0.3056 ratio 1.000 | k=3 fixed 2.6751 branch 1.0000 ratio 2.675 0s
+fitted b=3 acc=0.97 design 4.000 k=2 fixed 0.2944 branch 0.2944 ratio 1.000 | k=3 fixed 2.4628 branch 1.0000 ratio 2.463 0s

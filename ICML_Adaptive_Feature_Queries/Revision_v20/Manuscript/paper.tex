@@ -1,0 +1,217 @@
+\documentclass{article}
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{xurl}
+\usepackage{icml2026}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{array}
+\usepackage{float}
+\hypersetup{pdftitle={The Statistical Value of Adaptive Feature Queries},pdfauthor={Anonymous Authors},pdfsubject={Anonymous review manuscript on statistical model evaluation}}
+\icmltitlerunning{The Statistical Value of Adaptive Feature Queries}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{definition}[theorem]{Definition}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\sgn}{\operatorname{sgn}}
+\newcommand{\KL}{D_{\mathrm{KL}}}
+\newcommand{\X}{\mathcal X}
+\newcommand{\A}{\mathcal A}
+\newcommand{\G}{\mathcal G}
+\newcommand{\Hh}{\mathcal H}
+\newcommand{\U}{\mathsf U}
+\newcommand{\ip}[2]{\langle #1,#2\rangle_\mu}
+\newcommand{\PP}{\mathbb P}
+\newcommand{\pos}[1]{(#1)_+}
+\newcommand{\rin}{R_{\mathrm{branch}}}
+\newcommand{\rfix}{R_{\mathrm{fixed}}}
+\newcommand{\sqdist}{\operatorname{dist}}
+\input{v20_numbers}
+\input{v20_sentences}
+\lefthyphenmin=3
+\righthyphenmin=3
+\begin{document}
+\twocolumn[
+\icmltitle{The Statistical Value of Adaptive Feature Queries}
+\begin{icmlauthorlist}
+\icmlauthor{Anonymous Authors}{anon}
+\end{icmlauthorlist}
+\icmlaffiliation{anon}{Anonymous Institution}
+\icmlcorrespondingauthor{Anonymous Author}{anonymous@example.org}
+\icmlkeywords{model evaluation, adaptive feature acquisition, statistical learning theory, minimax estimation, rounds of adaptivity}
+\vskip 0.3in
+]
+\printAffiliationsAndNotice{}
+
+\begin{abstract}
+Questionnaires, laboratory panels and budgeted classifiers reveal at most $b$ of $m$ features per record. If each record's $b$ questions must be fixed in advance instead of chosen from its earlier answers, how many more records does it take to estimate a known low-degree functional, such as the accuracy of a frozen screening rule? We show that pre-committed question sets can simulate any adaptive protocol exactly with $2^{b-1}$ times the records, for every task, sample size and population, and that this factor is attained. Each round of adaptivity halves the bound, yet some targets lose nearly all of it after any constant number of rounds. Whether a parsimonious model for the unasked features removes the gap depends on how strongly the features depend on one another: when the features are modelled as independent given the label, the gap is at most a factor two at any accuracy of the rule and vanishes if the forms may be drawn using the label; near independence it is polynomial in $b$ for log-linear models of bounded order; and under strong pairwise couplings it is exponential again. A certified solver computes the optimal design of each kind at a given population. \nAbstractData
+\end{abstract}
+
+\section{Introduction}
+Population quantities are often estimated from records that each reveal only a few features. Questionnaires cap respondent burden, clinical protocols cap the tests per patient, and budgeted classifiers acquire a few inputs per case \citep{turney1995,trapeznikov2013,nan2017}. The collector can pre-commit to each record's feature set, as in split questionnaires and laboratory panels ordered at once \citep{raghunathan1995,chipperfield2009}, or choose each question after seeing earlier answers, as in skip logic, adaptive matrix sampling \citep{gonzalez2008} and reflex testing. In machine-learning terms, the first is a static feature subset drawn per example and the second an adaptive feature-acquisition policy with a hard budget \citep{covert2023}; here the goal is not a prediction for the example but an estimate for the population, such as the accuracy of a frozen rule or the accuracy gain of a model update.
+
+This paper asks what pre-commitment costs in records. That adaptivity within one input can be worth exponentially many queries is classical in decision-tree complexity, the huge-object model and interactive local privacy \citep{goldreich2022,adar2024,joseph2019}. Under a per-record cap the price is paid in records, and three quantitative questions arise: what the price is exactly, how much of it a few rounds of adaptivity recover, and what remains of it at a given population or under a model for the unasked features. We answer them as follows.
+
+\textbf{An exact simulation and a sharp constant (Section~\ref{sec:gap}).} Pre-committed forms reproduce any adaptive protocol exactly, for every estimator, loss and sample size, with $K_{m,b}=\min\{2^{b-1},\binom{m-1}{b-1}\}$ times the records in expectation; $r$ rounds need $2^{b-r}$. An address contrast attains $2^{b-1}$, whatever the accuracy of the rule, and a pointer tree shows that a constant number of rounds can still lose $2^{b(1-o(1))}$.
+
+\textbf{Constants at a population, computed with certificates (Section~\ref{sec:general}).} The minimax constant of each protocol class is a convex program; at a population it is bracketed by two interpretable quantities, and a column-generation solver with exact pricing over trees finds the optimal design of every class.
+
+\textbf{What a model changes (Section~\ref{sec:model}).} The simulation bounds the gap within every model. In the model with features independent given the label there is no gap if the forms may depend on the label, and at most a factor two otherwise, at rules of any accuracy. Under a log-linear model with interactions of order at most $k$ the gap is polynomial in $b$ at and near laws without dependence (at most $(b+1)^k$ at uniform laws), and pairwise laws with strong couplings among the features bring back $2^{b-1}/b$.
+
+\textbf{What the constants are for trained rules (Section~\ref{sec:experiments}).} \nContribData
+
+The setting is deliberately simple: every sampled record's label is observed and charged separately, the target is one known contrast of degree at most $b$ on binary features, and answers do not depend on question order. Section~\ref{sec:discussion} discusses what this leaves out and what a practitioner can take from the results.
+
+\section{Estimand and Acquisition Protocols}\label{sec:setup}
+Let $X$ take values in $\X=\{-1,1\}^m$ and let $Y\in\{-1,1\}$ be a label. Freeze two rules $p_0,p_1:\X\to[0,1]$ that predict $+1$ with probabilities $p_j(x)$, put $d=p_1-p_0$, $t(x,y)=yd(x)$, and
+\begin{equation}
+ \Delta(P)=\E_P[t(X,Y)]=\E_P[Yd(X)].\label{eq:gain}
+\end{equation}
+This is the accuracy difference of the two rules; $p_0\equiv1/2$ makes it affine in the accuracy of $p_1$ alone (other proper scores: Appendix~\ref{app:metrics}). The cap $b$ bounds the feature queries per record and is \emph{binding} when $m>b$.
+
+\paragraph{Protocols.}
+An interview $\iota$ maps a profile $x$ to a transcript $\ell_\iota(x)$. A \emph{fixed form} queries a set of coordinates chosen before the record is seen. An \emph{$r$-round interview} queries batches $B_1,B_2(x_{B_1}),\ldots,B_r$, each chosen from the answers to earlier batches, with $\sum_s|B_s|\le b$. A \emph{branching interview} is a decision tree of depth at most $b$. The menus are nested, $\A_{\rm fixed}=\A_1\subseteq\cdots\subseteq\A_b=\A_{\rm branch}$. In machine-learning terms an interview is a per-example acquisition policy, a form is a static feature subset, and a collection of records under a design is an evaluation run, which we call an audit. In missing-data terms a fixed form is missingness completely at random by design, and the other interviews are randomized monotone coarsenings \citep{gill1997}, which are ignorable. Across records a protocol may use all previous records to choose the next interview. $R_\A(d,n)$ is the minimax mean squared error over protocols and estimators with $n$ records and interviews from $\A$.
+
+\paragraph{Identification.}
+The contrast is identifiable for all populations exactly when $d$ is a sum of functions that are each constant on the transcript cells of one interview; for forms of size $b$ and for depth-$b$ trees this is the same condition, Fourier degree $\deg(d)\le b$ in the characters $\chi_S(x)=\prod_{j\in S}x_j$. It holds for every probability average of depth-$b$ trees, such as the predicted probability of a depth-limited random forest, and fails for most thresholded ensembles at small caps.
+
+\paragraph{A worked example.}
+Let $m=3$, $b=2$ and $d(x)=[(1+x_1)x_2+(1-x_1)x_3]/2$: the first answer selects which of two others is the target (Figure~\ref{fig:queries}). Branching reads $x_1$ and then the selected coordinate, so it observes $t$. Under uniform profiles and an independent uniform label, the best pre-committed design draws $\{1,2\}$ or $\{1,3\}$ with probability $1/2$ and doubles the score when the drawn form contains the selected coordinate: it needs twice the records.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figures/v13_protocols.pdf}
+\caption{The worked example. A two-query branching interview asks $X_2$ after $X_1=+1$ and $X_3$ after $X_1=-1$. A fixed form commits to $\{1,2\}$ or $\{1,3\}$ before the record is seen and completes the tree's path only for half of the profiles.}
+\label{fig:queries}
+\end{figure}
+
+\section{The Price of Pre-Commitment}\label{sec:gap}
+\begin{theorem}[Exact simulation and the sharp gap]\label{thm:universal}
+Let $1\le b\le m$ and $K_{m,b}=\min\{2^{b-1},\binom{m-1}{b-1}\}$.
+\textup{(i)} Every protocol on $n$ branching records, with any estimator, is reproduced with the same law at every population by a fixed-form protocol on a random number of records with mean $K_{m,b}n$.
+\textup{(ii)} Consequently, for every contrast of degree at most $b$ and with the constants $V$ and $W$ of Section~\ref{sec:general}, $V_{\rm fixed}\le K_{m,b}V_{\rm branch}$, and at every law $P$ of $(X,Y)$,
+\begin{equation}
+ W_{\rm branch}(P)\le W_{\rm fixed}(P)\le K_{m,b}\,W_{\rm branch}(P).\label{eq:universal}
+\end{equation}
+\textup{(iii)} The address contrast on $m=b-1+2^{b-1}$ coordinates has $V_{\rm fixed}/V_{\rm branch}=2^{b-1}$, and $W_{\rm fixed}(P)/W_{\rm branch}(P)=2^{b-1}$ at uniform profiles whenever the label agrees with the rule with a probability in $(0,1)$ that does not depend on the profile. With $m\le b^2$ there are examples with ratio at least $2^{b-b/(\lfloor\log_2 b\rfloor+1)-\lfloor\log_2 b\rfloor}$.
+\end{theorem}
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{figures/v13_constructions.pdf}
+\caption{The three constructions behind Theorems~\ref{thm:universal} and~\ref{thm:rounds}. (a) Address contrast: $\kappa=b-1$ address bits select one of $D=2^\kappa$ data bits; branching reads the address and then the selected bit, while any fixed set of $b$ coordinates explains at most a fraction $1/D$ of the target's variance under the uniform law. (b) Path guessing: a fixed form draws one of a tree's at most $2^{b-1}$ padded path sets and keeps the record when the path completes inside it. (c) Binary pointer tree: $L=b-1$ levels of pointer bits select a child and the target is the data bit at the reached leaf; a round that reads $a$ pointer bits raises the conditional probability of the most likely leaf by at most a factor $1+2a$ in expectation.}
+\label{fig:constructions}
+\end{figure*}
+
+\begin{proof}
+\emph{(i)} Remove repeated questions from a tree $\tau$ and pad every root-to-leaf path, by a fixed rule, with unused coordinates to exactly $b$ distinct ones. All path sets contain the root question, and the first $b-1$ answers determine the set, so the collection $\mathcal S_\tau$ of distinct path sets has at most $K_{m,b}$ elements. To simulate one record of $\tau$, draw one set of $\mathcal S_\tau$ uniformly and ask it as a form (Figure~\ref{fig:constructions}b). The answers reveal whether the drawn set is this record's own padded path set (follow the tree while its questions lie in the set), and for every profile exactly one set is; so the check succeeds with probability $1/|\mathcal S_\tau|$ whatever the record is. Accept a success with probability $|\mathcal S_\tau|/K_{m,b}$. An accepted record is then a draw from the population together with the transcript that $\tau$ would have produced, and the number of records used until acceptance is geometric with mean $K_{m,b}$ and independent of that transcript. The tree may depend on earlier transcripts, so the argument applies record by record to any protocol (Theorem~\ref{thm:simulation}). \emph{(ii)} For $V$, apply a near-optimal branching design to the records accepted from a fixed budget, whose number is binomial with success probability $1/K_{m,b}$. At a given $P$ an explicit score suffices: draw a tree of the branching design and one of its path sets, and return $c+|\mathcal S_\tau|(H-c)$ if the set is the record's own and $c$ otherwise, where $H$ is the tree's score and $c=\Delta(P)$. This score has the conditional mean of $H$ at every profile and at most $K_{m,b}$ times its variance (Appendix~\ref{app:population}). \emph{(iii)} Let $\kappa=b-1$ address bits select one of $D=2^\kappa$ data bits, $d(A,Z)=Z_A$ (Figure~\ref{fig:constructions}a). Branching computes $d$. Under the uniform law, a form $T$ with $s$ address bits and $w\ge1$ data bits has $s\le\kappa+1-w$ and explains the energy
+\begin{equation}
+ \|\E[d\mid X_T]\|_2^2=w\,2^{s-2\kappa}\le2^{-\kappa},\label{eq:addressinformation}
+\end{equation}
+because each of its data bits is consistent with a fraction $2^{-s}$ of the partial addresses and is then the selected bit with conditional probability $2^{-(\kappa-s)}$. The dual of Theorem~\ref{thm:char} with the uniform law and the witness $h=d$ compares $\|d\|_2^4=1$ with this energy, so $V_{\rm fixed}\ge D$. The same energy bounds the variance that a form explains when the label is a noisy copy of $d$ (Proposition~\ref{prop:labelnoise}), and products of address blocks give the example in polynomial dimension (Appendix~\ref{app:productaddress}).
+\end{proof}
+The gap requires that \emph{every} record obey the cap: under a mean budget of $b$ queries, asking all $m$ features with probability $b/m$ bounds the ratio by $m/b$ (Appendix~\ref{app:expectedproof}). For $m$ close to $b$ the extreme ratio is open (Proposition~\ref{prop:fourbit}).
+
+\begin{theorem}[Rounds of adaptivity]\label{thm:rounds}
+Let $K_r=\min\{2^{b-r},\binom{m-r}{b-r}\}$ and let $V_r$, $W_r(P)$ be the constants of $r$-round interviews.
+\textup{(a)} Part \textup{(i)} of Theorem~\ref{thm:universal} holds for $r$-round interviews with $K_r$ in place of $K_{m,b}$; hence $V_r\le K_rV_{\rm branch}$ and $W_r(P)\le K_rW_{\rm branch}(P)$ at every $P$.
+\textup{(b)} The binary pointer tree on $m=2^b-1$ coordinates has $V_{\rm branch}=1$ and $V_r\ge2^{b-1}/(1+2b/r)^{r}$ for $1\le r\le b$.
+\textup{(c)} For $b\ge4$ a product of pointer trees on $m\le b^2$ coordinates has $V_{\rm branch}=1$ and $\log_2V_r\ge b-O(rb\log\log b/\log b)$.
+\end{theorem}
+For (a), follow the tree for $r-1$ rounds and guess the rest of the path in the last batch. For (b), a round that reads $a$ pointer bits raises the conditional probability of the most likely leaf by at most a factor $1+2a$ in expectation (Figure~\ref{fig:constructions}c); a potential argument makes this precise and extends to products (Appendix~\ref{app:roundshier}). On the pointer tree, a protocol within a polynomial factor of branching needs more than $0.37b-O(\log b)$ rounds. The product of part (c) loses $2^{b(1-o(1))}$ for every constant $r$ but is evaluated exactly in $\lfloor\log_2b\rfloor$ rounds; whether more than logarithmically many rounds can be necessary on $\mathrm{poly}(b)$ features is open. Appendix~\ref{app:pointerexact} computes the constants of the pointer tree at $b\in\{3,4\}$: two rounds lose $1.80$ and $3.33$, below the bounds $2$ and $4$ of part (a).
+
+\section{Constants and Their Computation}\label{sec:general}\label{sec:population}
+The simulation bounds the gap; the following constants measure it for a given contrast and population. A \emph{design} draws an interview $\iota$ with probability $q_\iota$ and scores its transcript with a table $g_\iota$; the score $Yg_\iota(\ell_\iota(X))/q_\iota$ is unbiased for $Yd(X)$ at every profile exactly when $\sum_\iota g_\iota(\ell_\iota(x))=d(x)$ for all $x$. Define the worst-case and population constants
+\begin{align}
+ V(d,\A)&=\inf_{q,g:\ \sum_\iota g_\iota=d}\ \max_{x\in\X}\sum_\iota\frac{g_\iota(\ell_\iota(x))^2}{q_\iota},\label{eq:unbiasedprogram}\\
+ W_{\A}(P)&=\inf_{q,H:\,\E[H\mid X,Y]=t(X,Y)}\Var_{P,q}(H),\label{eq:mainW}
+\end{align}
+where $H$ is a score of the drawn interview's transcript and the label that may be tuned to $P$. Let $\sigma_P^2=\Var_P(t)$; for a depth-$b$ tree $\tau$ that computes $d$, with padded path sets $S_\tau(x)$, let $\rho_P^2=\max_{|T|=b}\Var_P(\E_P[t\mid X_T,Y])/\sigma_P^2$ be the largest share of the target's variance that one form explains, and $N_P(\tau)=(\sum_Sv_S^{1/2})^2$ with $v_S=\E_P[(t-\Delta)^2\mathbf 1\{S_\tau(X)=S\}]/\sigma_P^2$ the effective number of question sets the tree uses at $P$.
+
+\begin{theorem}[Exact constants]\label{thm:char}\label{thm:bracket}
+Let $\A$ be a finite menu on which $d$ is identifiable.
+\textup{(a)} $nR_\A(d,n)\to V(d,\A)$; for every $\epsilon>0$ an iid design with an unbiased score has worst-case risk at most $(V+\epsilon)/n$ for every $n$, and the converse covers biased estimators, designs that adapt across records and interview choices that depend on the current label. Moreover $V(d,\A)=\sup_{\mu,h}\langle d,h\rangle_\mu^2/\max_{\iota\in\A}\|\E_\mu[h\mid\ell_\iota(X)]\|_\mu^2$ over positive profile laws $\mu$ and witnesses $h$.
+\textup{(b)} At a full-support law $P$, $W_\A(P)/n$ is the local asymptotic minimax risk over arbitrary estimators from the capped records, for interviews drawn without the record's label; drawing them with the label can only lower the constant (Proposition~\ref{prop:labeldesign}).
+\textup{(c)} If a depth-$b$ tree $\tau$ computes $d$ and $\sigma_P^2>0$, then $W_{\rm branch}(P)=\sigma_P^2$ and
+\[
+ \frac1{\rho_P^2}\ \le\ \frac{W_{\rm fixed}(P)}{W_{\rm branch}(P)}\ \le\ N_P(\tau)\ \le\ K_{m,b},
+\]
+with equality throughout for the address contrast under the uniform law. For every menu, constant $c$ and witness $h$ (with $0/0=0$), $W_\A(P)+(\Delta-c)^2\ge\E_P[(t-c)h]^2/\max_{\iota\in\A}\E_P[\E_P[h\mid\ell_\iota(X),Y]^2]$.
+\end{theorem}
+The ingredients are standard: minimax duality for linear functionals \citep{donoho1994,juditsky2009,polyanskiy2026}, information bounds over families of channels \citep{acharya2019,barnes2020}, and, for one menu, $c$-optimal design with the efficient augmented inverse-probability score under known coarsening \citep{elfving1952,pukelsheim1993,robins1994,tsiatis2006}. What is new is the comparison across menus and the exact optimization over the combinatorial menus of $r$-round and branching interviews. Ratios of $W$ are ratios of records needed when $n$ is large and each class uses its best design for $P$ (Appendices~\ref{app:B}, \ref{app:localminimax}, \ref{app:population}).
+
+\begin{table}[t]
+\centering
+\caption{The constants of the paper. Ratios compare the best designs of two classes, each tuned to $P$.}
+\label{tab:constants}
+\footnotesize
+\setlength{\tabcolsep}{2.5pt}
+\begin{tabular}{lp{6.4cm}}
+\toprule
+$V(d,\A)$ & worst-case first-order constant, $\lim_n nR_\A(d,n)$\\
+$W_\A(P)$ & smallest variance of a pointwise-unbiased design at $P$; local minimax risk times $n$\\
+$K_{m,b}$ & $\min\{2^{b-1},\binom{m-1}{b-1}\}$: simulation factor; bound on the gap, attained if $m\ge b-1+2^{b-1}$\\
+$\rho_P^2$, $N_P$ & share of $\Var_P(t)$ explained by the best form; effective number of the tree's question sets\\
+$W^{(k)}_\A(P)$ & local minimax constant when the law lies in the log-linear model with interactions of order $\le k$\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Computing every protocol class.}
+Pad every transcript to exactly $b$ coordinates, so that an interview is a partition of the cube into cells $\{x:x_T=a\}$ with $|T|=b$. Pointwise unbiasedness of the tables is then equivalent to matching the Fourier coefficients of $t$ of degree at most $b$, and \eqref{eq:mainW} over a list of interviews is a second-order cone program in the tables and the interview probabilities. Column generation solves a restricted master problem over a few interviews; for its dual witness, the most informative interview of any class $\A_r$ is found by dynamic programming over partial assignments (singleton batches give trees, one full batch gives forms). The witness certifies a lower bound through the last display of Theorem~\ref{thm:bracket}, and the master value is an upper bound. Pricing visits $O(\sum_{k\le b}\binom mk4^k)$ partial assignments per iteration and never touches the $2^m$ profiles (Appendix~\ref{app:engine}).
+
+The unbiasedness identities hold at every profile, so a design fitted on reference data, or learned from a pilot of the evaluation itself, stays exactly unbiased when the reference is wrong; only its variance depends on it (Proposition~\ref{prop:selfcal}).
+
+\section{What a Model Changes}\label{sec:model}
+The constants so far assume nothing about the unasked features. Suppose instead that the law of $(X,Y)$ lies in a smooth parametric model with tangent space $\mathcal T$ at $P$. The records of an interview $\iota$ carry the information $J_\iota(h)=\E_P[\E_P[h\mid\ell_\iota(X),Y]^2]$ about a direction $h\in\mathcal T$, and the local asymptotic minimax constant of a menu \emph{within the model} is
+\begin{equation}
+ W^{\mathcal T}_\A(P)=\min_q\ \sup_{h\in\mathcal T}\ \frac{\langle t-\Delta(P),h\rangle_P^2}{\sum_\iota q_\iota J_\iota(h)},\label{eq:mainWT}
+\end{equation}
+with $0/0=0$. For the space of all mean-zero functions this is $W_\A(P)$; a model restricts the witness of Theorem~\ref{thm:bracket}(c) to $\mathcal T$. The value is a lower bound on the local minimax risk within the model, attained when the optimal design has nonsingular information (Proposition~\ref{prop:localmodel}), and the same solver computes it. Let $\mathcal M_k$ be the log-linear model with all interactions of order at most $k$ among the $m$ features and the label, with constants $W^{(k)}_\A$: $k=2$ is the pairwise model, and $k=m+1$ is saturated and returns $W_\A$. The submodel $\mathcal M_{\rm ci}\subset\mathcal M_2$ keeps only the interactions of each feature with the label.
+
+\begin{theorem}[Adaptivity in a model]\label{thm:structured}
+\textup{(a)} For every model, every law $P$ and $1\le r\le b$: $W^{\mathcal T}_r(P)\le K_r\,W^{\mathcal T}_{\rm branch}(P)$.
+\textup{(b)} In the model $\mathcal M_{\rm ci}$ in which the features are independent given the label, at every law of the model and for every contrast: fixed forms, $r$-round and branching interviews have the same constant if the design may depend on the record's label, and $W^{\rm ci}_{\rm fixed}(P)\le2\,W^{\rm ci}_{\rm branch}(P)$ if it may not. At product laws with a balanced label the pairwise model has $W^{(2)}_{\rm fixed}=W^{(2)}_{\rm branch}$ for every contrast.
+\textup{(c)} If the features and the label are independent under $P$, each taking both values with probability at least $\lambda$, then $W^{(k)}_{\rm fixed}(P)\le\min\{K_{m,b},\nu_k\}\,W^{(k)}_{\rm branch}(P)$ with $\nu_k=\sum_{j=1}^k\binom{b+1}j(\frac{1-\lambda}\lambda)^j$, at most $(b+1)^k$ at uniform laws; for $k\le b$ the bound holds up to a factor $1+\epsilon$ on a neighbourhood of $P$ in $\mathcal M_k$.
+\textup{(d)} For the address contrast at the uniform law and $3\le k\le b+1$, the ratio $W^{(k)}_{\rm fixed}/W^{(k)}_{\rm branch}$ is at least $L_k(b)\ge\binom{b-1}{k-2}/b$; it is at least $(4/9+o(1))\,b$ for $k=3$ and equals $2^{b-1}$ for $k=b+1$.
+\textup{(e)} For every $b\ge3$ and $\epsilon>0$ there are full-support laws in the pairwise model $\mathcal M_2$, on $b-1+3\cdot2^{b-1}$ features, at which $W^{(k)}_{\rm fixed}/W^{(k)}_{\rm branch}\ge(1-\epsilon)\,2^{b-1}/b$ for every $k\ge2$.
+\end{theorem}
+Part (a) is the simulation of Theorem~\ref{thm:universal}, which involves no model. Part (b) is the benign extreme, and it holds at rules of any accuracy: when the features are independent given the label, as in a naive-Bayes or latent-class model, a record informs the estimate only through \emph{which} coordinates it reveals; the constant of a design is $\Var(\E[t\mid Y])+\sum_yP(y)\sum_j(\hat d^{\,y}_j)^2/\pi_j(y)$, where $\pi_j(y)$ is the probability that feature $j$ is asked of a record with label $y$ and $\hat d^{\,y}_j$ is the degree-one coefficient of the rule in class $y$. Whatever inclusion probabilities a tree realizes, a label-dependent mixture of forms realizes as well, so adaptivity has no first-order value once the label may be used. Without the label a tree can use early answers as a proxy for it, and forms may need up to twice the records; an example with a noisy copy of the label among the features comes close to two (Appendix~\ref{app:structured}). Part (c) extends this to interactions of bounded order at laws without any dependence, by Cauchy--Schwarz over the low-order monomials inside a path set; part (d) locates the gap there for the contrast that attains $2^{b-1}$ without a model. Part (e) shows that parsimony alone is not enough: with a one-hot copy of the address and the products of its indicators with the data bits, tied by strong pairwise couplings as dummy-coded and derived items are, the target is a polynomial of degree two on a set of probability nearly one. What removes the gap is weak dependence among the features, not the order of the model. Between (b)--(c) and (e) no bound is proved: the neighbourhood in (c) has no explicit radius, and already at product laws with an unbalanced label the pairwise constants of forms and trees can differ (Appendix~\ref{app:structured}). Section~\ref{sec:experiments} computes the constants there.
+
+\input{v20_experiments_main}
+
+\section{Related Work}\label{sec:related}
+\paragraph{Adaptivity in query and decision models.} Within-input adaptivity is classical in decision-tree and property-testing complexity, with round hierarchies for testers and oracle evaluation \citep{canonne2018,li2026regex} and pointer chasing in communication \citep{nisan1993}; that a $q$-query adaptive procedure is simulated by $2^q$ non-adaptive queries to the same input is folklore there, and Theorem~\ref{thm:universal}(i) is that conversion carried out across records under a cap of $b$ queries each, with an acceptance step that makes the simulation exact in law and gives the constant $K_{m,b}$; the locally bounded model of \citet{adar2024}, with its exponential separation from non-adaptive testers \citep{goldreich2022,chakraborty2023}, is the testing counterpart of our branching class. Adaptivity gaps are also studied in stochastic optimization \citep{dean2008,golovin2011}, batched bandits \citep{perchet2016,gao2019} and adaptive sensing \citep{ariascastro2013}. None of these gives the price in records, for estimation, of fixing a record's questions in advance, its exact constant, or its behaviour under a model.
+
+\paragraph{Information-constrained estimation.} Estimation under communication and local-privacy constraints fixes a per-sample channel family \citep{acharya2019,barnes2020,acharya2022tit,lau2026}, and pointer chasing separates rounds of interaction in local privacy \citep{joseph2019,joseph2020}. Ours is a noiseless analogue with exact constants.
+
+\paragraph{Optimal design and missing data by design.} For one menu our programs are $c$-optimal design and our solver a vertex-direction method \citep{elfving1952,fedorov1972,wynn1970,pukelsheim1993,sagnol2011}; minimax pairs of a design and a design-unbiased estimator are classical for fully observed units \citep{stenger1979,gabler1990,aronow2026}. Split questionnaires and matrix sampling assign fixed forms \citep{raghunathan1995,graham2006,thomas2006,chipperfield2009,rhemtulla2012}, which have been optimized under a model from a pilot or an earlier wave \citep{adiguzel2008,jang2022}, and known-coarsening theory gives the efficient estimator for a fixed mechanism \citep{robins1994,tsiatis2006}. Adaptive matrix sampling \citep{gonzalez2008}, responsive design \citep{groves2006}, two-phase designs \citep{reilly1995,gilbert2014,mcisaac2015,tao2020,chen2020,chen2022} and multistage adaptive tests \citep{yamamoto2018,fink2024} are two-round interviews in our sense. These lines optimize one protocol within one design space; we compare the spaces.
+
+\paragraph{Evaluation and acquisition in ML.} Restricted-focus-of-attention learning chooses a few attributes of each example before seeing it, our fixed-form class \citep{bendavid1998}, and budgeted learning fits predictors from such views \citep{cesa2011,hazan2012,lizotte2003,kapoor2005}. Active testing and prediction-powered inference allocate labels \citep{kossen2021,zrnic2024,angelopoulos2023}, the reverse of our cost structure; active feature acquisition chooses features for individual predictions \citep{trapeznikov2013,nan2017,covert2023,vonkleist2025}.
+
+\section{Discussion and Limitations}\label{sec:discussion}
+Within-record adaptivity is worth at most $2^{b-1}$ in records, for every task, model and population, sharply without a model, and it accrues round by round. A model with features independent given the label removes the gap, up to a factor two if forms are drawn without the label, and a pairwise model removes little of it when strong couplings encode the rule's structure. \nDiscussionSentence
+
+\emph{In practice.} \nPracticeSentence
+
+\emph{Scope.} For a single screening tree the adaptive optimum is the rule itself, so the comparison prices paper forms and panels ordered in one batch against computer-assisted administration of the rule; for ensembles the cap costs more than pre-commitment (Table~\ref{tab:capgrid}). The target is one known low-degree functional fixed before collection: records collected for one rule can be nearly useless for another (Appendix~\ref{app:reuse}), and thresholded ensembles exceed small caps. Labels are free and always observed; if the cap can be relaxed and labels are expensive, complete records can be cheaper (Appendix~\ref{app:costchoice}). Answers are assumed not to depend on question order or mode; \nOrderSentence{}
+
+\emph{What the constants mean.} Ratios of $W$ compare designs tuned to the population in the limit of many records per cell, and the finite-sample bracket of Theorem~\ref{thm:finite} carries a factor of 104. The model-based constants hold when the model does. The populations are unweighted, smoothed empirical laws; no audit was run in the field. Pricing visits on the order of $\binom mb4^b$ partial assignments per iteration: adaptive classes were solved for $m\le12$, $b\le6$ and for $m=20$ at $b=3$ only.
+
+\section*{Impact Statement}
+Shorter adaptive questionnaires and test sequences can reduce respondent and patient burden. Branching exposes people to different questions; order effects, selective nonresponse and subgroup-specific burdens can bias estimates or hide unequal outcomes, and population-average gains do not imply subgroup gains, so deployments should monitor both.
+
+\bibliography{refs}
+\bibliographystyle{icml2026}
+\clearpage
+\onecolumn
+\raggedbottom
+\appendix
+\counterwithin{theorem}{section}
+\counterwithin{equation}{section}
+\input{appendix_v20}
+\end{document}

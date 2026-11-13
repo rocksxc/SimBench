@@ -1,0 +1,19 @@
+\begin{table}[h]
+\centering
+\caption{The model in which the features are independent given the label (Theorem~\ref{thm:structuredfull}(b)), at its fit to each target law: closed-form constants for every rule that depends on more than $b$ items, including the rules whose design-based optimum was not computed. Ratio: label-blind forms over the optimum with label-dependent forms, which equals the branching optimum with the label and bounds the branching optimum without it from below; the ratio therefore bounds $W^{\rm ci}_{\rm fixed}/W^{\rm ci}_{\rm branch}$ from above. The other columns are relative to the variance of $t$ under the fit: the constants of label-blind forms and of complete records within the model. Medians over runs [range].}
+\label{tab:ci}
+\footnotesize
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{lrlll}
+\toprule
+target & runs & forms / branching, at most & forms & complete records \\
+\midrule
+BRFSS, diabetes (12 items) & 17 & 1.002 [1.000, 1.007] & 0.62 [0.58, 0.72] & 0.56 [0.47, 0.61] \\
+BRFSS, heart disease & 9 & 1.003 [1.000, 1.011] & 0.64 [0.56, 0.71] & 0.50 [0.40, 0.67] \\
+BRFSS, stroke & 9 & 1.002 [1.001, 1.015] & 0.67 [0.56, 0.70] & 0.59 [0.36, 0.65] \\
+BRFSS, high blood pressure & 9 & 1.001 [1.000, 1.004] & 0.66 [0.58, 0.68] & 0.61 [0.54, 0.64] \\
+BRFSS, difficulty walking & 7 & 1.004 [1.001, 1.007] & 0.61 [0.56, 0.65] & 0.55 [0.49, 0.61] \\
+Spambase, spam & 9 & 1.050 [1.021, 1.143] & 0.61 [0.51, 0.78] & 0.50 [0.35, 0.55] \\
+\bottomrule
+\end{tabular}
+\end{table}

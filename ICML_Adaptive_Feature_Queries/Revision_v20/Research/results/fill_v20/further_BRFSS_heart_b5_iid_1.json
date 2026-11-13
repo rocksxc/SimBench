@@ -1,0 +1,22 @@
+{
+ "kind": "further",
+ "dataset": "BRFSS:heart",
+ "b": 5,
+ "seed": 20261109,
+ "shift": false,
+ "items": 8,
+ "delta_fit": 0.3825336962161781,
+ "var_fit": 0.853667971259189,
+ "ci_label": 0.5492665518750727,
+ "ci_blind": 0.5501408518578714,
+ "ci_full": 0.5004271951850383,
+ "ci_ratio_upper": 1.001591759009927,
+ "bracket": {
+  "lower": 1.1043949068399992,
+  "upper": 5.083214409796226,
+  "path_sets": 6
+ },
+ "rules_v19_status": "ok",
+ "fixed": 1.5659070972031017,
+ "seconds": 0.41921329498291016
+}

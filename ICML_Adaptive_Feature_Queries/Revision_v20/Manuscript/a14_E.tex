@@ -1,0 +1,250 @@
+\section{Population Constants and Their Computation}\label{app:E}
+\input{a15_population}
+\input{a17_structured}
+
+\paragraph{Contrasts that branching cannot compute.}
+For an ensemble whose contrast is not computed by one depth-$b$ tree, part (b)
+of Theorem~\ref{thm:bracketfull} applies to both menus. Every depth-$b$ branching interview is a coarsening of
+a complete depth-$b$ tree, and the energy of a tree is a sum over its leaves.
+Hence $\max_\iota\E_P[\E_P[h\mid\ell_\iota,Y]^2]$ over all depth-$b$ trees is
+computed exactly by dynamic programming over partial assignments, in time
+$O(m^b2^b)$. This yields certified lower bounds on $M_{\rm branch}(P)$ for every
+dual witness $h$. Appendix~\ref{app:forestexact} uses these bounds inside
+column generation to compute the branching coefficient over all depth-three
+trees.
+
+\input{a14_upper}
+\input{a14_engine}
+\subsection{The Form Program and the Path-Set Menu}\label{sec:pathdesign}
+A form can reveal useful coordinates even when it fails to complete a tree path. For a frozen depth-$b$ tree, take the coordinate set on each root-to-leaf path, extend it to size $b$ with fixed unused coordinates, and retain the $L$ distinct sets as a tractable menu. Let $g_{T,y}(u)$ be a table on \emph{all} answers $u$ to form $T$, and let $\widehat P_T(u,y)$ be calibrated marginal frequencies. For binary features solve
+\begin{align}
+ \min_{q,g}\quad&\sum_{T,u,y}\widehat P_T(u,y)
+                       \frac{g_{T,y}(u)^2}{q_T},\label{eq:fullprogram}\\
+ \text{subject to}\quad&\sum_{T\supseteq S}\widehat g_{T,y}(S)
+                   =y\widehat d(S)\quad\text{for every }S,y,\nonumber\\
+ &\sum_Tq_T=1,\qquad q_T\ge\beta/L.\nonumber
+\end{align}
+Here $\widehat g_{T,y}(S)$ is the Fourier coefficient of the table on its own form; it is a linear transform of $g$. Fitted designs in Section~\ref{sec:experiments} use $\beta=0.05$. These constraints are exactly equivalent to $\sum_Tg_{T,y}(x_T)=yd(x)$. Returning $g_{T,Y}(X_T)/q_T$ is therefore globally unbiased even when the reference frequencies are inaccurate; the reference affects only the variance.
+
+There are at most $2L2^b$ score entries and coefficient constraints, and the program avoids enumerating the $2^m$ full profiles. Pairwise shared-coordinate corrections span the complete unbiased score space on the supplied menu over the full binary cube (Proposition~\ref{prop:sharing}). A correction adds $f(X_{T\cap T'},Y)/q_T$ on form $T$ and subtracts it divided by $q_{T'}$ on form $T'$. The optimization therefore includes every such control variate. In the language of coarsening at random, \eqref{eq:fullprogram} chooses the optimal augmentation of the inverse-probability-weighted score under the reference law, jointly with the form probabilities. For ordinal data the same program applies to tensor contrasts on the categories defined by the frozen tree's thresholds.
+
+For an existing randomized archive, keep its known $q$ fixed and optimize only the tables. Form-specific marginal frequencies can be estimated from incomplete training records; they need not be assembled into a joint reference distribution. Identification then requires coverage by the actual form menu, not only the degree bound for the menu of all size-$b$ forms.
+
+A \emph{completion-only} score returns an inverse-probability weighted target on a matching padded path and zero otherwise; the experiments call its uniform version path guessing.
+
+\paragraph{Proper scoring rules.}
+For Brier improvement, with $z=(Y+1)/2$,
+\[
+ (p_0-z)^2-(p_1-z)^2=d(1-p_0-p_1)+Yd.
+\]
+In the form program, replace $Yd$ by this known target and impose separate coefficient identities for each label. The same unbiasedness guarantee holds. For ensembles of degree $r$, Brier loss can require degree $2r$; log loss can introduce still higher interactions. Appendix~\ref{app:metrics} gives the identification conditions and explains why AUC requires a separate pairwise design.
+
+
+\subsection{Shared-Coordinate Corrections and the Complete Score Space}\label{app:fullscores}
+Fix a menu of coordinate sets $\mathcal T$. For binary features write
+$g_{T,y}(x_T)=\sum_{S\subseteq T}\gamma_{T,y,S}\chi_S(x)$.
+Uniqueness of the Fourier expansion gives the following elementary
+representation.
+
+\begin{proposition}[All shared-coordinate corrections]\label{prop:sharing}
+The score tables satisfy $\sum_Tg_{T,y}(x_T)=yd(x)$ on the full binary cube
+if and only if
+\[
+       \sum_{T\supseteq S}\gamma_{T,y,S}=y\widehat d(S)
+       \quad\text{for every }S.
+\]
+For a fixed positive design $q$, every change to a globally unbiased score
+is a sum of pairwise transfers of functions on shared coordinates:
+add $f(X_{T\cap T'},Y)/q_T$ to form $T$ and subtract the same function
+divided by $q_{T'}$ from form $T'$.
+\end{proposition}
+\begin{proof}
+Equate the coefficients of each $\chi_S$. For the second claim, any score
+difference has, for each $S$ and each label, coefficients summing to zero
+over forms containing $S$. Choose one of those forms as an anchor and
+transfer every other coefficient to or from the anchor. Each transfer is
+observable under both forms. Terms appearing in only one form must have
+zero difference. Summing the transfers proves the statement.
+\end{proof}
+Thus including all such terms uses the entire unbiased score space on the
+supplied menu. This is a product-basis implementation of standard control
+variates and known-coarsening influence-function optimization, not a new
+general missing-data efficiency bound.
+
+The implementation works in cell values. A block of the constraint matrix
+is the normalized Walsh transform of a form's table, placed in the rows of
+its contained coordinate subsets. If $F$ is the resulting matrix, the
+constraints are $Fg_y=y\widehat d$. Its rows are orthogonal:
+$FF^{\mathsf T}$ is diagonal, with entry
+$\sum_{T\supseteq S}2^{-|T|}$ for subset $S$. We use this identity to
+repair numerical equality residuals explicitly. Rotated second-order cones
+represent $g_{T,y}(u)^2\le q_Tv_{T,y}(u)$.
+
+For a given population, marginal form--label frequencies are sufficient for
+the objective. No full-profile enumeration is needed. With $L$ forms of
+size at most $b$, there are at most $2L2^b$ score entries and $2L2^b$
+coefficient constraints. A tree provides the target coefficients through
+its leaves, or by Fourier transforming its known completion-score
+decomposition. Choosing an unrestricted menu can still require
+$\binom mb$ forms; this implementation does not solve that combinatorial
+design problem.
+
+For ordinal features one splits each coordinate at all thresholds used for it
+in the frozen tree, with a fixed middle cut for otherwise unused padding
+coordinates. We use orthonormal Helmert contrasts on those categories and
+their tensor products. The same argument is exact on the resulting product
+space. This retains every observed tree-threshold category, but not
+within-category distinctions between raw ordinal answers. Its cell count
+is $\sum_T\prod_{j\in T}s_j$, where $s_j$ is the category count.
+
+
+\subsection{Efficiency and Augmented Fixed Forms}\label{app:augmentation}
+\subsubsection{Relation to the Missing-Data Efficiency Bound}
+Fix a known form law $q$ and a full-support law $P$ on the finite complete-record space. The observed record is $O=(A,o_A(Z))$. Its score along a centered complete-data perturbation $h$ is $\E_P[h(Z)\mid O]$. A mean-zero observed influence function $\phi(O)$ for $\Delta=\E_Pt$ must therefore satisfy
+\[
+ \E[\phi(O)\mid Z]=t(Z)-\Delta.
+\]
+Conversely this equation gives the required pairing with every complete-data score, and hence an influence function in this finite regular model. Minimizing $\E\phi^2$ is the efficiency bound. Substituting $\phi=H-\Delta$ identifies it with the fixed-design population variance $W_q(P)$. This is the usual known-coarsening influence-function geometry \citep{robins1994,tsiatis2006}, not a new asymptotic efficiency formula. The proposition's additional statement is finite-$n$ pointwise optimality over globally unbiased nonlinear estimators and sequential form assignments, together with its extension to boundary laws. It does not assert a finite-sample bound for all locally regular biased estimators.
+
+Fixed random forms implement planned missingness. A tree's terminal cell is generated using observed answers, so its known acquisition mechanism is a designed coarsening-at-random mechanism \citep{heitjan1991,gill1997}. This description does not cover arbitrary unrecorded selection or nonresponse.
+
+\subsection{Learning a Design from a Compact Tree}\label{app:pathdesign}
+Fix a tree that recovers $t(z)=yd(x)$ within $b$ distinct queries. Pad each path deterministically to $b$ coordinates. Enumerate its distinct path sets $\mathcal S=\{S_1,\ldots,S_L\}$ and let $S(z)$ denote the reached set. If an assigned fixed form $S_j$ permits following the padded tree to completion, then $S(z)=S_j$, as in Appendix~\ref{app:universal}. For any strictly positive form law $q$, the score
+\[
+ H_q(z,J)=\frac{t(z)}{q_J}\mathbf1\{S(z)=S_J\},\qquad J\sim q,
+\]
+is computable from the selected form and label. It is unbiased conditional on every full record. With $w_j=\E_P[t(Z)^2\mathbf1\{S(Z)=S_j\}]$,
+\begin{equation}
+ \Var_P H_q=\sum_{j=1}^L\frac{w_j}{q_j}-\Delta(P)^2.
+ \label{eq:pathvariance}
+\end{equation}
+Within this importance-score family the unconstrained optimum is $q_j\propto\sqrt{w_j}$, with infimal second moment $(\sum_j\sqrt{w_j})^2$. Zero-mass cells are handled by limits. We enforce $q_j\ge\beta/L$, ensuring global unbiasedness even on path sets absent from calibration. If some $w_j>0$, the constrained optimum satisfies $q_j=\max\{\beta/L,c\sqrt{w_j}\}$, with $c$ chosen to normalize the probabilities. If all weights vanish, every feasible $q$ is optimal. Iteratively fixing cells below the floor computes the positive-weight solution without profile enumeration. This oracle optimizes a specified score family, not all fixed-form estimators.
+
+\subsubsection{A Worked Two-Question Example}
+Let $d(x)=[(1+x_1)x_2+(1-x_1)x_3]/2$. Branching queries $x_1$ and then $x_2$ when $x_1=1$, or $x_3$ when $x_1=-1$. The two fixed forms are
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+Form & Probability & Observed score\\
+\midrule
+$\{1,2\}$ & $1/2$ & $2Yx_2\mathbf1\{x_1=1\}$\\
+$\{1,3\}$ & $1/2$ & $2Yx_3\mathbf1\{x_1=-1\}$\\
+\bottomrule
+\end{tabular}
+\end{center}
+At every full record the mean score is $Yd$ and its second moment is two. The branching score has second moment one. For an independent fair label both score means vanish, so their sample-mean variances are exactly $2/n$ and $1/n$. This describes these concrete estimators; the minimax results additionally justify their worst-case comparison against all protocols.
+
+\subsubsection{A Finite Calibration Guarantee}
+Suppose the tree is fitted independently of $r$ calibration records and $|t|\le M$. Full calibration records reveal $W_j=t^2\mathbf1\{S=S_j\}$ directly. Alternatively, assign each calibration person a uniformly random fixed path set. On successful completion return $W_j=L t^2\mathbf1\{J=j,S=S_j\}$ and return zero on failure. This alternative obeys the same fixed per-person cap and uses only observable quantities. In both cases $\E W=w$. Let $\widehat w$ be the mean and let $\widehat q$ minimize $\sum_j\widehat w_j/q_j$ subject to $q_j\ge\beta/L$.
+
+\begin{proposition}[Learning path-set probabilities]\label{prop:pilot}
+Let $q_\beta^\star$ be the population optimum with the same probability floor. Set $B=M^2$ for full calibration or $B=LM^2$ for uniformly assigned fixed calibration. With probability at least $1-\alpha$ over the $r$ independent calibration records,
+\[
+ \Var_P H_{\widehat q}-\Var_P H_{q_\beta^\star}
+ \le\frac{2LB}{\beta}\sqrt{\frac{2(L\log2+\log(1/\alpha))}{r}}.
+\]
+The resulting audit mean on fresh respondents remains globally unbiased for every realized calibration sample.
+\end{proposition}
+\begin{proof}
+Each calibration vector has at most one nonzero entry and $\|W\|_1\le B$. For any sign vector $\sigma\in\{-1,1\}^L$, $\sigma^TW\in[-B,B]$. Hoeffding's inequality and a union bound over $2^L$ vectors give
+\[
+ \|\widehat w-w\|_1
+ =\max_\sigma\sigma^T(\widehat w-w)
+ \le B\sqrt{2(L\log2+\log(1/\alpha))/r}.
+\]
+The difference between the empirical and population second-moment objective is uniformly at most $(L/\beta)\|\widehat w-w\|_1$. Empirical minimization costs at most twice this uniform deviation. Subtracting the common $\Delta^2$ proves the bound. Pointwise conditional unbiasedness holds for each positive $q$, hence also conditional on the entire calibration sample.
+\end{proof}
+The bound is conservative and becomes informative only with sufficiently large calibration samples. It proves consistency relative to a constrained family oracle, not a calibration-free optimality claim. Form enumeration takes time polynomial in the given tree's size and $m$; that tree may itself have exponentially many leaves in $b$. A deployment needs only its form probabilities and the tree, not a table over all $s^m$ profiles.
+
+\subsubsection{Confidence Intervals and Costs}
+Conditional on calibration, each path score has magnitude at most $M/q_{\min}$. Thus the ordinary score mean has a distribution-free $(1-\alpha)$ confidence interval with half-width
+\[
+ \frac{M}{q_{\min}}\sqrt{\frac{2\log(2/\alpha)}n},
+\]
+intersected with $[-M,M]$. The branching score has the same bound with $q_{\min}=1$. These Hoeffding intervals are valid but conservative; they are not claims of optimal interval width or power. The paper's risk comparisons concern MSE and do not order intervals for biased estimators.
+
+For a menu with known per-person costs $c_\iota>0$, let $c(q)=\sum_\iota q_\iota c_\iota$. An iid unbiased score mean with $n$ respondents uses expected cost $nc(q)$, so its worst-case MSE-times-cost upper criterion is $c(q)\max_x\sum_\iota g_\iota(x)^2/q_\iota$. Set $r_\iota=q_\iota/c(q)$. Joint cost-weighted design becomes the convex program
+\[
+ U_c(d,\A)=\inf_{\substack{r,g:\,\sum_\iota c_\iota r_\iota=1\\ \sum_\iota g_\iota=d}}
+              \max_x\sum_\iota\frac{g_\iota(x)^2}{r_\iota}.
+\]
+Conversely $q_\iota=r_\iota/\sum_jr_j$ recovers the design, proving equivalence of the two criteria. For fixed forms, $c_\iota$ may include recruitment, the label and item-specific costs. For a branching tree, taking $c_\iota$ as its maximum path cost gives a conservative criterion. This uses expected total expenditure and continuous sample-size scaling; it does not impose an almost-sure stopping budget or establish a sharp adaptivity ratio for arbitrary costs.
+
+\subsection{Learning the Design from the Audit Itself}\label{app:selfcal}
+The population-specific constants $W_\A(P)$ are attained by designs tuned to
+$P$. Section~\ref{sec:experiments} tunes them on separate reference records.
+No reference is needed asymptotically: because every cell mass of every
+interview is estimable from the records assigned that interview, a pilot
+phase of the audit itself can supply the design, and pointwise unbiasedness
+keeps every intermediate design exactly unbiased.
+
+For a finite menu $\A$, a law $P$ on $\X\times\{-1,1\}$ and a design $(q,g)$
+feasible for \eqref{eq:mainW}, write $J_P(q,g)=\sum_\iota\sum_{c,y}P_\iota(c,y)g_\iota(c,y)^2/q_\iota$
+for its second moment, where $P_\iota(c,y)=P(\ell_\iota(X)=c,Y=y)$ are the
+cell masses, so that $M_\A(P)=\inf_{q,g}J_P(q,g)$. For $\beta\in(0,1]$ let
+$M_\A^{\beta}(P)$ denote the infimum over designs with $q_\iota\ge\beta/|\A|$
+for all $\iota$.
+
+\begin{proposition}[Two-phase self-calibration]\label{prop:selfcal}
+Let $n_1=n_1(n)\to\infty$ with $n_1/n\to0$, and let $\alpha_n,\beta_n\in(0,1]$
+tend to zero with $\alpha_n n_1^{1/2}\to\infty$. Phase one interviews $n_1$
+records with the uniform design on $\A$ and forms, for every interview $\iota$,
+the Horvitz--Thompson estimates
+$\widehat P_\iota(c,y)=(|\A|/n_1)\sum_{i\le n_1}\mathbf 1\{\iota_i=\iota,\ \ell_\iota(X_i)=c,\ Y_i=y\}$
+and the smoothed masses $\widetilde P_\iota=(1-\alpha_n)\widehat P_\iota+\alpha_n u_\iota$,
+where $u_\iota$ is uniform on the cells and labels of $\iota$. Let
+$(\hat q,\hat g)$ minimize $J_{\widetilde P}$ over feasible designs with
+$q\ge\beta_n/|\A|$, and interview the remaining $n_2=n-n_1$ records with
+$(\hat q,\hat g)$. Then the mean $\widehat\Delta$ of their scores is
+unbiased for $\Delta(P)$ conditionally on phase one, for every $P$, and
+\[
+ n_2\Var(\widehat\Delta\mid\text{phase one})=J_P(\hat q,\hat g)-\Delta(P)^2,
+ \qquad J_P(\hat q,\hat g)\ \xrightarrow{\ \PP\ }\ M_\A(P),
+ \qquad n\,\Var(\widehat\Delta\mid\text{phase one})\xrightarrow{\ \PP\ }W_\A(P).
+\]
+\end{proposition}
+\begin{proof}
+Unbiasedness holds because $(\hat q,\hat g)$ satisfies the pointwise
+constraints $\sum_\iota\hat g_\iota(\ell_\iota(x),y)=t(x,y)$ for every $(x,y)$,
+whatever the phase-one data. Conditionally on phase one the phase-two scores
+are iid with mean $\Delta(P)$ and second moment $J_P(\hat q,\hat g)$, which
+gives the variance identity. For the limit put $P^{\alpha}_\iota=(1-\alpha_n)P_\iota+\alpha_nu_\iota$.
+Each $\widehat P_\iota(c,y)$ is an average of $n_1$ iid bounded terms with
+mean $P_\iota(c,y)$, so $\max_{\iota,c,y}|\widehat P_\iota(c,y)-P_\iota(c,y)|=O_\PP(n_1^{-1/2})$
+over the finitely many cells. Since
+$\widetilde P_\iota-P^\alpha_\iota=(1-\alpha_n)(\widehat P_\iota-P_\iota)$ and
+$P^\alpha_\iota\ge\alpha_nu_\iota$,
+\[
+ \rho_n:=\max_{\iota,c,y}\Big|\frac{\widetilde P_\iota(c,y)}{P^\alpha_\iota(c,y)}-1\Big|
+ \le\frac{\max_{\iota,c,y}|\widehat P_\iota(c,y)-P_\iota(c,y)|}{\alpha_n\min_\iota u_\iota}
+ =O_\PP\big((\alpha_nn_1^{1/2})^{-1}\big)\to0 .
+\]
+Let $(q^\alpha,g^\alpha)$ be optimal for $J_{P^\alpha}$ under the floor
+$\beta_n$. Because $J$ is linear in the masses,
+\[
+ (1-\alpha_n)J_P(\hat q,\hat g)\le J_{P^\alpha}(\hat q,\hat g)\le\frac{J_{\widetilde P}(\hat q,\hat g)}{1-\rho_n}
+ \le\frac{J_{\widetilde P}(q^\alpha,g^\alpha)}{1-\rho_n}\le\frac{1+\rho_n}{1-\rho_n}\,M^{\beta_n}_\A(P^{\alpha}) .
+\]
+Finally $M^{\beta}_\A(P^{\alpha})\to M_\A(P)$ as $\alpha,\beta\to0$: for any
+feasible $(q,g)$, mixing $q$ with the uniform design at weight $\beta$ keeps
+the tables feasible and multiplies $J$ by at most $(1-\beta)^{-1}$, so
+$M_\A^\beta(P^\alpha)\le(1-\beta)^{-1}J_{P^\alpha}(q,g)\le(1-\beta)^{-1}[(1-\alpha)J_P(q,g)+\alpha J_{u}(q,g)]$,
+whose infimum over $(q,g)$ tends to $M_\A(P)$; conversely
+$M_\A^\beta(P^\alpha)\ge(1-\alpha)M_\A(P)$. Combining the displays gives
+$\limsup J_P(\hat q,\hat g)\le M_\A(P)$ in probability, and
+$J_P(\hat q,\hat g)\ge M_\A(P)$ holds for every feasible design.
+Since $n_2/n\to1$, the last claim follows from
+$W_\A(P)=M_\A(P)-\Delta(P)^2$.
+\end{proof}
+
+The proposition is an asymptotic statement about a finite menu: phase one
+must estimate the masses of all $\sum_\iota|{\rm cells}(\iota)|$ cells, which
+requires $n_1$ large compared with $|\A|2^b$, and in the experiments of
+Section~\ref{sec:experiments} reference records play the role of phase one.
+A sequential version that refits the design after every batch of records
+inherits exact unbiasedness by the same argument; its rate is not analyzed
+here. Learning the design across records is standard adaptive importance
+sampling; the point here is that the pointwise constraints make every fitted
+design exactly unbiased, so that the price of learning is paid in variance
+only.
+

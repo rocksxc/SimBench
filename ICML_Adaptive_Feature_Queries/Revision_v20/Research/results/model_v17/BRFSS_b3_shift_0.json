@@ -1,0 +1,11 @@
+{
+ "dataset": "BRFSS",
+ "b": 3,
+ "seed": 20261108,
+ "shift": true,
+ "items": 3,
+ "n_target": 111706,
+ "delta_emp": 0.48490555565502297,
+ "trivial": true,
+ "seconds": 0.3057281970977783
+}

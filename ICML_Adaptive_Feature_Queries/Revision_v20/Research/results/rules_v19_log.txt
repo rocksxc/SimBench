@@ -1,0 +1,24 @@
+('BRFSS:heart', 4, 1) ok K 5 acc 0.631 fixed 1.160 uniform 1.438 boot [1.158, 1.162] model2 1.058 2s
+('BRFSS:heart', 4, 0) ok K 6 acc 0.631 fixed 1.286 uniform 2.146 boot [1.280, 1.290] model2 1.098 5s
+('BRFSS:heart', 4, 2) ok K 7 acc 0.629 fixed 1.534 uniform 3.221 boot [1.529, 1.540] model2 1.181 10s
+('BRFSS:heart', 5, 2) ok K 8 acc 0.697 fixed 1.673 uniform 3.731 boot [1.670, 1.679] model2 1.187 38s
+('BRFSS:heart', 5, 1) ok K 8 acc 0.666 fixed 1.566 uniform 2.928 boot [1.562, 1.573] model2 1.148 52s
+('BRFSS:heart', 6, 1) skipped K 14  0s
+('BRFSS:heart', 6, 2) skipped K 14  0s
+('BRFSS:stroke', 4, 0) ok K 6 acc 0.737 fixed 1.442 uniform 2.050 boot [1.438, 1.444] model2 1.227 2s
+('BRFSS:stroke', 4, 1) ok K 6 acc 0.787 fixed 1.366 uniform 1.946 boot [1.362, 1.371] model2 1.120 3s
+('BRFSS:stroke', 4, 2) ok K 6 acc 0.641 fixed 1.303 uniform 1.912 boot [1.299, 1.306] model2 1.121 3s
+('BRFSS:stroke', 5, 0) ok K 9 acc 0.679 fixed 1.298 uniform 3.242 boot [1.290, 1.303] model2 1.101 180s
+('BRFSS:stroke', 5, 1) ok K 8 acc 0.634 fixed 1.323 uniform 2.193 boot [1.318, 1.330] model2 1.076 61s
+('BRFSS:stroke', 5, 2) ok K 9 acc 0.666 fixed 1.787 uniform 3.736 boot [1.779, 1.792] model2 1.283 186s
+('BRFSS:stroke', 6, 0) skipped K 16  0s
+('BRFSS:heart', 5, 0) ok K 10 acc 0.743 fixed 2.230 uniform 8.916 boot [2.221, 2.240] model2 1.241 511s
+('BRFSS:stroke', 6, 2) skipped K 15  0s
+('BRFSS:highbp', 4, 0) ok K 5 acc 0.704 fixed 1.248 uniform 1.512 boot [1.245, 1.250] model2 1.008 1s
+('BRFSS:highbp', 4, 1) ok K 5 acc 0.699 fixed 1.330 uniform 1.591 boot [1.326, 1.334] model2 1.013 2s
+('BRFSS:highbp', 4, 2) ok K 5 acc 0.701 fixed 1.160 uniform 1.572 boot [1.157, 1.162] model2 1.006 2s
+('BRFSS:highbp', 5, 0) ok K 6 acc 0.701 fixed 1.129 uniform 1.410 boot [1.127, 1.129] model2 1.005 3s
+('BRFSS:highbp', 5, 1) ok K 6 acc 0.698 fixed 1.127 uniform 1.414 boot [1.124, 1.130] model2 1.006 3s
+('BRFSS:highbp', 5, 2) ok K 6 acc 0.702 fixed 1.130 uniform 1.411 boot [1.128, 1.133] model2 1.005 3s
+('BRFSS:highbp', 6, 0) ok K 7 acc 0.702 fixed 1.066 uniform 1.311 boot [1.064, 1.067] model2 1.002 12s
+('BRFSS:heart', 6, 0) ok K 13 acc 0.722 fixed 2.379 uniform 16.757 boot [-] model2 - 1953s

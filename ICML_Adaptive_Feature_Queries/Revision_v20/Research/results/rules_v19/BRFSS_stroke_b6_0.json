@@ -1,0 +1,11 @@
+{
+ "dataset": "BRFSS:stroke",
+ "b": 6,
+ "seed": 20261108,
+ "items": 16,
+ "n_target": 126840,
+ "n_train": 20000,
+ "features": 21,
+ "status": "skipped",
+ "seconds": 0.3612394332885742
+}

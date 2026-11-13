@@ -1,0 +1,9 @@
+5 0 False 1000 branch rmse 0.0280 bias -0.0030 fixed rmse 0.0300 bias -0.0043 cf rmse 0.0303 bias -0.0042 em2 rmse 0.0244 bias 0.0002 cov fixed 0.970 cf 0.970 151s
+5 0 False 4000 branch rmse 0.0142 bias 0.0006 fixed rmse 0.0153 bias 0.0002 cf rmse 0.0151 bias -0.0001 em2 rmse 0.0132 bias 0.0035 cov fixed 0.980 cf 0.980 235s
+5 0 False 16000 branch rmse 0.0085 bias -0.0016 fixed rmse 0.0096 bias -0.0020 cf rmse 0.0097 bias -0.0020 em2 rmse 0.0073 bias -0.0002 cov fixed 0.940 cf 0.940 322s
+5 1 False 1000 branch rmse 0.0327 bias -0.0012 fixed rmse 0.0378 bias -0.0003 cf rmse 0.0372 bias -0.0004 em2 rmse 0.0313 bias 0.0098 cov fixed 0.920 cf 0.920 154s
+5 1 False 4000 branch rmse 0.0142 bias 0.0003 fixed rmse 0.0163 bias -0.0014 cf rmse 0.0164 bias -0.0013 em2 rmse 0.0169 bias 0.0101 cov fixed 0.970 cf 0.970 256s
+5 1 False 16000 branch rmse 0.0075 bias -0.0002 fixed rmse 0.0087 bias -0.0001 cf rmse 0.0087 bias -0.0003 em2 rmse 0.0117 bias 0.0097 cov fixed 0.940 cf 0.940 370s
+5 2 False 1000 branch rmse 0.0314 bias 0.0016 fixed rmse 0.0348 bias 0.0017 cf rmse 0.0355 bias 0.0016 em2 rmse 0.0334 bias 0.0035 cov fixed 0.990 cf 0.970 151s
+5 2 False 4000 branch rmse 0.0140 bias -0.0020 fixed rmse 0.0182 bias -0.0032 cf rmse 0.0186 bias -0.0032 em2 rmse 0.0132 bias 0.0007 cov fixed 0.970 cf 0.970 254s
+5 2 False 16000 branch rmse 0.0077 bias 0.0007 fixed rmse 0.0099 bias 0.0008 cf rmse 0.0098 bias 0.0009 em2 rmse 0.0074 bias 0.0019 cov fixed 0.940 cf 0.930 376s
