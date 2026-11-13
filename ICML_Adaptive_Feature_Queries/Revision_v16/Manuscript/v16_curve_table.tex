@@ -1,0 +1,20 @@
+\begin{table}[h]
+\centering
+\caption{Working models against the design-based form score on the same fitted-form records, as a function of the audit size $n$ (12 BRFSS trees: caps 4 and 5, two targets, three seeds; 400 replications per tree and size). Entries are medians over trees [minimum, maximum] of the RMSE relative to the design-based form score; EM-2 and EM-3 are log-linear models with all two-way and all three-way interactions. Worse: number of trees for which the model has the larger RMSE. Bias/SD: median absolute bias of the model in units of its own standard deviation.}
+\label{tab:curve}
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{rlrrlrrl}
+\toprule
+$n$ & EM-2 / form score & worse & bias/SD & EM-3 / form score & worse & bias/SD & branching / form score \\
+\midrule
+500 & 0.81 [0.77, 0.94] & 0/12 & 0.11 & 1.00 [0.95, 1.06] & 7/12 & 0.05 & 0.82 [0.77, 0.99] \\
+1,000 & 0.81 [0.73, 0.93] & 0/12 & 0.08 & 0.98 [0.93, 1.00] & 1/12 & 0.05 & 0.82 [0.73, 0.98] \\
+2,000 & 0.80 [0.70, 0.92] & 0/12 & 0.21 & 0.96 [0.88, 0.98] & 0/12 & 0.09 & 0.83 [0.74, 0.98] \\
+4,000 & 0.82 [0.72, 1.00] & 0/12 & 0.21 & 0.94 [0.90, 1.01] & 1/12 & 0.15 & 0.80 [0.73, 0.98] \\
+8,000 & 0.83 [0.70, 1.09] & 3/12 & 0.25 & 0.95 [0.89, 1.04] & 1/12 & 0.23 & 0.84 [0.73, 0.98] \\
+16,000 & 0.83 [0.74, 1.36] & 4/12 & 0.34 & 0.96 [0.91, 1.10] & 3/12 & 0.37 & 0.82 [0.74, 0.98] \\
+32,000 & 0.88 [0.79, 1.81] & 4/12 & 0.45 & 1.04 [0.90, 1.13] & 9/12 & 0.55 & 0.81 [0.74, 0.97] \\
+\bottomrule
+\end{tabular}
+\end{table}

@@ -1,0 +1,23 @@
+{
+ "dataset": "BRFSS",
+ "shift": true,
+ "b": 5,
+ "seed": 20261109,
+ "m": 12,
+ "delta": 0.4917474441838397,
+ "second": 1.0,
+ "full_var": 0.7581844511386615,
+ "prevalence": 0.1516033158469554,
+ "fixed_ratio": 1.5374396227300897,
+ "centered_upper": 5.485510000472273,
+ "path_sets": 6,
+ "uniform_ht_ratio": 30.549196535043166,
+ "uniform_opt_ratio": 14.485529667907153,
+ "label_fixed_M": 1.4058358676589349,
+ "label_fixed_ratio": 1.535273266352851,
+ "label_fixed_ratio_lower": 1.5352732226636994,
+ "round2_ratio": 1.0000000000585505,
+ "round2_fit_ratio": 1.011267966779125,
+ "round2_fit_interviews": 7,
+ "seconds": 593.413741350174
+}

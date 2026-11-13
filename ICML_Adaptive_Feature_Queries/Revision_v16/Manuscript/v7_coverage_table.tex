@@ -1,0 +1,37 @@
+\begin{table*}[t]
+\centering
+\caption{Conditional coverage of nominal 95\% Wald intervals over the first five tasks per dataset, selected before inspecting coverage. Each task uses 2,000 iid audit replications with frozen training and calibration. Mean/min/max are descriptive summaries; the final column is the largest binomial Monte Carlo standard error within that row. Imputation intervals need not cover the target gain.}
+\label{tab:coverage}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lrrrrrr}
+\toprule
+Data & $n$ & Score & Mean & Min. & Max. & MC SE \\
+\midrule
+SUSHI & 100 & Branching & 0.944 & 0.939 & 0.949 & 0.005 \\
+SUSHI & 1000 & Branching & 0.948 & 0.944 & 0.949 & 0.005 \\
+SUSHI & 100 & Prefix & 0.947 & 0.942 & 0.954 & 0.005 \\
+SUSHI & 1000 & Prefix & 0.948 & 0.945 & 0.955 & 0.005 \\
+SUSHI & 100 & Form scores & 0.949 & 0.944 & 0.954 & 0.005 \\
+SUSHI & 1000 & Form scores & 0.950 & 0.941 & 0.956 & 0.005 \\
+SUSHI & 100 & Imputation & 0.934 & 0.879 & 0.955 & 0.007 \\
+SUSHI & 1000 & Imputation & 0.797 & 0.242 & 0.951 & 0.010 \\
+SAPA & 100 & Branching & 0.947 & 0.941 & 0.953 & 0.005 \\
+SAPA & 1000 & Branching & 0.948 & 0.941 & 0.955 & 0.005 \\
+SAPA & 100 & Prefix & 0.952 & 0.947 & 0.957 & 0.005 \\
+SAPA & 1000 & Prefix & 0.949 & 0.945 & 0.953 & 0.005 \\
+SAPA & 100 & Form scores & 0.942 & 0.940 & 0.948 & 0.005 \\
+SAPA & 1000 & Form scores & 0.954 & 0.951 & 0.957 & 0.005 \\
+SAPA & 100 & Imputation & 0.938 & 0.919 & 0.949 & 0.006 \\
+SAPA & 1000 & Imputation & 0.782 & 0.618 & 0.946 & 0.011 \\
+SAPA-ordinal & 100 & Branching & 0.944 & 0.939 & 0.948 & 0.005 \\
+SAPA-ordinal & 1000 & Branching & 0.948 & 0.944 & 0.958 & 0.005 \\
+SAPA-ordinal & 100 & Prefix & 0.945 & 0.942 & 0.950 & 0.005 \\
+SAPA-ordinal & 1000 & Prefix & 0.951 & 0.949 & 0.958 & 0.005 \\
+SAPA-ordinal & 100 & Form scores & 0.951 & 0.948 & 0.957 & 0.005 \\
+SAPA-ordinal & 1000 & Form scores & 0.949 & 0.944 & 0.953 & 0.005 \\
+SAPA-ordinal & 100 & Imputation & 0.265 & 0.018 & 0.503 & 0.011 \\
+SAPA-ordinal & 1000 & Imputation & 0.000 & 0.000 & 0.001 & 0.001 \\
+\bottomrule
+\end{tabular}
+\end{table*}

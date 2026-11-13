@@ -1,0 +1,22 @@
+\begin{table}[t]
+\centering
+\caption{Independent forest updates, cap $b=3$, 20 splits per cell. Exact fixed/branching variance ratio over all forms and all depth-3 trees (median and 10th--90th percentiles). Restr.: branching restricted to the 40 component trees and all triples. Fix/full: fixed-form variance relative to the full-information variance. Fitted: designs optimized on training records, evaluated held-out ($m=12$, five splits).}
+\label{tab:forestexact}
+\footnotesize
+\setlength{\tabcolsep}{2.6pt}
+\begin{tabular}{llrrrr}
+\toprule
+Data & $m$ & Exact ratio & Restr. & Fix/full & Fitted \\
+\midrule
+WDBC & 6 & 1.36 [1.27, 1.48] & 1.08 & 2.11 &  \\
+ & 9 & 1.57 [1.43, 1.69] & 1.09 & 3.91 &  \\
+ & 12 & 1.66 [1.53, 1.74] & 1.08 & 5.55 & 1.67 \\
+Spambase & 6 & 1.41 [1.27, 1.52] & 1.03 & 2.31 &  \\
+ & 9 & 1.45 [1.36, 1.59] & 1.03 & 3.09 &  \\
+ & 12 & 1.58 [1.49, 1.66] & 1.04 & 4.75 & 1.60 \\
+Ionosphere & 6 & 1.36 [1.20, 1.46] & 1.07 & 2.06 &  \\
+ & 9 & 1.61 [1.45, 1.77] & 1.10 & 4.19 &  \\
+ & 12 & 1.73 [1.58, 1.78] & 1.10 & 5.94 & 1.79 \\
+\bottomrule
+\end{tabular}
+\end{table}

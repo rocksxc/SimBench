@@ -1,0 +1,1 @@
+{"items": 7, "computable": true, "first_batch": [0, 2, 8], "rounds_needed": 2, "dataset": "BRFSS", "b": 5, "shift": true, "seed": 20261110}

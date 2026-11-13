@@ -1,0 +1,18 @@
+\begin{table*}[t]
+\centering
+\caption{Screening trees on twelve items: records needed relative to branching, which asks the tree\textquotesingle s own questions and attains the full-information variance (medians over two targets and three seeds; the range is over runs). Best: optimal fixed design over all forms at the target law. Fitted: the same program on source records, evaluated at the target. Label: optimal fixed design whose form probabilities may depend on the label. Two: exact optimal two-round design (at $b=6$ the median includes certified upper bounds from feasible two-round designs for 4 runs, Table~\ref{tab:runs}). Two fit.: two-round design fitted on source records. Naive pre-committed designs with the best scores for each: U-paths, uniform over the tree\textquotesingle s question paths; U-items, uniform over all $b$-subsets of the items the rule depends on; U-all, uniform over all $\binom{12}b$ forms. $1/\rho_P^2$, $N_P$: the ends of Theorem~\ref{thm:bracket}. -- not computed.}
+\label{tab:screening}
+\footnotesize
+\setlength{\tabcolsep}{4.6pt}
+\begin{tabular}{lrrlrrrrrrrrr}
+\toprule
+Data, $b$ & runs & Best & [min, max] & Fitted & Label & Two & Two fit. & U-paths & U-items & U-all & $1/\rho_P^2$ & $N_P$ \\
+\midrule
+BRFSS, 3 & 6 & 1.00 & [1.00, 1.34] & 1.04 & 1.00 & 1.00 & 1.00 & 1.03 & 1.00 & 15.8 & 1.00 & 1.5 \\
+BRFSS, 4 & 6 & 1.49 & [1.00, 1.75] & 1.57 & 1.48 & 1.00 & 1.01 & 1.80 & 2.30 & 21.7 & 1.18 & 3.3 \\
+BRFSS, 5 & 6 & 1.35 & [1.18, 1.54] & 1.42 & 1.35 & 1.00 & 1.01 & 1.72 & 2.04 & 12.9 & 1.08 & 5.4 \\
+BRFSS, 6 & 6 & 1.58 & [1.42, 1.98] & 1.68 & -- & $\le$1.05 & -- & 2.30 & 4.18 & 11.1 & 1.13 & 10.5 \\
+Thyroid, 3--6 & 24 & 1.00 & [1.00, 1.00] & 1.04 & 1.00 & 1.00 & 1.04 & 1.20 & 1.00 & 4.9 & 1.00 & 3.6 \\
+\bottomrule
+\end{tabular}
+\end{table*}

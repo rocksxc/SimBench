@@ -1,0 +1,45 @@
+\documentclass{article}
+\usepackage{microtype,graphicx,booktabs,amsmath,amssymb,amsthm,mathtools,array,float}
+\usepackage{xr-hyper}
+\usepackage{hyperref}
+\usepackage{xurl}
+\usepackage[margin=1in]{geometry}
+\externaldocument{paper}
+\usepackage{natbib}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\sgn}{\operatorname{sgn}}
+\newcommand{\KL}{D_{\mathrm{KL}}}
+\newcommand{\X}{\mathcal X}
+\newcommand{\A}{\mathcal A}
+\newcommand{\G}{\mathcal G}
+\newcommand{\Hh}{\mathcal H}
+\newcommand{\U}{\mathsf U}
+\newcommand{\ip}[2]{\langle #1,#2\rangle_\mu}
+\newcommand{\PP}{\mathbb P}
+\newcommand{\pos}[1]{(#1)_+}
+\newcommand{\rin}{R_{\mathrm{branch}}}
+\newcommand{\rfix}{R_{\mathrm{fixed}}}
+\newcommand{\sqdist}{\operatorname{dist}}
+\title{Supplementary report to ``The Statistical Value of Adaptive Feature Queries'': material from earlier stages of the study}
+\author{Anonymous Authors}
+\date{}
+\begin{document}
+\maketitle
+\noindent This report collects analyses from earlier stages of the study that the submitted paper no longer uses. They are retained because they document negative and null findings: restricted branching menus on independently fitted forests, controlled refinements on preference and personality data, calibration transfer across age groups, pilot-based calibration, label-cost crossovers, and a synthetic budget curve. Numbered references to theorems, equations and appendix sections point into the submitted paper. Nothing here is needed for the results of the paper. All results are reproducible from the released code and public data as described in the paper's reproducibility section.
+\renewcommand{\thesection}{S\arabic{section}}
+\input{legacy_earlier_experiments}
+\input{legacy_forest_v11}
+\input{legacy_full_form}
+\input{legacy_v8}
+\input{v10_extensions}
+\input{legacy_oracle}
+\input{oracle_proof}
+\input{indicator_address}
+\bibliographystyle{plainnat}
+\bibliography{refs}
+\end{document}

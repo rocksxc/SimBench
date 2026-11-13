@@ -1,0 +1,43 @@
+('BRFSS', 3, 0, False) fixed 1.000 (v12 1.000) fit 1.035 PS 1.000 PSfit 1.000 lower 1.000 upperNP 1.495 r2 1.000 r3 1.000 heur 1.000 pos0.1 b 1.37 f 2.19 1s
+('BRFSS', 3, 1, False) fixed 1.000 (v12 1.000) fit 1.040 PS 1.000 PSfit 1.016 lower 1.000 upperNP 4.285 r2 1.000 r3 1.000 heur 1.000 pos0.1 b 2.55 f 4.06 11s
+('BRFSS', 3, 2, False) fixed 1.000 (v12 1.000) fit 1.037 PS 1.000 PSfit 1.002 lower 1.000 upperNP 1.508 r2 1.000 r3 1.000 heur 1.000 pos0.1 b 0.51 f 0.82 15s
+('BRFSS', 3, 0, True) fixed 1.000 (v12 1.000) fit 1.040 PS 1.000 PSfit 1.000 lower 1.000 upperNP 1.000 r2 1.000 r3 1.000 heur 1.000 pos0.1 b 1.57 f 1.86 5s
+('BRFSS', 3, 1, True) fixed 1.000 (v12 1.000) fit 1.040 PS 1.000 PSfit 1.000 lower 1.000 upperNP 1.000 r2 1.000 r3 1.000 heur 1.000 pos0.1 b 2.23 f 3.82 10s
+('BRFSS', 3, 2, True) fixed 1.338 (v12 1.338) fit 1.409 PS 1.338 PSfit 1.356 lower 1.069 upperNP 1.585 r2 1.000 r3 1.000 heur 1.000 pos0.1 b 1.38 f 1.91 5s
+('BRFSS', 4, 0, False) fixed 1.457 (v12 1.457) fit 1.524 PS 1.496 PSfit 1.516 lower 1.150 upperNP 3.264 r2 1.000 r3 1.000 r4 1.000 heur 1.200 1.000 pos0.1 b 1.50 f 1.80 302s
+('BRFSS', 4, 1, False) fixed 1.406 (v12 1.406) fit 1.461 PS 1.458 PSfit 1.471 lower 1.173 upperNP 3.874 r2 1.000 r3 1.000 r4 1.000 heur 1.134 1.000 pos0.1 b 1.71 f 2.15 419s
+('BRFSS', 4, 2, False) fixed 1.845 (v12 1.550) fit 1.611 PS 1.608 PSfit 1.610 lower 1.187 upperNP 2.987 r2 1.512 r3 1.500 r4 1.500 heur 1.140 1.000 pos0.1 b 2.03 f 2.25 381s
+('BRFSS', 4, 0, True) fixed 1.069 (v12 1.000) fit 1.035 PS 1.000 PSfit 1.006 lower 1.000 upperNP 1.760 r2 1.000 r3 1.000 r4 1.000 heur 1.000 1.000 pos0.1 b 0.79 f 1.77 19s
+BRFSS b4 shift 0 fixed 1.0000 v12 1.0000 r2 1.0000
+('BRFSS', 4, 2, False) fixed 1.550 (v12 1.550) fit 1.611 PS 1.608 PSfit 1.610 lower 1.187 upperNP 2.987 r2 1.511 r3 1.500 r4 1.500 heur 1.140 1.000 pos0.1 b 2.03 f 2.25 235s
+('BRFSS', 4, 1, True) fixed 1.749 (v12 1.749) fit 1.867 PS 1.817 PSfit 1.889 lower 1.207 upperNP 4.340 r2 1.495 r3 1.495 r4 1.495 heur 1.239 1.000 pos0.1 b 2.03 f 2.35 298s
+('BRFSS', 4, 2, True) fixed 1.517 (v12 1.517) fit 1.610 PS 1.570 PSfit 1.624 lower 1.184 upperNP 3.940 r2 1.517 r3 1.517 r4 1.517 heur 1.133 1.000 pos0.1 b 2.16 f 2.43 208s
+('Thyroid', 3, 0, False) fixed 1.000 (v12 1.000) fit 1.041 PS 1.000 PSfit 1.004 lower 1.000 upperNP 3.328 r2 1.000 r3 1.000 heur 1.000 pos0.1 b 0.08 f 2.41 1s
+('Thyroid', 3, 1, False) fixed 1.000 (v12 1.000) fit 1.041 PS 1.000 PSfit 1.005 lower 1.000 upperNP 2.557 r2 1.000 r3 1.000 heur 1.000 pos0.1 b 0.32 f 2.48 1s
+('Thyroid', 3, 2, False) fixed 1.000 (v12 1.000) fit 1.041 PS 1.000 PSfit 1.006 lower 1.000 upperNP 3.588 r2 1.000 r3 1.000 heur 1.000 pos0.1 b 0.39 f 2.34 1s
+('Thyroid', 3, 0, True) fixed 1.000 (v12 1.000) fit 1.043 PS 1.000 PSfit 1.009 lower 1.000 upperNP 3.629 r2 1.000 r3 1.000 heur 1.000 pos0.1 b 0.33 f 0.04 1s
+('Thyroid', 3, 1, True) fixed 1.000 (v12 1.000) fit 1.043 PS 1.000 PSfit 1.007 lower 1.000 upperNP 3.645 r2 1.000 r3 1.000 heur 1.000 pos0.1 b 0.32 f 2.33 1s
+WARNING inconsistent fixed optimum Thyroid 3 2 True
+('Thyroid', 3, 2, True) fixed 1.000 (v12 1.000) fit 1.045 PS 1.000 PSfit 1.005 lower 1.000 upperNP 3.415 r2 1.000 r3 1.000 heur 1.000 pos0.1 b 0.22 f 3.29 1s
+('Thyroid', 4, 0, False) fixed 1.000 (v12 1.000) fit 1.036 PS 1.000 PSfit 1.004 lower 1.000 upperNP 3.328 r2 1.000 r3 1.000 r4 1.000 heur 1.000 1.000 pos0.1 b 0.06 f 2.43 7s
+('Thyroid', 4, 1, False) fixed 1.000 (v12 1.000) fit 1.036 PS 1.000 PSfit 1.001 lower 1.000 upperNP 3.380 r2 1.000 r3 1.000 r4 1.000 heur 1.000 1.000 pos0.1 b 0.22 f 2.59 6s
+('Thyroid', 4, 2, False) fixed 1.000 (v12 1.000) fit 1.036 PS 1.000 PSfit 1.004 lower 1.000 upperNP 5.006 r2 1.000 r3 1.000 r4 1.000 heur 1.000 1.000 pos0.1 b 0.27 f 2.45 6s
+WARNING inconsistent fixed optimum Thyroid 4 0 True
+('Thyroid', 4, 0, True) fixed 1.000 (v12 1.000) fit 1.041 PS 1.000 PSfit 1.011 lower 1.000 upperNP 4.887 r2 1.000 r3 1.000 r4 1.000 heur 1.000 1.000 pos0.1 b 0.45 f 1.36 8s
+('Thyroid', 4, 1, True) fixed 1.000 (v12 1.000) fit 1.042 PS 1.000 PSfit 1.012 lower 1.000 upperNP 4.960 r2 1.000 r3 1.000 r4 1.000 heur 1.000 1.000 pos0.1 b 0.29 f 1.25 8s
+('Thyroid', 4, 2, True) fixed 1.000 (v12 1.000) fit 1.042 PS 1.000 PSfit 1.018 lower 1.000 upperNP 5.003 r2 1.000 r3 1.000 r4 1.000 heur 1.000 1.000 pos0.1 b 0.20 f 1.03 8s
+('Thyroid', 5, 0, False) fixed 1.000 (v12 1.000) fit 1.032 PS 1.000 PSfit 1.002 lower 1.000 upperNP 6.113 r2 1.000 r3 1.000 r4 1.000 r5 1.000 heur 1.000 1.000 1.000 pos0.1 b 0.04 f 2.45 107s
+('Thyroid', 5, 1, False) fixed 1.000 (v12 1.000) fit 1.032 PS 1.000 PSfit 1.000 lower 1.000 upperNP 6.274 r2 1.000 r3 1.000 r4 1.000 r5 1.000 heur 1.000 1.000 1.000 pos0.1 b 0.16 f 2.60 99s
+('BRFSS', 4, 2, False) fixed 1.550 (v12 1.550) fit 1.611 PS 1.608 PSfit 1.610 lower 1.187 upperNP 2.987 r2 1.000 r3 1.000 r4 1.000 heur 1.140 1.000 pos0.1 b 2.03 f 2.25 34s
+('BRFSS', 4, 1, True) fixed 1.749 (v12 1.749) fit 1.867 PS 1.817 PSfit 1.889 lower 1.207 upperNP 4.340 r2 1.000 r3 1.000 r4 1.000 heur 1.239 1.000 pos0.1 b 2.03 f 2.35 11s
+('BRFSS', 4, 2, True) fixed 1.517 (v12 1.517) fit 1.610 PS 1.570 PSfit 1.624 lower 1.184 upperNP 3.940 r2 1.000 r3 1.000 r4 1.000 heur 1.133 1.000 pos0.1 b 2.16 f 2.43 14s
+('Thyroid', 5, 2, False) fixed 1.000 (v12 1.000) fit 1.032 PS 1.000 PSfit 1.004 lower 1.000 upperNP 6.790 r2 1.000 r3 1.000 r4 1.000 r5 1.000 heur 1.000 1.000 1.000 pos0.1 b 0.20 f 2.48 107s
+('Thyroid', 5, 0, True) fixed 1.000 (v12 1.000) fit 1.039 PS 1.000 PSfit 1.009 lower 1.000 upperNP 5.687 r2 1.000 r3 1.000 r4 1.000 r5 1.000 heur 1.000 1.000 1.000 pos0.1 b 0.34 f 1.62 120s
+('Thyroid', 5, 1, True) fixed 1.000 (v12 1.000) fit 1.039 PS 1.000 PSfit 1.009 lower 1.000 upperNP 6.057 r2 1.000 r3 1.000 r4 1.000 r5 1.000 heur 1.000 1.000 1.000 pos0.1 b 0.22 f 1.56 115s
+('Thyroid', 5, 2, True) fixed 1.000 (v12 1.000) fit 1.039 PS 1.000 PSfit 1.015 lower 1.000 upperNP 5.834 r2 1.000 r3 1.000 r4 1.000 r5 1.000 heur 1.000 1.000 1.000 pos0.1 b 0.15 f 1.31 119s
+('Thyroid', 6, 0, False) fixed 1.000 (v12 1.000) fit 1.028 PS 1.000 PSfit 1.002 lower 1.000 upperNP 6.180 r2 1.000 r3 1.000 r4 1.000 r5 1.000 r6 1.000 heur 1.000 1.000 1.000 1.000 pos0.1 b 0.04 f 2.41 489s
+('Thyroid', 6, 1, False) fixed 1.000 (v12 1.000) fit 1.028 PS 1.000 PSfit 1.000 lower 1.000 upperNP 6.748 r2 1.000 r3 1.000 r4 1.000 r5 1.000 r6 1.000 heur 1.000 1.000 1.000 1.000 pos0.1 b 0.13 f 2.55 475s
+('Thyroid', 6, 2, False) fixed 1.000 (v12 1.000) fit 1.027 PS 1.000 PSfit 1.003 lower 1.000 upperNP 7.969 r2 1.000 r3 1.000 r4 1.000 r5 1.000 r6 1.000 heur 1.000 1.000 1.000 1.000 pos0.1 b 0.16 f 2.46 468s
+('Thyroid', 6, 0, True) fixed 1.000 (v12 1.000) fit 1.036 PS 1.000 PSfit 1.008 lower 1.000 upperNP 4.987 r2 1.000 r3 1.000 r4 1.000 r5 1.000 r6 1.000 heur 1.000 1.000 1.000 1.000 pos0.1 b 0.28 f 1.69 501s
+('Thyroid', 6, 1, True) fixed 1.000 (v12 1.000) fit 1.036 PS 1.000 PSfit 1.010 lower 1.000 upperNP 6.057 r2 1.000 r3 1.000 r4 1.000 r5 1.000 r6 1.000 heur 1.000 1.000 1.000 1.000 pos0.1 b 0.18 f 1.68 480s
+('Thyroid', 6, 2, True) fixed 1.000 (v12 1.000) fit 1.037 PS 1.000 PSfit 1.012 lower 1.000 upperNP 7.836 r2 1.000 r3 1.000 r4 1.000 r5 1.000 r6 1.000 heur 1.000 1.000 1.000 1.000 pos0.1 b 0.13 f 1.41 502s

@@ -1,0 +1,22 @@
+90 tasks
+('WDBC', 20261109, 6, 4) exact [1.1524,1.1524] comp 1.071 fitted 1.197 it 28 40s
+('WDBC', 20261108, 6, 4) exact [1.2195,1.2195] comp 1.020 fitted 1.242 it 28 40s
+('WDBC', 20261110, 6, 4) exact [1.2642,1.2642] comp 1.047 fitted 1.456 it 31 41s
+('Spambase', 20261108, 6, 4) exact [1.2831,1.2831] comp 1.038 fitted 1.298 it 23 27s
+('WDBC', 20261111, 6, 4) exact [1.3543,1.3543] comp 1.024 fitted 1.392 it 30 37s
+('WDBC', 20261112, 6, 4) exact [1.2268,1.2268] comp 1.031 fitted 1.266 it 28 40s
+('Spambase', 20261109, 6, 4) exact [1.2824,1.2824] comp 1.067 fitted 1.283 it 23 31s
+('Spambase', 20261110, 6, 4) exact [1.3265,1.3265] comp 1.095 fitted 1.330 it 24 35s
+('Spambase', 20261111, 6, 4) exact [1.2297,1.2297] comp 1.059 fitted 1.235 it 24 34s
+('Spambase', 20261112, 6, 4) exact [1.2572,1.2572] comp 1.029 fitted 1.266 it 27 46s
+('Ionosphere', 20261109, 6, 4) exact [1.1512,1.1512] comp 1.033 fitted 1.210 it 28 65s
+('Ionosphere', 20261108, 6, 4) exact [1.2037,1.2037] comp 1.054 fitted 1.238 it 29 69s
+('Ionosphere', 20261110, 6, 4) exact [1.2389,1.2389] comp 1.076 fitted 1.318 it 32 69s
+('Ionosphere', 20261111, 6, 4) exact [1.2863,1.2863] comp 1.099 fitted 1.369 it 26 52s
+('Ionosphere', 20261112, 6, 4) exact [1.1263,1.1263] comp 1.043 fitted 1.188 it 33 102s
+75 tasks
+30 tasks
+30 tasks
+15 tasks
+15 tasks
+30 tasks
