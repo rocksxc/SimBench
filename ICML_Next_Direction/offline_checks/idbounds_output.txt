@@ -1,0 +1,99 @@
+Beta(0.3,1.5) n=10
+  k=       10 k/n^2=   0.100  lower=0.50976 true=0.50976 upper=0.50976  rel.width=0.000
+  k=       20 k/n^2=   0.200  lower=0.42033 true=0.42071 upper=0.42103  rel.width=0.002
+  k=       25 k/n^2=   0.250  lower=0.39323 true=0.39476 upper=0.39608  rel.width=0.007
+  k=       40 k/n^2=   0.400  lower=0.33319 true=0.34456 upper=0.35429  rel.width=0.061
+  k=       50 k/n^2=   0.500  lower=0.30087 true=0.32280 upper=0.34128  rel.width=0.125
+  k=      100 k/n^2=   1.000  lower=0.18217 true=0.26308 upper=0.32596  rel.width=0.547
+  k=      200 k/n^2=   2.000  lower=0.06687 true=0.21406 upper=0.32512  rel.width=1.206
+  k=      400 k/n^2=   4.000  lower=0.00901 true=0.17402 upper=0.32512  rel.width=1.817
+  k=     1600 k/n^2=  16.000  lower=0.00000 true=0.11488 upper=0.32512  rel.width=2.830
+  k= 10000000 k/n^2=100000.000  lower=0.00000 true=0.00835 upper=0.32512  rel.width=38.946
+Beta(0.3,1.5) n=20
+  k=       20 k/n^2=   0.050  lower=0.42071 true=0.42071 upper=0.42071  rel.width=0.000
+  k=       40 k/n^2=   0.100  lower=0.34456 true=0.34456 upper=0.34457  rel.width=0.000
+  k=       80 k/n^2=   0.200  lower=0.28040 true=0.28106 upper=0.28166  rel.width=0.004
+  k=      100 k/n^2=   0.250  lower=0.26097 true=0.26308 upper=0.26500  rel.width=0.015
+  k=      200 k/n^2=   0.500  lower=0.19290 true=0.21406 upper=0.23214  rel.width=0.183
+  k=      400 k/n^2=   1.000  lower=0.10794 true=0.17402 upper=0.22521  rel.width=0.674
+  k=      800 k/n^2=   2.000  lower=0.03382 true=0.14141 upper=0.22498  rel.width=1.352
+  k=     1600 k/n^2=   4.000  lower=0.00332 true=0.11488 upper=0.22498  rel.width=1.929
+  k=     6400 k/n^2=  16.000  lower=0.00000 true=0.07581 upper=0.22498  rel.width=2.968
+  k= 10000000 k/n^2=25000.000  lower=0.00000 true=0.00835 upper=0.22498  rel.width=26.950
+Beta(0.3,1.5) n=40
+  k=       40 k/n^2=   0.025  lower=0.34456 true=0.34456 upper=0.34456  rel.width=0.000
+  k=       80 k/n^2=   0.050  lower=nan true=0.28106 upper=0.28106  rel.width=nan
+  k=      160 k/n^2=   0.100  lower=0.22876 true=0.22878 upper=0.22880  rel.width=0.000
+  k=      400 k/n^2=   0.250  lower=0.16966 true=0.17402 upper=0.17780  rel.width=0.047
+  k=      800 k/n^2=   0.500  lower=0.11577 true=0.14141 upper=0.16219  rel.width=0.328
+  k=     1600 k/n^2=   1.000  lower=0.05455 true=0.11488 upper=0.16029  rel.width=0.920
+  k=     3200 k/n^2=   2.000  lower=0.01208 true=0.09332 upper=0.16028  rel.width=1.588
+  k=     6400 k/n^2=   4.000  lower=0.00059 true=0.07581 upper=0.16029  rel.width=2.107
+  k=    25600 k/n^2=  16.000  lower=0.00000 true=0.05002 upper=0.16028  rel.width=3.205
+  k= 10000000 k/n^2=6250.000  lower=0.00000 true=0.00835 upper=0.16028  rel.width=19.199
+Beta(0.6,2.0) n=10
+  k=       10 k/n^2=   0.100  lower=0.32512 true=0.32512 upper=0.32512  rel.width=0.000
+  k=       20 k/n^2=   0.200  lower=0.22460 true=0.22497 upper=0.22531  rel.width=0.003
+  k=       25 k/n^2=   0.250  lower=0.19730 true=0.19876 upper=0.20011  rel.width=0.014
+  k=       40 k/n^2=   0.400  lower=0.14255 true=0.15223 upper=0.16173  rel.width=0.126
+  k=       50 k/n^2=   0.500  lower=0.11654 true=0.13385 upper=0.15126  rel.width=0.259
+  k=      100 k/n^2=   1.000  lower=0.04317 true=0.08924 upper=0.14107  rel.width=1.097
+  k=      200 k/n^2=   2.000  lower=0.00594 true=0.05919 upper=0.14074  rel.width=2.277
+  k=      400 k/n^2=   4.000  lower=0.00011 true=0.03916 upper=0.14074  rel.width=3.591
+  k=     1600 k/n^2=  16.000  lower=0.00000 true=0.01708 upper=0.14074  rel.width=8.240
+  k= 10000000 k/n^2=100000.000  lower=0.00000 true=0.00009 upper=0.14074  rel.width=1560.200
+Beta(0.6,2.0) n=20
+  k=       20 k/n^2=   0.050  lower=0.22497 true=0.22497 upper=0.22497  rel.width=0.000
+  k=       40 k/n^2=   0.100  lower=0.15223 true=0.15223 upper=0.15224  rel.width=0.000
+  k=       80 k/n^2=   0.200  lower=0.10120 true=0.10176 upper=0.10231  rel.width=0.011
+  k=      100 k/n^2=   0.250  lower=0.08759 true=0.08924 upper=0.09091  rel.width=0.037
+  k=      200 k/n^2=   0.500  lower=0.04695 true=0.05919 upper=0.07221  rel.width=0.427
+  k=      400 k/n^2=   1.000  lower=0.01399 true=0.03916 upper=0.06970  rel.width=1.423
+  k=      800 k/n^2=   2.000  lower=0.00124 true=0.02587 upper=0.06967  rel.width=2.645
+  k=     1600 k/n^2=   4.000  lower=0.00001 true=0.01708 upper=0.06967  rel.width=4.079
+  k=     6400 k/n^2=  16.000  lower=0.00000 true=0.00744 upper=0.06967  rel.width=9.367
+  k= 10000000 k/n^2=25000.000  lower=0.00000 true=0.00009 upper=0.06967  rel.width=772.320
+Beta(0.6,2.0) n=40
+  k=       40 k/n^2=   0.025  lower=0.15223 true=0.15223 upper=0.15223  rel.width=0.000
+  k=       80 k/n^2=   0.050  lower=0.10176 true=0.10176 upper=nan  rel.width=nan
+  k=      160 k/n^2=   0.100  lower=0.06757 true=0.06758 upper=0.06760  rel.width=0.001
+  k=      400 k/n^2=   0.250  lower=0.03683 true=0.03916 upper=nan  rel.width=nan
+  k=      800 k/n^2=   0.500  lower=0.01654 true=0.02587 upper=0.03665  rel.width=0.777
+  k=     1600 k/n^2=   1.000  lower=0.00337 true=0.01708 upper=0.03635  rel.width=1.931
+  k=     3200 k/n^2=   2.000  lower=0.00014 true=0.01127 upper=0.03634  rel.width=3.211
+  k=     6400 k/n^2=   4.000  lower=0.00000 true=0.00744 upper=0.03635  rel.width=4.887
+  k=    25600 k/n^2=  16.000  lower=0.00000 true=0.00324 upper=0.03634  rel.width=11.223
+  k= 10000000 k/n^2=6250.000  lower=0.00000 true=0.00009 upper=0.03634  rel.width=402.852
+Beta(1.0,3.0) n=10
+  k=       10 k/n^2=   0.100  lower=0.23077 true=0.23077 upper=0.23077  rel.width=0.000
+  k=       20 k/n^2=   0.200  lower=0.13018 true=0.13043 upper=0.13066  rel.width=0.004
+  k=       25 k/n^2=   0.250  lower=0.10616 true=0.10714 upper=0.10810  rel.width=0.018
+  k=       40 k/n^2=   0.400  lower=0.06370 true=0.06977 upper=0.07664  rel.width=0.185
+  k=       50 k/n^2=   0.500  lower=0.04646 true=0.05660 upper=0.06901  rel.width=0.398
+  k=      100 k/n^2=   1.000  lower=0.00982 true=0.02913 upper=0.06263  rel.width=1.813
+  k=      200 k/n^2=   2.000  lower=0.00044 true=0.01478 upper=0.06250  rel.width=4.199
+  k=      400 k/n^2=   4.000  lower=0.00000 true=0.00744 upper=0.06250  rel.width=8.396
+  k=     1600 k/n^2=  16.000  lower=0.00000 true=0.00187 upper=0.06250  rel.width=33.396
+  k= 10000000 k/n^2=100000.000  lower=0.00000 true=0.00000 upper=0.06250  rel.width=208331.675
+Beta(1.0,3.0) n=20
+  k=       20 k/n^2=   0.050  lower=0.13043 true=0.13043 upper=0.13043  rel.width=0.000
+  k=       40 k/n^2=   0.100  lower=0.06977 true=0.06977 upper=0.06977  rel.width=0.000
+  k=       80 k/n^2=   0.200  lower=0.03582 true=0.03614 upper=0.03650  rel.width=0.019
+  k=      100 k/n^2=   0.250  lower=0.02821 true=0.02913 upper=0.03018  rel.width=0.068
+  k=      200 k/n^2=   0.500  lower=0.00991 true=0.01478 upper=0.02167  rel.width=0.796
+  k=      400 k/n^2=   1.000  lower=0.00129 true=0.00744 upper=0.02098  rel.width=2.646
+  k=      800 k/n^2=   2.000  lower=0.00002 true=0.00374 upper=0.02098  rel.width=5.609
+  k=     1600 k/n^2=   4.000  lower=0.00000 true=0.00187 upper=0.02098  rel.width=11.209
+  k=     6400 k/n^2=  16.000  lower=0.00000 true=0.00047 upper=0.02098  rel.width=44.772
+  k= 10000000 k/n^2=25000.000  lower=0.00000 true=0.00000 upper=0.02098  rel.width=69924.142
+Beta(1.0,3.0) n=40
+  k=       40 k/n^2=   0.025  lower=0.06977 true=0.06977 upper=0.06977  rel.width=0.000
+  k=       80 k/n^2=   0.050  lower=0.03614 true=0.03614 upper=0.03614  rel.width=0.000
+  k=      160 k/n^2=   0.100  lower=0.01839 true=0.01840 upper=0.01842  rel.width=0.001
+  k=      400 k/n^2=   0.250  lower=nan true=0.00744 upper=nan  rel.width=nan
+  k=      800 k/n^2=   0.500  lower=0.00157 true=0.00374 upper=0.00751  rel.width=1.590
+  k=     1600 k/n^2=   1.000  lower=0.00009 true=0.00187 upper=0.00748  rel.width=3.949
+  k=     3200 k/n^2=   2.000  lower=0.00000 true=0.00094 upper=0.00753  rel.width=8.043
+  k=     6400 k/n^2=   4.000  lower=0.00000 true=0.00047 upper=0.00748  rel.width=15.968
+  k=    25600 k/n^2=  16.000  lower=0.00000 true=0.00012 upper=0.00748  rel.width=63.849
+  k= 10000000 k/n^2=6250.000  lower=0.00000 true=0.00000 upper=0.00748  rel.width=24938.051

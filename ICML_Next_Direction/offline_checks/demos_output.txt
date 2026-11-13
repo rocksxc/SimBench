@@ -1,0 +1,27 @@
+3. beta-binomial forecast of the unsolved fraction U_k = E(1-pi)^k   (M = 2000 tasks, n = 30 attempts)
+  truth = beta       share of replications where the fit is not rejected at 5%: 0.90
+     k=    30  forecast 0.3255   truth 0.3257
+     k=   300  forecast 0.1455   truth 0.1471
+     k=  3000  forecast 0.0643   truth 0.0663
+     k= 30000  forecast 0.0284   truth 0.0296
+  truth = floor      share of replications where the fit is not rejected at 5%: 0.80
+     k=    30  forecast 0.2942   truth 0.3053
+     k=   300  forecast 0.1271   truth 0.1788
+     k=  3000  forecast 0.0544   truth 0.1366
+     k= 30000  forecast 0.0233   truth 0.1237
+  truth = lognormal  share of replications where the fit is not rejected at 5%: 0.00
+     k=    30  forecast 0.3997   truth 0.3516
+     k=   300  forecast 0.2580   truth 0.0949
+     k=  3000  forecast 0.1664   truth 0.0114
+     k= 30000  forecast 0.1074   truth 0.0006
+4. identification interval for G(pi > 1/2), the accuracy of an infinite majority vote (two answers)
+  Beta(1.2,0.9) n=  5  [0.3868, 0.7982]  truth 0.5998  width 0.4114  width*n 2.057
+  Beta(1.2,0.9) n= 10  [0.4752, 0.7179]  truth 0.5998  width 0.2427  width*n 2.427
+  Beta(1.2,0.9) n= 20  [0.5309, 0.6667]  truth 0.5998  width 0.1359  width*n 2.717
+  Beta(1.2,0.9) n= 40  [0.5545, 0.6427]  truth 0.5998  width 0.0883  width*n 3.531
+  Beta(1.2,0.9) n= 80  [nan, 0.6275]  truth 0.5998  width nan  width*n nan
+  Beta(0.7,0.5) n=  5  [0.4297, 0.7627]  truth 0.6004  width 0.3329  width*n 1.665
+  Beta(0.7,0.5) n= 10  [0.5087, 0.6886]  truth 0.6004  width 0.1798  width*n 1.798
+  Beta(0.7,0.5) n= 20  [0.5506, 0.6491]  truth 0.6004  width 0.0985  width*n 1.970
+  Beta(0.7,0.5) n= 40  [0.5709, 0.6298]  truth 0.6004  width 0.0590  width*n 2.360
+  Beta(0.7,0.5) n= 80  [0.5788, nan]  truth 0.6004  width nan  width*n nan

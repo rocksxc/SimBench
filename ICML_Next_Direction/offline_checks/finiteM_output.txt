@@ -1,0 +1,16 @@
+n=20
+  k=   20 (k/n=  1, k/n^2= 0.05)  worst-case RMSE bound: M=3e+02: 0.0577  M=3e+03: 0.0183  M=1e+05: 0.0032  M=1e+07: 0.0003  M=1e+10: 0.0000   bias with |g|<=1: 0.0000, unconstrained-ish: 0.00000
+  k=   40 (k/n=  2, k/n^2= 0.10)  worst-case RMSE bound: M=3e+02: 0.0582  M=3e+03: 0.0187  M=1e+05: 0.0036  M=1e+07: 0.0006  M=1e+10: 0.0000   bias with |g|<=1: 0.0004, unconstrained-ish: 0.00000
+  k=   60 (k/n=  3, k/n^2= 0.15)  worst-case RMSE bound: M=3e+02: 0.1203  M=3e+03: 0.0494  M=1e+05: 0.0164  M=1e+07: 0.0039  M=1e+10: 0.0006   bias with |g|<=1: 0.0625, unconstrained-ish: 0.00011
+  k=  100 (k/n=  5, k/n^2= 0.25)  worst-case RMSE bound: M=3e+02: 0.1968  M=3e+03: 0.1179  M=1e+05: 0.0540  M=1e+07: 0.0226  M=1e+10: 0.0075   bias with |g|<=1: 0.1604, unconstrained-ish: 0.00227
+  k=  200 (k/n= 10, k/n^2= 0.50)  worst-case RMSE bound: M=3e+02: 0.3237  M=3e+03: 0.2298  M=1e+05: 0.1473  M=1e+07: 0.0880  M=1e+10: 0.0471   bias with |g|<=1: 0.2772, unconstrained-ish: 0.02325
+  k=  400 (k/n= 20, k/n^2= 1.00)  worst-case RMSE bound: M=3e+02: 0.4211  M=3e+03: 0.3339  M=1e+05: 0.2530  M=1e+07: 0.1837  M=1e+10: 0.1292   bias with |g|<=1: 0.3633, unconstrained-ish: 0.08204
+  k= 1000 (k/n= 50, k/n^2= 2.50)  worst-case RMSE bound: M=3e+02: 0.4897  M=3e+03: 0.4377  M=1e+05: 0.3709  M=1e+07: 0.3096  M=1e+10: 0.2553   bias with |g|<=1: 0.4319, unconstrained-ish: 0.19733
+n=50
+  k=   50 (k/n=  1, k/n^2= 0.02)  worst-case RMSE bound: M=3e+02: 0.0577  M=3e+03: 0.0183  M=1e+05: 0.0032  M=1e+07: 0.0003  M=1e+10: 0.0000   bias with |g|<=1: 0.0000, unconstrained-ish: 0.00000
+  k=  100 (k/n=  2, k/n^2= 0.04)  worst-case RMSE bound: M=3e+02: 0.0578  M=3e+03: 0.0184  M=1e+05: 0.0033  M=1e+07: 0.0004  M=1e+10: 0.0000   bias with |g|<=1: 0.0001, unconstrained-ish: 0.00000
+  k=  150 (k/n=  3, k/n^2= 0.06)  worst-case RMSE bound: M=3e+02: 0.1195  M=3e+03: 0.0477  M=1e+05: 0.0152  M=1e+07: 0.0032  M=1e+10: 0.0004   bias with |g|<=1: 0.0618, unconstrained-ish: 0.00000
+  k=  250 (k/n=  5, k/n^2= 0.10)  worst-case RMSE bound: M=3e+02: 0.1963  M=3e+03: 0.1173  M=1e+05: 0.0505  M=1e+07: 0.0194  M=1e+10: 0.0049   bias with |g|<=1: 0.1596, unconstrained-ish: 0.00012
+  k=  500 (k/n= 10, k/n^2= 0.20)  worst-case RMSE bound: M=3e+02: 0.3235  M=3e+03: 0.2262  M=1e+05: 0.1438  M=1e+07: 0.0803  M=1e+10: 0.0382   bias with |g|<=1: 0.2772, unconstrained-ish: 0.00584
+  k= 1000 (k/n= 20, k/n^2= 0.40)  worst-case RMSE bound: M=3e+02: 0.4211  M=3e+03: 0.3311  M=1e+05: 0.2469  M=1e+07: 0.1753  M=1e+10: 0.1144   bias with |g|<=1: 0.3633, unconstrained-ish: 0.04520
+  k= 2500 (k/n= 50, k/n^2= 1.00)  worst-case RMSE bound: M=3e+02: 0.4897  M=3e+03: 0.4362  M=1e+05: 0.3686  M=1e+07: 0.3044  M=1e+10: 0.2418   bias with |g|<=1: 0.4319, unconstrained-ish: 0.15567
