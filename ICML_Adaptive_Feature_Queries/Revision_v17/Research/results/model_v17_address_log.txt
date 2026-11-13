@@ -1,0 +1,2 @@
+address b=4 order 2: p 78 full 0.1250 fixed 0.2500 branch 0.2500 [lower 0.2500] ratio 1.0000 rule tree 1.0 (1s)
+address b=4 order 3: p 298 full 0.5000 fixed 2.7500 branch 1.0000 [lower 1.0000] ratio 2.7500 rule tree 1.000000000000001 (2s)

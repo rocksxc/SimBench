@@ -1,0 +1,17 @@
+{
+ "dataset": "Thyroid",
+ "shift": false,
+ "b": 3,
+ "seed": 20261108,
+ "m": 12,
+ "delta": 0.6467999999999999,
+ "second": 1.0,
+ "full_var": 0.5816497600000001,
+ "prevalence": 0.07472222222222222,
+ "centered_upper": 2.3679907775807765,
+ "path_sets": 3,
+ "uniform_ht_ratio": 32.39718049569899,
+ "uniform_opt_ratio": 12.259760217091175,
+ "light": true,
+ "seconds": 0.07034897804260254
+}

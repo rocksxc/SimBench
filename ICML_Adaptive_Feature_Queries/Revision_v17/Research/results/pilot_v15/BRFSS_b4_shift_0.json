@@ -1,0 +1,12 @@
+{
+ "dataset": "BRFSS",
+ "shift": true,
+ "b": 4,
+ "seed": 20261108,
+ "path_sets": 2,
+ "cells": 64,
+ "ps_oracle": 1.000000000111772,
+ "ps_reference": 1.0062936357337153,
+ "pilot_design": 1.2454517936206548,
+ "seconds": 0.548654317855835
+}

@@ -1,0 +1,2 @@
+Spambase 20261108 20 4 fixed/full 5.760 392s
+Spambase 0 20 4 fixed/branch in [1.030, 5.760]  branch iterations 66 1972s

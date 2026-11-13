@@ -1,0 +1,17 @@
+\begin{table}[t]
+\centering
+\caption{Forest updates of depth $b$ under cap $b$ (WDBC, Spambase, Ionosphere; binding tasks). Fixed/branch: exact $W_{\rm fixed}/W_{\rm branch}$, median [minimum, maximum]. Fit: median excess of the ratio realized by designs optimized on training records over the exact ratio of the same task ($^\dagger$the 15 tasks with $m=12$). Own: share of the log-gap captured when branching may use only the forests\textquotesingle{} own trees. Two: exact optimal two-round design, $W_2/W_{\rm branch}$ ($^\ddagger$five splits per cell: 45 and 15 tasks; at $b=2$ two rounds are branching). Cap: $W_{\rm fixed}$ and $W_{\rm branch}$ relative to the full-information variance.}
+\label{tab:capgrid}
+\footnotesize
+\setlength{\tabcolsep}{2.6pt}
+\begin{tabular}{rrlrrrrr}
+\toprule
+ & & & & & & \multicolumn{2}{c}{Cap: /full} \\
+$b$ & tasks & Fixed/branch & Fit & Own & Two & fixed & branch \\
+\midrule
+2 & 45 & 1.31 [1.12, 1.49] & +1\% & 49\% & 1 & 4.1 & 3.3 \\
+3 & 180 & 1.51 [1.14, 1.85] & +2\%$^\dagger$ & 17\% & 1.04$^\ddagger$ & 3.5 & 2.3 \\
+4 & 15 & 1.24 [1.13, 1.35] & +3\% & 26\% & 1.03$^\ddagger$ & 1.4 & 1.1 \\
+\bottomrule
+\end{tabular}
+\end{table}

@@ -1,0 +1,20 @@
+b=4 brute force over all of T_3 (exact value of the mixture design, optimised over eps on a grid) vs formula:
+   s=2, r=2: exact 1.7178   formula (upper bound) 1.7178
+   s=1, r=3: exact 7.4646   formula (upper bound) 7.4641
+exact Fourier check of the model-unbiasedness of the score, and resulting upper bound on W^(3)_branch:
+   b= 3: best (s,r)=(2,1)  max coefficient error 0.0e+00  W^(3)_branch <= 1.0000   L_3(b)=2.2500   => ratio W_fixed/W_branch >= 2.250
+   b= 4: best (s,r)=(3,1)  max coefficient error 0.0e+00  W^(3)_branch <= 1.0000   L_3(b)=2.6667   => ratio W_fixed/W_branch >= 2.667
+   b= 5: best (s,r)=(4,1)  max coefficient error 0.0e+00  W^(3)_branch <= 1.0000   L_3(b)=2.7778   => ratio W_fixed/W_branch >= 2.778
+   b= 6: best (s,r)=(4,2)  max coefficient error 0.0e+00  W^(3)_branch <= 0.9721   L_3(b)=3.0000   => ratio W_fixed/W_branch >= 3.086
+   b= 7: best (s,r)=(5,2)  max coefficient error 3.8e-17  W^(3)_branch <= 0.8540   L_3(b)=3.0625   => ratio W_fixed/W_branch >= 3.586
+   b= 8: best (s,r)=(6,2)  max coefficient error 4.5e-17  W^(3)_branch <= 0.7812   L_3(b)=3.2000   => ratio W_fixed/W_branch >= 4.096
+   b= 9: best (s,r)=(7,2)  max coefficient error 6.6e-17  W^(3)_branch <= 0.7323   L_3(b)=3.2400   => ratio W_fixed/W_branch >= 4.424
+   b=10: best (s,r)=(7,3)  max coefficient error 6.3e-17  W^(3)_branch <= 0.6933   L_3(b)=3.3333   => ratio W_fixed/W_branch >= 4.808
+   b=11: best (s,r)=(8,3)  max coefficient error 8.7e-19  W^(3)_branch <= 0.6353   L_3(b)=3.3611   => ratio W_fixed/W_branch >= 5.290
+   b=12: best (s,r)=(9,3)  max coefficient error 2.4e-17  W^(3)_branch <= 0.5926   L_3(b)=3.4286   => ratio W_fixed/W_branch >= 5.786
+   b=13: best (s,r)=(10,3)  max coefficient error 4.3e-17  W^(3)_branch <= 0.5599   L_3(b)=3.4490   => ratio W_fixed/W_branch >= 6.160
+   b=14: best (s,r)=(10,4)  max coefficient error nan  W^(3)_branch <= 0.5332   L_3(b)=3.5000   => ratio W_fixed/W_branch >= 6.565
+   b=20: upper bound 0.3920 (s=15), b*bound=7.84
+   b=50: upper bound 0.1707 (s=37), b*bound=8.54
+   b=100: upper bound 0.0876 (s=75), b*bound=8.76
+   b=400: upper bound 0.0224 (s=300), b*bound=8.94

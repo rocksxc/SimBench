@@ -1,0 +1,21 @@
+\begin{table}[h]
+\centering
+\caption{The pilot of Table~\ref{tab:pilot} with its cell masses smoothed by a pairwise log-linear fit (BRFSS runs with a gain; medians over runs of the median over 12 pilots; $N=4n_1$). Empirical: cell masses from the pilot\textquotesingle s frequencies, as in Table~\ref{tab:pilot}. Pairwise fit: cell masses from the pairwise model fitted to the pilot by EM. Pilot, learned and all-in are per-record variances relative to branching, as in Table~\ref{tab:pilot}; over oracle is the median over runs of the all-in price divided by that run\textquotesingle s oracle optimum over all forms.}
+\label{tab:pilotsmooth}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{rrr rrr rrrr rr}
+\toprule
+ & & & \multicolumn{3}{c}{empirical} & \multicolumn{4}{c}{pairwise fit} & \multicolumn{2}{c}{oracle} \\
+\cmidrule(lr){4-6}\cmidrule(lr){7-10}\cmidrule(lr){11-12}
+$b$ & runs & $n_1$ & pilot & learned & all-in & pilot & learned & all-in & over oracle & PS & all forms \\
+\midrule
+4 & 5 & 1,000 & 1.97 & 1.64 & 1.67 & 1.86 & 1.59 & 1.65 & +11\% & 1.57 & 1.52 \\
+ &  & 2,000 & 1.89 & 1.61 & 1.65 & 1.84 & 1.59 & 1.64 & +11\% &  &  \\
+5 & 6 & 1,000 & 2.33 & 1.70 & 1.82 & 1.78 & 1.40 & 1.53 & +12\% & 1.36 & 1.35 \\
+ &  & 2,000 & 1.98 & 1.54 & 1.64 & 1.75 & 1.38 & 1.50 & +10\% &  &  \\
+6 & 6 & 1,000 & 5.38 & 3.79 & 4.33 & 2.66 & 1.70 & 1.93 & +20\% & 1.61 & 1.58 \\
+ &  & 2,000 & 4.91 & 2.82 & 3.37 & 2.42 & 1.66 & 1.84 & +15\% &  &  \\
+\bottomrule
+\end{tabular}
+\end{table}

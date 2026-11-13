@@ -1,0 +1,76 @@
+\subsection{An Exact Four-Feature Example Beyond the Block Gap}\label{app:fourbit}
+The ratio two in the four-bit block is not extremal at $(m,b)=(4,3)$.
+\begin{proposition}\label{prop:fourbit}
+There is a Boolean contrast on four features, computable by a depth-three tree, with
+\[
+ V_{\rm branch}(d,3)=1,\qquad
+ V_{\rm fixed}(d,3)=\frac{7+2\sqrt2}{4}=2.457106\ldots.
+\]
+\end{proposition}
+\begin{proof}
+Write $\zeta=\sqrt2$ and $\alpha=(7+2\zeta)/4$. Define
+\[
+ f_-(x)=\frac{(1-x_2)x_1-(1+x_2)x_3}{2},\qquad
+ f_+(x)=-\frac{(1-x_3)x_2+(1+x_3)x_1}{2},
+\]
+\[
+ d(x)=\frac{(1-x_4)f_-(x)+(1+x_4)f_+(x)}2.
+\]
+Query $x_4$ first. If its value is $-1$, query $x_2$ and then $x_1$ or $x_3$; if its value is $+1$, query $x_3$ and then $x_2$ or $x_1$. This computes $d\in\{-1,1\}$ with three queries. Jensen's inequality and the exact tree score give $V_{\rm branch}=1$.
+
+For the fixed upper bound use only the forms $124$, $134$ and $234$, with respective probabilities $(2-\zeta)/2$, $(2-\zeta)/2$ and $\zeta-1$. In a form $T=(i,j,k)$ index its answers by $c=(1+x_i)/2+2(1+x_j)/2+4(1+x_k)/2$. The following table specifies twice the unbiased decomposition table $g_T$; the returned score is $Yg_T/q_T$.
+\begin{center}
+\begin{tabular}{rrrr}
+\toprule
+$c$ & $2g_{124}$ & $2g_{134}$ & $2g_{234}$\\
+\midrule
+0 & $\zeta-3$ & $4-3\zeta$ & $2\zeta-3$\\
+1 & $3-\zeta$ & $2-\zeta$ & $2\zeta-1$\\
+2 & $\zeta-1$ & $\zeta-2$ & $3-2\zeta$\\
+3 & $1-\zeta$ & $3\zeta-4$ & $1-2\zeta$\\
+4 & $2-\zeta$ & $1-\zeta$ & $2\zeta-1$\\
+5 & $4-3\zeta$ & $\zeta-1$ & $1-2\zeta$\\
+6 & $3\zeta-4$ & $3-\zeta$ & $2\zeta-3$\\
+7 & $\zeta-2$ & $\zeta-3$ & $3-2\zeta$\\
+\bottomrule
+\end{tabular}
+\end{center}
+Number full profiles lexicographically by $i=8(1+x_1)/2+4(1+x_2)/2+2(1+x_3)/2+(1+x_4)/2$, and put $E=\{1,2,3,6,8,12,13,15\}$. Substitution gives $\sum_Tg_T=d$ on all sixteen profiles. The conditional second moment equals $\alpha$ on $E$, and $(23-10\zeta)/4$ outside $E$. The latter is smaller because their difference is $3\zeta-4>0$. Thus $V_{\rm fixed}\le\alpha$.
+
+For the matching lower bound, let $\mu$ be uniform on $E$. Set $\xi=3+2\zeta$ and define a signed vector $\eta$, in the same full-profile order, by
+\[
+ 32\eta=(-\xi,3,-5,5,\xi,-\xi,-3,\xi,5,\xi,\xi,-\xi,3,-3,-\xi,-5).
+\]
+For a form $T$ let $I_T=\sum_C\eta(C)^2/\mu(C)$ over its cells, with $0/0=0$. Every zero-mass cell in this example also has zero signed mass. Direct summation yields
+\[
+ \eta^Td=\alpha,\qquad
+ I_{123}=\alpha-\frac12,\qquad
+ I_{124}=I_{134}=I_{234}=\alpha.
+\]
+The Cauchy--Schwarz certificate above therefore gives $V_{\rm fixed}\ge(\eta^Td)^2/\max_T I_T=\alpha$. Forms with fewer coordinates are coarsenings of triples and cannot increase $I_T$. All displayed identities are exact in $\mathbb Q(\sqrt2)$; the supplied symbolic script verifies them without a numerical optimizer.
+\end{proof}
+Consequently the worst ratio at $(4,3)$ lies in $[(7+2\sqrt2)/4,3]$. This excludes two as its value, but neither proves that three is attainable nor determines the exact supremum over all identifiable real contrasts.
+
+\begin{corollary}\label{cor:roundseparation}
+For the same contrast and budget three, $V_2(d,3)\ge4/3>V_{\rm branch}(d,3)=1$.
+\end{corollary}
+\begin{proof}
+Use the uniform law and witness $h=d$. A deterministic two-round protocol can be represented by a first set $S$ of size one or two, followed by a set of $3-|S|$ remaining coordinates depending on the first answers. Padding covers protocols using fewer queries; a single fixed triple is included by splitting it into a first pair and a final fixed coordinate. For a given $S$, its largest possible projection energy is
+\[
+ J(S)=2^{-|S|}\sum_{u\in\{-1,1\}^S}
+ \max_{\substack{T\subseteq[4]\setminus S\\|T|=3-|S|}}
+ \E\!\left[\E[d\mid X_S=u,X_T]^2\mid X_S=u\right].
+\]
+Substitution of the displayed contrast gives the complete table:
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+First set $S$ & $J(S)$\\
+\midrule
+$\{1\},\{4\},\{1,2\},\{1,3\},\{1,4\},\{2,3\}$ & $1/2$\\
+$\{2\},\{3\},\{2,4\},\{3,4\}$ & $3/4$\\
+\bottomrule
+\end{tabular}
+\end{center}
+Thus every allowed two-round observation has projection energy at most $3/4$. The variance dual with $\E[d^2]=1$ gives $V_2\ge4/3$, including mixtures of these protocols. The symbolic script also verifies all ten entries using rational arithmetic. This is a strict constant separation at the smallest cap where one exists; Theorem~\ref{thm:binarytree} gives the exponential separation for large caps.
+\end{proof}

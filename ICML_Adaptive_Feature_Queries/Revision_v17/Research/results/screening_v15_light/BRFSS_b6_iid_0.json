@@ -1,0 +1,17 @@
+{
+ "dataset": "BRFSS",
+ "shift": false,
+ "b": 6,
+ "seed": 20261108,
+ "m": 12,
+ "delta": 0.4577696310312204,
+ "second": 1.0,
+ "full_var": 0.7904469649055403,
+ "prevalence": 0.13832387259539577,
+ "centered_upper": 11.04641253525332,
+ "path_sets": 14,
+ "uniform_ht_ratio": 29.659396583003414,
+ "uniform_opt_ratio": 11.558935073694897,
+ "light": true,
+ "seconds": 12.388781070709229
+}

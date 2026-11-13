@@ -1,0 +1,48 @@
+('BRFSS', 3, 1, False) items 3 forms 1 PSopt 1.000 unifPS 1.701 unifItems 1.000  0s
+('BRFSS', 3, 0, False) items 2 forms 1 PSopt 1.000 unifPS 1.000 unifItems 1.000  0s
+('BRFSS', 3, 2, False) items 3 forms 1 PSopt 1.000 unifPS 1.061 unifItems 1.000  0s
+('BRFSS', 3, 0, True) items 3 forms 1 PSopt 1.000 unifPS 1.000 unifItems 1.000  0s
+('BRFSS', 3, 1, True) items 3 forms 1 PSopt 1.000 unifPS 1.000 unifItems 1.000  0s
+('BRFSS', 3, 2, True) items 4 forms 4 PSopt 1.338 unifPS 1.500 unifItems 1.643 n1=250 cf 1.56 learn 1.37 n1=500 cf 1.53 learn 1.36 n1=1000 cf 1.52 learn 1.35 n1=2000 cf 1.51 learn 1.35 4s
+('BRFSS', 4, 0, False) items 6 forms 15 PSopt 1.496 unifPS 1.825 unifItems 2.311 n1=250 cf 2.43 learn 1.80 n1=500 cf 2.13 learn 1.63 n1=1000 cf 1.99 learn 1.56 n1=2000 cf 1.90 learn 1.54 6s
+('BRFSS', 4, 1, False) items 5 forms 5 PSopt 1.458 unifPS 1.772 unifItems 1.486 n1=250 cf 2.33 learn 1.73 n1=500 cf 2.08 learn 1.60 n1=1000 cf 1.92 learn 1.52 n1=2000 cf 1.84 learn 1.50 6s
+('BRFSS', 4, 0, True) items 4 forms 1 PSopt 1.000 unifPS 1.244 unifItems 1.000  0s
+('BRFSS', 4, 2, False) items 6 forms 15 PSopt 1.608 unifPS 1.686 unifItems 2.304 n1=250 cf 1.97 learn 1.77 n1=500 cf 1.84 learn 1.71 n1=1000 cf 1.76 learn 1.64 n1=2000 cf 1.72 learn 1.63 6s
+('BRFSS', 4, 1, True) items 7 forms 35 PSopt 1.817 unifPS 2.359 unifItems 3.641 n1=250 cf 3.13 learn 2.43 n1=500 cf 2.82 learn 2.08 n1=1000 cf 2.59 learn 1.95 n1=2000 cf 2.46 learn 1.89 6s
+('BRFSS', 4, 2, True) items 6 forms 15 PSopt 1.570 unifPS 1.965 unifItems 2.294 n1=250 cf 2.44 learn 1.83 n1=500 cf 2.22 learn 1.71 n1=1000 cf 2.12 learn 1.64 n1=2000 cf 2.03 learn 1.61 5s
+('BRFSS', 5, 0, False) items 6 forms 6 PSopt 1.189 unifPS 1.664 unifItems 1.356 n1=250 cf 3.35 learn 2.18 n1=500 cf 3.10 learn 1.71 n1=1000 cf 2.40 learn 1.45 n1=2000 cf 2.04 learn 1.31 21s
+('BRFSS', 5, 1, False) items 7 forms 21 PSopt 1.281 unifPS 1.513 unifItems 1.885 n1=250 cf 3.16 learn 2.47 n1=500 cf 2.79 learn 1.84 n1=1000 cf 2.23 learn 1.59 n1=2000 cf 1.91 learn 1.43 25s
+('BRFSS', 5, 2, False) items 8 forms 56 PSopt 1.544 unifPS 1.742 unifItems 2.878 n1=250 cf 2.98 learn 2.44 n1=500 cf 2.55 learn 1.95 n1=1000 cf 2.16 learn 1.73 n1=2000 cf 1.94 learn 1.64 20s
+('BRFSS', 5, 0, True) items 7 forms 21 PSopt 1.261 unifPS 1.695 unifItems 2.011 n1=250 cf 3.12 learn 2.09 n1=500 cf 2.60 learn 1.60 n1=1000 cf 2.14 learn 1.42 n1=2000 cf 1.95 learn 1.36 22s
+('BRFSS', 5, 1, True) items 8 forms 56 PSopt 1.564 unifPS 1.878 unifItems 3.101 n1=250 cf 3.73 learn 2.83 n1=500 cf 3.12 learn 2.09 n1=1000 cf 2.54 learn 1.88 n1=2000 cf 2.20 learn 1.70 22s
+('BRFSS', 5, 2, True) items 7 forms 21 PSopt 1.439 unifPS 1.910 unifItems 2.060 n1=250 cf 4.35 learn 3.11 n1=500 cf 4.01 learn 2.38 n1=1000 cf 3.09 learn 1.85 n1=2000 cf 2.55 learn 1.65 34s
+('BRFSS', 6, 0, False) items 10 forms 210 PSopt 2.022 unifPS 2.769 unifItems 4.729 n1=250 cf 5.92 learn 5.12 n1=500 cf 5.95 learn 5.47 n1=1000 cf 6.50 learn 4.11 n1=2000 cf 5.17 learn 3.13 396s
+('BRFSS', 6, 1, False) items 9 forms 84 PSopt 1.534 unifPS 2.412 unifItems 2.995 n1=250 cf 4.64 learn 4.09 n1=500 cf 5.86 learn 3.99 n1=1000 cf 5.41 learn 3.61 n1=2000 cf 5.43 learn 2.71 483s
+('BRFSS', 6, 2, False) items 9 forms 84 PSopt 1.438 unifPS 1.966 unifItems 3.089 n1=250 cf 4.42 learn 3.81 n1=500 cf 4.35 learn 3.81 n1=1000 cf 4.68 learn 2.90 n1=2000 cf 3.78 learn 2.14 330s
+('BRFSS', 6, 0, True) items 10 forms 210 PSopt 1.645 unifPS 1.989 unifItems 4.059 n1=250 cf 4.40 learn 3.88 n1=500 cf 4.55 learn 4.00 n1=1000 cf 4.61 learn 3.08 n1=2000 cf 3.61 learn 2.38 249s
+('BRFSS', 6, 1, True) items 10 forms 210 PSopt 1.767 unifPS 2.210 unifItems 4.579 n1=250 cf 5.03 learn 4.81 n1=500 cf 5.52 learn 4.80 n1=1000 cf 5.39 learn 3.80 n1=2000 cf 4.41 learn 2.82 285s
+('Thyroid', 3, 0, False) items 3 forms 1 PSopt 1.000 unifPS 1.167 unifItems 1.000  0s
+('Thyroid', 3, 1, False) items 3 forms 1 PSopt 1.000 unifPS 1.187 unifItems 1.000  0s
+('Thyroid', 3, 2, False) items 3 forms 1 PSopt 1.000 unifPS 1.338 unifItems 1.000  0s
+('Thyroid', 3, 0, True) items 3 forms 1 PSopt 1.000 unifPS 1.468 unifItems 1.000  0s
+('Thyroid', 3, 1, True) items 3 forms 1 PSopt 1.000 unifPS 1.366 unifItems 1.000  0s
+('Thyroid', 3, 2, True) items 2 forms 1 PSopt 1.000 unifPS 1.126 unifItems 1.000  0s
+('Thyroid', 4, 0, False) items 3 forms 1 PSopt 1.000 unifPS 1.167 unifItems 1.000  0s
+('Thyroid', 4, 1, False) items 3 forms 1 PSopt 1.000 unifPS 1.020 unifItems 1.000  0s
+('Thyroid', 4, 2, False) items 3 forms 1 PSopt 1.000 unifPS 1.146 unifItems 1.000  0s
+('Thyroid', 4, 0, True) items 4 forms 1 PSopt 1.000 unifPS 1.602 unifItems 1.000  0s
+('Thyroid', 4, 1, True) items 4 forms 1 PSopt 1.000 unifPS 1.575 unifItems 1.000  0s
+('Thyroid', 4, 2, True) items 4 forms 1 PSopt 1.000 unifPS 1.976 unifItems 1.000  0s
+('Thyroid', 5, 0, False) items 3 forms 1 PSopt 1.000 unifPS 1.109 unifItems 1.000  0s
+('Thyroid', 5, 1, False) items 3 forms 1 PSopt 1.000 unifPS 1.008 unifItems 1.000  0s
+('Thyroid', 5, 2, False) items 3 forms 1 PSopt 1.000 unifPS 1.147 unifItems 1.000  0s
+('Thyroid', 5, 0, True) items 4 forms 1 PSopt 1.000 unifPS 1.261 unifItems 1.000  0s
+('Thyroid', 5, 1, True) items 4 forms 1 PSopt 1.000 unifPS 1.269 unifItems 1.000  0s
+('Thyroid', 5, 2, True) items 4 forms 1 PSopt 1.000 unifPS 2.179 unifItems 1.000  0s
+('Thyroid', 6, 0, False) items 3 forms 1 PSopt 1.000 unifPS 1.107 unifItems 1.000  0s
+('Thyroid', 6, 1, False) items 3 forms 1 PSopt 1.000 unifPS 1.006 unifItems 1.000  0s
+('Thyroid', 6, 2, False) items 3 forms 1 PSopt 1.000 unifPS 1.091 unifItems 1.000  1s
+('Thyroid', 6, 0, True) items 4 forms 1 PSopt 1.000 unifPS 1.218 unifItems 1.000  0s
+('Thyroid', 6, 1, True) items 4 forms 1 PSopt 1.000 unifPS 1.266 unifItems 1.000  0s
+('Thyroid', 6, 2, True) items 4 forms 1 PSopt 1.000 unifPS 1.734 unifItems 1.000  0s
+('BRFSS', 6, 2, True) items 10 forms 210 PSopt 1.570 unifPS 2.388 unifItems 4.304 n1=250 cf 4.40 learn 4.21 n1=500 cf 5.63 learn 4.42 n1=1000 cf 6.33 learn 4.46 n1=2000 cf 5.91 learn 3.12 436s

@@ -1,0 +1,3 @@
+Spambase 20261110 20 3 fixed/full 5.052 6s
+  two rounds [3.2583, 3.2990] / full 133 iterations 931s
+Spambase 2 20 3 fixed/branch in [1.608, 1.608] two/branch in [1.037, 1.050] branch iterations 114 1760s
