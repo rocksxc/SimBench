@@ -1,0 +1,114 @@
+{
+ "snli": {
+  "n_items": 1514,
+  "n_items_expected": 1514,
+  "uids_unique": true,
+  "label_counter_keys": [
+   "c",
+   "e",
+   "n"
+  ],
+  "all_label_counter_sum_to_100": true,
+  "label_counter_sum_min_max": [
+   100,
+   100
+  ],
+  "label_count_field_equals_label_counter": true,
+  "total_annotations": 151400,
+  "n_items_tied_plurality": 14,
+  "majority_label_field_is_a_plurality_class_fraction": 1.0,
+  "old_label_equals_majority_label_fraction": 0.750330250990753,
+  "models": [
+   "albert-xxlarge",
+   "bart-large",
+   "bert-base",
+   "bert-large",
+   "distilbert",
+   "roberta-base",
+   "roberta-large",
+   "xlnet-base",
+   "xlnet-large"
+  ],
+  "n_uids_in_prediction_file_per_model": [
+   29462
+  ],
+  "items_missing_from_prediction_file": 0,
+  "predicted_label_equals_argmax_logits_fraction": 1.0,
+  "max_abs_diff_vs_readme_scoreboard_over_3_large_models_x_4_metrics": 0.0
+ },
+ "mnli_m": {
+  "n_items": 1599,
+  "n_items_expected": 1599,
+  "uids_unique": true,
+  "label_counter_keys": [
+   "c",
+   "e",
+   "n"
+  ],
+  "all_label_counter_sum_to_100": true,
+  "label_counter_sum_min_max": [
+   100,
+   100
+  ],
+  "label_count_field_equals_label_counter": true,
+  "total_annotations": 159900,
+  "n_items_tied_plurality": 14,
+  "majority_label_field_is_a_plurality_class_fraction": 1.0,
+  "old_label_equals_majority_label_fraction": 0.6823014383989994,
+  "models": [
+   "albert-xxlarge",
+   "bart-large",
+   "bert-base",
+   "bert-large",
+   "distilbert",
+   "roberta-base",
+   "roberta-large",
+   "xlnet-base",
+   "xlnet-large"
+  ],
+  "n_uids_in_prediction_file_per_model": [
+   29462
+  ],
+  "items_missing_from_prediction_file": 0,
+  "predicted_label_equals_argmax_logits_fraction": 0.9999305121256341,
+  "max_abs_diff_vs_readme_scoreboard_over_3_large_models_x_4_metrics": 0.0
+ },
+ "alphanli": {
+  "n_items": 1532,
+  "n_items_expected": 1532,
+  "uids_unique": true,
+  "label_counter_keys": [
+   "1",
+   "2"
+  ],
+  "all_label_counter_sum_to_100": true,
+  "label_counter_sum_min_max": [
+   100,
+   100
+  ],
+  "label_count_field_equals_label_counter": true,
+  "total_annotations": 153200,
+  "n_items_tied_plurality": 8,
+  "majority_label_field_is_a_plurality_class_fraction": 1.0,
+  "old_label_equals_majority_label_fraction": 0.893603133159269,
+  "models": [
+   "albert-xxlarge",
+   "bart-large",
+   "bert-base",
+   "bert-large",
+   "distilbert",
+   "roberta-base",
+   "roberta-large",
+   "xlnet-base",
+   "xlnet-large"
+  ],
+  "n_uids_in_prediction_file_per_model": [
+   1532
+  ],
+  "items_missing_from_prediction_file": 0,
+  "predicted_label_equals_argmax_logits_fraction": 1.0,
+  "max_abs_diff_vs_readme_scoreboard_over_3_large_models_x_4_metrics": 0.0
+ },
+ "total_items": 4645,
+ "total_items_expected": 4645
+}

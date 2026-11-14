@@ -1,0 +1,42 @@
+== chaosnli_snli: 1514 items, 3 classes
+  (a) mean score (lower is better) of the oracle and of sharpened oracles
+    TV    n=3: oracle 0.198, one-hot 0.245, p^2 0.189, p^4 0.206 -> best: p^2 (sharpened) | n=5: oracle 0.153, one-hot 0.246, p^2 0.162, p^4 0.194 -> best: oracle p | n=10: oracle 0.105, one-hot 0.246, p^2 0.136, p^4 0.184 -> best: oracle p | n=100: oracle 0.000, one-hot 0.245, p^2 0.111, p^4 0.176 -> best: oracle p
+    JSD   n=3: oracle 0.089, one-hot 0.165, p^2 0.087, p^4 0.111 -> best: p^2 (sharpened) | n=5: oracle 0.057, one-hot 0.154, p^2 0.062, p^4 0.093 -> best: oracle p | n=10: oracle 0.029, one-hot 0.147, p^2 0.042, p^4 0.080 -> best: oracle p | n=100: oracle 0.000, one-hot 0.142, p^2 0.027, p^4 0.072 -> best: oracle p
+    Brier n=3: oracle 0.110, one-hot 0.263, p^2 0.136, p^4 0.182 -> best: oracle p | n=5: oracle 0.066, one-hot 0.219, p^2 0.092, p^4 0.138 -> best: oracle p | n=10: oracle 0.031, one-hot 0.183, p^2 0.057, p^4 0.103 -> best: oracle p | n=100: oracle 0.000, one-hot 0.152, p^2 0.026, p^4 0.071 -> best: oracle p
+  (b) temperature preferred by each metric (argmin over a grid), per model: n=3 / n=5 / n=10 / n=100
+    TV    albert-xxl: 1.4/2/2/2; bart-large: 1.4/1.4/2/2; bert-base: 1.4/1.4/2/2; bert-large: 1.4/1.4/2/2; distilbert: 1/1.4/1.4/1.4
+    JSD   albert-xxl: 2/2/2/2; bart-large: 2/2/2/2; bert-base: 1.4/2/2/2; bert-large: 1.4/2/2/2; distilbert: 1.4/1.4/2/2
+    CE    albert-xxl: 3/3/3/3; bart-large: 3/3/3/3; bert-base: 2/3/3/3; bert-large: 3/3/3/3; distilbert: 2/2/2/2
+    Brier albert-xxl: 3/3/3/3; bart-large: 3/3/3/3; bert-base: 3/3/3/3; bert-large: 3/3/3/3; distilbert: 2/2/2/2
+  (c) share of the 9 models for which the hard (one-hot) version scores better than the soft version
+    TV    n=3: 0/9, n=5: 0/9, n=10: 0/9, n=100: 0/9
+    JSD   n=3: 0/9, n=5: 0/9, n=10: 0/9, n=100: 0/9
+    Brier n=3: 0/9, n=5: 0/9, n=10: 0/9, n=100: 0/9
+== chaosnli_mnli_m: 1599 items, 3 classes
+  (a) mean score (lower is better) of the oracle and of sharpened oracles
+    TV    n=3: oracle 0.252, one-hot 0.350, p^2 0.253, p^4 0.281 -> best: oracle p | n=5: oracle 0.192, one-hot 0.350, p^2 0.209, p^4 0.258 -> best: oracle p | n=10: oracle 0.133, one-hot 0.350, p^2 0.171, p^4 0.241 -> best: oracle p | n=100: oracle 0.000, one-hot 0.349, p^2 0.131, p^4 0.227 -> best: oracle p
+    JSD   n=3: oracle 0.122, one-hot 0.245, p^2 0.121, p^4 0.154 -> best: p^2 (sharpened) | n=5: oracle 0.074, one-hot 0.226, p^2 0.081, p^4 0.122 -> best: oracle p | n=10: oracle 0.036, one-hot 0.216, p^2 0.052, p^4 0.103 -> best: oracle p | n=100: oracle 0.000, one-hot 0.208, p^2 0.029, p^4 0.090 -> best: oracle p
+    Brier n=3: oracle 0.150, one-hot 0.395, p^2 0.183, p^4 0.251 -> best: oracle p | n=5: oracle 0.088, one-hot 0.331, p^2 0.121, p^4 0.188 -> best: oracle p | n=10: oracle 0.042, one-hot 0.286, p^2 0.074, p^4 0.142 -> best: oracle p | n=100: oracle 0.000, one-hot 0.243, p^2 0.033, p^4 0.100 -> best: oracle p
+  (b) temperature preferred by each metric (argmin over a grid), per model: n=3 / n=5 / n=10 / n=100
+    TV    albert-xxl: 3/3/3/3; bart-large: 3/3/3/3; bert-base: 3/3/3/3; bert-large: 3/3/3/3; distilbert: 3/3/3/3
+    JSD   albert-xxl: 3/3/3/3; bart-large: 3/3/3/3; bert-base: 3/3/3/3; bert-large: 3/3/3/3; distilbert: 3/3/3/3
+    CE    albert-xxl: 3/3/3/3; bart-large: 3/3/3/3; bert-base: 3/3/3/3; bert-large: 3/3/3/3; distilbert: 3/3/3/3
+    Brier albert-xxl: 3/3/3/3; bart-large: 3/3/3/3; bert-base: 3/3/3/3; bert-large: 3/3/3/3; distilbert: 3/3/3/3
+  (c) share of the 9 models for which the hard (one-hot) version scores better than the soft version
+    TV    n=3: 0/9, n=5: 0/9, n=10: 0/9, n=100: 0/9
+    JSD   n=3: 0/9, n=5: 0/9, n=10: 0/9, n=100: 0/9
+    Brier n=3: 0/9, n=5: 0/9, n=10: 0/9, n=100: 0/9
+== chaosnli_alphanli: 1532 items, 2 classes
+  (a) mean score (lower is better) of the oracle and of sharpened oracles
+    TV    n=3: oracle 0.111, one-hot 0.119, p^2 0.097, p^4 0.104 -> best: p^2 (sharpened) | n=5: oracle 0.088, one-hot 0.118, p^2 0.085, p^4 0.098 -> best: p^2 (sharpened) | n=10: oracle 0.062, one-hot 0.119, p^2 0.073, p^4 0.094 -> best: oracle p | n=100: oracle 0.000, one-hot 0.119, p^2 0.062, p^4 0.092 -> best: oracle p
+    JSD   n=3: oracle 0.047, one-hot 0.077, p^2 0.044, p^4 0.055 -> best: p^2 (sharpened) | n=5: oracle 0.031, one-hot 0.072, p^2 0.033, p^4 0.047 -> best: oracle p | n=10: oracle 0.017, one-hot 0.069, p^2 0.024, p^4 0.042 -> best: oracle p | n=100: oracle 0.000, one-hot 0.066, p^2 0.017, p^4 0.038 -> best: oracle p
+    Brier n=3: oracle 0.057, one-hot 0.120, p^2 0.070, p^4 0.089 -> best: oracle p | n=5: oracle 0.034, one-hot 0.096, p^2 0.046, p^4 0.065 -> best: oracle p | n=10: oracle 0.016, one-hot 0.079, p^2 0.028, p^4 0.047 -> best: oracle p | n=100: oracle 0.000, one-hot 0.063, p^2 0.013, p^4 0.032 -> best: oracle p
+  (b) temperature preferred by each metric (argmin over a grid), per model: n=3 / n=5 / n=10 / n=100
+    TV    albert-xxl: 3/3/3/3; bart-large: 3/3/3/3; bert-base: 3/3/3/3; bert-large: 3/3/3/3; distilbert: 3/3/3/3
+    JSD   albert-xxl: 3/3/3/3; bart-large: 3/3/3/3; bert-base: 3/3/3/3; bert-large: 3/3/3/3; distilbert: 3/3/3/3
+    CE    albert-xxl: 3/3/3/3; bart-large: 3/3/3/3; bert-base: 3/3/3/3; bert-large: 3/3/3/3; distilbert: 3/3/3/3
+    Brier albert-xxl: 3/3/3/3; bart-large: 3/3/3/3; bert-base: 3/3/3/3; bert-large: 3/3/3/3; distilbert: 3/3/3/3
+  (c) share of the 9 models for which the hard (one-hot) version scores better than the soft version
+    TV    n=3: 0/9, n=5: 0/9, n=10: 0/9, n=100: 0/9
+    JSD   n=3: 0/9, n=5: 0/9, n=10: 0/9, n=100: 0/9
+    Brier n=3: 0/9, n=5: 0/9, n=10: 0/9, n=100: 0/9

@@ -1,0 +1,15 @@
+consensus agreement 0.9587
+fixed panels
+  n= 3  votes/item  3.00  set [0.8566,1.0000] width 0.1434
+  n= 5  votes/item  5.00  set [0.8699,0.9997] width 0.1298
+  n= 7  votes/item  7.00  set [0.8905,0.9955] width 0.1050
+  n= 9  votes/item  9.00  set [0.8996,0.9932] width 0.0936
+  n=11  votes/item 11.00  set [0.9072,0.9908] width 0.0836
+  n=15  votes/item 15.00  set [0.9174,0.9867] width 0.0693
+top-up: 3 votes for all, then extra votes while the margin is small
+  3 + 4 if not unanimous           votes/item  4.25  set [0.8905,0.9955] width 0.1050
+  3 + 6 if not unanimous           votes/item  4.88  set [0.8996,0.9932] width 0.0936
+  3 + 12 if not unanimous          votes/item  6.76  set [0.9174,0.9867] width 0.0693
+  3 + 4 + 8 while margin <= 3      votes/item  6.05  set [0.9174,0.9867] width 0.0693
+  5 + 10 if margin <= 3            votes/item  9.28  set [0.9174,0.9867] width 0.0693
+  3 + 6 + 12 while margin <= 3     votes/item 11.64  set [0.9268,0.9822] width 0.0554
