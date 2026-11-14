@@ -1,0 +1,12 @@
+model A (follows the crowd closely): consensus accuracy 0.9586; agreement with a random annotator 0.8450; ceiling of that agreement 0.8502
+   n= 3: accuracy vs majority-of-n 0.8892 | identified set for consensus accuracy [0.8568, 1.0000] (width 0.1432) | ceiling: plug-in 0.8956, identified set [0.7913, 0.8816]
+   n= 5: accuracy vs majority-of-n 0.9071 | identified set for consensus accuracy [0.8701, 0.9997] (width 0.1296) | ceiling: plug-in 0.8767, identified set [0.8254, 0.8632]
+   n= 9: accuracy vs majority-of-n 0.9236 | identified set for consensus accuracy [0.9001, 0.9931] (width 0.0931) | ceiling: plug-in 0.8647, identified set [0.8414, 0.8546]
+   n=21: accuracy vs majority-of-n 0.9400 | identified set for consensus accuracy [0.9243, 0.9836] (width 0.0594) | ceiling: plug-in 0.8564, identified set [0.8484, 0.8511]
+   n=51: accuracy vs majority-of-n 0.9498 | identified set for consensus accuracy [nan, nan] (width nan) | ceiling: plug-in 0.8527, identified set [0.8496, 0.8505]
+model B (noisier on contested items): consensus accuracy 0.8809; agreement with a random annotator 0.8051; ceiling of that agreement 0.8502
+   n= 3: accuracy vs majority-of-n 0.8394 | identified set for consensus accuracy [0.7151, 0.9774] (width 0.2623) | ceiling: plug-in 0.8956, identified set [0.7913, 0.8816]
+   n= 5: accuracy vs majority-of-n 0.8520 | identified set for consensus accuracy [0.7615, 0.9605] (width 0.1990) | ceiling: plug-in 0.8767, identified set [0.8254, 0.8632]
+   n= 9: accuracy vs majority-of-n 0.8627 | identified set for consensus accuracy [0.8049, 0.9387] (width 0.1338) | ceiling: plug-in 0.8647, identified set [0.8414, 0.8546]
+   n=21: accuracy vs majority-of-n 0.8720 | identified set for consensus accuracy [0.8448, 0.9121] (width 0.0673) | ceiling: plug-in 0.8564, identified set [0.8484, 0.8511]
+   n=51: accuracy vs majority-of-n 0.8769 | identified set for consensus accuracy [0.8603, 0.9005] (width 0.0402) | ceiling: plug-in 0.8527, identified set [0.8496, 0.8505]
